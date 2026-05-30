@@ -1,13 +1,16 @@
 import type { NormalizedSlide, ResolvedDesignTokens } from '../compiler/types';
 
-// Structural stub for a pptxgenjs Slide instance.
-// Work 2 will replace this with the actual pptxgenjs.Slide type.
+// Structural interface for a pptxgenjs Slide instance.
+// The actual pptxgenjs Slide is passed at runtime; this interface documents
+// the methods templates use and enables type-safe template authoring.
 export interface PptxSlide {
+  background: unknown;
   addText(text: string | unknown[], opts?: unknown): this;
   addShape(shapeType: string, opts?: unknown): this;
   addChart(type: string, data: unknown[], opts?: unknown): this;
   addTable(rows: unknown[][], opts?: unknown): this;
   addImage(opts: unknown): this;
+  addNotes(notes: string): this;
 }
 
 export type RenderFn<T extends NormalizedSlide = NormalizedSlide> = (
@@ -26,8 +29,10 @@ export interface SlideTemplate<T extends NormalizedSlide = NormalizedSlide> {
 export class TemplateRegistry {
   private readonly templates = new Map<string, SlideTemplate>();
 
-  register(template: SlideTemplate): void {
-    this.templates.set(template.id, template);
+  // Accepts a strongly-typed SlideTemplate<T> and stores it as the base union type.
+  // Safe because resolve() dispatches only the matching slide type to each template.
+  register<T extends NormalizedSlide>(template: SlideTemplate<T>): void {
+    this.templates.set(template.id, template as unknown as SlideTemplate);
   }
 
   // Resolves by `type` or `type:variant`. Throws if not found — no silent fallback.

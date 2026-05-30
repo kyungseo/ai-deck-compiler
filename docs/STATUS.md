@@ -21,7 +21,7 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| W2 (slug: work2-default-modern-renderer) | default-modern preset + P1 slide render + PPTX CLI | `/work work2-default-modern-renderer` 착수 시 생성 |
+| FEAT-20260530-001 | Work 2 — default-modern preset + P1 slide render + PPTX CLI | `docs/works/phase1/FEAT-20260530-001-work2-default-modern-renderer.md` |
 
 ## Blockers And Open Questions
 

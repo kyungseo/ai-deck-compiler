@@ -1,0 +1,71 @@
+deck:
+  title: Product Overview
+  design: default-modern
+  theme: light
+  version: "1.0"
+  audience: Internal team
+
+slides:
+  - id: hero-1
+    type: hero
+    title: Product Overview
+    subtitle: Q2 2026 Update
+    cta: Engineering · Design · Growth
+
+  - id: agenda-1
+    type: agenda
+    title: Agenda
+    items:
+      - Product Goals & Strategy
+      - Key Metrics (Q2)
+      - Architecture Update
+      - Roadmap
+
+  - id: kpi-1
+    type: kpi
+    title: Key Metrics — Q2 2026
+    kpis:
+      - label: Monthly Active Users
+        value: "124K"
+        delta: "+18%"
+        trend: up
+      - label: Revenue
+        value: "$2.4M"
+        delta: "+11%"
+        trend: up
+      - label: Churn Rate
+        value: "2.1%"
+        delta: "-0.4%"
+        trend: down
+
+  - id: content-1
+    type: content
+    title: Product Strategy
+    body:
+      - Focus on developer experience and AI-native workflows
+      - Expand enterprise tier with SSO and audit logging
+      - Launch self-serve onboarding by end of Q3
+
+  - id: chart-1
+    type: chart
+    title: Monthly Revenue (Last 6 Months)
+    chart:
+      type: bar
+      data:
+        source: inline
+        labels: [Jan, Feb, Mar, Apr, May, Jun]
+        series:
+          - name: Revenue ($K)
+            values: [180, 210, 195, 240, 275, 310]
+
+  - id: summary-1
+    type: summary
+    title: Summary & Next Steps
+    body:
+      - Strong Q2 growth across all key metrics
+      - Architecture modernisation on track
+      - Team headcount stable, two senior hires planned
+    takeaways:
+      - Ship self-serve onboarding by Aug 1
+      - Complete SSO integration by Sep 15
+      - Review enterprise pricing in July
