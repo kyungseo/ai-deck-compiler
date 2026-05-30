@@ -11,6 +11,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
+| FEAT-20260531-001 | P2 slide type 5종 구현 — timeline, flow, decision, appendix, closing | 2026-05-31 | — |
 | FEAT-20260530-002 | skill-create-deck + skill-generate-blueprint | 2026-05-31 | — |
 | FEAT-20260530-001 | Work 2 — default-modern preset + P1 slide render + PPTX CLI | 2026-05-30 | — |
 

@@ -59,7 +59,10 @@ export async function compile(opts: CompilerOptions): Promise<pptxgen> {
 
     template.render(slideToRender, tokens, s);
 
-    renderFooter(s, tokens, blueprint.slides.indexOf(slide), blueprint.slides.length);
+    const skipFooter = slide.type === 'closing';
+    if (!skipFooter) {
+      renderFooter(s, tokens, blueprint.slides.indexOf(slide), blueprint.slides.length);
+    }
   }
 
   return pptx;

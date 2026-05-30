@@ -65,9 +65,16 @@ const tokens: ResolvedDesignTokens = {
 
 describe('defaultRegistry', () => {
   const P1_TYPES = ['hero', 'agenda', 'content', 'two-column', 'kpi', 'table', 'chart', 'architecture', 'summary'];
+  const P2_TYPES = ['section-divider', 'comparison', 'timeline', 'flow', 'decision', 'appendix', 'closing'];
 
   it('has all 9 P1 slide types registered', () => {
     for (const type of P1_TYPES) {
+      expect(defaultRegistry.has(type), `"${type}" should be registered`).toBe(true);
+    }
+  });
+
+  it('has all 6 P2 slide types registered', () => {
+    for (const type of P2_TYPES) {
       expect(defaultRegistry.has(type), `"${type}" should be registered`).toBe(true);
     }
   });
@@ -194,5 +201,76 @@ describe('All P1 types compile without error', () => {
     const slide = makeMockSlide();
     const template = defaultRegistry.resolve('summary');
     expect(() => template.render({ id: 's', type: 'summary', title: 'Summary', body: ['Point A'], takeaways: ['Key 1', 'Key 2'] }, tokens, slide)).not.toThrow();
+  });
+});
+
+// ── All P2 types compile without error ────────────────────────────────────────
+
+describe('All P2 types compile without error', () => {
+  it('timeline', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('timeline');
+    expect(() => template.render({
+      id: 'tl', type: 'timeline', title: 'Roadmap',
+      items: [
+        { date: 'Q1', label: 'Phase 1', description: 'Foundation' },
+        { date: 'Q2', label: 'Phase 2', description: 'Build' },
+        { date: 'Q3', label: 'Phase 3', description: 'Launch' },
+      ],
+    }, tokens, slide)).not.toThrow();
+  });
+
+  it('flow: no diagram (placeholder)', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('flow');
+    expect(() => template.render({ id: 'fl', type: 'flow', title: 'Process Flow' }, tokens, slide)).not.toThrow();
+  });
+
+  it('flow: with inline diagram', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('flow');
+    expect(() => template.render({
+      id: 'fl2', type: 'flow', title: 'Flow',
+      diagram: {
+        source: 'inline', version: '1.0',
+        nodes: [
+          { id: 'a', kind: 'service', label: 'Start', zone: 'center-left' },
+          { id: 'b', kind: 'service', label: 'End', zone: 'center-right' },
+        ],
+        edges: [{ from: 'a', to: 'b', kind: 'sync' }],
+      },
+    }, tokens, slide)).not.toThrow();
+  });
+
+  it('decision', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('decision');
+    expect(() => template.render({
+      id: 'dc', type: 'decision', title: 'Build vs Buy',
+      options: [
+        { label: 'Build', pros: ['Full control'], cons: ['High cost'] },
+        { label: 'Buy', pros: ['Fast'], cons: ['Vendor lock-in'] },
+      ],
+      recommendation: 'Buy — faster time to market given current runway',
+    }, tokens, slide)).not.toThrow();
+  });
+
+  it('appendix', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('appendix');
+    expect(() => template.render({
+      id: 'ap', type: 'appendix', title: 'Appendix',
+      body: ['See supporting data at data/charts/', 'Architecture decisions at docs/decisions/'],
+    }, tokens, slide)).not.toThrow();
+  });
+
+  it('closing', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('closing');
+    expect(() => template.render({
+      id: 'cl', type: 'closing', title: 'Q&A',
+      subtitle: 'kyungseo.park@gmail.com',
+      message: '발표를 들어주셔서 감사합니다',
+    }, tokens, slide)).not.toThrow();
   });
 });

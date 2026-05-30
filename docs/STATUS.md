@@ -33,5 +33,4 @@
 
 ## Next Actions
 
-1. `/work skill-create-deck` — AI guided 인터랙티브 워크플로우 skill (P0, 핵심 UX)
-2. `/work p2-slide-types` — P2 slide 6종 구현
+1. `/pick` — 다음 작업 후보 선택 (p2-slide-types 완료, skill-review-deck / examples-expanded 등 후보)

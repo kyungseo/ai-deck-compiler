@@ -177,6 +177,12 @@ const AppendixSlide = z.object({
   body: z.array(z.string()).optional(),
 });
 
+const ClosingSlide = z.object({
+  ...base,
+  type: z.literal('closing'),
+  message: z.string().optional(),  // small label above title (e.g., "발표를 들어주셔서 감사합니다")
+});
+
 // ── Discriminated Union ───────────────────────────────────────────────────────
 
 export const SlideSchema = z.discriminatedUnion('type', [
@@ -195,6 +201,7 @@ export const SlideSchema = z.discriminatedUnion('type', [
   DecisionSlide,
   SummarySlide,
   AppendixSlide,
+  ClosingSlide,
 ]);
 
 // ── Deck ──────────────────────────────────────────────────────────────────────

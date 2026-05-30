@@ -10,6 +10,11 @@ import { tableTemplate } from './slides/table.js';
 import { chartTemplate } from './slides/chart.js';
 import { architectureTemplate } from './slides/architecture.js';
 import { summaryTemplate } from './slides/summary.js';
+import { timelineTemplate } from './slides/timeline.js';
+import { flowTemplate } from './slides/flow.js';
+import { decisionTemplate } from './slides/decision.js';
+import { appendixTemplate } from './slides/appendix.js';
+import { closingTemplate } from './slides/closing.js';
 
 export const defaultRegistry = new TemplateRegistry();
 
@@ -24,3 +29,8 @@ defaultRegistry.register(tableTemplate);
 defaultRegistry.register(chartTemplate);
 defaultRegistry.register(architectureTemplate);
 defaultRegistry.register(summaryTemplate);
+defaultRegistry.register(timelineTemplate);
+defaultRegistry.register(flowTemplate);
+defaultRegistry.register(decisionTemplate);
+defaultRegistry.register(appendixTemplate);
+defaultRegistry.register(closingTemplate);
