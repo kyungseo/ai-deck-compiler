@@ -6,13 +6,13 @@
 
 | 항목 | 내용 |
 | --- | --- |
-| 프로젝트 목표 | blueprint.yaml + design preset → editable PPTX 결정론적 컴파일 |
+| 프로젝트 목표 | blueprint.yaml + design preset → editable PPTX 일관 생성 |
 | 주요 사용자 | AI-assisted presentation author (개인 / 팀 내부) |
 | production 성격 | library / internal tool (public open-source) |
 | 배포 또는 공개 방식 | public GitHub, npm package (Post-MVP) |
 | 제품 핵심 workflow | blueprint.yaml → Schema Validation (Zod) → Compiler → TemplateRegistry → pptxgenjs → Editable PPTX → Validation Report |
 | AI 작업 도구 | Claude Code / Codex / Cursor |
-| 주요 제약 조건 | AI가 x/y 좌표를 결정하지 않음. 결정론적 렌더링만 허용. pptxgenjs editable output 필수. blueprint.yaml 확정 후 100% 결정론적. |
+| 주요 제약 조건 | AI가 x/y 좌표를 결정하지 않음. 규칙 기반 렌더링만 허용 (같은 입력 = 같은 결과). pptxgenjs editable output 필수. |
 
 ## Implementation Baseline
 
@@ -51,7 +51,7 @@ Validation Report → AI Review / Human Review
 **핵심 원칙: AI writes intent. Code renders layout.**
 
 - AI 역할: blueprint.yaml 생성·수정, slide narrative 개선, diagram semantic spec 생성
-- 결정론적 엔진 역할: blueprint 파싱, design token 해석, template 선택, 좌표 계산, PPTX 생성
+- 규칙 기반 엔진 역할: blueprint 파싱, design token 해석, template 선택, 좌표 계산, PPTX 생성
 - AI 금지: 임의 x/y 좌표 결정, 미등록 layout 발명, design token 무시
 
 ## Verification Defaults

@@ -12,7 +12,7 @@ branch: feature/work2-default-modern-renderer
 
 ## Goal
 
-blueprint.yaml + default-modern design preset → editable PPTX 결정론적 생성.
+blueprint.yaml + default-modern design preset → editable PPTX 일관 생성.
 P1 slide type 9종, zone-based layout engine, PPTX CLI 구현.
 
 ## Plan

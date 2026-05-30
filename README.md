@@ -2,8 +2,8 @@
 
 > Compile presentations from design systems and blueprints.
 
-AI가 structured input(blueprint.yaml)을 작성하고, 결정론적 엔진이 editable PPTX로 컴파일합니다.
-AI가 x/y 좌표를 결정하거나 슬라이드를 이미지로 렌더링하지 않습니다.
+AI가 structured input(blueprint.yaml)을 작성하고, 규칙 기반 컴파일 엔진이 editable PPTX를 생성합니다.
+같은 blueprint는 항상 같은 PPTX를 만듭니다. AI가 x/y 좌표를 결정하거나 슬라이드를 이미지로 렌더링하지 않습니다.
 
 ```
 blueprint.yaml + design preset → Editable PPTX
@@ -13,7 +13,7 @@ blueprint.yaml + design preset → Editable PPTX
 
 ## 특징
 
-- **AI-Native 경계 명확** — AI는 blueprint를 작성하고, 엔진은 100% 결정론적으로 렌더링
+- **AI-Native 경계 명확** — AI는 blueprint를 작성하고, 엔진은 규칙대로 렌더링 (같은 입력 = 항상 같은 결과)
 - **Editable 출력** — 텍스트, 차트, 표, 다이어그램 모두 native PowerPoint XML (이미지 아님)
 - **Design System 기반** — `tokens.json`으로 색상·타이포그래피·간격 일괄 적용
 - **Zone-based 다이어그램** — AI가 node를 zone(top-left, center 등)에 배치하면 엔진이 좌표 계산
