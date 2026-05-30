@@ -13,11 +13,12 @@ blueprint.yaml + design preset → Editable PPTX
 
 ## 특징
 
-- **AI-Native 경계 명확** — AI는 blueprint를 작성하고, 엔진은 규칙대로 렌더링 (같은 입력 = 항상 같은 결과)
-- **Editable 출력** — 텍스트, 차트, 표, 다이어그램 모두 native PowerPoint XML (이미지 아님)
-- **Design System 기반** — `tokens.json`으로 색상·타이포그래피·간격 일괄 적용
-- **Zone-based 다이어그램** — AI가 node를 zone(top-left, center 등)에 배치하면 엔진이 좌표 계산
-- **Schema Validation** — Zod schema로 blueprint 유효성 검사
+- **레이아웃 무결성** — 같은 blueprint를 실행하면 언제나 동일한 PPTX가 나옵니다. 좌표·크기·간격이 규칙에 따라 계산되므로 재실행해도 layout이 틀어지지 않습니다. blueprint.yaml을 한 줄 바꾸면 PPTX에서 정확히 그 부분만 바뀝니다.
+- **AI-Native 경계** — AI는 blueprint(의도)를 작성하고, 엔진은 규칙대로 렌더링합니다. AI가 임의로 좌표를 결정하거나 슬라이드를 이미지로 만들지 않습니다.
+- **Editable 출력** — 텍스트, 차트, 표, 다이어그램 모두 native PowerPoint XML로 생성됩니다. 생성 후 PowerPoint에서 자유롭게 편집할 수 있습니다.
+- **Design System 기반** — `tokens.json`으로 색상·타이포그래피·간격을 일괄 정의하고, design preset을 교체하면 전체 덱의 스타일이 바뀝니다.
+- **Zone-based 다이어그램** — AI가 node를 zone(top-left, center 등)으로 지정하면 엔진이 좌표를 계산합니다. AI가 숫자를 추측할 필요가 없습니다.
+- **Schema Validation** — blueprint.yaml은 Zod schema로 검사합니다. 잘못된 슬라이드 타입이나 누락된 필드는 생성 전에 오류로 잡힙니다.
 
 ---
 
