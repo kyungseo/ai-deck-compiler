@@ -1,0 +1,70 @@
+import type { SlideTemplate, PptxSlide } from '../registry.js';
+import type { ResolvedDesignTokens } from '../../compiler/types.js';
+import type { Slide } from '../../schema/blueprint.js';
+import { SL, hex } from '../layout.js';
+
+type ChartSlide = Extract<Slide, { type: 'chart' }>;
+
+const PPTX_CHART_TYPE: Record<string, string> = {
+  'bar': 'bar',
+  'stacked-bar': 'bar',
+  'line': 'line',
+  'area': 'area',
+  'pie': 'pie',
+  'donut': 'doughnut',
+};
+
+export const chartTemplate: SlideTemplate<ChartSlide> = {
+  id: 'chart',
+  supportedType: 'chart',
+  variants: ['default'],
+  render(slide: ChartSlide, tokens: ResolvedDesignTokens, pptxSlide: PptxSlide) {
+    const ty = tokens.typography;
+    const co = tokens.colors;
+
+    pptxSlide.addText(slide.title, {
+      x: SL.cx, y: SL.ty, w: SL.cw, h: SL.th,
+      fontSize: ty['title']?.size ?? 40,
+      bold: true,
+      fontFace: ty['title']?.font ?? 'Pretendard',
+      color: hex(co['text-primary'] ?? '#111827'),
+      valign: 'middle',
+    });
+
+    const { chart } = slide;
+    if (chart.data.source === 'file') {
+      pptxSlide.addText('[Chart data from file — inline source required for rendering]', {
+        x: SL.cx, y: SL.cy, w: SL.cw, h: SL.ch,
+        fontSize: ty['caption']?.size ?? 14,
+        color: hex(co['text-muted'] ?? '6B7280'),
+        align: 'center', valign: 'middle',
+      });
+      return;
+    }
+
+    const chartData = chart.data.series.map(s => ({
+      name: s.name,
+      labels: chart.data.source === 'inline' ? chart.data.labels : [],
+      values: s.values,
+    }));
+
+    const chartColors = [0, 1, 2, 3, 4, 5].map(i => hex(co[`chart-${i}`] ?? '2563EB'));
+    const pptxType = PPTX_CHART_TYPE[chart.type] ?? 'bar';
+    const isStacked = chart.type === 'stacked-bar';
+    const isPie = chart.type === 'pie' || chart.type === 'donut';
+
+    const chartOpts: Record<string, unknown> = {
+      x: SL.cx, y: SL.cy, w: SL.cw, h: SL.ch,
+      chartColors,
+      showLegend: true,
+      legendPos: 'b',
+      legendFontSize: ty['caption']?.size ?? 14,
+      dataLabelFontSize: ty['caption']?.size ?? 14,
+      showValue: isPie,
+    };
+
+    if (isStacked) chartOpts['barGrouping'] = 'stacked';
+
+    pptxSlide.addChart(pptxType, chartData, chartOpts);
+  },
+};

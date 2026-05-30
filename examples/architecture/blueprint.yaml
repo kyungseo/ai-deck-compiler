@@ -1,0 +1,106 @@
+deck:
+  title: Platform Architecture
+  design: default-modern
+  theme: dark
+  version: "1.0"
+  audience: Engineering
+
+slides:
+  - id: hero-1
+    type: hero
+    title: Platform Architecture
+    subtitle: Backend Services Overview
+
+  - id: arch-1
+    type: architecture
+    title: Core Service Topology
+    diagram:
+      source: inline
+      version: "1.0"
+      nodes:
+        - id: gateway
+          kind: gateway
+          label: API Gateway
+          zone: top-center
+        - id: api
+          kind: service
+          label: API Service
+          zone: center
+        - id: db
+          kind: database
+          label: Postgres
+          zone: center-right
+        - id: cache
+          kind: cache
+          label: Redis
+          zone: center-left
+        - id: queue
+          kind: queue
+          label: Message Queue
+          zone: bottom-center
+        - id: worker
+          kind: service
+          label: Worker Service
+          zone: bottom-right
+      edges:
+        - from: gateway
+          to: api
+          kind: sync
+          label: HTTPS
+        - from: api
+          to: db
+          kind: sync
+          label: SQL
+        - from: api
+          to: cache
+          kind: sync
+          label: Redis
+        - from: api
+          to: queue
+          kind: async
+          label: Publish
+        - from: queue
+          to: worker
+          kind: async
+          label: Consume
+      groups:
+        - id: backend
+          label: Backend Layer
+          nodes: [api, db, cache]
+
+  - id: two-col-1
+    type: two-column
+    title: Design Decisions
+    left:
+      body:
+        - API Gateway handles auth and rate limiting
+        - All inter-service calls are authenticated
+        - Redis used for session and response caching
+    right:
+      body:
+        - Async workers decouple heavy processing
+        - Postgres is the single source of truth
+        - Queue ensures at-least-once delivery
+
+  - id: table-1
+    type: table
+    title: Service SLAs
+    headers: [Service, Availability, P99 Latency, Owner]
+    rows:
+      - [API Gateway, 99.99%, 50ms, Platform]
+      - [API Service, 99.9%, 120ms, Backend]
+      - [Worker Service, 99.5%, 2s, Backend]
+      - [Postgres, 99.99%, 10ms, Data]
+      - [Redis, 99.99%, 2ms, Platform]
+
+  - id: summary-1
+    type: summary
+    title: Architecture Summary
+    body:
+      - Gateway-first design provides consistent auth and observability
+      - Async processing isolates failure domains
+      - All components have defined SLAs and owners
+    takeaways:
+      - Add circuit breaker to API → DB path
+      - Migrate queue to managed service in Q3
+      - Instrument worker with structured logging

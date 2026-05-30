@@ -18,4 +18,5 @@ export type ResolvedDesignTokens = {
   typography: Record<string, TypographyToken>;
   spacing: Record<string, number>;
   slideSize: { width: number; height: number };
+  shapes: Record<string, string>; // node kind → pptxgenjs shape name
 };

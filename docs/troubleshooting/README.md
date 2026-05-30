@@ -6,6 +6,7 @@
 
 | 증상 | 환경 | 파일 |
 | --- | --- | --- |
+| PowerPoint 열기 시 복구 메시지 — architecture 슬라이드 역방향 엣지 | pptxgenjs, macOS PowerPoint | `pptx-negative-cx-powerpoint-repair.md` |
 
 ## 작성 규칙
 
