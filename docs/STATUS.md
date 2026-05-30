@@ -21,7 +21,6 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| FEAT-20260530-001 | Work 2 — default-modern preset + P1 slide render + PPTX CLI | `docs/works/phase1/FEAT-20260530-001-work2-default-modern-renderer.md` |
 
 ## Blockers And Open Questions
 
@@ -34,6 +33,6 @@
 
 ## Next Actions
 
-1. Work 2 착수: `/work work2-default-modern-renderer` — default-modern preset, P1 slide render 9종, zone-based layout engine, PPTX CLI, snapshot/determinism 테스트
-2. `docs/backlog/PHASE1.md`에 Work 2 및 Post-MVP 후보 등록 (Work ID는 /work 착수 시 확정)
-3. `docs/PLAN.md` Project Initialization Plan에 stack 선택 근거 이전 (`temp/work-plans/10-ai-native-pt-engineering-framework-3.md` §7 기반)
+1. `docs/backlog/PHASE1.md`에 Phase 1 후보 등록 (p2-slide-types, skills, readme-public 등)
+2. `docs/PLAN.md` Project Initialization Plan에 stack 선택 근거 이전
+3. README.md 공개용 문서 작성

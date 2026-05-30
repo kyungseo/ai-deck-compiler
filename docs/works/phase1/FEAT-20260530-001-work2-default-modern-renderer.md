@@ -1,9 +1,10 @@
 ---
 id: FEAT-20260530-001
 title: "Work 2 — default-modern preset + P1 slide render + PPTX CLI"
-status: Active
+status: Done
 type: FEAT
 created: 2026-05-30
+actual_end: 2026-05-30
 branch: feature/work2-default-modern-renderer
 ---
 
@@ -37,11 +38,11 @@ P1 slide type 9종, zone-based layout engine, PPTX CLI 구현.
 
 ## Done Criteria
 
-- [ ] `npm run deck -- --blueprint examples/sample/blueprint.yaml --design default-modern --theme light --output output/sample.pptx` → PPTX 생성 성공
-- [ ] P1 slide 9종 모두 텍스트·차트·표가 native XML (addImage 미사용)으로 렌더링
-- [ ] 동일 input → 동일 슬라이드 구조 (determinism 테스트 통과)
-- [ ] `npm test` — 기존 19개 + 신규 테스트 모두 통과
-- [ ] `npm run typecheck` — 에러 없음
+- [x] `npm run deck -- --blueprint examples/sample/blueprint.yaml --design default-modern --theme light --output output/sample.pptx` → PPTX 생성 성공
+- [x] P1 slide 9종 모두 텍스트·차트·표가 native XML (addImage 미사용)으로 렌더링
+- [x] 동일 input → 동일 슬라이드 구조 (determinism 테스트 통과)
+- [x] `npm test` — 34 tests 통과 (parser 19 + renderer 12 + snapshot 3)
+- [x] `npm run typecheck` — 에러 없음
 
 ## Discovery
 
@@ -55,7 +56,13 @@ Work 1 확인 결과:
 
 ## Checkpoints
 
-- [ ] Phase A 완료: resolver.ts에서 tokens.json 로딩, `npm run typecheck` 통과
-- [ ] Phase B 완료: compiler.ts에서 빈 PPTX 생성 확인
-- [ ] Phase C 완료: 9종 template 등록, `npm run typecheck` 통과
-- [ ] Phase D 완료: 전체 Done Criteria 달성
+- [x] Phase A 완료: resolver.ts에서 tokens.json 로딩, `npm run typecheck` 통과
+- [x] Phase B 완료: compiler.ts에서 빈 PPTX 생성 확인
+- [x] Phase C 완료: 9종 template 등록, `npm run typecheck` 통과
+- [x] Phase D 완료: 전체 Done Criteria 달성
+
+## Close Notes
+
+- 추가 구현 (잔여 항목): schemas/blueprint.schema.json, design docs 4종, snapshot 테스트 3개
+- 버그 수정: architecture 역방향 엣지 음수 cx/cy (OOXML 위반) → flipH/flipV로 정규화
+- 트러블슈팅: `docs/troubleshooting/pptx-negative-cx-powerpoint-repair.md` 기록
