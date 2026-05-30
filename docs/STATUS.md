@@ -21,7 +21,6 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| FEAT-20260530-002 | skill-create-deck + skill-generate-blueprint | `docs/works/phase1/FEAT-20260530-002-skill-create-deck.md` |
 
 ## Blockers And Open Questions
 
@@ -36,4 +35,3 @@
 
 1. `/work skill-create-deck` — AI guided 인터랙티브 워크플로우 skill (P0, 핵심 UX)
 2. `/work p2-slide-types` — P2 slide 6종 구현
-3. `docs/PLAN.md` Project Initialization Plan에 stack 선택 근거 이전

@@ -142,6 +142,11 @@
   - `CONTRIBUTING.md` — 개발 환경 설정, 테스트 실행, PR 가이드
   - `LICENSE` — MIT
   - `README.md` 보완: limitations, roadmap, skill 사용법, custom design 추가 방법
+  - `README.md` + `docs/USER-MANUAL.md` 환경 설정 섹션 보강:
+    - Pretendard 폰트 설치 안내 (macOS: `brew install --cask font-pretendard`, Windows: 수동 설치 링크)
+    - PowerPoint 또는 LibreOffice Impress 필요 여부 명시
+    - preview CLI 선택 의존성 안내 (LibreOffice + poppler/pdftoppm): macOS Homebrew, Windows Scoop/winget, Linux apt 설치 명령
+    - clone 후 실행 체크리스트 (font → npm install → typecheck → test → validate)
 - Verification: 파일 존재 및 내용 검토
 - Preconditions: 없음
 
