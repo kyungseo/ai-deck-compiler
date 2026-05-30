@@ -5,7 +5,7 @@
 | 항목 | 내용 |
 | --- | --- |
 | Phase | Phase 1 |
-| 제품 목표 | blueprint.yaml + design preset → editable PPTX 결정론적 컴파일 |
+| 제품 목표 | blueprint.yaml + design preset → editable PPTX 일관 생성 |
 | 주요 사용자 | AI-assisted presentation author |
 | Phase 1 범위 | 엔진(compiler) + AI guided workflow(skills) + P2 slide types |
 | 상태 | In Progress |

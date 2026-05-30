@@ -18,14 +18,14 @@ Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로�
 | 주요 사용자 | AI-assisted presentation author (개인 / 팀 내부) |
 | production 성격 | library / internal tool (public open-source) |
 | 배포 또는 공개 방식 | public GitHub, npm package (Post-MVP) |
-| 핵심 성공 기준 | blueprint.yaml → editable PPTX 결정론적 생성. AI가 x/y 좌표를 결정하지 않음. 19 parser tests 통과 기준 유지. |
+| 핵심 성공 기준 | blueprint.yaml → editable PPTX 일관 생성 (같은 입력 = 같은 결과). AI가 x/y 좌표를 결정하지 않음. 19 parser tests 통과 기준 유지. |
 
 ## 2. Product Definition
 
 제품 목표와 성공 기준을 먼저 확정한다. 이 단계가 완료되지 않으면 Phase 1 backlog를 만들지 않는다.
 
-- [x] Phase 1 목표를 한 문장으로 정리 — blueprint.yaml + design preset → editable PPTX 결정론적 컴파일 엔진 구축 (P1 slide type 9종 + zone-based layout engine + PPTX CLI)
-- [x] 주요 사용자와 첫 사용 시나리오 정리 — AI-assisted presentation author. 발표 목적·구조를 blueprint.yaml로 작성하면 editable PPTX가 결정론적으로 생성됨.
+- [x] Phase 1 목표를 한 문장으로 정리 — blueprint.yaml + design preset → editable PPTX 일관 출력 엔진 구축 (P1 slide type 9종 + zone-based layout engine + PPTX CLI)
+- [x] 주요 사용자와 첫 사용 시나리오 정리 — AI-assisted presentation author. 발표 목적·구조를 blueprint.yaml로 작성하면 editable PPTX가 규칙대로 생성됨.
 - [x] 핵심 성공 기준 정의 (§1 Project Identity에서 채운 항목 재확인) — §1 완료
 - [x] `docs/PLAN-SUMMARY.md` Project Summary를 이 정보로 업데이트 — 완료
 

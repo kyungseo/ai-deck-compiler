@@ -4,7 +4,7 @@
 
 | Field | Value |
 | --- | --- |
-| Phase | Phase 1 — Blueprint → Editable PPTX 결정론적 컴파일 엔진 구축 |
+| Phase | Phase 1 — Blueprint → Editable PPTX 일관 출력 엔진 구축 |
 | Active plan | — |
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
