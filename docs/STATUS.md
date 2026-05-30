@@ -21,6 +21,7 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| FEAT-20260530-002 | skill-create-deck + skill-generate-blueprint | `docs/works/phase1/FEAT-20260530-002-skill-create-deck.md` |
 
 ## Blockers And Open Questions
 

@@ -74,14 +74,28 @@ design preset을 교체하면 (예: default-modern → minimal-dark) 내용은 �
 2. `npm run validate -- --blueprint <path>` 로 검증
 3. `npm run deck -- --blueprint <path> --output <path>` 로 PPTX 생성
 
-### AI 가이드 방식 (구현 예정)
+### AI 가이드 방식 — `/create-deck`
 
-1. Claude Code에서 `/create-deck` 입력
-2. AI가 목적·청중·구조를 물어봄
-3. AI가 blueprint.yaml 초안 작성
-4. 사용자 검토 및 수정 반복
-5. `npm run deck` 자동 실행
-6. AI가 결과 검토 및 개선 제안
+Claude Code에서 `/create-deck`을 입력하면 6단계 워크플로우가 시작됩니다.
+
+```
+Step 1: Claude가 목적·청중·분량·테마를 질의
+Step 2: 슬라이드 구조 제안 + 사용자 승인
+Step 3: blueprint.yaml 초안 자동 작성
+Step 4: 슬라이드별 내용 검토 및 수정 반복
+Step 5: npm run validate → npm run deck 실행
+Step 6: 결과 확인, 필요 시 재수정
+```
+
+**예시:**
+```
+사용자: /create-deck Q2 엔지니어링 성과 리뷰
+Claude: PPT 제작을 도와드리겠습니다. 몇 가지 확인할게요.
+        청중은 누구인가요? ...
+```
+
+전체 워크플로우 상세: `skills/create-deck.md`
+blueprint만 빠르게 생성: `skills/generate-blueprint.md`
 
 ---
 
