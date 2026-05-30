@@ -1,11 +1,19 @@
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { ResolvedDesignTokens, TypographyToken } from '../compiler/types.js';
+import type { ResolvedDesignTokens, TypographyToken, BrandToken } from '../compiler/types.js';
 
 const PRESETS_DIR = join(dirname(fileURLToPath(import.meta.url)), 'presets');
 
+const DEFAULT_BRAND: BrandToken = {
+  name: 'Presentation Compiler',
+  show: true,
+  showPageNumbers: true,
+  fontSize: 10,
+};
+
 interface RawTokens {
+  brand?: Partial<BrandToken>;
   colors: Record<string, Record<string, string>>;
   typography: Record<string, TypographyToken>;
   spacing: Record<string, number>;
@@ -35,5 +43,6 @@ export function resolveDesignTokens(
     spacing: raw.spacing,
     slideSize: { width: 13.33, height: 7.5 }, // LAYOUT_WIDE
     shapes: raw.shapes,
+    brand: { ...DEFAULT_BRAND, ...raw.brand },
   };
 }

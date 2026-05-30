@@ -144,3 +144,31 @@
 | Border | `border`, 1pt |
 | Header | "Key Takeaways", label (12pt, Bold), `accent` |
 | Item font | body (18pt), `text-secondary` |
+
+---
+
+## Brand Footer
+
+모든 슬라이드 하단에 자동 추가 (컴파일러가 처리, 템플릿 불필요).
+
+| 속성 | 값 |
+| --- | --- |
+| 위치 (브랜드명) | footer 우측, x=10.83", y=7.15", w=2.5", h=0.3" |
+| 위치 (페이지번호) | footer 좌측, x=0.67", y=7.15", w=1.0", h=0.3" |
+| 폰트 | caption (10pt), `text-muted` |
+| 표지(hero) 제외 | 페이지 번호 미표시 옵션 |
+
+---
+
+## Visual Density 규칙
+
+**슬라이드 Content Area 하단 30%를 비워두지 않는다.**
+
+콘텐츠가 적어 하단이 비어 보이면, blueprint 작성 시 다음 중 하나를 추가한다:
+
+1. **Key Takeaway 강조** — `notes` 필드에 핵심 메시지 → 추후 시각적 강조 박스로 렌더링 예정
+2. **데이터 수치 추가** — 슬라이드 내용을 뒷받침하는 구체적 수치를 body에 포함
+3. **Takeaways 추가** — `summary` 슬라이드에서 `takeaways` 배열 활용
+4. **KPI 병행** — 텍스트 슬라이드에 관련 수치를 kpi 형태로 별도 슬라이드 추가
+
+AI가 blueprint를 작성할 때 이 규칙을 따른다. 컴파일러 자동 강제는 미구현.
