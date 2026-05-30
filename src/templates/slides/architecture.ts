@@ -81,9 +81,16 @@ export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
       const to = nodePos.get(edge.to);
       if (!from || !to) continue;
 
+      const dx = to.cx - from.cx;
+      const dy = to.cy - from.cy;
+      // OOXML requires non-negative cx/cy — normalize bounding box and use flip flags
       pptxSlide.addShape('line', {
-        x: from.cx, y: from.cy,
-        w: to.cx - from.cx, h: to.cy - from.cy,
+        x: Math.min(from.cx, to.cx),
+        y: Math.min(from.cy, to.cy),
+        w: Math.abs(dx) || 0.01,
+        h: Math.abs(dy) || 0.01,
+        flipH: dx < 0 ? true : undefined,
+        flipV: dy < 0 ? true : undefined,
         line: { color: hex(co['edge'] ?? '9CA3AF'), width: 1.5, endArrowType: 'arrow' },
       });
 
