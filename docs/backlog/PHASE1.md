@@ -167,22 +167,31 @@
 
 ---
 
-**[public-repo-cleanup]** | Priority: P2 | Scope: public 전환 전 harness 제거 및 repo 정리 — **remote repo 생성 직전 별도 branch에서 수행**
+**[public-repo-cleanup]** | Priority: P2 | Scope: public 전환 전 repo 경량화 + contributor 최적화 — **remote repo 생성 직전 별도 branch에서 수행**
 
-> ⚠️ 개발 중 수행 금지. harness를 제거하면 현재 AI workflow(STATUS, work tracking, commands)가 중단됨.
-> public release gate로 예약하고, 개발이 안정화된 시점에 착수한다.
+> harness를 전면 제거하지 않는다. public 이후에도 AI 기반 유지보수가 계속되므로 harness workflow는 유지한다.
+> 대신 "내부 상태 파일"은 정리하고, AI surface는 외부 contributor 친화적으로 재작성한다.
+> harness 문서 자체는 "AI로 개발하는 방법"으로 포지셔닝 — 오픈소스 차별화 요소로 활용.
 
 - Done Criteria:
-  - `docs/` 정리: `HARNESS-*.md`, `BOOTSTRAP.md`, `AGENT-WORKFLOW.md`, `BEHAVIOR-PRINCIPLES.md` → `docs/archive/harness/`로 이동
-  - `docs/works/`, `docs/backlog/`, `docs/retrospectives/` → archive 또는 제거
-  - `docs/decisions/` 중 harness 전용(DR-007, DR-008, DR-013) → archive. DR-014(언어정책)는 유지
-  - `prompts/`, `.agents/` 디렉토리 제거
-  - `.claude/commands/` 중 harness용(start, pick, work, close, register 등) 제거. `create-deck.md`만 유지
-  - `CLAUDE.md` → product 전용으로 재작성 (harness 참조 제거, `/create-deck` 워크플로우 중심)
-  - `AGENTS.md` → product 전용으로 재작성
-  - 유지 대상 확인: `docs/PLAN.md`, `PLAN-SUMMARY.md`, `SYSTEM-MANUAL.md`, `USER-MANUAL.md`, `docs/decisions/DR-014`, `skills/`, `.claude/commands/create-deck.md`
-  - `npm test`, `npm run typecheck`, `npm run validate` 모두 통과
-- Verification: clone 후 README만 보고 사용 가능한 상태인지 확인
+  - **제거 (public 가치 없는 내부 상태):**
+    - `docs/works/` — 완료된 작업 내역 제거 또는 archive
+    - `docs/backlog/` — 내부 todo 제거 또는 `.dev/` 하위로 이동
+    - `docs/retrospectives/` — 제거
+    - `prompts/` — 제거
+    - `docs/BOOTSTRAP.md` — 이미 완료된 부팅 절차, 제거
+  - **유지 (설계 철학 공개, 오픈소스 강점):**
+    - `docs/PLAN.md`, `PLAN-SUMMARY.md`, `SYSTEM-MANUAL.md`, `USER-MANUAL.md`
+    - `docs/decisions/` — DR-014(언어정책) 등 product 관련 유지. harness 전용(DR-007, 008, 013)은 archive
+    - `docs/STATUS.md` — 현재 개발 상태 공개 (많은 OSS 프로젝트가 이 형태 사용)
+    - `skills/` — 이 repo의 핵심 AI workflow 기능
+    - `.claude/commands/create-deck.md` — 핵심 product command
+  - **재작성 (contributor 최적화):**
+    - `CLAUDE.md` → 내부 harness 운영 규칙 대신 "이 repo를 AI로 기여하는 방법" 중심으로 재작성
+    - `AGENTS.md` → 동일 방향으로 재작성
+    - `.claude/commands/` harness 전용 커맨드(start, pick, work, close 등)는 숨김 또는 간소화
+  - `npm test`, `npm run typecheck`, `npm run validate` 통과
+- Verification: 외부 contributor가 clone 후 CLAUDE.md만 읽고 기여 방법을 파악할 수 있는지 확인
 - Preconditions: remote repo 생성 직전. 개발 안정화 완료 후.
 
 ---
