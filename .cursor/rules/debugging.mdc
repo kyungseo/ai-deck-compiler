@@ -1,0 +1,28 @@
+---
+description: Use this when debugging failures, broken tests, runtime errors, or unexpected behavior.
+globs:
+alwaysApply: false
+---
+
+# Debugging Rules
+
+MUST follow this sequence:
+
+1. Reproduce or clearly describe the failing condition.
+2. Narrow the cause using actual code, logs, stack traces, tests, or runtime output.
+3. Fix the ROOT CAUSE with the smallest reasonable change.
+4. Re-run the same scenario or test that exposed the issue.
+
+MUST NOT:
+
+- Guess the cause without evidence.
+- Mask a failure by weakening assertions, deleting tests, or broadening exception handling.
+- Change unrelated behavior while debugging.
+
+When a test fails, explain:
+
+- The failing scenario.
+- The most likely root cause.
+- The verification command or scenario used after the fix.
+
+When a non-trivial issue is fully resolved (environment mismatch, hidden constraint, non-obvious root cause, tool version incompatibility), record it in `docs/troubleshooting/` using the symptom → cause → action format. Link from `docs/HARNESS-MAINTAINER-GUIDE.md` if the issue affects local setup.
