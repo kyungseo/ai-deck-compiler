@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | Priority | Start | Work File |
 | --- | --- | --- | --- | --- |
+| FEAT-20260530-002 | skill-create-deck + skill-generate-blueprint | P0 | 2026-05-30 | `FEAT-20260530-002-skill-create-deck.md` |
 
 ## Done (Archive Pending)
 
