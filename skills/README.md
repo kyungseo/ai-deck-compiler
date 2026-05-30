@@ -19,6 +19,7 @@ Claude Code / Codex / Cursor가 사용하는 AI agent skill 문서 모음.
 | --- | --- | --- |
 | create-deck | `create-deck.md` | 대화식 end-to-end PPT 생성 워크플로우 |
 | generate-blueprint | `generate-blueprint.md` | blueprint.yaml 초안 생성 |
+| customize-preset | `customize-preset.md` | 스크린샷·브랜드 자산 → custom design preset 생성 |
 | generate-architecture-slide | *(예정)* | 기술 아키텍처 → architecture slide |
 | review-deck | *(예정)* | 생성된 deck 구조·메시지 검토 |
 | convert-design-system | *(예정)* | design.md → ppt-design.md 변환 |

@@ -48,7 +48,47 @@ export async function compile(opts: CompilerOptions): Promise<pptxgen> {
 
     const template = registry.resolve(slide.type, slide.variant);
     template.render(slide, tokens, s);
+
+    renderFooter(s, tokens, blueprint.slides.indexOf(slide), blueprint.slides.length);
   }
 
   return pptx;
+}
+
+function renderFooter(
+  s: PptxSlide,
+  tokens: ResolvedDesignTokens,
+  index: number,
+  total: number,
+): void {
+  const { brand } = tokens;
+  if (!brand.show) return;
+
+  const footerY = 7.15;
+  const footerH = 0.3;
+  const muted = hex(tokens.colors['text-muted'] ?? '6B7280');
+  const font = tokens.typography['caption']?.font ?? 'Pretendard';
+  const isHero = index === 0;
+
+  // Brand name — footer right
+  s.addText(brand.name, {
+    x: 10.83, y: footerY, w: 2.5, h: footerH,
+    fontSize: brand.fontSize,
+    fontFace: font,
+    color: muted,
+    align: 'right',
+    valign: 'middle',
+  });
+
+  // Page number — footer left (skip hero/cover slide)
+  if (brand.showPageNumbers && !isHero) {
+    s.addText(`${index + 1} / ${total}`, {
+      x: 0.67, y: footerY, w: 1.0, h: footerH,
+      fontSize: brand.fontSize,
+      fontFace: font,
+      color: muted,
+      align: 'left',
+      valign: 'middle',
+    });
+  }
 }

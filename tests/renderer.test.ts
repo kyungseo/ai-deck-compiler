@@ -53,6 +53,7 @@ const tokens: ResolvedDesignTokens = {
   },
   spacing: { xs: 0.05, sm: 0.1, md: 0.2, lg: 0.3, xl: 0.5, xxl: 0.8 },
   slideSize: { width: 13.33, height: 7.5 },
+  brand: { name: 'Test', show: false, showPageNumbers: false, fontSize: 10 },
   shapes: {
     service: 'roundRect', database: 'can', queue: 'rect', gateway: 'diamond',
     client: 'rect', cloud: 'cloud', container: 'rect', cache: 'hexagon',
