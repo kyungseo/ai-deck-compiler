@@ -1,0 +1,6 @@
+node_modules/
+dist/
+output/
+*.pptx
+.DS_Store
+*.local

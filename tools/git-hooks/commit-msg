@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+# Validates commit message format: Conventional Commits
+# https://www.conventionalcommits.org
+#
+# Valid types: feat fix docs style refactor chore config test perf ci build revert
+
+TYPES="feat|fix|docs|style|refactor|chore|config|test|perf|ci|build|revert"
+MSG=$(cat "$1")
+
+if ! echo "$MSG" | grep -qE "^($TYPES)(\(.+\))?: .+"; then
+    echo ""
+    echo "  ERROR: Invalid commit message format."
+    echo ""
+    echo "  Expected : type(scope?): subject"
+    echo "  Example  : feat(blueprint): add kpi slide type"
+    echo "  Types    : feat fix docs style refactor chore config test perf ci build revert"
+    echo ""
+    exit 1
+fi

@@ -1,0 +1,138 @@
+deck:
+  title: Platform Modernization Strategy
+  design: default-modern
+  theme: dark
+  version: "1.0"
+  audience: Engineering Leadership
+
+slides:
+  - id: hero
+    type: hero
+    title: Platform Modernization Strategy
+    subtitle: From monolith operations to cloud-native delivery
+
+  - id: agenda
+    type: agenda
+    title: Agenda
+    items:
+      - "01 — Current State Assessment"
+      - "02 — Target Architecture"
+      - "03 — Migration Roadmap"
+      - "04 — Key Risks and Mitigations"
+
+  - id: kpis
+    type: kpi
+    title: Current Performance Baseline
+    kpis:
+      - label: Deploy Frequency
+        value: "4/month"
+        delta: "-60% vs target"
+        trend: down
+      - label: MTTR
+        value: "48 hours"
+        delta: "+300% vs target"
+        trend: down
+      - label: Change Failure Rate
+        value: "22%"
+        delta: "+12% vs target"
+        trend: down
+
+  - id: architecture
+    type: architecture
+    title: Target Platform Architecture
+    diagram:
+      source: inline
+      version: "1.0"
+      nodes:
+        - id: client
+          kind: client
+          label: Client
+          zone: left
+        - id: gateway
+          kind: gateway
+          label: API Gateway
+          zone: center-left
+        - id: auth
+          kind: service
+          label: Auth Service
+          zone: top-center
+        - id: api
+          kind: service
+          label: Platform API
+          zone: center
+        - id: db
+          kind: database
+          label: PostgreSQL
+          zone: center-right
+        - id: cache
+          kind: cache
+          label: Redis
+          zone: top-right
+      edges:
+        - from: client
+          to: gateway
+          kind: sync
+        - from: gateway
+          to: auth
+          kind: sync
+          label: authenticate
+        - from: gateway
+          to: api
+          kind: sync
+        - from: api
+          to: db
+          kind: sync
+        - from: api
+          to: cache
+          kind: async
+          label: cache read/write
+      groups:
+        - id: backend
+          label: Backend Services
+          nodes: [auth, api, db, cache]
+
+  - id: delivery-chart
+    type: chart
+    title: Delivery Performance Trend
+    chart:
+      type: line
+      data:
+        source: inline
+        labels: ["Q1 2025", "Q2 2025", "Q3 2025", "Q4 2025"]
+        series:
+          - name: Deploy Frequency (per month)
+            values: [4, 8, 15, 24]
+          - name: MTTR (hours)
+            values: [48, 32, 18, 8]
+
+  - id: roadmap
+    type: timeline
+    title: Migration Roadmap
+    items:
+      - date: "2025 Q1"
+        label: Foundation
+        description: Infra baseline, CI/CD pipeline, observability stack
+      - date: "2025 Q2"
+        label: Core Migration
+        description: Service decomposition, API gateway rollout
+      - date: "2025 Q3"
+        label: Hardening
+        description: SLO definition, incident response, load testing
+      - date: "2025 Q4"
+        label: Full Production
+        description: Full traffic migration, legacy decommission
+
+  - id: summary
+    type: summary
+    title: Key Takeaways
+    takeaways:
+      - Current platform blocks delivery velocity — 4x slower than target
+      - Cloud-native migration reduces MTTR from 48h to 8h within 12 months
+      - Phased approach minimizes production risk with clear rollback gates
+
+  - id: appendix
+    type: appendix
+    title: Appendix
+    body:
+      - See supporting data at data/charts/
+      - Architecture decision records at docs/decisions/
