@@ -162,6 +162,8 @@
 
 ---
 
+**[slide-layout-fine-tuning]** | Priority: P2 | Scope: 슬라이드 타입별 레이아웃 미세 조정 — 여백, 텍스트 크기, 카드 비율 등 실제 PPTX 확인 후 조정 |
+**[pptx-document-metadata]** | Priority: P2 | Scope: PPTX 문서 속성(제목·저자·회사) 설정 — pptxgenjs 기본값("PptxGenJS") 대신 `deck.title`, `deck.author`/`brand.author`, `deck.version`으로 채우기 (`pptx.title`, `pptx.author`, `pptx.company`, `pptx.revision`) |
 **[preset-enterprise-clean]** | Priority: P3 | Scope: enterprise-clean design preset 추가 |
 **[custom-preset-support]** | Priority: P3 | Scope: `--design custom/my-company` 형식 custom preset 디렉터리 지원 |
 **[skill-validate-deck]** | Priority: P3 | Scope: layout, overlap, typography, editability 검증 skill |

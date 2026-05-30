@@ -52,6 +52,9 @@
   의사결정 유도 / 이해도 향상 / 신뢰 구축 / 실행 동기 부여
 
 [테마] light (비즈니스) / dark (기술·엔지니어링)
+
+[작성자] 표지에 표시할 이름 또는 팀명?
+  (기본값: 박경서 / 생략 시 기본값 사용)
 ```
 
 ---
@@ -66,9 +69,11 @@
 | --- | --- |
 | 항상 첫 슬라이드 | `hero` |
 | 4개 이상 섹션 있을 때 | `agenda` |
+| 주요 섹션 사이 구분 | `section-divider` |
 | 핵심 지표 3~4개 강조 | `kpi` |
 | 텍스트 설명·불렛 포인트 | `content` |
 | 좌우 비교 또는 두 관점 | `two-column` |
+| 기존 vs 제안 명확한 대비 | `comparison` |
 | 시계열·비교 데이터 | `chart` |
 | 행/열 구조 데이터 | `table` |
 | 시스템·인프라 구조 설명 | `architecture` |
@@ -116,11 +121,18 @@ deck:
   title: # 발표 제목 (60자 이내)
   design: default-modern
   theme: light | dark  # Step 1에서 확인한 값
-  version: "1.0"
+  version: "1.0"       # 문서 버전 — 표지 우측 상단에 자동 표시
+  author: # 작성자 — 생략 시 기본값(박경서) 사용, 표지에 표시
   audience: # 청중 (선택)
 ```
 
 **id 규칙:** 소문자, 하이픈, 고유값. 예: `hero-1`, `kpi-q2`, `arch-overview`
+
+**언어 규칙 (DR-014):**
+- `section_label`: 영어 UPPERCASE 고정 — `"01. PROBLEM"`, `"SOLUTION"`
+- `left.label` / `right.label` (패널 라벨): 영어 UPPERCASE 권장 — `"CURRENT REALITY"`, `"OUR APPROACH"`
+- `title`: 발표 언어 + Action Title 원칙 (결론 선언형 문장)
+- `body` 항목: 발표 언어 + 기술 용어·지표는 영어 원문 유지
 
 **슬라이드 타입별 필수 필드:**
 

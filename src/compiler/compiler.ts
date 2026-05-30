@@ -47,7 +47,17 @@ export async function compile(opts: CompilerOptions): Promise<pptxgen> {
     }
 
     const template = registry.resolve(slide.type, slide.variant);
-    template.render(slide, tokens, s);
+
+    // Inject deck-level metadata into hero slide before rendering
+    const slideToRender = slide.type === 'hero'
+      ? {
+          ...slide,
+          doc_version: (slide as { doc_version?: string }).doc_version ?? `v${blueprint.deck.version}`,
+          author: (slide as { author?: string }).author ?? blueprint.deck.author,
+        }
+      : slide;
+
+    template.render(slideToRender, tokens, s);
 
     renderFooter(s, tokens, blueprint.slides.indexOf(slide), blueprint.slides.length);
   }

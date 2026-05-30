@@ -6,6 +6,7 @@
   "scripts": {
     "validate": "tsx src/cli/validate.ts",
     "deck": "tsx src/cli/deck.ts",
+    "preview": "tsx src/cli/preview.ts",
     "schema": "tsx scripts/gen-blueprint-schema.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"

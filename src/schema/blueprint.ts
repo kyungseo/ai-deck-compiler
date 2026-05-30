@@ -56,6 +56,8 @@ const base = {
   title: z.string().min(1),
   notes: z.string().optional(),
   variant: z.string().optional(),
+  section_label: z.string().optional(), // e.g. "01. OVERVIEW" — renders above title
+  subtitle: z.string().optional(),       // one-line context below title
 };
 
 // ── Slide Types ───────────────────────────────────────────────────────────────
@@ -65,6 +67,8 @@ const HeroSlide = z.object({
   type: z.literal('hero'),
   subtitle: z.string().optional(),
   cta: z.string().optional(),
+  author: z.string().optional(),      // overrides brand.author when set
+  doc_version: z.string().optional(), // injected from deck.version by compiler
 });
 
 const AgendaSlide = z.object({
@@ -89,15 +93,15 @@ const ContentSlide = z.object({
 const TwoColumnSlide = z.object({
   ...base,
   type: z.literal('two-column'),
-  left: z.object({ body: z.array(z.string()) }),
-  right: z.object({ body: z.array(z.string()) }),
+  left: z.object({ label: z.string().optional(), body: z.array(z.string()) }),
+  right: z.object({ label: z.string().optional(), body: z.array(z.string()) }),
 });
 
 const ComparisonSlide = z.object({
   ...base,
   type: z.literal('comparison'),
-  left: z.object({ label: z.string(), body: z.array(z.string()) }).optional(),
-  right: z.object({ label: z.string(), body: z.array(z.string()) }).optional(),
+  left: z.object({ label: z.string().optional(), body: z.array(z.string()) }).optional(),
+  right: z.object({ label: z.string().optional(), body: z.array(z.string()) }).optional(),
 });
 
 const KpiSlide = z.object({
@@ -200,6 +204,7 @@ export const DeckSchema = z.object({
   design: z.string().min(1),
   theme: z.enum(['light', 'dark']),
   version: z.string().default('1.0'),
+  author: z.string().optional(),  // overrides brand.author for this deck
   audience: z.string().optional(),
 });
 

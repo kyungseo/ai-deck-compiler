@@ -1,7 +1,7 @@
 import type { SlideTemplate, PptxSlide } from '../registry.js';
 import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
-import { SL, hex, zoneCenter } from '../layout.js';
+import { SL, CARD, hex, zoneCenter, renderSectionHeader, renderCardBackground } from '../layout.js';
 
 type ArchitectureSlide = Extract<Slide, { type: 'architecture' }>;
 
@@ -16,18 +16,12 @@ export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
     const ty = tokens.typography;
     const co = tokens.colors;
 
-    pptxSlide.addText(slide.title, {
-      x: SL.cx, y: SL.ty, w: SL.cw, h: SL.th,
-      fontSize: ty['title']?.size ?? 40,
-      bold: true,
-      fontFace: ty['title']?.font ?? 'Pretendard',
-      color: hex(co['text-primary'] ?? '#111827'),
-      valign: 'middle',
-    });
+    renderSectionHeader(pptxSlide, slide, tokens);
+    renderCardBackground(pptxSlide, tokens);
 
     if (slide.diagram.source === 'file') {
       pptxSlide.addText('[Diagram from file — inline source required for rendering]', {
-        x: SL.cx, y: SL.cy, w: SL.cw, h: SL.ch,
+        x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
         fontSize: ty['caption']?.size ?? 14,
         color: hex(co['text-muted'] ?? '6B7280'),
         align: 'center', valign: 'middle',
@@ -37,7 +31,7 @@ export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
 
     const { nodes, edges, groups } = slide.diagram;
 
-    // Compute node center positions
+    // Compute node center positions (zone system uses SL.cy/SL.ch — zones land inside card)
     const nodePos = new Map<string, { cx: number; cy: number }>();
     for (const node of nodes) {
       nodePos.set(node.id, zoneCenter(node.zone));

@@ -1,7 +1,7 @@
 import type { SlideTemplate, PptxSlide } from '../registry.js';
 import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
-import { SL, hex } from '../layout.js';
+import { SL, CARD, hex, renderSectionHeader, renderCardBackground, renderPanelLabel } from '../layout.js';
 
 type TwoColumnSlide = Extract<Slide, { type: 'two-column' }>;
 
@@ -15,20 +15,27 @@ export const twoColumnTemplate: SlideTemplate<TwoColumnSlide> = {
     const ty = tokens.typography;
     const co = tokens.colors;
 
-    pptxSlide.addText(slide.title, {
-      x: SL.cx, y: SL.ty, w: SL.cw, h: SL.th,
-      fontSize: ty['title']?.size ?? 40,
-      bold: true,
-      fontFace: ty['title']?.font ?? 'Pretendard',
-      color: hex(co['text-primary'] ?? '#111827'),
-      valign: 'middle',
-    });
+    renderSectionHeader(pptxSlide, slide, tokens);
+    renderCardBackground(pptxSlide, tokens);
 
-    // Divider
+    const dividerX = SL.cx + colW + 0.15;
+    const hasLabels = !!(slide.left.label || slide.right.label);
+    const contentY = hasLabels ? CARD.iy + 0.45 : CARD.iy;
+    const contentH = CARD.ih - (hasLabels ? 0.45 : 0);
+
+    // Panel labels
+    if (slide.left.label) {
+      renderPanelLabel(pptxSlide, slide.left.label, SL.cx, tokens);
+    }
+    if (slide.right.label) {
+      renderPanelLabel(pptxSlide, slide.right.label, dividerX + 0.15, tokens);
+    }
+
+    // Divider — very subtle
     pptxSlide.addShape('rect', {
-      x: SL.cx + colW + 0.15, y: SL.cy, w: 0.01, h: SL.ch,
-      fill: { color: hex(co['border'] ?? 'E5E7EB') },
-      line: { color: hex(co['border'] ?? 'E5E7EB'), width: 0 },
+      x: dividerX, y: CARD.iy, w: 0.01, h: CARD.ih,
+      fill: { color: hex(co['divider-light'] ?? 'E8F0FE') },
+      line: { color: hex(co['divider-light'] ?? 'E8F0FE'), width: 0 },
     });
 
     const renderCol = (items: string[], x: number) => {
@@ -38,17 +45,17 @@ export const twoColumnTemplate: SlideTemplate<TwoColumnSlide> = {
         options: {
           fontSize: ty['body']?.size ?? 18,
           fontFace: ty['body']?.font ?? 'Pretendard',
-          color: hex(co['text-secondary'] ?? '#374151'),
+          color: hex(co['text-secondary'] ?? '374151'),
           bullet: { code: '2022', indent: 15 },
-          paraSpaceAfter: 6,
+          paraSpaceAfter: 8,
         },
       }));
       pptxSlide.addText(bullets, {
-        x, y: SL.cy, w: colW, h: SL.ch, valign: 'top',
+        x, y: contentY, w: colW, h: contentH, valign: 'top',
       });
     };
 
     renderCol(slide.left.body, SL.cx);
-    renderCol(slide.right.body, SL.cx + colW + 0.3);
+    renderCol(slide.right.body, dividerX + 0.3);
   },
 };

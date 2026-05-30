@@ -1,7 +1,7 @@
 import type { SlideTemplate, PptxSlide } from '../registry.js';
 import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
-import { SL, hex } from '../layout.js';
+import { SL, CARD, hex, renderSectionHeader, renderCardBackground } from '../layout.js';
 
 type ContentSlide = Extract<Slide, { type: 'content' }>;
 
@@ -13,32 +13,25 @@ export const contentTemplate: SlideTemplate<ContentSlide> = {
     const ty = tokens.typography;
     const co = tokens.colors;
 
-    pptxSlide.addText(slide.title, {
-      x: SL.cx, y: SL.ty, w: SL.cw, h: SL.th,
-      fontSize: ty['title']?.size ?? 40,
-      bold: true,
-      fontFace: ty['title']?.font ?? 'Pretendard',
-      color: hex(co['text-primary'] ?? '#111827'),
-      valign: 'middle',
-    });
+    renderSectionHeader(pptxSlide, slide, tokens);
+    renderCardBackground(pptxSlide, tokens);
 
     const items = slide.body ?? [];
     if (items.length === 0) return;
 
-    // Bullet list as a single addText with paragraph array
     const bullets = items.map(text => ({
       text,
       options: {
         fontSize: ty['body']?.size ?? 18,
         fontFace: ty['body']?.font ?? 'Pretendard',
-        color: hex(co['text-secondary'] ?? '#374151'),
+        color: hex(co['text-secondary'] ?? '374151'),
         bullet: { code: '2022', indent: 15 },
-        paraSpaceAfter: 6,
+        paraSpaceAfter: 8,
       },
     }));
 
     pptxSlide.addText(bullets, {
-      x: SL.cx, y: SL.cy, w: SL.cw, h: SL.ch,
+      x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
       valign: 'top',
     });
   },
