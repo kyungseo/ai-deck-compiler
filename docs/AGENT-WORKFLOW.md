@@ -175,18 +175,19 @@ ID prefix와 파일명 상세 기준:
 
 ## Project Constants
 
-- Runtime: Markdown 문서와 shell script. 별도 application runtime 불필요.
-- Framework: Manual-first AI Workflow Harness
-- Build: core workflow 문서에는 build 없음. scaffold script는 shell 기반.
-- Architecture: Entry contract + state/work 추적 + approval gate + tool-surface mirror + scaffold
-- Base package/module: 해당 없음
+- Runtime: Node.js 18+, TypeScript
+- Framework: pptxgenjs ^3.12, zod ^3.23, yaml ^2.4 (eemeli), vitest ^1, tsx ^4
+- Build: tsconfig.json (ES2022, strict). `npm run typecheck` (tsc), `tsx` for CLI dev.
+- Architecture: blueprint.yaml → Schema Validation (Zod) → Compiler → TemplateRegistry → pptxgenjs → Editable PPTX
+- Base package/module: `src/` (schema/, compiler/, templates/, design/, cli/)
 - Active state file: `docs/STATUS.md`
 
 ## Verification Defaults
 
+- TypeScript 변경: `npm run typecheck`
+- 로직·렌더러 변경: `npm test` (vitest)
+- Blueprint schema 변경: `npm run validate -- --blueprint examples/sample/blueprint.yaml`
 - Documentation-only change: `git diff --check`, 링크와 stale phrase 점검
-- Workflow/protocol/tool-surface change: canonical -> tool-specific -> user-facing -> scaffold cascade 점검
-- Scaffold change: `scripts/create-harness.sh`가 있으면 `bash -n scripts/create-harness.sh`, generic dry-run, 필요 시 temp 실제 생성. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable로 보고
-- Public release prep: secret/private-info scan, stale project identity audit
+- Scaffold/script: 이 repo에 `scripts/create-harness.sh` 없음 — Not Applicable
 
 검증을 실행할 수 없다면 이유와 남은 risk를 보고한다.

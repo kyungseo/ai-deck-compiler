@@ -4,7 +4,7 @@
 
 | Field | Value |
 | --- | --- |
-| Phase | Phase 1 — [프로젝트 목표 한 줄] |
+| Phase | Phase 1 — Blueprint → Editable PPTX 결정론적 컴파일 엔진 구축 |
 | Active plan | — |
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
@@ -21,6 +21,7 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| W2 (slug: work2-default-modern-renderer) | default-modern preset + P1 slide render + PPTX CLI | `/work work2-default-modern-renderer` 착수 시 생성 |
 
 ## Blockers And Open Questions
 
@@ -33,10 +34,6 @@
 
 ## Next Actions
 
-1. Scaffold bootstrap onboarding: `docs/BOOTSTRAP.md`를 §0부터 순서대로 채운다
-2. §1 Project Identity, §2 Product Definition 완료 후 `docs/PLAN-SUMMARY.md` Project Summary 업데이트
-3. §3 Project Initialization: `docs/PLAN-SUMMARY.md` Implementation Baseline 채우기 (코드 개발 프로젝트만)
-4. Implementation Baseline 완료 후 `docs/backlog/PHASE1.md`에 초기 작업 후보 등록 (Work ID는 /work 착수 시 확정)
-5. `docs/AGENT-WORKFLOW.md` Project Constants와 Verification Defaults 채우기
-6. AI workflow 개선 항목은 `docs/backlog/HARNESS.md`로 분리
-7. Claude Code: `/start`로 첫 세션 시작 | Codex: `AGENTS.md` 확인 후 `/start` intent 실행 | Cursor: `prompts/cursor-session-start.md` 사용
+1. Work 2 착수: `/work work2-default-modern-renderer` — default-modern preset, P1 slide render 9종, zone-based layout engine, PPTX CLI, snapshot/determinism 테스트
+2. `docs/backlog/PHASE1.md`에 Work 2 및 Post-MVP 후보 등록 (Work ID는 /work 착수 시 확정)
+3. `docs/PLAN.md` Project Initialization Plan에 stack 선택 근거 이전 (`temp/work-plans/10-ai-native-pt-engineering-framework-3.md` §7 기반)
