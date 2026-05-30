@@ -167,6 +167,26 @@
 
 ---
 
+**[public-repo-cleanup]** | Priority: P2 | Scope: public 전환 전 harness 제거 및 repo 정리 — **remote repo 생성 직전 별도 branch에서 수행**
+
+> ⚠️ 개발 중 수행 금지. harness를 제거하면 현재 AI workflow(STATUS, work tracking, commands)가 중단됨.
+> public release gate로 예약하고, 개발이 안정화된 시점에 착수한다.
+
+- Done Criteria:
+  - `docs/` 정리: `HARNESS-*.md`, `BOOTSTRAP.md`, `AGENT-WORKFLOW.md`, `BEHAVIOR-PRINCIPLES.md` → `docs/archive/harness/`로 이동
+  - `docs/works/`, `docs/backlog/`, `docs/retrospectives/` → archive 또는 제거
+  - `docs/decisions/` 중 harness 전용(DR-007, DR-008, DR-013) → archive. DR-014(언어정책)는 유지
+  - `prompts/`, `.agents/` 디렉토리 제거
+  - `.claude/commands/` 중 harness용(start, pick, work, close, register 등) 제거. `create-deck.md`만 유지
+  - `CLAUDE.md` → product 전용으로 재작성 (harness 참조 제거, `/create-deck` 워크플로우 중심)
+  - `AGENTS.md` → product 전용으로 재작성
+  - 유지 대상 확인: `docs/PLAN.md`, `PLAN-SUMMARY.md`, `SYSTEM-MANUAL.md`, `USER-MANUAL.md`, `docs/decisions/DR-014`, `skills/`, `.claude/commands/create-deck.md`
+  - `npm test`, `npm run typecheck`, `npm run validate` 모두 통과
+- Verification: clone 후 README만 보고 사용 가능한 상태인지 확인
+- Preconditions: remote repo 생성 직전. 개발 안정화 완료 후.
+
+---
+
 **[slide-layout-fine-tuning]** | Priority: P2 | Scope: 슬라이드 타입별 레이아웃 미세 조정 — 여백, 텍스트 크기, 카드 비율 등 실제 PPTX 확인 후 조정 |
 **[pptx-document-metadata]** | Priority: P2 | Scope: PPTX 문서 속성(제목·저자·회사) 설정 — pptxgenjs 기본값("PptxGenJS") 대신 `deck.title`, `deck.author`/`brand.author`, `deck.version`으로 채우기 (`pptx.title`, `pptx.author`, `pptx.company`, `pptx.revision`) |
 **[preset-enterprise-clean]** | Priority: P3 | Scope: enterprise-clean design preset 추가 |
