@@ -33,6 +33,6 @@
 
 ## Next Actions
 
-1. `docs/backlog/PHASE1.md`에 Phase 1 후보 등록 (p2-slide-types, skills, readme-public 등)
-2. `docs/PLAN.md` Project Initialization Plan에 stack 선택 근거 이전
-3. README.md 공개용 문서 작성
+1. `/work skill-create-deck` — AI guided 인터랙티브 워크플로우 skill (P0, 핵심 UX)
+2. `/work p2-slide-types` — P2 slide 6종 구현
+3. `docs/PLAN.md` Project Initialization Plan에 stack 선택 근거 이전
