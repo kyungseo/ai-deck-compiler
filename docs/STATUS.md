@@ -33,4 +33,4 @@
 
 ## Next Actions
 
-1. `/pick` — 다음 작업 후보 선택 (p2-slide-types 완료, skill-review-deck / examples-expanded 등 후보)
+1. `skill-review-deck` 착수 — 생성된 deck 구조·메시지·디자인 검토 AI skill (P1)
