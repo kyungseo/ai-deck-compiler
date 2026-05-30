@@ -34,3 +34,4 @@
 ## Next Actions
 
 1. `skill-review-deck` 착수 — 생성된 deck 구조·메시지·디자인 검토 AI skill (P1)
+2. Public 전환 시: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020

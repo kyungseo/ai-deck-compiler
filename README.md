@@ -1,6 +1,6 @@
-# Presentation Compiler
+# AI-Native Presentation Engineering Framework
 
-> Compile presentations from design systems and blueprints.
+> AI authors the blueprint. A rules-based engine compiles your design system and structured content into consistent, editable PPTX — no manual coordinates, no image rendering.
 
 AI가 structured input(blueprint.yaml)을 작성하고, 규칙 기반 컴파일 엔진이 editable PPTX를 생성합니다.
 같은 blueprint는 항상 같은 PPTX를 만듭니다. AI가 x/y 좌표를 결정하거나 슬라이드를 이미지로 렌더링하지 않습니다.
@@ -33,7 +33,7 @@ blueprint.yaml + design preset → Editable PPTX
 
 ```bash
 git clone <repo-url>
-cd presentation-compiler
+cd ai-deck-compiler
 npm install
 ```
 
