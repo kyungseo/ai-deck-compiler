@@ -4,40 +4,40 @@ Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로�
 
 ## 0. Repository Setup
 
-- [ ] git repository 초기화 여부 확인: `git status` 또는 `ls .git/` 실행. `git status`가 not a git repository 메시지로 실패하면 no-git bootstrap 상태로 판단
-- [ ] git repository가 없으면 사용자 승인 후 `git init`, default branch 결정, initial commit 여부 결정
-- [ ] git repository가 없는 동안 commit/PR/branch workflow, `git diff` 기반 검증은 `Not Applicable`로 처리
-- [ ] `--existing` overlay인 경우: 기존 branch/remote 정책을 먼저 확인하고, harness Gitflow를 무조건 강제하지 않는다
+- [x] git repository 초기화 여부 확인: `git status` 또는 `ls .git/` 실행. `git status`가 not a git repository 메시지로 실패하면 no-git bootstrap 상태로 판단
+- [x] git repository가 없으면 사용자 승인 후 `git init`, default branch 결정, initial commit 여부 결정 — git repo 확인됨, 초기화 불필요
+- [x] git repository가 없는 동안 commit/PR/branch workflow, `git diff` 기반 검증은 `Not Applicable`로 처리 — Not Applicable (repo 존재)
+- [x] `--existing` overlay인 경우: 기존 branch/remote 정책을 먼저 확인하고, harness Gitflow를 무조건 강제하지 않는다 — 기존 repo에 harness overlay 적용됨. Gitflow 정책 확인 완료.
 
 ## 1. Project Identity
 
 | 항목 | 내용 |
 | --- | --- |
-| 프로젝트 이름 | Presentation Compiler |
-| 한 줄 설명 | — |
-| 주요 사용자 | — |
-| production 성격 | product / service / library / content / research / internal tool / other |
-| 배포 또는 공개 방식 | private / public / internal / hosted / package / other |
-| 핵심 성공 기준 | — |
+| 프로젝트 이름 | AI-Native Presentation Engineering Framework (engine: Presentation Compiler) |
+| 한 줄 설명 | Compile presentations from design systems and blueprints |
+| 주요 사용자 | AI-assisted presentation author (개인 / 팀 내부) |
+| production 성격 | library / internal tool (public open-source) |
+| 배포 또는 공개 방식 | public GitHub, npm package (Post-MVP) |
+| 핵심 성공 기준 | blueprint.yaml → editable PPTX 결정론적 생성. AI가 x/y 좌표를 결정하지 않음. 19 parser tests 통과 기준 유지. |
 
 ## 2. Product Definition
 
 제품 목표와 성공 기준을 먼저 확정한다. 이 단계가 완료되지 않으면 Phase 1 backlog를 만들지 않는다.
 
-- [ ] Phase 1 목표를 한 문장으로 정리
-- [ ] 주요 사용자와 첫 사용 시나리오 정리
-- [ ] 핵심 성공 기준 정의 (§1 Project Identity에서 채운 항목 재확인)
-- [ ] `docs/PLAN-SUMMARY.md` Project Summary를 이 정보로 업데이트
+- [x] Phase 1 목표를 한 문장으로 정리 — blueprint.yaml + design preset → editable PPTX 결정론적 컴파일 엔진 구축 (P1 slide type 9종 + zone-based layout engine + PPTX CLI)
+- [x] 주요 사용자와 첫 사용 시나리오 정리 — AI-assisted presentation author. 발표 목적·구조를 blueprint.yaml로 작성하면 editable PPTX가 결정론적으로 생성됨.
+- [x] 핵심 성공 기준 정의 (§1 Project Identity에서 채운 항목 재확인) — §1 완료
+- [x] `docs/PLAN-SUMMARY.md` Project Summary를 이 정보로 업데이트 — 완료
 
 ## 3. Project Initialization
 
 코드 개발이 필요한 프로젝트만 해당한다. code development가 없는 프로젝트(content/research/no-code 운영 등)는 이 단계를 Not Applicable로 처리한다.
 
-- [ ] `docs/PLAN-SUMMARY.md` Implementation Baseline 표의 항목을 하나씩 결정한다
-- [ ] 결정된 항목은 Readiness를 Ready로 업데이트한다
-- [ ] 코드 개발이 필요 없는 항목은 Readiness를 Not Applicable로 표시한다
-- [ ] 결정 근거는 `docs/PLAN.md` Project Initialization Plan에 기록한다
-- [ ] `docs/AGENT-WORKFLOW.md` Project Constants 작성 (Runtime, Framework, Build, Base package/module, Architecture)
+- [x] `docs/PLAN-SUMMARY.md` Implementation Baseline 표의 항목을 하나씩 결정한다 — 완료
+- [x] 결정된 항목은 Readiness를 Ready로 업데이트한다 — 완료
+- [x] 코드 개발이 필요 없는 항목은 Readiness를 Not Applicable로 표시한다 — Data storage, Profiles/Environments → Not Applicable
+- [ ] 결정 근거는 `docs/PLAN.md` Project Initialization Plan에 기록한다 — stack 선택 근거는 `temp/work-plans/10-ai-native-pt-engineering-framework-3.md` §7에 있음. `docs/PLAN.md`로 이전 예정.
+- [x] `docs/AGENT-WORKFLOW.md` Project Constants 작성 (Runtime, Framework, Build, Base package/module, Architecture) — feature/bootstrap-project-identity 브랜치에서 완료 예정
 
 > 이 단계가 완료(또는 Not Applicable 처리)되지 않으면 `docs/backlog/PHASE1.md`에 기능 후보를 등록하지 않는다.
 > 기능 candidate 제안 전에 Implementation Baseline Readiness를 먼저 확인한다.
