@@ -1,65 +1,262 @@
 # Presentation Compiler
 
-> [프로젝트 한 줄 설명 — 채워주세요]
+> Compile presentations from design systems and blueprints.
+
+AI가 structured input(blueprint.yaml)을 작성하고, 결정론적 엔진이 editable PPTX로 컴파일합니다.
+AI가 x/y 좌표를 결정하거나 슬라이드를 이미지로 렌더링하지 않습니다.
+
+```
+blueprint.yaml + design preset → Editable PPTX
+```
+
+---
+
+## 특징
+
+- **AI-Native 경계 명확** — AI는 blueprint를 작성하고, 엔진은 100% 결정론적으로 렌더링
+- **Editable 출력** — 텍스트, 차트, 표, 다이어그램 모두 native PowerPoint XML (이미지 아님)
+- **Design System 기반** — `tokens.json`으로 색상·타이포그래피·간격 일괄 적용
+- **Zone-based 다이어그램** — AI가 node를 zone(top-left, center 등)에 배치하면 엔진이 좌표 계산
+- **Schema Validation** — Zod schema로 blueprint 유효성 검사
+
+---
+
+## 요구사항
+
+- Node.js 18+
+- npm 9+
+
+---
+
+## 설치
+
+```bash
+git clone <repo-url>
+cd presentation-compiler
+npm install
+```
+
+---
+
+## 빠른 시작
+
+### 1. blueprint 유효성 검사
+
+```bash
+npm run validate -- --blueprint examples/basic/blueprint.yaml
+```
+
+### 2. PPTX 생성
+
+```bash
+npm run deck -- \
+  --blueprint examples/basic/blueprint.yaml \
+  --design default-modern \
+  --theme light \
+  --output output/basic.pptx
+```
+
+### 3. JSON Schema 재생성
+
+```bash
+npm run schema   # schemas/blueprint.schema.json 업데이트
+```
+
+### 4. 테스트
+
+```bash
+npm test         # vitest (34 tests)
+npm run typecheck
+```
+
+---
+
+## Blueprint 형식
+
+```yaml
+deck:
+  title: My Presentation        # 필수
+  design: default-modern        # 필수 — design preset 이름
+  theme: light | dark           # 필수
+  version: "1.0"                # 기본값 "1.0"
+  audience: Engineering         # 선택
+
+slides:
+  - id: hero-1                  # 필수, 고유값
+    type: hero                  # 필수 — 지원 타입 목록 참조
+    title: Hello World          # 필수
+    notes: Speaker notes        # 선택 — presenter notes
+    subtitle: Subtitle text     # 타입별 추가 필드
+    cta: Get Started
+```
+
+전체 스키마: `schemas/blueprint.schema.json`
+DSL 상세: `src/design/presets/default-modern/ppt-chart-rules.md`
+
+---
+
+## 지원 Slide 타입
+
+### P1 — 구현 완료
+
+| Type | 주요 필드 |
+| --- | --- |
+| `hero` | `subtitle`, `cta` |
+| `agenda` | `items[]` |
+| `content` | `body[]` |
+| `two-column` | `left.body[]`, `right.body[]` |
+| `kpi` | `kpis[]{label, value, delta, trend}` |
+| `table` | `headers[]`, `rows[][]` |
+| `chart` | `chart{type, data}` — bar, stacked-bar, line, area, pie, donut |
+| `architecture` | `diagram` — zone-based inline 또는 file |
+| `summary` | `body[]`, `takeaways[]` |
+
+### P2 — 구현 예정
+
+`section-divider`, `comparison`, `timeline`, `flow`, `decision`, `appendix`
+
+---
+
+## Architecture Diagram
+
+zone-based 레이아웃 — AI가 node를 zone에 배치하면 엔진이 좌표 계산:
+
+```yaml
+- id: arch-1
+  type: architecture
+  title: System Architecture
+  diagram:
+    source: inline
+    version: "1.0"
+    nodes:
+      - id: api
+        kind: service          # service|database|queue|gateway|client|cloud|container|cache|storage|external
+        label: API Service
+        zone: center           # top-left|top-center|top-right|center-left|center|center-right|...
+    edges:
+      - from: api
+        to: db
+        kind: sync             # sync|async|bidirectional|data-flow
+        label: SQL
+    groups:
+      - id: backend
+        label: Backend
+        nodes: [api, db]
+```
+
+---
+
+## Design Presets
+
+### default-modern (기본)
+
+| 항목 | 값 |
+| --- | --- |
+| Canvas | 13.33" × 7.5" (LAYOUT_WIDE 16:9) |
+| Font | Pretendard |
+| Theme | light / dark |
+
+Preset 파일 위치: `src/design/presets/default-modern/`
+
+| 파일 | 내용 |
+| --- | --- |
+| `tokens.json` | 색상·타이포그래피·spacing·shapes 토큰 |
+| `ppt-design.md` | Design system 개요 |
+| `ppt-components.md` | 컴포넌트 명세 |
+| `ppt-layouts.md` | 슬라이드 타입별 레이아웃 |
+| `ppt-chart-rules.md` | 차트 규칙 및 데이터 형식 |
+
+---
+
+## 예제
+
+| 파일 | 설명 |
+| --- | --- |
+| `examples/basic/blueprint.yaml` | 기본 6-slide deck (light theme) |
+| `examples/architecture/blueprint.yaml` | 시스템 아키텍처 5-slide deck (dark theme) |
+| `examples/sample/blueprint.yaml` | 전체 슬라이드 타입 샘플 8-slide |
+
+---
+
+## 프로젝트 구조
+
+```
+src/
+├── schema/blueprint.ts       # Zod schema (15 slide types)
+├── compiler/
+│   ├── parser.ts             # YAML → Blueprint
+│   └── compiler.ts           # Blueprint → PPTX
+├── templates/
+│   ├── registry.ts           # TemplateRegistry
+│   ├── layout.ts             # SL constants, zoneCenter()
+│   ├── index.ts              # P1 template 등록
+│   └── slides/               # 9종 slide renderer
+├── design/
+│   ├── resolver.ts           # preset → ResolvedDesignTokens
+│   └── presets/default-modern/
+└── cli/
+    ├── validate.ts           # npm run validate
+    └── deck.ts               # npm run deck
+
+schemas/
+└── blueprint.schema.json     # JSON Schema (자동 생성)
+
+examples/
+├── basic/
+├── architecture/
+└── sample/
+```
+
+---
+
+## AI Agent 사용 가이드
+
+이 도구는 AI가 blueprint를 작성하고 CLI가 PPTX를 생성하는 방식으로 사용합니다.
+
+**AI가 해야 할 것:**
+- `blueprint.yaml` 작성·수정
+- slide narrative 개선
+- diagram semantic spec 작성 (zone 지정)
+
+**AI가 하면 안 되는 것:**
+- 임의 x/y 좌표 결정
+- 미등록 layout 발명
+- design token 무시
+- blueprint 없이 PPTX 직접 수정
+
+---
+
+## 개발
+
+```bash
+npm test             # 전체 테스트 (34 tests)
+npm run typecheck    # TypeScript 타입 검사
+npm run schema       # JSON Schema 재생성
+npm run validate -- --blueprint <path>
+npm run deck -- --blueprint <path> --output <path>
+```
+
+스냅샷 업데이트:
+```bash
+npm test -- --update-snapshots
+```
+
+---
 
 ## AI Workflow Harness
 
 이 프로젝트는 Claude Code / Codex / Cursor 공통 AI 워크플로우 하네스를 포함합니다.
-하네스는 Product track과 Harness track을 함께 운영하도록 설계되어 있습니다.
-첫 세션에서는 프로젝트 identity, Product Definition, Project Initialization baseline을 먼저 정리한 뒤 Product track backlog를 만들고,
-AI workflow 자체의 개선과 example pack 정비는 Harness track으로 분리합니다.
-
-| Track | 목적 | 주요 파일 |
-| --- | --- | --- |
-| Product track | 실제 제품/서비스/콘텐츠 작업과 Phase backlog | `docs/backlog/PHASE1.md`, `docs/works/phase1/` |
-| Harness track | AI workflow, command/rule, prompt, scaffold, process 개선 | `docs/backlog/HARNESS.md`, `docs/works/harness/` |
 
 | 파일 | 역할 |
 | --- | --- |
 | `CLAUDE.md` | Claude Code 진입점 |
 | `AGENTS.md` | Codex 진입점 |
-| `docs/BEHAVIOR-PRINCIPLES.md` | 전역 행동 원칙 |
 | `docs/STATUS.md` | 현재 작업 상태 |
-| `docs/HARNESS-QUICK-REFERENCE.md` | 세션 실행 규칙 요약 |
-| `docs/HARNESS-ARCHITECTURE.md` | harness 아키텍처와 정보 흐름 시각화 |
-| `docs/HARNESS-MAINTAINER-GUIDE.md` | 유지보수·convention 가이드 |
-| `docs/BOOTSTRAP.md` | scaffold 직후 프로젝트 부팅 checklist |
-| `docs/WORKFLOW-MANUAL.md` | 사용자용 워크플로우 가이드 |
-| `docs/AGENT-WORKFLOW.md` | 공통 운영 규칙 |
-| `docs/works/` | Work 파일 (큰 작업의 SSoT) |
-| `.claude/commands/` | `/start`, `/pick`, `/register`, `/work`, `/close`, `/done` 등 |
-| `.agents/skills/` | Codex command skill |
-| `.codex/hooks.json` | Codex hook 설정 |
-| `prompts/` | 세션 시작 및 태스크 프롬프트 라이브러리 |
-
-### 첫 세션
-
-**Claude Code:**
-```bash
-claude        # Claude Code 열기
-/start        # 하네스 로딩 확인 및 현재 상태 요약
-```
-
-**Codex:** repo root의 `AGENTS.md`를 기본 진입점으로 사용하고, 세션 첫 요청은 `/start` intent로 시작한다. `prompts/codex-session-start.md`는 수동 bootstrap이 필요한 fallback이다.
-
-**Cursor:** `prompts/cursor-session-start.md` 내용을 세션 시작 시 붙여넣는다.
-
-## 사전 작업
-
-git repository는 자동으로 초기화되지 않는다. 첫 세션에서 `docs/BOOTSTRAP.md` §0 Repository Setup을 따라 초기화 여부를 먼저 결정한다.
-
-스캐폴딩 직후 첫 `/start`에서는 `docs/STATUS.md` Next Actions를 확인한다.
-Next Actions가 scaffold bootstrap/onboarding을 가리키면 `docs/BOOTSTRAP.md`를 §0부터 순서대로 채운다.
-Bootstrap onboarding에 사용할 prompt는 `docs/BOOTSTRAP.md` §8에 있다.
-
-1. `docs/STATUS.md` — 프로젝트 목표와 Phase 설명
-2. `docs/PLAN-SUMMARY.md` Project Summary — 제품 목표와 핵심 workflow
-3. `docs/PLAN-SUMMARY.md` Implementation Baseline — Runtime/Framework/Build/package 결정 (코드 개발 프로젝트)
-4. `docs/PLAN.md` Project Initialization Plan — stack 선택 근거와 초기 구조
-5. `docs/backlog/PHASE1.md` — baseline 완료 후 도출한 초기 작업 항목 (Work ID는 /work 착수 시 확정)
-6. `docs/BEHAVIOR-PRINCIPLES.md` — 전역 행동 원칙 확인
-7. `docs/AGENT-WORKFLOW.md` — Project Constants와 Verification Defaults
+| `docs/BEHAVIOR-PRINCIPLES.md` | 전역 행동 원칙 |
+| `.claude/commands/` | `/start`, `/pick`, `/work`, `/close` 등 |
 
 ---
 
-*Scaffolded 2026-05-30 — [AI Workflow Harness](docs/WORKFLOW-MANUAL.md)*
+## 라이선스
+
+MIT
