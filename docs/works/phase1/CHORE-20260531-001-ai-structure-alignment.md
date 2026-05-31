@@ -1,9 +1,10 @@
 ---
 id: CHORE-20260531-001
 title: "AI 구조 정렬 — 멀티툴 product skill 라우팅 완성"
-status: Active
+status: Done
 type: CHORE
 created: 2026-05-31
+actual_end: 2026-05-31
 branch: feature/ai-structure-alignment
 ---
 
@@ -100,19 +101,19 @@ Claude 채팅 (참조/복사용, 실행 도구 아님):
 
 ## Done Criteria
 
-- [ ] `AGENTS.md` — Product Skill Routing 섹션 추가 (Workflow Skill Routing 섹션과 별도, English Only)
-- [ ] `.agents/skills/create-deck/SKILL.md` — `skills/create-deck.md` 로드, Gate 1~4 유지
-- [ ] `.agents/skills/review-deck/SKILL.md` — `skills/review-deck.md` 로드
-- [ ] `.agents/skills/generate-blueprint/SKILL.md` — `skills/generate-blueprint.md` 로드
-- [ ] `.claude/commands/review-deck.md` — wrapper 추가
-- [ ] `.claude/commands/generate-blueprint.md` — wrapper 추가
-- [ ] `prompts/codex-session-start.md` — product skill 진입 섹션 추가
-- [ ] `skills/create-deck.md` — Step 6 이후 review-deck 선택 review loop 명시
-- [ ] 각 `.agents/skills/{name}/SKILL.md`는 절차 원문 중복 없이 canonical `skills/*.md`를 로드/참조
-- [ ] `skills/create-deck.md` 또는 wrapper에서 PPTX 생성 후 review-deck으로 이어지는 선택 review loop가 명시됨
-- [ ] generate-blueprint 단독 제공이 Claude Code·Codex 양쪽에 모두 반영됨
-- [ ] Claude 채팅은 참조/복사용 경로로 설명됨 (실행 도구 아님)
-- [ ] FEAT-20260531-002 STATUS Finalization 처리 (commit 전 확인)
+- [x] `AGENTS.md` — Product Skill Routing 섹션 추가 (Workflow Skill Routing 섹션과 별도, English Only)
+- [x] `.agents/skills/create-deck/SKILL.md` — `skills/create-deck.md` 로드, Gate 1~4 유지
+- [x] `.agents/skills/review-deck/SKILL.md` — `skills/review-deck.md` 로드
+- [x] `.agents/skills/generate-blueprint/SKILL.md` — `skills/generate-blueprint.md` 로드
+- [x] `.claude/commands/review-deck.md` — wrapper 추가
+- [x] `.claude/commands/generate-blueprint.md` — wrapper 추가
+- [x] `prompts/codex-session-start.md` — product skill 진입 섹션 추가
+- [x] `skills/create-deck.md` — Step 6 이후 review-deck 선택 review loop 명시
+- [x] 각 `.agents/skills/{name}/SKILL.md`는 절차 원문 중복 없이 canonical `skills/*.md`를 로드/참조
+- [x] `skills/create-deck.md` 또는 wrapper에서 PPTX 생성 후 review-deck으로 이어지는 선택 review loop가 명시됨
+- [x] generate-blueprint 단독 제공이 Claude Code·Codex 양쪽에 모두 반영됨
+- [x] Claude 채팅은 참조/복사용 경로로 설명됨 (실행 도구 아님)
+- [x] FEAT-20260531-002 STATUS Finalization 처리 (commit 전 확인)
 
 ## Verification
 

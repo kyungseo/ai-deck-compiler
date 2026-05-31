@@ -23,9 +23,9 @@ blueprint 수정 제안을 actionable 형식으로 출력하는 skill 문서를 
 
 ## Done Criteria
 
-- [ ] `skills/review-deck.md` 작성 완료
-- [ ] 검토 항목 5종 모두 포함 (슬라이드 흐름, 메시지 일관성, 텍스트 분량, 차트/표 데이터 명확성, 청중 적합성)
-- [ ] 검토 결과를 blueprint 수정 제안 형식으로 출력하는 절차 포함
+- [x] `skills/review-deck.md` 작성 완료
+- [x] 검토 항목 5종 모두 포함 (슬라이드 흐름, 메시지 일관성, 텍스트 분량, 차트/표 데이터 명확성, 청중 적합성)
+- [x] 검토 결과를 blueprint 수정 제안 형식으로 출력하는 절차 포함
 
 ## Verification
 

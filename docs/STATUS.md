@@ -21,7 +21,6 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| CHORE-20260531-001 | AI 구조 정렬 — 멀티툴 product skill 라우팅 완성 | docs/works/phase1/CHORE-20260531-001-ai-structure-alignment.md |
 
 ## Blockers And Open Questions
 

@@ -42,9 +42,9 @@ App-level automatic skill discovery is outside the scope of this routing.
 
 | Intent | Skill file |
 | --- | --- |
-| PPT 생성 요청, `/create-deck` | `.agents/skills/create-deck/SKILL.md` |
-| deck 검토 요청, `/review-deck` | `.agents/skills/review-deck/SKILL.md` |
-| blueprint 작성 요청, `/generate-blueprint` | `.agents/skills/generate-blueprint/SKILL.md` |
+| Request to create a presentation, `/create-deck` | `.agents/skills/create-deck/SKILL.md` |
+| Request to review a deck or blueprint, `/review-deck` | `.agents/skills/review-deck/SKILL.md` |
+| Request to generate a blueprint, `/generate-blueprint` | `.agents/skills/generate-blueprint/SKILL.md` |
 
 Each product skill file loads the canonical procedure from `skills/{name}.md`.
 
