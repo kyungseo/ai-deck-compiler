@@ -2,8 +2,10 @@
 
 사용자와 대화하며 blueprint.yaml을 작성하고 editable PPTX를 생성하는 end-to-end 워크플로우.
 
-**Claude Code 진입:** `/create-deck`
-**단독 실행:** 이 파일 내용을 Claude 세션에 공유 후 시작 요청
+**진입 경로:**
+- Claude Code: `/create-deck`
+- Codex CLI/App: `.agents/skills/create-deck/SKILL.md` 로드
+- Claude 채팅: 이 파일 내용을 참조하여 대화 절차 수행
 
 ---
 

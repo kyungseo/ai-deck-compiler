@@ -36,7 +36,7 @@ AGENTS.md routing에 따른 **수동 로드** 기준이다.
 | Claude Code generate-blueprint wrapper | 없음 | `.claude/commands/generate-blueprint.md` |
 | Codex session prompt product skill | 없음 | `prompts/codex-session-start.md` 추가 |
 | create-deck → review-deck loop | 암묵적 | `skills/create-deck.md` Step 6에 명시 |
-| FEAT-20260531-002 close | Active 상태로 남아 있음 | commit 전 STATUS Finalization 처리 필요 |
+| FEAT-20260531-002 close | ✅ Done 처리 완료 | — |
 
 ## generate-blueprint 결정 (확정)
 
