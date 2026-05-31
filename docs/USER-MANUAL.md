@@ -53,7 +53,7 @@ npm install
 
 설치 후 Claude Code에서 `/create-deck`을 입력하면 바로 시작할 수 있습니다.
 
-기본 design preset(`default-modern`)은 **Pretendard** 폰트를 사용합니다.
+모든 design preset(`teal`, `vivid`, `modern`)은 **Pretendard** 폰트를 사용합니다.
 미설치 시 시스템 fallback 폰트로 렌더링되어 출력물 모양이 달라질 수 있습니다.
 
 | OS | 설치 방법 |
@@ -202,12 +202,14 @@ npm run validate -- --blueprint examples/strategy/blueprint.yaml
 npm run deck -- --blueprint examples/strategy/blueprint.yaml
 ```
 
+대표 preset/theme별 blueprint와 PPTX 결과물은 `examples/results/`에서 바로 확인할 수 있습니다.
+
 `blueprint.yaml`은 deck의 title, design, theme, metadata, slide list를 담습니다.
 
 ```yaml
 deck:
   title: Platform Modernization Strategy
-  design: default-modern
+  design: teal
   theme: dark
   version: "1.0"
   author: Platform Team
@@ -264,13 +266,18 @@ output/              ← 생성된 PPTX가 여기에 저장됩니다 (.gitignore
 
 ## 8. Preset, Theme, Branding
 
-기본 preset은 `default-modern`입니다.
+AI workflow 기본 추천은 `teal + dark`입니다.
+
+| Preset | 특징 | 추천 테마 |
+| --- | --- | --- |
+| `teal` | charcoal-dark + deep teal accent, AI-native. **신규 deck 기본 추천** | `dark` |
+| `vivid` | deep-navy + vivid purple, bold contrast. secondary/experimental | `dark` |
+| `modern` | modern, minimal, technical. light/dark 모두 지원 | `light` 또는 `dark` |
+
+**주의:** `teal`과 `vivid`는 dark-first preset입니다. `theme: light`를 사용하면 dark와 동일하게 렌더링됩니다. light 테마가 필요하면 `design: modern, theme: light`를 사용하세요. 기존 `default-modern` 이름도 alias로 동작합니다.
 
 | 항목 | 설명 |
 | --- | --- |
-| `default-modern` | modern, minimal, technical한 deck에 적합 |
-| `light` | 비즈니스/보고서 톤 |
-| `dark` | 기술/엔지니어링/컨퍼런스 톤 |
 | brand footer | footer 우측에 brand 표시 |
 | page number | 표지를 제외한 slide에 page number 표시 |
 
@@ -293,8 +300,8 @@ deck마다 다른 작성자를 쓰려면 blueprint에 `deck.author`를 넣거나
 ```yaml
 deck:
   title: Company AI Strategy
-  design: default-modern
-  theme: light
+  design: teal           # 기본 추천. light 필요 시 design: modern
+  theme: dark
   version: "1.0"
   author: Acme Strategy Team
   audience: Executive Committee
@@ -303,10 +310,11 @@ deck:
 ### 9.2 Brand footer 바꾸기
 
 brand footer는 preset token에서 관리합니다.
-현재 기본 preset 위치:
+기본 추천 preset 위치:
 
 ```text
-src/design/presets/default-modern/tokens.json
+src/design/presets/teal/tokens.json
+src/design/presets/modern/tokens.json  # light 테마 또는 기존 blueprint 호환 시
 ```
 
 팀/회사 브랜드를 계속 쓸 예정이면 custom preset을 만드는 편이 좋습니다.
@@ -330,7 +338,7 @@ custom preset을 만들고 싶어.
 - 회사 색상과 폰트를 반영
 - footer에 "Acme AI Lab" 표시
 - 기술 발표용 dark theme와 임원 보고용 light theme 둘 다 지원
-- 기존 default-modern 레이아웃 밀도는 유지
+- 기존 modern 레이아웃 밀도는 유지
 
 먼저 필요한 자료 목록과 preset 이름을 제안해줘.
 ```
@@ -338,7 +346,7 @@ custom preset을 만들고 싶어.
 레이아웃 조정 요청 예시:
 
 ```text
-default-modern 기반으로 우리 팀용 preset을 만들고 싶어.
+modern 기반으로 우리 팀용 preset을 만들고 싶어.
 표지는 더 여백 있게, kpi slide는 숫자를 더 크게,
 architecture slide는 node 간 간격을 넓혀줘.
 수정 대상 파일과 검증 방법을 먼저 계획해줘.

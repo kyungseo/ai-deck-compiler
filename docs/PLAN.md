@@ -74,12 +74,9 @@ presentation-compiler/
 │   ├── design/
 │   │   ├── resolver.ts           # preset → ResolvedDesignTokens
 │   │   └── presets/
-│   │       └── default-modern/   # 기본 design preset
-│   │           ├── tokens.json
-│   │           ├── ppt-design.md
-│   │           ├── ppt-components.md
-│   │           ├── ppt-layouts.md
-│   │           └── ppt-chart-rules.md
+│   │       ├── teal/             # AI workflow 기본 추천 (dark-first)
+│   │       ├── vivid/            # secondary preset (dark-first)
+│   │       └── modern/           # light/legacy 수요
 │   └── cli/
 │       ├── validate.ts           # npm run validate
 │       ├── deck.ts               # npm run deck
@@ -115,8 +112,8 @@ presentation-compiler/
 ```bash
 npm run validate -- --blueprint <path>     # schema 검사
 npm run deck -- --blueprint <path> \       # PPTX 생성
-  --design default-modern \
-  --theme light|dark \
+  --design teal \
+  --theme dark \
   --output <path>
 npm run preview -- <file.pptx> --out <dir> # PPTX → PNG (선택 도구 필요)
 npm run schema                             # JSON Schema 재생성
@@ -261,13 +258,13 @@ Preset 설명에는 다음 정보를 포함한다.
 
 | 항목 | 설명 |
 | --- | --- |
-| 이름 | `default-modern`, `minimal-dark` 등 CLI에서 사용하는 preset name |
+| 이름 | `teal`, `vivid`, `modern` 등 CLI에서 사용하는 preset name |
 | 추천 용도 | business review, technical proposal, executive report 등 |
 | layout traits | card-based, dense, editorial, section-heavy 등 레이아웃 특성 |
 | supported themes | light, dark |
 | brand slots | footer brand, author, company, contact 등 반영 가능한 branding 요소 |
 
-초기 구현은 `default-modern`의 설명을 skill 문서에 정적으로 반영하고,
+초기 구현은 `teal`을 AI workflow 기본 추천값으로 사용하고,
 후속 구현에서 preset metadata catalog(`src/design/presets/{name}/preset.json` 또는 `tokens.json` meta 섹션)를 검토한다.
 
 #### 9. Metadata And Version Mapping
@@ -393,7 +390,11 @@ src/design/presets/{preset-name}/
   ppt-chart-rules.md   — 차트 타입, 데이터 형식, 시각화 규칙
 ```
 
-현재 구현된 preset: `default-modern` (light / dark theme)
+현재 구현된 preset:
+
+- `teal` — AI workflow 기본 추천, dark-first
+- `vivid` — secondary/experimental, dark-first
+- `modern` — light/legacy 수요, light / dark theme 지원 (`default-modern` alias 호환)
 
 ### Slide Type 체계
 
@@ -410,7 +411,7 @@ src/design/presets/{preset-name}/
 | Renderer Structure Test | `tests/renderer.test.ts` | 각 slide renderer가 오류 없이 실행되는지 smoke test |
 | Snapshot Test | `tests/snapshot.test.ts` | PPTX XML 구조 회귀 방지 (timestamp 정규화 후 snapshot) |
 
-현재 총 43 tests (parser 19, renderer 19, snapshot 5).
+현재 총 44 tests (parser 19, renderer 19, snapshot 6).
 
 ---
 
@@ -437,20 +438,21 @@ src/design/presets/{preset-name}/
 | --- | --- |
 | P1 slide 9종 renderer | ✅ 완료 |
 | P2 slide 7종 renderer (section-divider, comparison, timeline, flow, decision, appendix, closing) | ✅ 완료 |
-| default-modern preset (light/dark), Apple 원칙 + Indigo accent | ✅ 완료 |
+| modern preset (light/dark), Apple 원칙 + Indigo accent | ✅ 완료 |
+| teal/vivid preset dark-first design overhaul | ✅ 완료 |
 | zone-based layout engine | ✅ 완료 |
 | CLI: validate, deck, schema | ✅ 완료 |
 | CLI: preview (PPTX → PNG, 선택 설치) | ✅ 완료 |
-| 테스트 43개 | ✅ 완료 |
+| 테스트 44개 | ✅ 완료 |
 | Skills: create-deck, generate-blueprint, review-deck | ✅ 완료 |
 | 멀티툴 product skill routing (Claude Code / Codex / Claude 채팅) | ✅ 완료 |
 | README, SYSTEM-MANUAL, USER-MANUAL | ✅ 완료 |
-| Preset-aware deck creation + metadata/source input workflow | 🔄 구현 완료, 리뷰 대기 (FEAT-20260531-003) |
-| Skills 품질 개선, architecture-slide skill | ⬜ backlog |
+| Preset-aware deck creation + metadata/source input workflow | ✅ 완료 |
+| Skills 품질 개선, architecture-slide skill | ✅ 완료 |
 | P2 slide 확장 renderer | ✅ 완료 |
-| examples/strategy/, examples/data-report/ | ⬜ backlog |
-| preset-minimal-dark | ⬜ backlog |
-| PPTX 문서 속성 (title, author, subject) | 🔄 FEAT-20260531-003 |
+| examples/strategy/, examples/data-report/ | ✅ 완료 |
+| preset-minimal-dark | 대체: `teal` / `vivid` dark-first preset으로 흡수 |
+| PPTX 문서 속성 (title, author, subject) | ✅ 완료 |
 
 **완료 기준:**
 - blueprint.yaml → PPTX 전체 워크플로우 AI 단독 수행 가능
@@ -458,7 +460,7 @@ src/design/presets/{preset-name}/
 - brief-first / source-first / AI-research-first 입력 패턴을 workflow가 구분하여 처리 가능
 - preset·brand·version 정보를 blueprint 작성 초기에 확인하고 산출물 생성 흐름에 반영 가능
 - PPTX 생성 후 preview 기반 검토 및 blueprint 보완 loop 수행 가능
-- 43개 이상 테스트 통과
+- 44개 이상 테스트 통과
 
 ### Phase 2 — 공개 repo 완성 및 확장 (Post-MVP)
 
@@ -499,7 +501,7 @@ npm run typecheck                                    # 타입 오류 없음
 npm test                                             # 전체 테스트 통과
 npm run validate -- --blueprint examples/basic/blueprint.yaml
 npm run deck -- --blueprint examples/basic/blueprint.yaml \
-  --design default-modern --theme light \
+  --design modern --theme light \
   --output output/basic.pptx                         # PPTX 생성 확인
 ```
 

@@ -17,7 +17,7 @@
 2. 청중 (임원 / 팀 내부 / 고객 등)
 3. 슬라이드 목록 (타입 + 제목)
 4. 각 슬라이드의 주요 내용 또는 데이터
-5. design preset (기본: default-modern)
+5. design preset (기본: teal — dark-first AI 추천. light 필요 시 modern)
 6. theme (light | dark)
 7. author/team (선택, 표지와 PPTX metadata)
 8. version (기본: "1.0")
@@ -58,8 +58,8 @@ Narrative Spine을 사용자에게 제시하고 승인받은 후 blueprint 작�
 ```yaml
 deck:
   title: {발표 제목}
-  design: default-modern
-  theme: {light | dark}
+  design: teal           # 기본 추천 (dark-first). light 필요 시 design: modern
+  theme: dark            # teal/vivid는 dark 우선
   version: "1.0"
   author: {작성자 또는 팀명} # 선택
   audience: {청중} # 선택

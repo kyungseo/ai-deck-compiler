@@ -1,6 +1,6 @@
-# default-modern Chart Rules
+# teal Chart Rules
 
-`chart` 슬라이드 타입의 차트 렌더링 규칙.
+`chart` 슬라이드 타입의 차트 렌더링 규칙. modern과 동일한 규칙이며 색상만 teal 계열로 적용된다.
 
 ---
 
@@ -48,7 +48,7 @@ data:
 | 항목 | 값 |
 | --- | --- |
 | 위치/크기 | x=0.67, y=1.35, w=12.0, h=5.75 (content 전체) |
-| Series 색상 | `chart-0` ~ `chart-5` (tokens.json) |
+| Series 색상 | `chart-0` ~ `chart-5` (teal 계열: `#4FAE9A`, `#2D6B5E`, `#34D399`, …) |
 | 범례 위치 | 하단 (`legendPos: 'b'`) |
 | 범례 폰트 | caption (14pt) |
 | 데이터 레이블 폰트 | caption (14pt) |

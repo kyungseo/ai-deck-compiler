@@ -4,6 +4,9 @@ import { fileURLToPath } from 'node:url';
 import type { ResolvedDesignTokens, TypographyToken, BrandToken } from '../compiler/types.js';
 
 const PRESETS_DIR = join(dirname(fileURLToPath(import.meta.url)), 'presets');
+const PRESET_ALIASES: Record<string, string> = {
+  'default-modern': 'modern',
+};
 
 const DEFAULT_BRAND: BrandToken = {
   name: 'ai-deck-compiler',
@@ -25,7 +28,8 @@ export function resolveDesignTokens(
   presetName: string,
   theme: 'light' | 'dark',
 ): ResolvedDesignTokens {
-  const tokensPath = join(PRESETS_DIR, presetName, 'tokens.json');
+  const canonicalPresetName = PRESET_ALIASES[presetName] ?? presetName;
+  const tokensPath = join(PRESETS_DIR, canonicalPresetName, 'tokens.json');
   let raw: RawTokens;
   try {
     raw = JSON.parse(readFileSync(tokensPath, 'utf-8')) as RawTokens;
@@ -35,7 +39,7 @@ export function resolveDesignTokens(
 
   const themeColors = raw.colors[theme];
   if (!themeColors) {
-    throw new Error(`Theme "${theme}" not found in preset "${presetName}"`);
+    throw new Error(`Theme "${theme}" not found in preset "${canonicalPresetName}"`);
   }
 
   return {

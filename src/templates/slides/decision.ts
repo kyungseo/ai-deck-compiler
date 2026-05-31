@@ -61,7 +61,7 @@ export const decisionTemplate: SlideTemplate<DecisionSlide> = {
       const rowH = 0.32;
       const prosColor = hex(co['success'] ?? '059669');
       const consColor = hex(co['text-muted'] ?? '9CA3AF');
-      const bodySize = 12;
+      const bodySize = 13;
 
       // Pros
       (opt.pros ?? []).forEach(pro => {
