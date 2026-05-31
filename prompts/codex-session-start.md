@@ -32,12 +32,12 @@ AI workflow 자체의 개선 항목과 example pack 정비 항목은 `docs/backl
 
 ---
 
-## 0. Product Skill — Deck Creation & Review
+## 0. Product Skill — Deck Creation, Review & Export
 
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | generate-blueprint]에
+AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | generate-blueprint | export-pdf]에
 대응하는 `.agents/skills/{name}/SKILL.md`를 로드하고 절차를 수행해줘.
 ```
 
@@ -53,6 +53,12 @@ deck 검토 / review-deck:
 ```text
 `skills/review-deck.md`를 읽고 절차를 따라줘.
 MUST: 보고서와 수정 제안을 동시에 출력하지 않는다. 각 GATE에서 반드시 멈추고 사용자 응답을 기다린다.
+```
+
+PDF 내보내기 / export-pdf:
+```text
+`skills/export-pdf.md`를 읽고 절차를 따라줘.
+MUST: 파일 경로 없이 변환을 실행하지 않는다. LibreOffice가 없으면 설치 안내만 제공한다.
 ```
 
 blueprint 생성 / generate-blueprint:

@@ -344,6 +344,26 @@ AI review 항목:
 
 수정이 필요하면 blueprint를 고치고 다시 validate/deck/preview를 반복합니다.
 
+### PDF 내보내기
+
+PPTX를 PDF로 변환하려면 `/export-pdf` 또는 `npm run export-pdf`를 사용합니다.
+
+```bash
+npm run export-pdf -- output/platform-modernization-v1.0.pptx
+# 출력 경로 지정 시:
+npm run export-pdf -- output/platform-modernization-v1.0.pptx --out output/platform-modernization.pdf
+```
+
+LibreOffice가 설치되어 있어야 합니다.
+
+| OS | 설치 방법 |
+| --- | --- |
+| macOS | `brew install --cask libreoffice` |
+| Ubuntu/Debian | `sudo apt install libreoffice` |
+| Windows | [libreoffice.org/download](https://www.libreoffice.org/download/) |
+
+LibreOffice가 없으면 CLI가 OS에 맞는 설치 안내를 출력하고 종료합니다.
+
 ---
 
 ## 12. 자주 묻는 질문

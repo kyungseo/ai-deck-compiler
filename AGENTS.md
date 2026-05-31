@@ -34,7 +34,7 @@ Available workflow skills: directories named `workflow-*` under `.agents/skills/
 
 ## Product Skill Routing
 
-When the user requests a product skill (create-deck, review-deck, generate-blueprint),
+When the user requests a product skill (create-deck, review-deck, generate-blueprint, export-pdf),
 load `.agents/skills/{name}/SKILL.md` and follow the procedure.
 
 Note: `.agents/skills/{name}/SKILL.md` is loaded manually based on intent matching.
@@ -45,6 +45,7 @@ App-level automatic skill discovery is outside the scope of this routing.
 | Request to create a presentation, `/create-deck` | `.agents/skills/create-deck/SKILL.md` |
 | Request to review a deck or blueprint, `/review-deck` | `.agents/skills/review-deck/SKILL.md` |
 | Request to generate a blueprint, `/generate-blueprint` | `.agents/skills/generate-blueprint/SKILL.md` |
+| Request to export a PPTX to PDF, `/export-pdf` | `.agents/skills/export-pdf/SKILL.md` |
 
 Each product skill file loads the canonical procedure from `skills/{name}.md`.
 

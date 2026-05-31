@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | Priority | Start | Work File |
 | --- | --- | --- | --- | --- |
+| FEAT-20260531-004 | PDF 내보내기 — export-pdf CLI + 멀티툴 AI skill | P1 | 2026-05-31 | [link](FEAT-20260531-004-pdf-export.md) |
 
 ## Done (Archive Pending)
 
