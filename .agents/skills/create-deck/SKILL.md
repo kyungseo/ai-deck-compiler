@@ -18,12 +18,14 @@ description: "사용자와 대화하며 blueprint.yaml을 작성하고 editable 
 
 ## Procedure
 
-`skills/create-deck.md`의 Step 1~6를 순서대로 수행한다.
+`skills/create-deck.md`의 Step 0~6를 순서대로 수행한다.
+wrapper는 thin routing만 담당한다.
+brief-first/source-first/AI-research-first mode 판별과 세부 질문은 `skills/create-deck.md`에서 처리한다.
 
 Gate 구조:
-- [GATE 1] Context 수집 완료 → Step 2
+- [GATE 1] Input mode와 context 수집 완료 → Step 2
 - [GATE 2] 슬라이드 구조 승인 → Step 3
-- [GATE 3] Blueprint 검토 완료 → Step 5
+- [GATE 3] Blueprint 검토 완료 → Step 4
 - [GATE 4] "생성해줘" 확인 → Step 5
 
 Step 6(결과 확인)에서 review-deck으로 이어지는 선택 review loop를 안내한다.

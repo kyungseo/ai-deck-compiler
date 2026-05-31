@@ -72,6 +72,7 @@ Schema Validation (Zod — src/schema/blueprint.ts)
 Parser (src/compiler/parser.ts)
   ↓
 Compiler (src/compiler/compiler.ts)
+  ↓ deck metadata → PPTX document properties
   ↓ design preset 로딩 (src/design/resolver.ts)
   ↓ TemplateRegistry 조회 (src/templates/registry.ts)
   ↓ 각 슬라이드 render 함수 실행
@@ -99,6 +100,10 @@ Editable PPTX
 ### 형식 결정: YAML (Markdown DSL 대신)
 
 **결정 근거:** 초기 v2 설계는 markdown 기반 blueprint.md를 제안했으나 v3에서 YAML로 확정.
+`blueprint.yaml`은 user-facing 기획/검토 산출물 이름을 유지하지만,
+시스템 내부에서는 Deck Specification DSL로 취급한다.
+`deck.spec.yaml` rename은 생태계 영향이 큰 major change 후보이며,
+`deck.manifest.yaml`은 향후 assets/source/output version mapping 분리 시 검토한다.
 
 YAML 선택 이유:
 - Schema validation (Zod discriminated union)이 용이
@@ -198,6 +203,17 @@ AI가 다음 reference material을 분석하여 tokens.json을 생성한다:
 Blueprint-First Policy: 최종 PPTX 전에 blueprint를 먼저 검토·승인한다.
 AI는 content를 만들고, 엔진이 형태를 만든다.
 
+`create-deck`는 사용자 입력 방식을 먼저 판별한다.
+
+| Mode | 역할 |
+| --- | --- |
+| brief-first | 짧은 주제·목적을 질문으로 보강해 구조화 |
+| source-first | markdown/file/source를 요약하고 narrative spine과 slide plan으로 변환 |
+| AI-research-first | research 범위와 출처 기준을 확인한 뒤 content draft 작성 |
+
+`generate-blueprint`는 구조가 결정된 뒤 blueprint 작성에 집중한다.
+source 처리와 구조 결정은 `create-deck` 책임이다.
+
 ### Slide 콘텐츠 품질 기준 (from /doc command)
 
 **Action Title 원칙**
@@ -260,7 +276,7 @@ blueprint 작성 전 전체 스토리를 5~10문장으로 요약한다.
 | `npm run validate -- --blueprint <path>` | blueprint 유효성 검사 |
 | `npm run deck -- --blueprint <path> --design <name> --theme light\|dark --output <path>` | PPTX 생성 |
 | `npm run schema` | schemas/blueprint.schema.json 재생성 |
-| `npm test` | 전체 테스트 (34 tests) |
+| `npm test` | 전체 테스트 (43 tests) |
 | `npm run typecheck` | TypeScript 타입 검사 |
 | `npm run list-designs` | *(예정)* 사용 가능한 preset 목록 |
 
@@ -271,11 +287,13 @@ blueprint 작성 전 전체 스토리를 5~10문장으로 요약한다.
 ### 완료
 
 - ✅ P1 slide 9종 renderer (hero, agenda, content, two-column, kpi, table, chart, architecture, summary)
+- ✅ P2 slide 7종 renderer (section-divider, comparison, timeline, flow, decision, appendix, closing)
 - ✅ default-modern design preset (light/dark)
 - ✅ zone-based layout engine
 - ✅ blueprint.yaml Schema (Zod + JSON Schema)
 - ✅ CLI: validate, deck, schema
-- ✅ 테스트 34개 (parser, renderer, snapshot)
+- ✅ PPTX document properties metadata 반영
+- ✅ 테스트 43개 (parser, renderer, snapshot)
 - ✅ Skills: create-deck, generate-blueprint, review-deck
 - ✅ README, USER-MANUAL
 

@@ -5,11 +5,11 @@
 | Field | Value |
 | --- | --- |
 | Phase | Phase 1 — Blueprint → Editable PPTX 일관 출력 엔진 구축 |
-| Active plan | — |
+| Active plan | FEAT-20260531-003 — preset-aware deck creation + metadata/source input workflow |
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-05-30 |
+| Last updated | 2026-05-31 |
 
 ## Work Context Rule
 
@@ -21,6 +21,7 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| FEAT-20260531-003 | preset-aware deck creation + metadata/source input workflow | docs/works/phase1/FEAT-20260531-003-preset-aware-deck-workflow.md |
 
 ## Blockers And Open Questions
 

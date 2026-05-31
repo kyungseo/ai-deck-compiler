@@ -74,16 +74,28 @@ design preset을 교체하면 (예: default-modern → minimal-dark) 내용은 �
 
 ### AI 가이드 방식 — `/create-deck`
 
-Claude Code에서 `/create-deck`을 입력하면 6단계 워크플로우가 시작됩니다.
+Claude Code에서 `/create-deck`을 입력하면 대화형 워크플로우가 시작됩니다.
 
 ```
-Step 1: Claude가 목적·청중·분량·테마를 질의
+Step 0: 입력 방식 판별 (간단 brief / source 제공 / AI research 위임)
+Step 1: 목적·청중·분량·preset·테마·작성자·버전 질의
 Step 2: 슬라이드 구조 제안 + 사용자 승인
 Step 3: blueprint.yaml 초안 자동 작성
 Step 4: 슬라이드별 내용 검토 및 수정 반복
 Step 5: npm run validate → npm run deck 실행
-Step 6: 결과 확인, 필요 시 재수정
+Step 6: preview와 review-deck으로 결과 확인, 필요 시 재수정
 ```
+
+입력 방식별 흐름:
+
+| 방식 | 사용자가 제공하는 것 | AI 처리 |
+| --- | --- | --- |
+| brief-first | 주제·목적 중심의 짧은 설명 | 핵심 질문 → 구조 제안 → blueprint |
+| source-first | markdown, 메모, 보고서 초안, 파일 경로 | source 요약 → narrative spine → slide plan → blueprint |
+| AI-research-first | 주제와 목표, "알아서 작성" 요청 | research 범위 확인 → 자료/가정 구분 → content draft → blueprint |
+
+AI-research-first는 사용 가능한 검색 도구에 따라 실제 외부 조사가 제한될 수 있습니다.
+검색 도구가 없으면 사용자가 제공한 source, 명시적 가정, 추가 질문을 기반으로 진행합니다.
 
 **예시:**
 ```
@@ -99,6 +111,9 @@ blueprint만 빠르게 생성: `skills/generate-blueprint.md`
 
 ## Blueprint 작성 가이드
 
+`blueprint.yaml`은 PPT 기획서이면서 컴파일러가 읽는 Deck Specification DSL입니다.
+파일명은 계속 `blueprint.yaml`을 사용하지만, 역할은 deck metadata, slide structure, content를 담은 명세서입니다.
+
 빠르게 blueprint.yaml을 작성하려면 `/generate-blueprint`를 사용하세요.
 상세: `skills/generate-blueprint.md`
 
@@ -108,6 +123,43 @@ blueprint만 빠르게 생성: `skills/generate-blueprint.md`
 
 현재 제공 preset: `default-modern` (light / dark)
 추가 preset(minimal-dark, enterprise-clean)은 backlog에서 관리 중입니다.
+
+`default-modern` 특징:
+- modern, minimal, technical presentation에 적합
+- light/dark theme 지원
+- footer brand와 page number 지원
+- 표지와 PPTX metadata에 author/version 반영
+
+회사 또는 개인 브랜드가 중요하면 `/create-deck` 초기 질문에서 작성자, 팀명, brand footer 요구사항을 알려주세요.
+custom preset 제작은 `skills/customize-preset.md`를 기준으로 진행합니다.
+
+---
+
+## Metadata와 Version 관리
+
+blueprint의 `deck` 값은 PPTX 산출물 metadata에도 반영됩니다.
+
+```yaml
+deck:
+  title: Platform Modernization Strategy
+  design: default-modern
+  theme: dark
+  version: "1.0"
+  author: Platform Team
+  audience: Engineering Leadership
+```
+
+반영 대상:
+- PPTX title: `deck.title`
+- PPTX author/creator: `deck.author` 또는 preset brand author fallback
+- PPTX subject: `deck.title`과 `deck.audience` 기반
+- PPTX revision: `deck.version`에서 안전한 정수형 revision으로 변환
+
+파일명은 명시적으로 version을 포함하는 형태를 권장합니다.
+
+```bash
+npm run deck -- --blueprint blueprints/platform-modernization.yaml --output output/platform-modernization-v1.0.pptx
+```
 
 ---
 

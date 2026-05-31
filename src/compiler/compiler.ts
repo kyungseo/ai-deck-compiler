@@ -17,6 +17,7 @@ export async function compile(opts: CompilerOptions): Promise<pptxgen> {
 
   const pptx = new pptxgen();
   pptx.layout = 'LAYOUT_WIDE';
+  applyPresentationMetadata(pptx, blueprint, tokens);
 
   for (const slide of blueprint.slides) {
     const pptxSlide = pptx.addSlide();
@@ -66,6 +67,29 @@ export async function compile(opts: CompilerOptions): Promise<pptxgen> {
   }
 
   return pptx;
+}
+
+function applyPresentationMetadata(
+  pptx: pptxgen,
+  blueprint: Blueprint,
+  tokens: ResolvedDesignTokens,
+): void {
+  const { deck } = blueprint;
+  const author = deck.author ?? tokens.brand.author ?? tokens.brand.name;
+  const subject = deck.audience
+    ? `${deck.title} — ${deck.audience}`
+    : deck.title;
+
+  pptx.title = deck.title;
+  pptx.subject = subject;
+  pptx.author = author;
+  pptx.company = tokens.brand.name;
+  pptx.revision = versionToRevision(deck.version);
+}
+
+function versionToRevision(version: string): string {
+  const major = version.match(/\d+/)?.[0];
+  return major ?? '1';
 }
 
 function renderFooter(

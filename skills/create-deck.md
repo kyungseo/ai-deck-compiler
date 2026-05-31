@@ -13,7 +13,8 @@
 
 ```
 사용자 의도 표현
-  → Step 1: 목적·청중·구조 파악 (대화)
+  → Step 0: 입력 모드 판별 (brief-first/source-first/AI-research-first)
+  → Step 1: 목적·청중·preset·metadata 파악 (대화)
   ── [GATE 1] 사용자 답변 수신 후 진행 ──
   → Step 2: 슬라이드 구조 제안 + 승인 대기
   ── [GATE 2] 구조 승인 후 진행 ──
@@ -22,16 +23,34 @@
   → Step 4: 슬라이드 내용 검토·보완 반복
   ── [GATE 4] "생성해줘" 확인 후 진행 ──
   → Step 5: PPTX 생성 (npm run deck)
-  → Step 6: 결과 확인 + 필요 시 재수정
+  → Step 6: Preview + review loop + 필요 시 재수정
 ```
 
 **MUST:** 각 GATE에서 반드시 멈추고 사용자 응답을 기다린다. "간단하게", "빠르게", "테스트용" 등의 말도 GATE를 건너뛰는 허가가 아니다.
 
 ---
 
+## Step 0 — Input Mode 판별
+
+사용자 입력을 먼저 3가지 mode 중 하나로 분류한다.
+
+| Mode | Trigger | 처리 원칙 |
+| --- | --- | --- |
+| brief-first | 주제·목적만 간단히 제공 | 핵심 질문을 최대 3개씩 묻고 structure proposal로 확장 |
+| source-first | markdown, 파일 경로, 메모, 보고서 초안 제공 | source 요약 → narrative spine → slide plan → blueprint |
+| AI-research-first | "알아서 작성", "자료 찾아서 작성" 등 | research 범위와 출처 기준 확인 → content draft → blueprint |
+
+`source-first`의 source 처리와 구조 결정은 이 skill의 책임이다.
+`generate-blueprint`는 구조가 정리된 뒤 Step 3~4의 blueprint 작성 단계만 위임받는다.
+
+AI-research-first mode에서 실제 외부 검색은 tool 환경에 따라 제한될 수 있다.
+검색 도구를 사용할 수 없으면 사용자 제공 source, 명시적 가정, 또는 추가 질문 기반으로 진행한다.
+
+---
+
 ## Step 1 — Brief Alignment (Context 수집)
 
-다음 9개 속성을 확인한다. 사용자가 이미 제공한 정보는 건너뛴다.
+다음 속성을 확인한다. 사용자가 이미 제공한 정보는 건너뛴다.
 모호한 항목이 있으면 최대 3개까지만 한 번에 질문한다.
 
 ```
@@ -46,6 +65,9 @@
 [분량] 발표 시간 또는 슬라이드 수?
   (예: 10분/8장, 20분/15장)
 
+[입력 방식] 지금 제공할 자료가 있나요?
+  간단 brief / markdown·파일 경로 제공 / AI가 자료 조사부터 작성
+
 [핵심 메시지] 청중이 발표 후 기억해야 할 것 (한 문장)
 
 [데이터] 포함할 수치나 차트가 있나요?
@@ -59,11 +81,36 @@
 [품질 기준] 이 발표의 성공 기준은?
   의사결정 유도 / 이해도 향상 / 신뢰 구축 / 실행 동기 부여
 
+[프리셋] 사용할 design preset은?
+  default-modern (기본값): modern, minimal, technical, light/dark 지원, brand footer/page number 지원
+
 [테마] light (비즈니스) / dark (기술·엔지니어링)
 
-[작성자] 표지에 표시할 이름 또는 팀명?
-  (기본값: 박경서 / 생략 시 기본값 사용)
+[작성자/브랜드] 표지와 PPTX metadata에 표시할 이름 또는 팀명?
+  (기본값: ai-deck-compiler (Kyungseo.Park@gmail.com) / 생략 시 기본값 사용)
+
+[버전] 문서 버전?
+  (기본값: 1.0 / blueprint와 PPTX metadata 추적에 사용)
 ```
+
+### Source-first 처리
+
+사용자가 markdown 또는 파일 경로를 제공하면 먼저 다음을 수행한다.
+
+1. source를 그대로 슬라이드에 복제하지 않고 핵심 주장, 근거, 수치, audience-specific message를 추출한다.
+2. source 요약과 narrative spine을 제시한다.
+3. 누락된 데이터·근거·청중 관점이 있으면 질문하거나 보강안을 제안한다.
+4. 구조 승인 후 blueprint 작성으로 이동한다.
+
+### AI-research-first 처리
+
+사용자가 내용 작성을 대부분 위임하면 먼저 다음을 확인한다.
+
+- research 범위: 지역/기간/산업/경쟁사/기술 범위
+- 출처 기준: 공식 문서, 리포트, 뉴스, 내부 자료 등
+- 허용 수준: 출처 기반 사실과 AI 추론을 구분해서 표시
+
+content가 빈약하면 바로 PPTX를 만들지 않고 추가 질문, source 요청, research 제안 중 하나로 보강한다.
 
 ---
 
@@ -131,7 +178,7 @@ deck:
   design: default-modern
   theme: light | dark  # Step 1에서 확인한 값
   version: "1.0"       # 문서 버전 — 표지 우측 상단에 자동 표시
-  author: # 작성자 — 생략 시 기본값(박경서) 사용, 표지에 표시
+  author: # 작성자 — 생략 시 기본값(ai-deck-compiler) 사용, 표지와 PPTX metadata에 표시
   audience: # 청중 (선택)
 ```
 
@@ -252,15 +299,15 @@ blueprints/{slug}.yaml을 작성했습니다.
 
 ```bash
 npm run validate -- --blueprint blueprints/{slug}.yaml
-npm run deck -- --blueprint blueprints/{slug}.yaml --output output/{slug}.pptx
+npm run deck -- --blueprint blueprints/{slug}.yaml --output output/{slug}-v{version}.pptx
 ```
 
 실행 결과:
-- 성공: `output/{slug}.pptx` 생성 완료 안내
+- 성공: `output/{slug}-v{version}.pptx` 생성 완료 안내
 - 실패: 오류 메시지 해석 후 blueprint 수정 제안
 
 ```
-PPTX가 생성됐습니다: output/{slug}.pptx
+PPTX가 생성됐습니다: output/{slug}-v{version}.pptx
 
 PowerPoint / Keynote에서 열어 확인해 주세요.
 수정이 필요하면 말씀해 주세요.
@@ -271,13 +318,29 @@ PowerPoint / Keynote에서 열어 확인해 주세요.
 ## Step 6 — 결과 확인 + Review Loop (선택)
 
 ```
-PPTX가 생성됐습니다: output/{slug}.pptx
+PPTX가 생성됐습니다: output/{slug}-v{version}.pptx
 
-PowerPoint에서 열어 확인해 주세요.
+AI가 preview 생성 가능 여부를 확인한 뒤 사용자에게 묻습니다:
+
+preview PNG를 생성해서 visual review까지 진행할까요?
+
+npm run preview -- output/{slug}-v{version}.pptx --out output/{slug}-preview
+
+사용자가 승인하면 preview를 생성하고, 실패하면 PowerPoint/Keynote 수동 확인으로 fallback합니다.
+
+검토 항목:
+- 시각적 밀도와 빈 공간
+- 제목/본문 overflow
+- chart/table 가독성
+- theme/preset 일관성
+- PPTX 속성의 title/author/subject가 blueprint metadata와 일치하는지
+
+preview 도구가 없으면 PowerPoint/Keynote에서 수동 확인합니다.
 deck 검토를 원하시면 `/review-deck` 또는 `skills/review-deck.md`를 사용하세요:
 - 슬라이드 흐름·메시지 일관성 검토
 - 텍스트 분량·차트·표 데이터 명확성 검토
 - 청중 적합성 평가
+- preview 기반 visual review
 - blueprint 수정 제안 (slide id + 변경 전/후)
 ```
 
