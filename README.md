@@ -1,41 +1,55 @@
 # AI-Native Presentation Engineering Framework
 
-> AI가 `blueprint.yaml`로 발표 의도를 쓰고, TypeScript 엔진이 design preset과 template registry로 **규칙 기반 editable PPTX**를 생성합니다.
+> "Q2 성과 리뷰 deck 만들어줘. 임원진 대상 15분 발표야."
+>
+> 한 문장으로 요청하면 AI가 구조를 협의하고, 슬라이드를 기획하고, **편집 가능한 PowerPoint 파일**을 만들어줍니다.
 
-`ai-deck-compiler`는 AI와 함께 PPT를 만들되, 레이아웃과 렌더링은 규칙 기반 엔진이 담당하도록 분리한 presentation compiler입니다.
-AI는 스토리, 메시지, 데이터, 구조를 작성하고, 엔진은 `blueprint.yaml + design preset`을 컴파일해 PowerPoint에서 편집 가능한 `.pptx`를 만듭니다.
+`ai-deck-compiler`는 Claude Code, Codex, Claude App과 함께 쓰는 AI-first PPT 생성 도구입니다.
+AI와의 대화로 발표 내용을 빠르게 정제하고, 레이아웃과 디자인은 엔진이 일관되게 처리합니다.
+
+상세 사용법은 [USER-MANUAL](docs/USER-MANUAL.md), 시스템 구조는 [SYSTEM-MANUAL](docs/SYSTEM-MANUAL.md)을 보세요.
+
+---
+
+## 어떻게 쓰나요?
+
+AI에게 요청하면 됩니다. 나머지는 AI와 엔진이 처리합니다.
 
 ```text
-AI-authored intent
-  + Deck Specification DSL (blueprint.yaml)
-  + design preset / tokens
-  + template registry
-  = editable, repeatable PPTX
+/create-deck
+
+Q2 엔지니어링 성과 리뷰 deck 만들어줘.
+청중은 임원진, 15분 발표야.
+핵심 메시지는 "플랫폼 안정성 개선, 다음 분기 배포 자동화 투자 필요"야.
+dark theme으로 해줘.
 ```
 
-> **DSL(Domain Specific Language)**: 특정 목적에 맞게 설계된 전용 기술 언어. `blueprint.yaml`은 "어떤 슬라이드를 어떤 내용으로 만들지"를 기술하는 deck 전용 DSL입니다.
+AI가 발표 구조를 제안하고 확인을 받습니다. 승인하면 blueprint를 작성하고 PPTX를 바로 생성합니다. 생성된 파일은 PowerPoint에서 바로 편집할 수 있습니다.
 
-상세 사용법은 [USER-MANUAL](docs/USER-MANUAL.md), 시스템 구조와 유지보수 절차는 [SYSTEM-MANUAL](docs/SYSTEM-MANUAL.md)을 보세요.
+### 사용 환경
+
+| 환경 | 시작 방법 |
+| --- | --- |
+| Claude Code | `/create-deck` 입력 후 요청 |
+| Codex CLI / App | repo skill `create-deck` 로드 후 요청 |
+| Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
 
 ---
 
 ## 왜 이 도구인가요?
 
-AI에게 "PPT 만들어줘"라고 맡기면 보통 다음 문제가 생깁니다.
+AI에게 "PPT 만들어줘"라고 맡기면 보통 이런 문제가 생깁니다.
 
 - 매번 레이아웃이 달라져 재현성이 낮다.
 - 차트, 표, 도형이 이미지로 들어가 편집이 어렵다.
-- AI가 좌표와 디자인을 즉흥적으로 결정해 브랜드 일관성이 깨진다.
 - 생성 후 사람이 다시 PPT를 다듬느라 자동화 효과가 줄어든다.
 
-이 프로젝트는 그 경계를 명확히 나눕니다.
+이 도구에서 **사용자가 하는 일은 두 가지**입니다.
 
-| AI가 담당 | TypeScript 엔진이 담당 |
-| --- | --- |
-| 목적, 청중, 스토리, slide content | schema validation |
-| `blueprint.yaml` 작성과 수정 | design preset / token 적용 |
-| source 요약과 narrative 구성 | template registry 기반 PPTX 렌더링 |
-| preview를 보고 개선 제안 | native editable PowerPoint 객체 생성 |
+1. AI와 대화한다 — 주제, 청중, 핵심 메시지, 슬라이드 구성을 협의합니다.
+2. 결과물을 검토한다 — `blueprint.yaml` 초안을 확인하고 수정 방향을 말합니다.
+
+레이아웃, 좌표, 색상, 타이포그래피는 엔진이 design preset에 따라 처리합니다. AI가 즉흥적으로 결정하지 않으므로 같은 입력은 항상 같은 PPTX를 만들어냅니다.
 
 ---
 
@@ -43,9 +57,8 @@ AI에게 "PPT 만들어줘"라고 맡기면 보통 다음 문제가 생깁니다
 
 ### 요구사항
 
-- Node.js 18+
-- npm 9+
-- Pretendard 폰트 권장 — 미설치 시 시스템 fallback 폰트로 렌더링됨 ([설치 안내](https://github.com/orioncactus/pretendard))
+- Node.js 18+, npm 9+
+- Pretendard 폰트 권장 ([설치 안내](https://github.com/orioncactus/pretendard)) — 미설치 시 시스템 fallback 폰트 사용
 - Optional preview: LibreOffice + `pdftoppm`(poppler)
 
 ### 설치
@@ -56,105 +69,54 @@ cd ai-deck-compiler
 npm install
 ```
 
-### 시작 방법 — AI 워크플로우 (권장)
+설치 후 Claude Code를 열고 `/create-deck`을 입력하면 바로 시작할 수 있습니다.
 
-설치 후 AI에게 요청하는 것이 가장 빠른 시작입니다.
-
-| 환경 | 진입 방법 |
-| --- | --- |
-| Claude Code | `/create-deck` 입력 |
-| Codex CLI/App | repo skill `create-deck` 로드 후 요청 |
-| Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
-
-```text
-# Claude Code 예시
-/create-deck
-
-Q2 엔지니어링 성과 리뷰 deck을 만들어줘.
-청중은 임원진이고, 15분 발표야. dark theme.
-```
-
-AI가 구조 협의 → `blueprint.yaml` 작성 → `npm run deck` 실행 → PPTX 생성까지 진행합니다.
-
-### 시작 방법 — CLI 직접 실행
-
-AI 없이 blueprint를 직접 작성하거나, 동작을 확인할 때 사용합니다.
+CLI로 직접 예제를 실행하려면:
 
 ```bash
-# blueprint 검증
 npm run validate -- --blueprint examples/sample/blueprint.yaml
-
-# PPTX 생성
-npm run deck -- \
-  --blueprint examples/sample/blueprint.yaml \
-  --output output/sample-v1.0.pptx
-
-# Preview (LibreOffice + pdftoppm 필요)
-npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
+npm run deck -- --blueprint examples/sample/blueprint.yaml
 ```
 
 ---
 
-## 전체 워크플로우
+## AI와 대화하면 어떻게 되나요?
 
-> 아래 다이어그램은 [Mermaid](https://mermaid.js.org/) 문법으로 작성되어 GitHub에서 바로 렌더링됩니다.
+AI는 발표 요청을 받으면 아래 흐름으로 진행합니다.
 
 ```mermaid
-flowchart TD
-  A["Repo clone"] --> B["의존성 설치"]
-  B --> C["AI workflow 또는 직접 편집 선택"]
-  C --> D["blueprint.yaml 작성·수정"]
-  D --> E["blueprint 검증"]
-  E --> F["editable PPTX 컴파일"]
-  F --> G{"Preview 가능?"}
-  G -->|Yes| H["preview PNG 생성"]
-  G -->|No| I["PPTX 직접 열기"]
-  H --> J["AI visual review + deck 검토"]
-  I --> J
-  J --> K{"수정 필요?"}
-  K -->|Yes| D
-  K -->|No| L["최종 PPTX"]
+flowchart LR
+  A["요청\n'Q2 리뷰 deck 만들어줘'"] --> B["AI: 목적·청중·구성 협의"]
+  B --> C["슬라이드 구조 제안 + 확인"]
+  C --> D["blueprint.yaml 작성"]
+  D --> E["PPTX 생성"]
+  E --> F["AI: preview 검토 + 개선 제안"]
+  F --> G{"수정 필요?"}
+  G -->|Yes| C
+  G -->|No| H["최종 PPTX"]
 ```
 
----
-
-## AI 환경별 빠른 설정
-
-| 환경 | 시작 방법 | 설명 |
-| --- | --- | --- |
-| Claude Code | `/create-deck`, `/generate-blueprint`, `/review-deck` | `.claude/commands/*.md` wrapper 사용 |
-| Codex CLI | repo skill `create-deck` 로드 | `.agents/skills/{name}/SKILL.md` 사용 |
-| Codex App | repo-local skill 또는 SKILL.md 수동 로드 | Manual load 기준으로 지원 |
-| Claude App | `skills/*.md` 내용을 복사/참조 | native slash command 실행은 가정하지 않음 |
-| Manual CLI | `blueprint.yaml` 직접 편집 후 `npm run validate`, `npm run deck` 실행 | AI 없이도 사용 가능 |
-
-권장 AI 진입점:
-
-- End-to-end deck 생성: `skills/create-deck.md`
-- Blueprint만 생성: `skills/generate-blueprint.md`
-- 검토와 개선: `skills/review-deck.md`
-- 브랜딩·custom preset: `skills/customize-preset.md`
+중간에 사용자가 "3번 슬라이드 내용 바꿔줘", "KPI 항목 추가해줘"라고 말하면 AI가 blueprint를 수정하고 다시 컴파일합니다. 반복이 빠르기 때문에 초안에서 완성까지 한 세션 안에 끝낼 수 있습니다.
 
 ---
 
 ## 주요 기능
 
-| 기능 | 설명 |
+| 기능 | 사용자 관점 |
 | --- | --- |
-| 규칙 기반 PPTX 생성 | 같은 `blueprint.yaml`과 preset은 같은 PPTX를 생성합니다. |
-| Deck Specification DSL | `blueprint.yaml`은 기획서이자 compiler가 읽는 deck spec입니다. |
-| 편집 가능한 native 객체 | chart, table, shape, text를 이미지가 아닌 PowerPoint 객체로 생성합니다. |
-| Design preset과 token | 색상, typography, spacing, brand footer를 preset으로 관리합니다. |
-| Template registry | slide type별 renderer가 등록되어 미등록 layout을 즉흥 생성하지 않습니다. |
-| 브랜딩 지원 | 개인/회사 author, brand footer, custom preset 방향을 workflow에 반영할 수 있습니다. |
-| Metadata·버전 매핑 | `deck.title`, `deck.author`, `deck.version`, `deck.audience`를 PPTX document properties에 반영합니다. |
-| Preview 기반 검토 | PPTX를 PNG로 preview한 뒤 AI가 시각적 밀도, overflow, 가독성을 검토할 수 있습니다. |
-| PDF 내보내기 | `/export-pdf` 또는 `npm run export-pdf`로 PPTX를 PDF로 변환합니다. LibreOffice 필요. |
-| 멀티툴 워크플로우 | Claude Code, Codex CLI/App, Claude App-compatible manual flow를 지원합니다. |
+| 대화식 deck 생성 | 주제·청중·메시지를 말하면 AI가 슬라이드 구조를 제안하고 초안을 만듭니다. |
+| 편집 가능한 PPTX | chart, table, shape, text가 이미지가 아닌 PowerPoint 객체로 생성됩니다. 생성 후 직접 편집할 수 있습니다. |
+| 일관된 레이아웃 | 같은 blueprint와 preset은 항상 같은 결과를 만듭니다. AI가 레이아웃을 즉흥 결정하지 않습니다. |
+| Preview 기반 검토 | AI가 슬라이드 PNG를 보고 텍스트 밀도, 가독성, 구성을 검토합니다. |
+| PDF 내보내기 | `/export-pdf`로 PPTX를 PDF로 바로 변환합니다. LibreOffice 필요. |
+| 16종 슬라이드 타입 | hero, agenda, kpi, chart, table, architecture, timeline, decision 등 발표에 필요한 타입이 미리 정의되어 있습니다. |
+| 멀티툴 지원 | Claude Code, Codex CLI/App, Claude App 세 환경에서 동일한 skill로 작동합니다. |
 
 ---
 
-## Blueprint 예시
+## AI가 작성하는 blueprint 예시
+
+아래는 AI가 요청을 받고 작성하는 `blueprint.yaml` 초안의 일부입니다. 사용자는 이 파일을 검토하고 수정 방향을 말합니다.
 
 ```yaml
 deck:
@@ -181,8 +143,7 @@ slides:
         trend: down
 ```
 
-전체 schema는 [schemas/blueprint.schema.json](schemas/blueprint.schema.json)을 참고하세요.
-더 많은 예제는 `examples/` 디렉터리를 참고하세요.
+전체 schema는 [schemas/blueprint.schema.json](schemas/blueprint.schema.json), 더 많은 예제는 `examples/` 디렉터리를 참고하세요.
 
 ---
 
@@ -209,17 +170,6 @@ slides:
 | Theme | `light`, `dark` |
 | Default author | `ai-deck-compiler (Kyungseo.Park@gmail.com)` |
 | Brand footer | `ai-deck-compiler` |
-
-Preset 파일:
-
-```text
-src/design/presets/default-modern/
-  tokens.json
-  ppt-design.md
-  ppt-components.md
-  ppt-layouts.md
-  ppt-chart-rules.md
-```
 
 회사 브랜드에 맞춘 custom preset은 [USER-MANUAL](docs/USER-MANUAL.md)의 customization 절차와 `skills/customize-preset.md`를 참고하세요.
 
@@ -264,21 +214,14 @@ npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sampl
 
 현재 기준: 43개 테스트.
 
-Metadata 검증:
-
-```bash
-unzip -p output/sample-v1.0.pptx docProps/core.xml | rg "dc:title|dc:creator|dc:subject|cp:revision"
-unzip -p output/sample-v1.0.pptx docProps/app.xml | rg "Company|Application"
-```
-
 ---
 
 ## 문서
 
 | 문서 | 용도 |
 | --- | --- |
-| [USER-MANUAL](docs/USER-MANUAL.md) | 초보 사용자용 설치, PPT 생성, AI 요청, customization 절차 |
-| [SYSTEM-MANUAL](docs/SYSTEM-MANUAL.md) | 초보 개발자용 architecture, 구현 구조, 유지보수 절차 |
+| [USER-MANUAL](docs/USER-MANUAL.md) | 사용자용 — AI 요청 방법, 설치, customization 절차 |
+| [SYSTEM-MANUAL](docs/SYSTEM-MANUAL.md) | 개발자용 — 구조, renderer 구현, 유지보수 절차 |
 | [PLAN](docs/PLAN.md) | 제품 설계, phase 계획, roadmap |
 | [STATUS](docs/STATUS.md) | 현재 active work dashboard |
 
@@ -288,7 +231,6 @@ unzip -p output/sample-v1.0.pptx docProps/app.xml | rg "Company|Application"
 
 - **Design preset**: 현재 `default-modern` 1종만 제공됩니다. `minimal-dark`, `enterprise-clean`은 backlog 예정입니다.
 - **Preview**: LibreOffice + poppler 의존. Keynote, Google Slides 직접 지원 없음.
-- **발표자 노트**: `slide.notes`가 PowerPoint 발표자 노트로 저장되지만 슬라이드에 시각적으로 렌더링되지 않습니다.
 - **AI 외부 검색**: AI-research-first mode의 실제 외부 검색은 도구 환경에 따라 제한됩니다.
 
 ---

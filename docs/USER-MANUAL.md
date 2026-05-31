@@ -1,47 +1,44 @@
 # User Manual — ai-deck-compiler
 
-이 문서는 `ai-deck-compiler`를 처음 사용하는 사람을 위한 안내서입니다.
-개발 구조나 renderer 구현을 고치려면 [SYSTEM-MANUAL](SYSTEM-MANUAL.md)을 보세요.
+AI와 대화하면서 발표 자료를 빠르게 만드는 방법을 안내합니다.
+엔진 구조나 renderer를 수정하려면 [SYSTEM-MANUAL](SYSTEM-MANUAL.md)을 보세요.
 
 ---
 
-## 1. 무엇을 만드는 도구인가요?
+## 1. 이렇게 씁니다
 
-`ai-deck-compiler`는 AI와 함께 `blueprint.yaml`을 작성하고, 이를 editable PowerPoint 파일(`.pptx`)로 컴파일하는 도구입니다.
+Claude Code에서 한 줄이면 됩니다.
 
-쉽게 말하면:
+```text
+/create-deck
+```
 
-- AI가 발표 기획서와 slide 내용을 씁니다.
-- 사용자는 중간 산출물인 `blueprint.yaml`을 검토합니다.
-- TypeScript 엔진이 design preset과 template을 적용해 PPTX를 만듭니다.
-- 생성된 PPTX는 PowerPoint에서 직접 편집할 수 있습니다.
+그러면 AI가 질문합니다. "어떤 발표인가요? 청중은 누구인가요? 핵심 메시지가 있으신가요?"
+답변을 주면 AI가 슬라이드 구성을 제안하고, 확인을 받은 뒤 `blueprint.yaml`을 작성하고, PPTX를 생성합니다.
 
-`blueprint.yaml`은 PPT 기획서이면서 compiler가 읽는 Deck Specification DSL입니다.
-(DSL — Domain Specific Language: 특정 목적에 맞게 설계된 전용 기술 언어)
-사용자는 "슬라이드에 무엇을 보여줄지"만 다루고, 좌표와 레이아웃은 엔진이 계산합니다.
+생성된 파일은 PowerPoint에서 바로 편집할 수 있습니다. chart, table, 도형이 이미지가 아닌 PowerPoint 객체로 만들어집니다.
+
+**사용자가 하는 일:**
+1. AI와 대화한다 — 주제, 청중, 핵심 메시지, 슬라이드 구성을 협의
+2. 결과물을 검토한다 — blueprint 초안을 확인하고 수정 방향을 말함
+3. 반복한다 — "3번 슬라이드 KPI 항목 하나 더 추가해줘" 같은 피드백으로 빠르게 정제
+
+레이아웃, 좌표, 색상은 엔진이 design preset에 따라 처리합니다. AI가 즉흥 결정하지 않으므로 같은 입력은 항상 같은 PPTX를 만듭니다.
 
 ---
 
 ## 2. 전체 흐름
 
 ```mermaid
-flowchart TD
-  A["Repo clone + npm install"] --> B{"시작 방법 선택"}
-  B -->|AI 워크플로우 권장| C["/create-deck 또는 skill 요청"]
-  B -->|CLI 직접 실행| D["blueprint.yaml 직접 작성"]
-  C --> E["AI: 구조 협의 → blueprint.yaml 작성"]
-  E --> F["사용자 검토·수정"]
-  D --> F
-  F --> G["npm run validate"]
-  G --> H["npm run deck → editable PPTX"]
-  H --> I{"Preview 가능?"}
-  I -->|Yes| J["npm run preview → PNG"]
-  I -->|No| K["PowerPoint/Keynote에서 직접 확인"]
-  J --> L["AI visual review + /review-deck"]
-  K --> L
-  L --> M{"수정 필요?"}
-  M -->|Yes| F
-  M -->|No| N["최종 deck"]
+flowchart LR
+  A["'Q2 리뷰 deck 만들어줘'"] --> B["AI: 목적·청중·구성 협의"]
+  B --> C["슬라이드 구조 제안 + 확인"]
+  C --> D["blueprint.yaml 자동 작성"]
+  D --> E["editable PPTX 생성"]
+  E --> F["AI: 시각 검토 + 개선 제안"]
+  F --> G{"수정 필요?"}
+  G -->|Yes| B
+  G -->|No| H["최종 PPTX"]
 ```
 
 ---
@@ -54,6 +51,8 @@ cd ai-deck-compiler
 npm install
 ```
 
+설치 후 Claude Code에서 `/create-deck`을 입력하면 바로 시작할 수 있습니다.
+
 기본 design preset(`default-modern`)은 **Pretendard** 폰트를 사용합니다.
 미설치 시 시스템 fallback 폰트로 렌더링되어 출력물 모양이 달라질 수 있습니다.
 
@@ -64,64 +63,21 @@ npm install
 
 ---
 
-## 4. 시작 방법 — AI 워크플로우 vs CLI 직접 실행
+## 4. AI 요청 방법
 
-두 가지 경로 중 하나를 선택합니다.
+### 4.1 사용 환경별 진입점
 
-### 4.1 AI 워크플로우 (권장)
+| 환경 | 진입 방법 |
+| --- | --- |
+| Claude Code | `/create-deck` 입력 후 요청 |
+| Claude Code | `/generate-blueprint` — blueprint만 생성할 때 |
+| Claude Code | `/review-deck` — 생성된 deck 검토·개선 |
+| Codex CLI / App | repo skill `create-deck` 로드 후 요청 |
+| Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
 
-AI에게 deck 생성을 요청하면 구조 협의 → `blueprint.yaml` 작성 → `npm run deck` 실행 → PPTX 생성까지 AI가 진행합니다.
+### 4.2 요청 예시
 
-| 환경 | 진입 방법 | 비고 |
-| --- | --- | --- |
-| Claude Code | `/create-deck` 입력 | `.claude/commands/create-deck.md` wrapper |
-| Claude Code | `/generate-blueprint` | blueprint만 생성할 때 |
-| Claude Code | `/review-deck` | 생성된 deck 검토 |
-| Codex CLI/App | repo skill `create-deck` 로드 후 요청 | `.agents/skills/create-deck/SKILL.md` |
-| Claude App | `skills/create-deck.md` 내용 참조 후 요청 | native slash command 미지원 |
-
-프롬프트 예시는 §5를 참고하세요.
-
-### 4.2 CLI 직접 실행
-
-AI 없이 `blueprint.yaml`을 직접 작성하거나, 동작 확인·디버깅 용도로 사용합니다.
-
-```bash
-# 예제 blueprint 검증 (세 가지 중 선택)
-npm run validate -- --blueprint examples/sample/blueprint.yaml
-npm run validate -- --blueprint examples/strategy/blueprint.yaml
-npm run validate -- --blueprint examples/data-report/blueprint.yaml
-
-# PPTX 생성
-npm run deck -- \
-  --blueprint examples/sample/blueprint.yaml \
-  --output output/sample-v1.0.pptx
-
-# Preview (LibreOffice + pdftoppm 필요, optional)
-npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
-
-# PDF 내보내기 (LibreOffice 필요)
-npm run export-pdf -- output/sample-v1.0.pptx
-```
-
-Preview가 없으면 PowerPoint 또는 Keynote에서 직접 확인하면 됩니다.
-
----
-
-## 5. AI로 deck 만들기
-
-### 5.1 입력 방식 3가지
-
-| 방식 | 언제 쓰나요? | AI가 하는 일 |
-| --- | --- | --- |
-| brief-first | 주제와 목적만 짧게 말할 때 | 핵심 질문을 하고 구조를 제안합니다. |
-| source-first | markdown, 메모, 보고서 초안이 있을 때 | source를 요약하고 narrative spine과 slide plan으로 바꿉니다. |
-| AI-research-first | "알아서 조사해서 만들어줘"에 가까울 때 | research 범위와 출처 기준을 확인한 뒤 content draft를 만듭니다. |
-
-AI-research-first는 도구 환경에 따라 실제 외부 검색이 제한될 수 있습니다.
-검색 도구가 없으면 AI는 사용자가 제공한 자료, 명시적 가정, 추가 질문을 기반으로 진행합니다.
-
-### 5.2 기본 요청 예시
+**주제와 목적만 말할 때 (brief-first)**
 
 ```text
 /create-deck
@@ -132,18 +88,18 @@ Q2 엔지니어링 성과 리뷰 deck을 만들어줘.
 dark theme로 해줘.
 ```
 
-### 5.3 Markdown source를 주는 예시
+**작성해둔 자료가 있을 때 (source-first)**
 
 ```text
 /create-deck
 
 아래 markdown 보고서를 기반으로 고객 제안용 8장 deck을 만들어줘.
-source-first로 진행하고, 원문을 그대로 복붙하지 말고 핵심 주장과 근거만 뽑아줘.
+원문을 그대로 복붙하지 말고 핵심 주장과 근거만 뽑아줘.
 
 [여기에 markdown 붙여넣기]
 ```
 
-### 5.4 AI에게 내용 작성을 맡기는 예시
+**AI에게 조사와 작성을 맡길 때 (AI-research-first)**
 
 ```text
 /create-deck
@@ -152,6 +108,34 @@ source-first로 진행하고, 원문을 그대로 복붙하지 말고 핵심 주
 대상은 스타트업 CTO들이고, 기술적이지만 너무 깊지 않게.
 필요하면 자료 조사 범위와 출처 기준을 먼저 물어봐.
 ```
+
+### 4.3 CLI 직접 실행 (디버깅·고급 사용자)
+
+AI 없이 `blueprint.yaml`을 직접 작성하거나, 동작을 확인할 때 사용합니다.
+
+```bash
+# blueprint 검증
+npm run validate -- --blueprint examples/sample/blueprint.yaml
+
+# PPTX 생성
+npm run deck -- \
+  --blueprint examples/sample/blueprint.yaml \
+  --output output/sample-v1.0.pptx
+
+# Preview (LibreOffice + pdftoppm 필요, optional)
+npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
+
+# PDF 내보내기
+npm run export-pdf -- output/sample-v1.0.pptx
+```
+
+---
+
+## 5. AI가 작성하는 blueprint
+
+AI가 요청을 처리하면 `blueprint.yaml`이라는 중간 파일을 생성합니다. 사용자는 이 파일을 직접 편집하거나 AI에게 수정을 요청합니다.
+
+blueprint는 "어떤 슬라이드를 어떤 내용으로 만들지"를 기술하는 deck 전용 DSL(Domain Specific Language)입니다. 좌표와 레이아웃은 없습니다 — 엔진이 처리합니다.
 
 ---
 
