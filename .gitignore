@@ -11,6 +11,7 @@ node_modules/
 outputs/
 output/
 *.pptx
+!examples/results/*.pptx
 blueprints/
 
 # Compiled files

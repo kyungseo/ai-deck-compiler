@@ -9,6 +9,14 @@ npm run validate -- --blueprint examples/strategy/blueprint.yaml
 npm run deck -- --blueprint examples/strategy/blueprint.yaml
 ```
 
+대표 preset별 blueprint와 PPTX 결과물은 `examples/results/`에 있습니다.
+
+```bash
+npm run deck -- --blueprint examples/results/strategy-teal-dark.blueprint.yaml --output examples/results/strategy-teal-dark.pptx
+npm run deck -- --blueprint examples/results/strategy-vivid-dark.blueprint.yaml --output examples/results/strategy-vivid-dark.pptx
+npm run deck -- --blueprint examples/results/strategy-modern-light.blueprint.yaml --output examples/results/strategy-modern-light.pptx
+```
+
 ## 슬라이드 구성
 
 | # | type | 설명 |

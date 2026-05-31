@@ -1,6 +1,6 @@
 deck:
   title: Platform Architecture
-  design: default-modern
+  design: modern
   theme: dark
   version: "1.0"
   audience: Engineering

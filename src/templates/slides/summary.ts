@@ -23,7 +23,7 @@ export const summaryTemplate: SlideTemplate<SummarySlide> = {
     // When takeaways are present: body on left (60%), takeaway panel on right (38%)
     const bodyW = hasTakeaways ? SL.cw * 0.58 : SL.cw;
     const panelX = SL.cx + bodyW + 0.3;
-    const panelW = SL.cw - bodyW - 0.3;
+    const panelW = SL.cw - bodyW - 0.3 - 0.15;
 
     if (bodyItems.length > 0) {
       const bullets = bodyItems.map(text => ({

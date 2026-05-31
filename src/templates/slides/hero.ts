@@ -13,6 +13,7 @@ export const heroTemplate: SlideTemplate<HeroSlide> = {
     const ty = tokens.typography;
     const co = tokens.colors;
     const accent = hex(co['accent'] ?? '4F46E5');
+    const accentText = hex(co['accent-text'] ?? co['accent'] ?? '4F46E5');
 
     // Version badge — top-right corner stamp
     if (slide.doc_version) {
@@ -27,7 +28,7 @@ export const heroTemplate: SlideTemplate<HeroSlide> = {
         fontSize: 12,
         bold: true,
         fontFace: ty['label']?.font ?? 'Pretendard',
-        color: accent,
+        color: accentText,
         align: 'center',
         valign: 'middle',
       });
@@ -44,9 +45,10 @@ export const heroTemplate: SlideTemplate<HeroSlide> = {
       valign: 'middle',
     });
 
-    // Accent line — below title
+    // Accent line — below title, width approximated from title length at 40pt Bold
+    const lineW = Math.min(Math.max(2.0, slide.title.length * 0.28), SL.cw * 0.75);
     pptxSlide.addShape('rect', {
-      x: SL.w / 2 - 1.5, y: 3.38, w: 3.0, h: 0.05,
+      x: SL.w / 2 - lineW / 2, y: 3.18, w: lineW, h: 0.05,
       fill: { color: accent },
       line: { color: accent, width: 0 },
     });
@@ -69,7 +71,7 @@ export const heroTemplate: SlideTemplate<HeroSlide> = {
         x: SL.mx, y: 4.3, w: SL.cw, h: 0.42,
         fontSize: ty['label']?.size ?? 12,
         fontFace: ty['label']?.font ?? 'Pretendard',
-        color: accent,
+        color: accentText,
         align: 'center',
         valign: 'middle',
       });

@@ -12,6 +12,7 @@ export const kpiTemplate: SlideTemplate<KpiSlide> = {
   render(slide: KpiSlide, tokens: ResolvedDesignTokens, pptxSlide: PptxSlide) {
     const ty = tokens.typography;
     const co = tokens.colors;
+    const accentText = hex(co['accent-text'] ?? co['accent'] ?? '2563EB');
 
     renderSectionHeader(pptxSlide, slide, tokens);
     renderCardBackground(pptxSlide, tokens);
@@ -48,15 +49,15 @@ export const kpiTemplate: SlideTemplate<KpiSlide> = {
         fontSize: ty['kpi-value']?.size ?? 52,
         bold: true,
         fontFace: ty['kpi-value']?.font ?? 'Pretendard',
-        color: hex(co['accent'] ?? '2563EB'),
+        color: accentText,
         align: 'center',
         valign: 'middle',
       });
 
       // Delta
       if (kpi.delta) {
-        const deltaColor = kpi.trend === 'up' ? '059669'
-          : kpi.trend === 'down' ? 'DC2626'
+        const deltaColor = kpi.trend === 'up' ? hex(co['success'] ?? '059669')
+          : kpi.trend === 'down' ? hex(co['danger'] ?? 'DC2626')
           : hex(co['text-muted'] ?? '6B7280');
         const arrow = kpi.trend === 'up' ? '▲ ' : kpi.trend === 'down' ? '▼ ' : '';
         pptxSlide.addText(`${arrow}${kpi.delta}`, {

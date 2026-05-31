@@ -44,26 +44,29 @@ export function renderSectionHeader(
   tokens: ResolvedDesignTokens,
 ): void {
   const { typography: ty, colors: co } = tokens;
-  const accent = hex(co['accent'] ?? '2563EB');
   const primary = hex(co['text-primary'] ?? '111827');
   const secondary = hex(co['text-secondary'] ?? '374151');
   const font = ty['title']?.font ?? 'Pretendard';
 
   if (opts.section_label) {
-    // Small accent square marker
-    s.addShape('rect', {
-      x: SL.mx, y: 0.28, w: 0.12, h: 0.14,
-      fill: { color: accent },
-      line: { color: accent, width: 0 },
+    const chipBg = hex(co['chip-bg'] ?? co['accent'] ?? '2D6B5E');
+    const chipText = hex(co['chip-text'] ?? 'FFFFFF');
+    const chipW = Math.min(Math.max(1.0, opts.section_label.length * 0.10 + 0.40), 4.0);
+    s.addShape('roundRect', {
+      x: SL.mx, y: 0.20, w: chipW, h: 0.28,
+      fill: { color: chipBg },
+      line: { color: chipBg, width: 0 },
+      rectRadius: 0.04,
     });
-    // Section label text
     s.addText(opts.section_label.toUpperCase(), {
-      x: SL.mx + 0.22, y: 0.22, w: 9.0, h: 0.35,
+      x: SL.mx + 0.14, y: 0.20, w: chipW - 0.28, h: 0.28,
       fontSize: 11,
       bold: true,
       fontFace: ty['label']?.font ?? 'Pretendard',
-      color: accent,
+      color: chipText,
       valign: 'middle',
+      align: 'left',
+      wrap: false,
     });
   }
 
