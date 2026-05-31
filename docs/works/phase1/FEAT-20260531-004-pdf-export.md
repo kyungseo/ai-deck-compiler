@@ -64,26 +64,26 @@ npm run export-pdf -- output/deck.pptx --out output/deck.pdf
 
 ## Done Criteria
 
-- [ ] `npm run export-pdf -- output/sample-v1.0.pptx` — PDF 생성 확인
-- [ ] LibreOffice 없을 때 OS별 설치 안내 출력 후 exit 1
-- [ ] `skills/export-pdf.md` — 환경 체크 + 변환 + 오류 안내 포함, 3도구 진입 경로 명시
-- [ ] `.claude/commands/export-pdf.md` wrapper 추가
-- [ ] `.agents/skills/export-pdf/SKILL.md` wrapper 추가
-- [ ] `AGENTS.md` Product Skill Routing 표 업데이트 (English Only)
-- [ ] `skills/README.md` 업데이트
-- [ ] `prompts/codex-session-start.md` Section 0 export-pdf 케이스 추가
-- [ ] README `## 주요 기능`에 PDF 내보내기 추가, 한계 항목 삭제
-- [ ] USER-MANUAL, SYSTEM-MANUAL 소급 반영
-- [ ] `npm run typecheck` 통과
-- [ ] `npm test` 통과
+- [x] `npm run export-pdf -- output/sample-v1.0.pptx` — PDF 생성 확인
+- [x] LibreOffice 없을 때 OS별 설치 안내 출력 후 exit 1
+- [x] `skills/export-pdf.md` — 환경 체크 + 변환 + 오류 안내 포함, 3도구 진입 경로 명시
+- [x] `.claude/commands/export-pdf.md` wrapper 추가
+- [x] `.agents/skills/export-pdf/SKILL.md` wrapper 추가
+- [x] `AGENTS.md` Product Skill Routing 표 업데이트 (English Only)
+- [x] `skills/README.md` 업데이트
+- [x] `prompts/codex-session-start.md` Section 0 export-pdf 케이스 추가
+- [x] README `## 주요 기능`에 PDF 내보내기 추가, 한계 항목 삭제
+- [x] USER-MANUAL, SYSTEM-MANUAL 소급 반영
+- [x] `npm run typecheck` 통과
+- [x] `npm test` 통과
 
 ## Verification
 
 ```bash
-npm run typecheck
-npm test
-npm run export-pdf -- output/sample-v1.0.pptx   # 실제 변환 확인
-unzip -l output/sample-v1.0.pdf 2>/dev/null || file output/sample-v1.0.pdf
+npm run typecheck   # ✅ 통과
+npm test            # ✅ 43 tests passed
+npm run export-pdf -- output/platform-modernization-strategy.pptx
+# ✅ PDF document, version 1.7, 8 pages 생성 확인 (2026-05-31)
 ```
 
 ## Risks

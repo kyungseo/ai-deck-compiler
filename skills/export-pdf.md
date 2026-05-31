@@ -44,14 +44,12 @@ PDF 출력 경로를 별도로 지정하려면 알려주세요.
 npm run export-pdf -- output/deck-v1.0.pptx
 ```
 
-LibreOffice가 없으면 CLI가 다음 안내를 출력하고 종료한다:
+LibreOffice가 없으면 CLI가 OS에 맞는 설치 안내를 출력하고 종료한다. 예시 (macOS):
 
 ```
   [오류] LibreOffice를 찾을 수 없습니다.
   설치 방법:
-    macOS:          brew install --cask libreoffice
-    Ubuntu/Debian:  sudo apt install libreoffice
-    Windows:        https://www.libreoffice.org/download/
+  brew install --cask libreoffice
 ```
 
 AI는 이 출력을 사용자에게 그대로 전달하고 설치를 안내한다.
