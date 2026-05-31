@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | Priority | Start | Work File |
 | --- | --- | --- | --- | --- |
+| FEAT-20260531-002 | skill-review-deck | P1 | 2026-05-31 | [link](FEAT-20260531-002-skill-review-deck.md) |
 
 ## Done (Archive Pending)
 
