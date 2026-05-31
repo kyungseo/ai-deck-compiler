@@ -3,6 +3,8 @@
 발표 목적과 내용을 기반으로 blueprint.yaml 초안을 생성하는 집중형 skill.
 
 `create-deck`의 Step 3~4에 해당하며, 이미 슬라이드 구조가 결정된 상황에서 blueprint 작성에 집중할 때 사용한다.
+`source-first`의 source 요약, narrative spine, slide plan 결정은 `create-deck`에서 처리한다.
+이 skill은 정리된 구조와 핵심 내용을 받아 blueprint.yaml로 변환한다.
 
 ---
 
@@ -17,7 +19,12 @@
 4. 각 슬라이드의 주요 내용 또는 데이터
 5. design preset (기본: default-modern)
 6. theme (light | dark)
+7. author/team (선택, 표지와 PPTX metadata)
+8. version (기본: "1.0")
 ```
+
+source나 markdown만 제공됐고 슬라이드 구조가 아직 없으면 바로 blueprint를 쓰지 않는다.
+먼저 `create-deck`의 source-first 절차로 source 요약, narrative spine, slide plan 승인을 거친 뒤 돌아온다.
 
 ---
 
@@ -54,6 +61,7 @@ deck:
   design: default-modern
   theme: {light | dark}
   version: "1.0"
+  author: {작성자 또는 팀명} # 선택
   audience: {청중} # 선택
 ```
 

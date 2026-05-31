@@ -30,6 +30,26 @@ async function getPptxSlideXmls(blueprintPath: string, design: string, theme: 'l
   return slides;
 }
 
+async function getPptxFileXml(
+  blueprintPath: string,
+  design: string,
+  theme: 'light' | 'dark',
+  path: string,
+): Promise<string> {
+  const blueprint = parseBlueprint(blueprintPath);
+  const tokens = resolveDesignTokens(design, theme);
+  const pptx = await compile({ blueprint, tokens });
+  const buffer = await (pptx as any).write({ outputType: 'nodebuffer' }) as Buffer;
+  const zip = await JSZip.loadAsync(buffer);
+  const file = zip.file(path);
+
+  if (!file) {
+    throw new Error(`Missing PPTX file: ${path}`);
+  }
+
+  return file.async('string');
+}
+
 describe('Renderer structure snapshot', () => {
   it('basic blueprint produces stable slide XML structure', async () => {
     const slides = await getPptxSlideXmls(
@@ -61,5 +81,32 @@ describe('Renderer determinism — identical PPTX structure on repeated compile'
     const run1 = await getPptxSlideXmls('examples/basic/blueprint.yaml', 'default-modern', 'light');
     const run2 = await getPptxSlideXmls('examples/basic/blueprint.yaml', 'default-modern', 'light');
     expect(run1).toEqual(run2);
+  });
+});
+
+describe('PPTX document metadata', () => {
+  it('writes deck metadata into core document properties', async () => {
+    const coreXml = await getPptxFileXml(
+      'examples/basic/blueprint.yaml',
+      'default-modern',
+      'light',
+      'docProps/core.xml',
+    );
+
+    expect(coreXml).toContain('<dc:title>Product Overview</dc:title>');
+    expect(coreXml).toContain('<dc:creator>ai-deck-compiler (Kyungseo.Park@gmail.com)</dc:creator>');
+    expect(coreXml).toContain('<dc:subject>Product Overview — Internal team</dc:subject>');
+    expect(coreXml).toContain('<cp:revision>1</cp:revision>');
+  });
+
+  it('writes brand metadata into app document properties', async () => {
+    const appXml = await getPptxFileXml(
+      'examples/basic/blueprint.yaml',
+      'default-modern',
+      'light',
+      'docProps/app.xml',
+    );
+
+    expect(appXml).toContain('<Company>ai-deck-compiler</Company>');
   });
 });

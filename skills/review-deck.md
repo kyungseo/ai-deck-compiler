@@ -16,7 +16,7 @@ blueprint 수정 제안을 actionable 형식으로 출력하는 skill.
 blueprint.yaml 입력 (또는 경로 지정)
   → Step 1: 대상 파일과 검토 범위 확인
   ── [GATE 1] 파일 확인 후 진행 ──
-  → Step 2: 5종 항목 분석
+  → Step 2: 7종 항목 분석
   → Step 3: 검토 보고서 출력
   ── [GATE 2] 보고서 확인 후 진행 ──
   → Step 4: blueprint 수정 제안 생성
@@ -44,15 +44,18 @@ blueprint 파일 경로가 제공되지 않으면 묻는다.
 - 텍스트 분량만
 - 차트·표 데이터만
 - 청중 적합성만
+- preview visual만
+- PPTX metadata만
 ```
 
 파일을 읽어 `deck` 메타데이터(제목, 청중, 테마)와 슬라이드 목록을 파악한다.
+PPTX 또는 preview PNG 경로가 제공되면 함께 확인한다.
 
 → **[GATE 1] 파일 확인 및 검토 범위 합의 후에만 분석을 시작한다.**
 
 ---
 
-## Step 2 — 5종 항목 분석
+## Step 2 — 7종 항목 분석
 
 ### 1. 슬라이드 흐름 (Flow)
 
@@ -140,11 +143,60 @@ blueprint 파일 경로가 제공되지 않으면 묻는다.
 발견: {부적합 슬라이드 id + 이유}
 ```
 
+### 6. Preview Visual Review
+
+preview PNG가 있으면 blueprint 구조 검토와 함께 실제 화면 기준으로 평가한다.
+
+확인 기준:
+- 제목/본문 overflow가 없는가
+- 하단 또는 주요 영역에 과도한 빈 공간이 없는가
+- chart/table 텍스트가 읽히는가
+- preset/theme/brand footer가 일관되게 보이는가
+- 강조 요소가 메시지 우선순위를 방해하지 않는가
+
+preview가 없으면 다음 명령으로 생성을 제안한다.
+
+```bash
+npm run preview -- output/{slug}.pptx --out output/{slug}-preview
+```
+
+preview 도구가 없으면 PowerPoint/Keynote 수동 확인으로 대체한다.
+
+출력 형식:
+```
+[Preview] ✅ 양호 | ⚠️ 개선 필요 | ❌ 문제 | ⏭️ 미확인
+평가: {1~2문장}
+발견: {slide 번호 또는 확인 불가 사유}
+```
+
+### 7. PPTX Metadata
+
+PPTX 경로가 있으면 document properties가 blueprint metadata와 일치하는지 확인한다.
+
+확인 기준:
+- `dc:title`이 `deck.title`과 일치하는가
+- `dc:creator`가 `deck.author` 또는 preset brand author fallback과 일치하는가
+- `dc:subject`가 `deck.title`/`deck.audience` 기반으로 채워져 있는가
+- `PptxGenJS Presentation` / `PptxGenJS` 기본값이 남아 있지 않은가
+
+검증 명령:
+
+```bash
+unzip -p output/{slug}.pptx docProps/core.xml | rg "dc:title|dc:creator|dc:subject|cp:revision"
+```
+
+출력 형식:
+```
+[Metadata] ✅ 양호 | ⚠️ 개선 필요 | ❌ 문제 | ⏭️ 미확인
+평가: {1~2문장}
+발견: {불일치 필드 또는 확인 불가 사유}
+```
+
 ---
 
 ## Step 3 — 검토 보고서 출력
 
-5종 항목 결과를 하나의 보고서로 정리해 출력한다.
+7종 항목 결과를 하나의 보고서로 정리해 출력한다.
 
 ```
 ## Deck Review — {deck.title}
@@ -156,6 +208,8 @@ blueprint 파일 경로가 제공되지 않으면 묻는다.
 | 텍스트 분량 | ✅/⚠️/❌ | {한 줄 요약} |
 | 차트·표 데이터 | ✅/⚠️/❌ | {한 줄 요약} |
 | 청중 적합성 | ✅/⚠️/❌ | {한 줄 요약} |
+| Preview | ✅/⚠️/❌/⏭️ | {한 줄 요약} |
+| Metadata | ✅/⚠️/❌/⏭️ | {한 줄 요약} |
 
 총 {n}개 개선 항목 발견.
 
@@ -217,7 +271,7 @@ npm run validate -- --blueprint {path}
 {n}개 항목을 수정했습니다.
 
 다시 PPTX를 생성하려면:
-npm run deck -- --blueprint {path} --output output/{slug}.pptx
+npm run deck -- --blueprint {path} --output output/{slug}-v{version}.pptx
 ```
 
 ---

@@ -25,5 +25,5 @@ Gate 구조:
 - [GATE 2] 검토 보고서 확인 → Step 4
 - [GATE 3] 수정 적용 여부 확인 → Step 5
 
-검토 항목 5종: 슬라이드 흐름, 메시지 일관성, 텍스트 분량, 차트·표 데이터 명확성, 청중 적합성
+검토 항목 7종: 슬라이드 흐름, 메시지 일관성, 텍스트 분량, 차트·표 데이터 명확성, 청중 적합성, preview visual, PPTX metadata
 상세: `skills/review-deck.md`

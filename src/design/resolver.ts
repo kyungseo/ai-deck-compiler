@@ -6,11 +6,11 @@ import type { ResolvedDesignTokens, TypographyToken, BrandToken } from '../compi
 const PRESETS_DIR = join(dirname(fileURLToPath(import.meta.url)), 'presets');
 
 const DEFAULT_BRAND: BrandToken = {
-  name: 'Presentation Compiler',
+  name: 'ai-deck-compiler',
   show: true,
   showPageNumbers: true,
   fontSize: 10,
-  author: '박경서 (Kyungseo.Park@gmail.com)',
+  author: 'ai-deck-compiler (Kyungseo.Park@gmail.com)',
 };
 
 interface RawTokens {

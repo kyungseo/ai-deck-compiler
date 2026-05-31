@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | Priority | Start | Work File |
 | --- | --- | --- | --- | --- |
+| FEAT-20260531-003 | preset-aware deck creation + metadata/source input workflow | P1 | 2026-05-31 | [link](FEAT-20260531-003-preset-aware-deck-workflow.md) |
 
 ## Done (Archive Pending)
 

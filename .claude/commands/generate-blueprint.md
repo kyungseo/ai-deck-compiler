@@ -8,6 +8,7 @@ disable-model-invocation: true
 
 슬라이드 구조가 이미 결정된 상황에서 blueprint.yaml 작성에 집중할 때 사용한다.
 처음부터 대화식으로 발표를 기획하려면 `/create-deck`을 사용한다.
+markdown/source 처리와 slide plan 결정이 필요하면 `/create-deck`의 source-first 흐름을 사용한다.
 
 ## Step 1 — 입력 정보 수집
 
@@ -21,6 +22,8 @@ disable-model-invocation: true
 4. 각 슬라이드의 주요 내용 또는 데이터
 5. design preset (기본: default-modern)
 6. theme (light | dark)
+7. author/team (선택)
+8. version (기본: "1.0")
 ```
 
 ## Step 2 — Narrative Spine 작성
@@ -48,7 +51,7 @@ blueprint가 완성됐습니다.
 
 PPTX를 생성하려면:
 npm run validate -- --blueprint blueprints/{slug}.yaml
-npm run deck -- --blueprint blueprints/{slug}.yaml --output output/{slug}.pptx
+npm run deck -- --blueprint blueprints/{slug}.yaml --output output/{slug}-v{version}.pptx
 ```
 
 ---
