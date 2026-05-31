@@ -131,6 +131,7 @@ flowchart TD
 | 브랜딩 지원 | 개인/회사 author, brand footer, custom preset 방향을 workflow에 반영할 수 있습니다. |
 | Metadata·버전 매핑 | `deck.title`, `deck.author`, `deck.version`, `deck.audience`를 PPTX document properties에 반영합니다. |
 | Preview 기반 검토 | PPTX를 PNG로 preview한 뒤 AI가 시각적 밀도, overflow, 가독성을 검토할 수 있습니다. |
+| PDF 내보내기 | `/export-pdf` 또는 `npm run export-pdf`로 PPTX를 PDF로 변환합니다. LibreOffice 필요. |
 | 멀티툴 워크플로우 | Claude Code, Codex CLI/App, Claude App-compatible manual flow를 지원합니다. |
 
 ---
@@ -267,7 +268,6 @@ unzip -p output/sample-v1.0.pptx docProps/app.xml | rg "Company|Application"
 - **Preview**: LibreOffice + poppler 의존. Keynote, Google Slides 직접 지원 없음.
 - **발표자 노트**: `slide.notes`가 PowerPoint 발표자 노트로 저장되지만 슬라이드에 시각적으로 렌더링되지 않습니다.
 - **AI 외부 검색**: AI-research-first mode의 실제 외부 검색은 도구 환경에 따라 제한됩니다.
-- **PDF 내보내기**: 내장 PDF 내보내기 없음. PowerPoint/Keynote 내보내기 기능을 사용하세요.
 
 ---
 

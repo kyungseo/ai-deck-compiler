@@ -28,6 +28,7 @@ create-deck ──→ generate-blueprint (Step 3~4 내부 또는 단독)
 | create-deck | `create-deck.md` | ✅ 완료 | 대화식 end-to-end PPT 생성 워크플로우 |
 | generate-blueprint | `generate-blueprint.md` | ✅ 완료 | blueprint.yaml 초안 생성 (단독 또는 create-deck 내부) |
 | review-deck | `review-deck.md` | ✅ 완료 | 생성된 deck 구조·메시지·디자인 검토 + blueprint 수정 제안 |
+| export-pdf | `export-pdf.md` | ✅ 완료 | PPTX → PDF 변환. 환경 체크 + LibreOffice 없을 시 설치 안내 |
 | customize-preset | `customize-preset.md` | 📄 문서 완료 | 스크린샷·브랜드 자산 → custom design preset 생성 (end-to-end 검증 미완) |
 | generate-architecture-slide | *(예정)* | 📋 backlog | 기술 아키텍처 설명 → architecture slide blueprint 생성 |
 | convert-design-system | *(예정)* | 📋 backlog | HTML/CSS design.md → ppt-design.md 변환 |

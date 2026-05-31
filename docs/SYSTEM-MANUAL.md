@@ -210,6 +210,7 @@ Product skills:
 | `create-deck` | input mode 판별, blueprint 작성, PPTX 생성, preview review loop |
 | `generate-blueprint` | 구조가 정해진 뒤 blueprint 작성에 집중 |
 | `review-deck` | 구조/메시지/텍스트/데이터/청중/preview/metadata 검토 |
+| `export-pdf` | PPTX → PDF 변환. LibreOffice 환경 체크 + 설치 안내 |
 | `customize-preset` | 브랜드 자료 기반 custom preset 생성 절차 |
 
 중요한 책임 분리:
@@ -217,6 +218,7 @@ Product skills:
 - `create-deck`: brief-first, source-first, AI-research-first를 판별하고 구조를 결정합니다.
 - `generate-blueprint`: 구조 결정 후 blueprint 작성만 담당합니다.
 - `review-deck`: blueprint와 optional PPTX/preview를 함께 검토합니다.
+- `export-pdf`: PPTX 파일을 PDF로 변환합니다. LibreOffice만 필요하며 poppler 불필요.
 
 ---
 
@@ -231,15 +233,18 @@ npm run deck -- \
 
 npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
 
+npm run export-pdf -- output/sample-v1.0.pptx
+npm run export-pdf -- output/sample-v1.0.pptx --out output/sample.pdf
+
 npm run schema
 npm run typecheck
 npm test
 ```
 
-Preview는 외부 도구에 의존합니다:
+Preview와 export-pdf는 외부 도구에 의존합니다:
 
-- LibreOffice (`soffice`) — 오픈소스 오피스 스위트. PPTX를 PDF로 변환하는 데 사용합니다.
-- poppler의 `pdftoppm` — PDF 렌더링 라이브러리. PDF를 PNG로 변환합니다.
+- LibreOffice (`soffice`) — 오픈소스 오피스 스위트. PPTX를 PDF로 변환하는 데 사용합니다. (`preview`, `export-pdf` 모두 필요)
+- poppler의 `pdftoppm` — PDF 렌더링 라이브러리. PDF를 PNG로 변환합니다. (`preview`만 필요)
 
 ---
 
