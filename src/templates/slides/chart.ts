@@ -47,13 +47,22 @@ export const chartTemplate: SlideTemplate<ChartSlide> = {
     const isStacked = chart.type === 'stacked-bar';
     const isPie = chart.type === 'pie' || chart.type === 'donut';
 
+    const textColor = hex(co['text-secondary'] ?? '6B7280');
+    const axisColor = hex(co['text-muted'] ?? '9CA3AF');
+
     const chartOpts: Record<string, unknown> = {
       x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
       chartColors,
       showLegend: true,
       legendPos: 'b',
       legendFontSize: ty['caption']?.size ?? 14,
+      legendFontColor: textColor,
       dataLabelFontSize: ty['caption']?.size ?? 14,
+      dataLabelColor: textColor,
+      catAxisLabelColor: axisColor,
+      catAxisLabelFontSize: ty['caption']?.size ?? 14,
+      valAxisLabelColor: axisColor,
+      valAxisLabelFontSize: ty['caption']?.size ?? 14,
       showValue: isPie,
     };
 

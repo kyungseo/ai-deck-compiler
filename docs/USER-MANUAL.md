@@ -63,10 +63,14 @@ npm install
 | macOS | `brew install --cask font-pretendard` |
 | Windows / Linux | [Pretendard 릴리스 페이지](https://github.com/orioncactus/pretendard)에서 다운로드 |
 
-### 3.2 샘플 blueprint 검증
+### 3.2 예제 blueprint 검증
+
+세 가지 예제 중 하나를 골라 시작하세요.
 
 ```bash
 npm run validate -- --blueprint examples/sample/blueprint.yaml
+npm run validate -- --blueprint examples/strategy/blueprint.yaml
+npm run validate -- --blueprint examples/data-report/blueprint.yaml
 ```
 
 ### 3.3 PPTX 생성
@@ -152,6 +156,22 @@ source-first로 진행하고, 원문을 그대로 복붙하지 말고 핵심 주
 ---
 
 ## 6. Blueprint 기본 개념
+
+### 6.0 제공 예제
+
+repo에 세 가지 예제가 포함되어 있습니다. 처음 시작할 때 가장 비슷한 형식을 골라 수정하면 됩니다.
+
+| 예제 | 경로 | 시나리오 | 사용된 slide type |
+| --- | --- | --- | --- |
+| sample | `examples/sample/` | 엔지니어링 플랫폼 전략 발표 | hero, agenda, kpi, architecture, chart, timeline, summary, appendix |
+| strategy | `examples/strategy/` | 경영진 대상 제품 전략 보고 | hero, agenda, content, kpi, decision, summary |
+| data-report | `examples/data-report/` | 분기 비즈니스 데이터 리뷰 | kpi, chart × 2, table, summary |
+
+```bash
+# 원하는 예제를 골라 실행
+npm run validate -- --blueprint examples/strategy/blueprint.yaml
+npm run deck -- --blueprint examples/strategy/blueprint.yaml
+```
 
 `blueprint.yaml`은 deck의 title, design, theme, metadata, slide list를 담습니다.
 

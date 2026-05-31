@@ -147,9 +147,9 @@ export function zoneCenter(zone: string): { cx: number; cy: number } {
   const entry = ZONE_GRID[zone as Zone] ?? [1, 1]; // default: center
   const [col, row] = entry;
   const cellW = SL.cw / 3;
-  const cellH = SL.ch / 3;
+  const cellH = CARD.ih / 3; // anchor to card inner area so top-row nodes stay inside card
   return {
     cx: SL.cx + cellW * col + cellW / 2,
-    cy: SL.cy + cellH * row + cellH / 2,
+    cy: CARD.iy + cellH * row + cellH / 2,
   };
 }
