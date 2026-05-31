@@ -225,33 +225,63 @@ Product skills:
 
 ---
 
-## 6. CLI 참조
+## 6. 실행 참조
+
+### 6.1 AI 진입점 (product skill)
+
+AI 도구에서 아래 skill을 통해 deck 생성·검토·내보내기를 요청할 수 있습니다.
+
+| 목적 | Claude Code | Codex CLI/App | 설명 |
+| --- | --- | --- | --- |
+| Deck 생성 | `/create-deck` | skill `create-deck` | brief → blueprint → PPTX end-to-end |
+| Blueprint만 | `/generate-blueprint` | skill `generate-blueprint` | 구조가 정해진 경우 blueprint만 생성 |
+| 검토 | `/review-deck` | skill `review-deck` | blueprint + PPTX + preview 검토 |
+| PDF 내보내기 | `/export-pdf` | skill `export-pdf` | PPTX → PDF, 환경 체크 포함 |
+
+Skill 파일 위치: `skills/*.md` (canonical), `.claude/commands/*.md` (Claude Code wrapper), `.agents/skills/*/SKILL.md` (Codex wrapper).
+
+### 6.2 CLI 직접 실행 (개발자·디버깅용)
 
 ```bash
+# blueprint 검증
 npm run validate -- --blueprint examples/sample/blueprint.yaml
 
+# PPTX 생성
 npm run deck -- \
   --blueprint examples/sample/blueprint.yaml \
   --output output/sample-v1.0.pptx
 
+# Preview (LibreOffice + pdftoppm 필요)
 npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
 
+# PDF 내보내기 (LibreOffice 필요)
 npm run export-pdf -- output/sample-v1.0.pptx
 npm run export-pdf -- output/sample-v1.0.pptx --out output/sample.pdf
 
-npm run schema
-npm run typecheck
-npm test
+# 개발 도구
+npm run schema      # JSON Schema 재생성
+npm run typecheck   # TypeScript 타입 검사
+npm test            # 테스트 실행
 ```
 
 Preview와 export-pdf는 외부 도구에 의존합니다:
 
-- LibreOffice (`soffice`) — 오픈소스 오피스 스위트. PPTX를 PDF로 변환하는 데 사용합니다. (`preview`, `export-pdf` 모두 필요)
+- LibreOffice (`soffice`) — 오픈소스 오피스 스위트. PPTX를 PDF로 변환합니다. (`preview`, `export-pdf` 모두 필요)
 - poppler의 `pdftoppm` — PDF 렌더링 라이브러리. PDF를 PNG로 변환합니다. (`preview`만 필요)
 
 ---
 
 ## 7. 유지보수 절차
+
+### 7.0 AI로 기여하기
+
+이 repo는 AI 도구 환경에서 직접 유지보수할 수 있도록 설계되어 있습니다.
+
+- **Claude Code**: `CLAUDE.md`와 `AGENTS.md`를 읽은 뒤 자유롭게 파일을 수정하고 `npm test`로 검증
+- **Codex CLI/App**: `AGENTS.md`의 Workflow Skill Routing을 통해 harness workflow 진입
+- **일반 원칙**: 코드 수정 후 반드시 `npm run typecheck && npm test` 통과를 확인
+
+아래 §7.1~7.6의 각 절차는 AI가 순서대로 실행할 수 있도록 작성되어 있습니다.
 
 ### 7.1 새 Slide Type 추가
 
