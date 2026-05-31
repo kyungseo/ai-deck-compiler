@@ -111,7 +111,7 @@ YAML 선택 이유:
 | 구분 | 타입 목록 |
 | --- | --- |
 | P1 (구현 완료) | hero, agenda, content, two-column, kpi, table, chart, architecture, summary |
-| P2 (구현 예정) | section-divider, comparison, timeline, flow, decision, appendix |
+| P2 (구현 완료) | section-divider, comparison, timeline, flow, decision, appendix, closing |
 
 ### Zone-based 다이어그램
 
@@ -223,9 +223,9 @@ blueprint 작성 전 전체 스토리를 5~10문장으로 요약한다.
 | --- | --- | --- |
 | create-deck | `skills/create-deck.md` | ✅ 완료 |
 | generate-blueprint | `skills/generate-blueprint.md` | ✅ 완료 |
-| customize-preset | `skills/customize-preset.md` | 구현 예정 |
+| review-deck | `skills/review-deck.md` | ✅ 완료 |
+| customize-preset | `skills/customize-preset.md` | 📄 문서 완료 (end-to-end 검증 미완) |
 | generate-architecture-slide | *(예정)* | P1 backlog |
-| review-deck | *(예정)* | P1 backlog |
 | convert-design-system | *(예정)* | P2 backlog |
 | validate-deck | *(예정)* | P3 backlog |
 
@@ -234,6 +234,8 @@ blueprint 작성 전 전체 스토리를 5~10문장으로 요약한다.
 | 커맨드 | 파일 | 역할 |
 | --- | --- | --- |
 | `/create-deck` | `.claude/commands/create-deck.md` | 대화식 PPT 생성 |
+| `/review-deck` | `.claude/commands/review-deck.md` | deck 검토 + blueprint 수정 제안 |
+| `/generate-blueprint` | `.claude/commands/generate-blueprint.md` | blueprint.yaml 초안 생성 |
 
 ---
 
@@ -274,19 +276,12 @@ blueprint 작성 전 전체 스토리를 5~10문장으로 요약한다.
 - ✅ blueprint.yaml Schema (Zod + JSON Schema)
 - ✅ CLI: validate, deck, schema
 - ✅ 테스트 34개 (parser, renderer, snapshot)
-- ✅ Skills: create-deck, generate-blueprint
+- ✅ Skills: create-deck, generate-blueprint, review-deck
 - ✅ README, USER-MANUAL
-
-### 진행 중 (FEAT-20260530-002)
-
-- 🔄 Skills 품질 개선 (Action Title, Story Arc, Visual Density)
-- 🔄 엔진 브랜드 + Page Number
-- 🔄 skills/customize-preset.md
 
 ### 예정 (PHASE1.md backlog)
 
-- ⬜ P2 slide 6종 (section-divider, comparison, timeline, flow, decision, appendix)
-- ⬜ skills: review-deck, generate-architecture-slide
+- ⬜ skills: generate-architecture-slide
 - ⬜ preset: minimal-dark, enterprise-clean
 - ⬜ CLI: list-designs
 - ⬜ CONTRIBUTING.md, LICENSE

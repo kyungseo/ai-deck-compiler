@@ -21,7 +21,7 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| FEAT-20260531-002 | skill-review-deck | docs/works/phase1/FEAT-20260531-002-skill-review-deck.md |
+| CHORE-20260531-001 | AI 구조 정렬 — 멀티툴 product skill 라우팅 완성 | docs/works/phase1/CHORE-20260531-001-ai-structure-alignment.md |
 
 ## Blockers And Open Questions
 
@@ -34,5 +34,4 @@
 
 ## Next Actions
 
-1. `skill-review-deck` 착수 — 생성된 deck 구조·메시지·디자인 검토 AI skill (P1)
-2. Public 전환 시: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020
+1. Public 전환 시: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020

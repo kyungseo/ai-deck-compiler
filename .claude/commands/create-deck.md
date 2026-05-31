@@ -79,13 +79,15 @@ npm run deck -- --blueprint blueprints/{slug}.yaml --output output/{slug}.pptx
 - validate 오류가 있으면 blueprint를 수정하고 재시도한다
 - 성공하면 output 경로를 안내한다
 
-## Step 6 — 결과 확인
+## Step 6 — 결과 확인 + Review Loop (선택)
 
 ```
 PPTX가 생성됐습니다: output/{slug}.pptx
 
 PowerPoint에서 열어 확인해 주세요.
-추가 수정이 필요하면 말씀해 주세요.
+deck 검토를 원하시면 `/review-deck`을 사용하세요:
+- 슬라이드 흐름·메시지·텍스트·차트·청중 적합성 5종 검토
+- blueprint 수정 제안 (slide id + 변경 전/후)
 ```
 
 ---

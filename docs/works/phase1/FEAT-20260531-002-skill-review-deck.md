@@ -1,9 +1,10 @@
 ---
 id: FEAT-20260531-002
 title: "skill-review-deck"
-status: Active
+status: Done
 type: FEAT
 created: 2026-05-31
+actual_end: 2026-05-31
 branch: feature/skill-review-deck
 ---
 

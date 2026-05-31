@@ -266,13 +266,17 @@ PowerPoint / Keynote에서 열어 확인해 주세요.
 
 ---
 
-## Step 6 — 결과 확인 (선택)
+## Step 6 — 결과 확인 + Review Loop (선택)
 
 ```
-deck 검토를 원하시면 말씀해 주세요.
+PPTX가 생성됐습니다: output/{slug}.pptx
+
+PowerPoint에서 열어 확인해 주세요.
+deck 검토를 원하시면 `/review-deck` 또는 `skills/review-deck.md`를 사용하세요:
 - 슬라이드 흐름·메시지 일관성 검토
+- 텍스트 분량·차트·표 데이터 명확성 검토
 - 청중 적합성 평가
-- 개선 제안
+- blueprint 수정 제안 (slide id + 변경 전/후)
 ```
 
 ---

@@ -24,13 +24,29 @@ NEVER:
 - Duplicate shared rules here.
 - Bypass `docs/STATUS.md` or the Approval Matrix.
 
-## Codex Skill Routing
+## Workflow Skill Routing
 
 When a workflow command is invoked or its intent is matched,
 load `.agents/skills/workflow-{name}/SKILL.md` and follow the procedure.
 Skill name maps directly to command name (e.g., `/start` → `workflow-start`).
 
-Available workflow skills are the directories under `.agents/skills/`.
+Available workflow skills: directories named `workflow-*` under `.agents/skills/`.
+
+## Product Skill Routing
+
+When the user requests a product skill (create-deck, review-deck, generate-blueprint),
+load `.agents/skills/{name}/SKILL.md` and follow the procedure.
+
+Note: `.agents/skills/{name}/SKILL.md` is loaded manually based on intent matching.
+App-level automatic skill discovery is outside the scope of this routing.
+
+| Intent | Skill file |
+| --- | --- |
+| PPT 생성 요청, `/create-deck` | `.agents/skills/create-deck/SKILL.md` |
+| deck 검토 요청, `/review-deck` | `.agents/skills/review-deck/SKILL.md` |
+| blueprint 작성 요청, `/generate-blueprint` | `.agents/skills/generate-blueprint/SKILL.md` |
+
+Each product skill file loads the canonical procedure from `skills/{name}.md`.
 
 ## Document Language Policy
 
