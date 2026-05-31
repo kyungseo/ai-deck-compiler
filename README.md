@@ -34,6 +34,17 @@ AI가 발표 구조를 제안하고 확인을 받습니다. 승인하면 bluepri
 | Codex CLI / App | repo skill `create-deck` 로드 후 요청 |
 | Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
 
+Codex App에서 처음 시작한다면 아래처럼 말하면 됩니다.
+
+```text
+이 repo의 AGENTS.md를 읽고 Product Skill Routing에 따라 create-deck 절차로 PPT 작성을 시작해줘.
+
+Q2 엔지니어링 성과 리뷰 deck을 만들고 싶어.
+청중은 임원진이고, 발표 시간은 15분이야.
+핵심 메시지는 "플랫폼 안정성이 개선됐고 다음 분기에는 배포 자동화 투자가 필요하다"야.
+dark theme, 간결한 executive briefing 톤으로 진행해줘.
+```
+
 ---
 
 ## 왜 이 도구인가요?
@@ -109,6 +120,7 @@ flowchart LR
 | 일관된 레이아웃 | 같은 blueprint와 preset이면 같은 구조와 레이아웃 규칙으로 생성됩니다. AI가 좌표나 디자인을 즉흥 결정하지 않습니다. |
 | Preview 기반 검토 | AI가 슬라이드 PNG를 보고 텍스트 밀도, 가독성, 구성을 검토합니다. |
 | PDF 내보내기 | `/export-pdf`로 PPTX를 PDF로 바로 변환합니다. LibreOffice 필요. |
+| 아키텍처 슬라이드 | `/generate-architecture-slide`로 자연어 설명에서 node/edge/zone을 추출해 다이어그램 슬라이드를 생성합니다. |
 | 16종 슬라이드 타입 | hero, agenda, kpi, chart, table, architecture, timeline, decision 등 발표에 필요한 타입이 미리 정의되어 있습니다. |
 | 멀티툴 지원 | Claude Code, Codex CLI/App, Claude App 세 환경에서 동일한 skill로 작동합니다. |
 
