@@ -72,6 +72,7 @@ npm install
 | Claude Code | `/create-deck` 입력 후 요청 |
 | Claude Code | `/generate-blueprint` — blueprint만 생성할 때 |
 | Claude Code | `/review-deck` — 생성된 deck 검토·개선 |
+| Claude Code | `/generate-architecture-slide` — 아키텍처 다이어그램 슬라이드만 생성할 때 |
 | Codex CLI / App | repo skill `create-deck` 로드 후 요청 |
 | Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
 
@@ -107,6 +108,16 @@ dark theme로 해줘.
 "AI-native presentation workflow"를 주제로 10장짜리 소개 deck을 만들어줘.
 대상은 스타트업 CTO들이고, 기술적이지만 너무 깊지 않게.
 필요하면 자료 조사 범위와 출처 기준을 먼저 물어봐.
+```
+
+**아키텍처 슬라이드만 생성할 때**
+
+```text
+/generate-architecture-slide
+
+API Gateway가 앞단에 있고, 뒤에 Auth Service와 Order Service가 붙어 있어.
+Auth Service는 Redis를 쓰고, Order Service는 Kafka로 이벤트를 발행해.
+외부 Client가 Gateway를 호출하는 구조야.
 ```
 
 ### 4.3 CLI 직접 실행 (디버깅·고급 사용자)

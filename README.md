@@ -109,6 +109,7 @@ flowchart LR
 | 일관된 레이아웃 | 같은 blueprint와 preset이면 같은 구조와 레이아웃 규칙으로 생성됩니다. AI가 좌표나 디자인을 즉흥 결정하지 않습니다. |
 | Preview 기반 검토 | AI가 슬라이드 PNG를 보고 텍스트 밀도, 가독성, 구성을 검토합니다. |
 | PDF 내보내기 | `/export-pdf`로 PPTX를 PDF로 바로 변환합니다. LibreOffice 필요. |
+| 아키텍처 슬라이드 | `/generate-architecture-slide`로 자연어 설명에서 node/edge/zone을 추출해 다이어그램 슬라이드를 생성합니다. |
 | 16종 슬라이드 타입 | hero, agenda, kpi, chart, table, architecture, timeline, decision 등 발표에 필요한 타입이 미리 정의되어 있습니다. |
 | 멀티툴 지원 | Claude Code, Codex CLI/App, Claude App 세 환경에서 동일한 skill로 작동합니다. |
 

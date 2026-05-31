@@ -66,6 +66,12 @@ blueprint 생성 / generate-blueprint:
 `skills/generate-blueprint.md`를 읽고 절차를 따라줘.
 ```
 
+아키텍처 슬라이드 생성 / generate-architecture-slide:
+```text
+`skills/generate-architecture-slide.md`를 읽고 절차를 따라줘.
+MUST: 출력은 source: inline만 사용한다. node.id/node.zone 중복 없음, edge from/to 참조 유효성 확인 필수.
+```
+
 참고: Claude 채팅 환경은 로컬 파일 실행·CLI 능력이 없다.
 파일 수정·명령 실행 대신 `skills/*.md` 내용을 복사·참조하여 대화 절차만 수행한다.
 
