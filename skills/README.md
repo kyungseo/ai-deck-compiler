@@ -17,6 +17,8 @@ Claude Code / Codex / Cursor가 사용하는 AI agent skill 문서 모음.
 
 ```
 create-deck ──→ generate-blueprint (Step 3~4 내부 또는 단독)
+     │               │
+     │               └──→ generate-architecture-slide (architecture slide 작성 시 내부 호출 또는 단독)
      │
      └──→ review-deck (생성 후 검토 loop)
 ```
@@ -29,7 +31,7 @@ create-deck ──→ generate-blueprint (Step 3~4 내부 또는 단독)
 | generate-blueprint | `generate-blueprint.md` | ✅ 완료 | blueprint.yaml 초안 생성 (단독 또는 create-deck 내부) |
 | review-deck | `review-deck.md` | ✅ 완료 | 생성된 deck 구조·메시지·디자인 검토 + blueprint 수정 제안 |
 | export-pdf | `export-pdf.md` | ✅ 완료 | PPTX → PDF 변환. 환경 체크 + LibreOffice 없을 시 설치 안내 |
+| generate-architecture-slide | `generate-architecture-slide.md` | ✅ 완료 | 자연어 설명 → architecture slide diagram spec(source: inline) 생성. generate-blueprint 내부 호출 또는 단독 사용 |
 | customize-preset | `customize-preset.md` | 📄 문서 완료 | 스크린샷·브랜드 자산 → custom design preset 생성 (end-to-end 검증 미완) |
-| generate-architecture-slide | *(예정)* | 📋 backlog | 기술 아키텍처 설명 → architecture slide blueprint 생성 |
 | convert-design-system | *(예정)* | 📋 backlog | HTML/CSS design.md → ppt-design.md 변환 |
 | validate-deck | *(예정)* | 📋 backlog | layout·editability 검증 |

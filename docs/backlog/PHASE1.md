@@ -87,17 +87,6 @@
 
 ---
 
-**[skill-generate-architecture-slide]** | Priority: P1 | Scope: 기술 아키텍처 설명 → diagram-spec → architecture slide blueprint 생성 skill
-
-- Done Criteria:
-  - `skills/generate-architecture-slide.md` 작성
-  - node kind, zone 배치, edge 관계를 자연어 설명에서 추출하는 절차 포함
-  - 생성된 diagram spec을 blueprint.yaml architecture slide로 변환하는 규칙 포함
-- Verification: "API Gateway → Service → DB 구조" 설명 입력 시 유효한 architecture slide blueprint 생성
-- Preconditions: P1 compiler 완료 (✅)
-
----
-
 ---
 
 ### P2 — 공개 repo 완성도 및 preset 확장
@@ -208,3 +197,4 @@
 | vitest-security-upgrade | vitest 3.x 업그레이드 — Dependabot 취약점 2건 해소 | 2026-05-31 |
 | examples-expanded | examples/strategy + examples/data-report 추가 | 2026-05-31 |
 | repo-rebranding | ai-deck-compiler 리브랜딩 — README 업데이트, GitHub remote/About/Topics 설정, 디렉터리 정리 | 2026-05-31 |
+| FEAT-20260531-006 | generate-architecture-slide skill — 자연어 설명 → architecture slide diagram spec 생성 | 2026-05-31 |

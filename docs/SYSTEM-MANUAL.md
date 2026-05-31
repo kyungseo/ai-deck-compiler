@@ -216,14 +216,16 @@ Product skills:
 | `generate-blueprint` | 구조가 정해진 뒤 blueprint 작성에 집중 |
 | `review-deck` | 구조/메시지/텍스트/데이터/청중/preview/metadata 검토 |
 | `export-pdf` | PPTX → PDF 변환. LibreOffice 환경 체크 + 설치 안내 |
+| `generate-architecture-slide` | 자연어 설명 → architecture slide diagram spec 생성. node/zone/edge 유효성 보장 |
 | `customize-preset` | 브랜드 자료 기반 custom preset 생성 절차 |
 
 중요한 책임 분리:
 
 - `create-deck`: brief-first, source-first, AI-research-first를 판별하고 구조를 결정합니다.
-- `generate-blueprint`: 구조 결정 후 blueprint 작성만 담당합니다.
+- `generate-blueprint`: 구조 결정 후 blueprint 작성만 담당합니다. architecture slide 작성 시 내부적으로 `generate-architecture-slide` 절차를 따릅니다.
 - `review-deck`: blueprint와 optional PPTX/preview를 함께 검토합니다.
 - `export-pdf`: PPTX 파일을 PDF로 변환합니다. LibreOffice만 필요하며 poppler 불필요.
+- `generate-architecture-slide`: 자연어 설명에서 node/edge/zone을 추출하고 유효한 diagram spec을 생성합니다. 단독 또는 `generate-blueprint` 내부에서 호출합니다.
 
 ---
 
@@ -239,6 +241,7 @@ AI 도구에서 아래 skill을 통해 deck 생성·검토·내보내기를 요�
 | Blueprint만 | `/generate-blueprint` | skill `generate-blueprint` | 구조가 정해진 경우 blueprint만 생성 |
 | 검토 | `/review-deck` | skill `review-deck` | blueprint + PPTX + preview 검토 |
 | PDF 내보내기 | `/export-pdf` | skill `export-pdf` | PPTX → PDF, 환경 체크 포함 |
+| Architecture 슬라이드 | `/generate-architecture-slide` | skill `generate-architecture-slide` | 자연어 설명 → diagram spec 생성 |
 
 Skill 파일 위치: `skills/*.md` (canonical), `.claude/commands/*.md` (Claude Code wrapper), `.agents/skills/*/SKILL.md` (Codex wrapper).
 Claude App은 native slash command 실행을 전제로 하지 않고 `skills/*.md`를 참조/복사해 진행한다.

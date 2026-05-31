@@ -37,7 +37,7 @@ AI workflow 자체의 개선 항목과 example pack 정비 항목은 `docs/backl
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | generate-blueprint | export-pdf]에
+AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | generate-blueprint | export-pdf | generate-architecture-slide]에
 대응하는 `.agents/skills/{name}/SKILL.md`를 로드하고 절차를 수행해줘.
 ```
 
@@ -64,6 +64,12 @@ MUST: 파일 경로 없이 변환을 실행하지 않는다. LibreOffice가 없�
 blueprint 생성 / generate-blueprint:
 ```text
 `skills/generate-blueprint.md`를 읽고 절차를 따라줘.
+```
+
+아키텍처 슬라이드 생성 / generate-architecture-slide:
+```text
+`skills/generate-architecture-slide.md`를 읽고 절차를 따라줘.
+MUST: 출력은 source: inline만 사용한다. node.id/node.zone 중복 없음, edge from/to 참조 유효성 확인 필수.
 ```
 
 참고: Claude 채팅 환경은 로컬 파일 실행·CLI 능력이 없다.
