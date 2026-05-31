@@ -73,7 +73,10 @@ skills/                       # canonical product skills
 .claude/commands/             # Claude Code wrappers
 .agents/skills/               # Codex wrappers
 docs/                         # manuals, plan, work tracking
-examples/                     # sample blueprints
+examples/
+  sample/                     # 엔지니어링 전략 발표 — full-stack 예제
+  strategy/                   # 경영진 전략 보고 — decision slide 포함
+  data-report/                # 분기 데이터 리뷰 — chart × 2, table 포함
 schemas/                      # generated JSON schema
 tests/                        # parser, renderer, snapshot tests
 ```

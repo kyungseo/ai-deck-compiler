@@ -164,6 +164,7 @@ slides:
 ```
 
 전체 schema는 [schemas/blueprint.schema.json](schemas/blueprint.schema.json)을 참고하세요.
+더 많은 예제는 `examples/` 디렉터리를 참고하세요.
 
 ---
 
@@ -225,7 +226,10 @@ skills/                      # canonical AI product skills
 .claude/commands/            # Claude Code wrappers
 .agents/skills/              # Codex skill wrappers
 docs/                        # manuals, plans, work tracking
-examples/                    # sample blueprints
+examples/
+  sample/                    # 엔지니어링 전략 발표 — hero, agenda, kpi, architecture, chart, timeline, summary, appendix
+  strategy/                  # 경영진 전략 보고 — hero, agenda, content, kpi, decision, summary
+  data-report/               # 분기 데이터 리뷰 — kpi, chart × 2, table, summary
 schemas/                     # generated JSON Schema
 ```
 
