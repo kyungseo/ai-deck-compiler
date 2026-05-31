@@ -163,6 +163,20 @@
 
 ---
 
+**[vitest-security-upgrade]** | Priority: P2 | Scope: vitest 2.x 이상 업그레이드 — Dependabot medium 취약점 2건 해소
+
+> 취약점 경로: `vitest@1.x → vite@5.4.21 → esbuild@0.21.5`. dev 전용, 개발 서버 미사용이라 실제 익스플로잇 조건 미충족. public 전환 전 해소 권장.
+> 취약점 요약: vite Path Traversal (CVE, ≤ 6.4.1), esbuild dev server arbitrary request (≤ 0.24.2).
+
+- Done Criteria:
+  - `vitest` 2.x 이상으로 업그레이드
+  - `npm test` 전체 통과
+  - `gh api /repos/kyungseo/ai-deck-compiler/dependabot/alerts` 상태 open 0건 확인
+- Verification: `npm test` 통과, Dependabot alert 해소 확인
+- Preconditions: public 전환 전
+
+---
+
 ### P3 — 장기 확장
 
 ---
