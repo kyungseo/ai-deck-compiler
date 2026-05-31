@@ -68,6 +68,8 @@ src/
     validate.ts               # validate blueprint
     deck.ts                   # compile deck
     preview.ts                # PPTX -> PNG preview
+    export-pdf.ts             # PPTX -> PDF export
+    lib/tools.ts              # LibreOffice / pdftoppm 탐색 유틸리티
 
 skills/                       # canonical product skills
 .claude/commands/             # Claude Code wrappers

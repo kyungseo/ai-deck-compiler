@@ -196,6 +196,7 @@
 **[cli-convert-design]** | Priority: P3 | Scope: `npm run convert-design` — design.md → ppt-design.md CLI |
 **[mermaid-fallback]** | Priority: P3 | Scope: draft/appendix용 Mermaid 렌더링 fallback |
 **[pef-cli-global]** | Priority: P3 | Scope: npm package 공개 및 `pef` 전역 설치 |
+**[export-pdf-hardening]** | Priority: P3 | Scope: `export-pdf.ts` edge case 강화 — `.pptx` 확장자 미검증 시 친절한 오류 메시지, 대문자 `.PPTX` 처리 |
 
 ---
 

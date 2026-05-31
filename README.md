@@ -49,7 +49,7 @@ AI에게 "PPT 만들어줘"라고 맡기면 보통 이런 문제가 생깁니다
 1. AI와 대화한다 — 주제, 청중, 핵심 메시지, 슬라이드 구성을 협의합니다.
 2. 결과물을 검토한다 — `blueprint.yaml` 초안을 확인하고 수정 방향을 말합니다.
 
-레이아웃, 좌표, 색상, 타이포그래피는 엔진이 design preset에 따라 처리합니다. AI가 즉흥적으로 결정하지 않으므로 같은 입력은 항상 같은 PPTX를 만들어냅니다.
+레이아웃, 좌표, 색상, 타이포그래피는 엔진이 design preset에 따라 처리합니다. AI가 즉흥적으로 결정하지 않으므로 같은 blueprint와 preset이면 같은 구조와 레이아웃 규칙으로 생성됩니다.
 
 ---
 
@@ -59,7 +59,8 @@ AI에게 "PPT 만들어줘"라고 맡기면 보통 이런 문제가 생깁니다
 
 - Node.js 18+, npm 9+
 - Pretendard 폰트 권장 ([설치 안내](https://github.com/orioncactus/pretendard)) — 미설치 시 시스템 fallback 폰트 사용
-- Optional preview: LibreOffice + `pdftoppm`(poppler)
+- Optional PDF export: LibreOffice (`brew install --cask libreoffice`)
+- Optional preview: LibreOffice + `pdftoppm` (`brew install poppler`)
 
 ### 설치
 
@@ -71,12 +72,11 @@ npm install
 
 설치 후 Claude Code를 열고 `/create-deck`을 입력하면 바로 시작할 수 있습니다.
 
-CLI로 직접 예제를 실행하려면:
-
-```bash
-npm run validate -- --blueprint examples/sample/blueprint.yaml
-npm run deck -- --blueprint examples/sample/blueprint.yaml
-```
+> CLI로 예제를 직접 실행해보려면(디버깅·확인 용도):
+> ```bash
+> npm run validate -- --blueprint examples/sample/blueprint.yaml
+> npm run deck -- --blueprint examples/sample/blueprint.yaml
+> ```
 
 ---
 
@@ -106,7 +106,7 @@ flowchart LR
 | --- | --- |
 | 대화식 deck 생성 | 주제·청중·메시지를 말하면 AI가 슬라이드 구조를 제안하고 초안을 만듭니다. |
 | 편집 가능한 PPTX | chart, table, shape, text가 이미지가 아닌 PowerPoint 객체로 생성됩니다. 생성 후 직접 편집할 수 있습니다. |
-| 일관된 레이아웃 | 같은 blueprint와 preset은 항상 같은 결과를 만듭니다. AI가 레이아웃을 즉흥 결정하지 않습니다. |
+| 일관된 레이아웃 | 같은 blueprint와 preset이면 같은 구조와 레이아웃 규칙으로 생성됩니다. AI가 좌표나 디자인을 즉흥 결정하지 않습니다. |
 | Preview 기반 검토 | AI가 슬라이드 PNG를 보고 텍스트 밀도, 가독성, 구성을 검토합니다. |
 | PDF 내보내기 | `/export-pdf`로 PPTX를 PDF로 바로 변환합니다. LibreOffice 필요. |
 | 16종 슬라이드 타입 | hero, agenda, kpi, chart, table, architecture, timeline, decision 등 발표에 필요한 타입이 미리 정의되어 있습니다. |
@@ -188,7 +188,9 @@ src/
   design/presets/            # design presets
   cli/validate.ts            # npm run validate
   cli/deck.ts                # npm run deck
-  cli/preview.ts             # npm run preview
+  cli/preview.ts             # npm run preview (PPTX → PNG)
+  cli/export-pdf.ts          # npm run export-pdf (PPTX → PDF)
+  cli/lib/tools.ts           # LibreOffice / pdftoppm 탐색 유틸리티
 
 skills/                      # canonical AI product skills
 .claude/commands/            # Claude Code wrappers

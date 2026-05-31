@@ -23,7 +23,7 @@ Claude Code에서 한 줄이면 됩니다.
 2. 결과물을 검토한다 — blueprint 초안을 확인하고 수정 방향을 말함
 3. 반복한다 — "3번 슬라이드 KPI 항목 하나 더 추가해줘" 같은 피드백으로 빠르게 정제
 
-레이아웃, 좌표, 색상은 엔진이 design preset에 따라 처리합니다. AI가 즉흥 결정하지 않으므로 같은 입력은 항상 같은 PPTX를 만듭니다.
+레이아웃, 좌표, 색상은 엔진이 design preset에 따라 처리합니다. AI가 즉흥 결정하지 않으므로 같은 blueprint와 preset이면 같은 구조와 레이아웃 규칙으로 생성됩니다.
 
 ---
 
@@ -385,8 +385,9 @@ LibreOffice가 없으면 CLI가 OS에 맞는 설치 안내를 출력하고 종�
 
 ### Q. 같은 blueprint인데 결과가 달라질 수 있나요?
 
-같은 blueprint와 같은 design preset이면 같은 PPTX가 나와야 합니다.
-결과가 다르면 blueprint, preset token, dependency version 차이를 확인하세요.
+같은 blueprint와 preset이면 같은 구조와 레이아웃 규칙으로 생성됩니다.
+단, 폰트 설치 여부나 LibreOffice 버전에 따라 preview 결과가 달라 보일 수 있습니다.
+구조적으로 다르다면 blueprint, preset token, dependency version 차이를 확인하세요.
 
 ### Q. PowerPoint 없이 preview할 수 있나요?
 
@@ -407,7 +408,7 @@ LibreOffice가 없으면 CLI가 OS에 맞는 설치 안내를 출력하고 종�
 ### 출력물 폰트가 이상하게 보여요
 
 Pretendard 폰트가 설치되지 않으면 시스템 fallback 폰트로 렌더링됩니다.
-[§3.1 설치](#31-설치)의 폰트 설치 안내를 따라 설치한 뒤 다시 생성하세요.
+[§3 설치](#3-설치)의 폰트 설치 안내를 따라 설치한 뒤 다시 생성하세요.
 
 ### `npm run preview`가 실패해요
 
