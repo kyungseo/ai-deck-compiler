@@ -198,3 +198,9 @@
 | examples-expanded | examples/strategy + examples/data-report 추가 | 2026-05-31 |
 | repo-rebranding | ai-deck-compiler 리브랜딩 — README 업데이트, GitHub remote/About/Topics 설정, 디렉터리 정리 | 2026-05-31 |
 | FEAT-20260531-006 | generate-architecture-slide skill — 자연어 설명 → architecture slide diagram spec 생성 | 2026-05-31 |
+| skill-create-deck | create-deck end-to-end interactive workflow skill | 2026-05-31 |
+| skill-generate-blueprint | generate-blueprint skill 문서 | 2026-05-31 |
+| p2-slide-types | P2 slide 6종 구현 — timeline, flow, decision, comparison, section-divider, appendix | 2026-05-31 |
+| skill-review-deck | review-deck AI skill 문서 | 2026-05-31 |
+| pptx-document-metadata | PPTX 문서 속성 설정 — title/author/company/revision (compiler.ts 구현 완료) | 2026-05-31 |
+| FEAT-20260531-007 | Design Preset 고도화 — teal/vivid 추가, section_label chip, hero accent line | 2026-06-01 |
