@@ -2,8 +2,10 @@
 
 사용자와 대화하며 blueprint.yaml을 작성하고 editable PPTX를 생성하는 end-to-end 워크플로우.
 
-**Claude Code 진입:** `/create-deck`
-**단독 실행:** 이 파일 내용을 Claude 세션에 공유 후 시작 요청
+**진입 경로:**
+- Claude Code: `/create-deck`
+- Codex CLI/App: `.agents/skills/create-deck/SKILL.md` 로드
+- Claude 채팅: 이 파일 내용을 참조하여 대화 절차 수행
 
 ---
 
@@ -266,13 +268,17 @@ PowerPoint / Keynote에서 열어 확인해 주세요.
 
 ---
 
-## Step 6 — 결과 확인 (선택)
+## Step 6 — 결과 확인 + Review Loop (선택)
 
 ```
-deck 검토를 원하시면 말씀해 주세요.
+PPTX가 생성됐습니다: output/{slug}.pptx
+
+PowerPoint에서 열어 확인해 주세요.
+deck 검토를 원하시면 `/review-deck` 또는 `skills/review-deck.md`를 사용하세요:
 - 슬라이드 흐름·메시지 일관성 검토
+- 텍스트 분량·차트·표 데이터 명확성 검토
 - 청중 적합성 평가
-- 개선 제안
+- blueprint 수정 제안 (slide id + 변경 전/후)
 ```
 
 ---

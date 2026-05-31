@@ -1,7 +1,5 @@
 # User Manual — Presentation Compiler
 
-> 이 문서는 사용자 매뉴얼 초안입니다. `skill-create-deck` 구현 후 실제 워크플로우에 맞게 보완합니다.
-
 ---
 
 ## 이 도구가 해결하는 문제
@@ -66,7 +64,7 @@ design preset을 교체하면 (예: default-modern → minimal-dark) 내용은 �
 
 ## 기본 워크플로우
 
-> 상세 인터랙티브 가이드는 `/create-deck` 커맨드를 사용하세요 (구현 예정).
+> 상세 인터랙티브 가이드는 `/create-deck` 커맨드를 사용하세요.
 
 ### 수동 방식 (현재)
 
@@ -101,13 +99,15 @@ blueprint만 빠르게 생성: `skills/generate-blueprint.md`
 
 ## Blueprint 작성 가이드
 
-*(작성 예정 — skill-generate-blueprint 구현 후 보완)*
+빠르게 blueprint.yaml을 작성하려면 `/generate-blueprint`를 사용하세요.
+상세: `skills/generate-blueprint.md`
 
 ---
 
 ## Design Preset 선택 가이드
 
-*(작성 예정 — minimal-dark, enterprise-clean preset 추가 후 보완)*
+현재 제공 preset: `default-modern` (light / dark)
+추가 preset(minimal-dark, enterprise-clean)은 backlog에서 관리 중입니다.
 
 ---
 

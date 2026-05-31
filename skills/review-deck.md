@@ -3,8 +3,10 @@
 생성된 deck(blueprint.yaml)을 분석하여 구조·메시지·디자인 일관성을 검토하고
 blueprint 수정 제안을 actionable 형식으로 출력하는 skill.
 
-**Claude Code 진입:** `/review-deck`
-**단독 실행:** 이 파일 내용을 Claude 세션에 공유 후 시작 요청
+**진입 경로:**
+- Claude Code: `/review-deck`
+- Codex CLI/App: `.agents/skills/review-deck/SKILL.md` 로드
+- Claude 채팅: 이 파일 내용을 참조하여 대화 절차 수행
 
 ---
 

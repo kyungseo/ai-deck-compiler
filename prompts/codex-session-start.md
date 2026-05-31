@@ -32,6 +32,39 @@ AI workflow 자체의 개선 항목과 example pack 정비 항목은 `docs/backl
 
 ---
 
+## 0. Product Skill — Deck Creation & Review
+
+**AGENTS.md 있음:**
+
+```text
+AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | generate-blueprint]에
+대응하는 `.agents/skills/{name}/SKILL.md`를 로드하고 절차를 수행해줘.
+```
+
+**AGENTS.md 없음 — 요청한 skill에 맞는 파일을 선택한다:**
+
+PPT 생성 / create-deck:
+```text
+`skills/create-deck.md`를 읽고 절차를 따라줘.
+MUST: 각 GATE에서 반드시 멈추고 사용자 응답을 기다린다. 승인 없이 다음 Step으로 진행하지 않는다.
+```
+
+deck 검토 / review-deck:
+```text
+`skills/review-deck.md`를 읽고 절차를 따라줘.
+MUST: 보고서와 수정 제안을 동시에 출력하지 않는다. 각 GATE에서 반드시 멈추고 사용자 응답을 기다린다.
+```
+
+blueprint 생성 / generate-blueprint:
+```text
+`skills/generate-blueprint.md`를 읽고 절차를 따라줘.
+```
+
+참고: Claude 채팅 환경은 로컬 파일 실행·CLI 능력이 없다.
+파일 수정·명령 실행 대신 `skills/*.md` 내용을 복사·참조하여 대화 절차만 수행한다.
+
+---
+
 ## 1. Basic Session Start
 
 **AGENTS.md 있음:**
