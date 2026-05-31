@@ -4,14 +4,13 @@ Product track Phase 1 작업 인덱스다.
 
 ## Active
 
-| ID | Title | Priority | Start | Work File |
-| --- | --- | --- | --- | --- |
-| FEAT-20260531-004 | PDF 내보내기 — export-pdf CLI + 멀티툴 AI skill | P1 | 2026-05-31 | [link](FEAT-20260531-004-pdf-export.md) |
+*(없음)*
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
+| FEAT-20260531-004 | PDF 내보내기 — export-pdf CLI + 멀티툴 AI skill | 2026-05-31 | — |
 | CHORE-20260531-004 | 문서 정보구조 정비 — README, USER-MANUAL, SYSTEM-MANUAL 재구성 | 2026-05-31 | — |
 | FEAT-20260531-003 | preset-aware deck creation + metadata/source input workflow | 2026-05-31 | — |
 | CHORE-20260531-001 | AI 구조 정렬 — 멀티툴 product skill 라우팅 완성 | 2026-05-31 | — |

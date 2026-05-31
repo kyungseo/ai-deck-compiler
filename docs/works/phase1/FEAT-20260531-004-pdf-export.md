@@ -1,7 +1,8 @@
 ---
 id: FEAT-20260531-004
 title: "PDF 내보내기 — export-pdf CLI + 멀티툴 AI skill"
-status: Active
+status: Done
+actual_end: 2026-05-31
 type: FEAT
 created: 2026-05-31
 branch: feature/FEAT-20260531-004-pdf-export

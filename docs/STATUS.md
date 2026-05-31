@@ -19,9 +19,7 @@
 
 ## Active Work
 
-| ID | Title | Work File |
-| --- | --- | --- |
-| FEAT-20260531-004 | PDF 내보내기 — export-pdf CLI + 멀티툴 AI skill | docs/works/phase1/FEAT-20260531-004-pdf-export.md |
+*(없음)*
 
 ## Blockers And Open Questions
 
