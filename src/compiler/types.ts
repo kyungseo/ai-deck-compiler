@@ -13,9 +13,19 @@ export type TypographyToken = {
   color?: string;
 };
 
+export type BrandToken = {
+  name: string;
+  show: boolean;
+  showPageNumbers: boolean;
+  fontSize: number;
+  author: string;
+};
+
 export type ResolvedDesignTokens = {
   colors: Record<string, string>;
   typography: Record<string, TypographyToken>;
   spacing: Record<string, number>;
   slideSize: { width: number; height: number };
+  shapes: Record<string, string>; // node kind → pptxgenjs shape name
+  brand: BrandToken;
 };

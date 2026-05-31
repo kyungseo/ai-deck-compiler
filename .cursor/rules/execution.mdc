@@ -1,0 +1,41 @@
+---
+description: Repository execution and verification commands.
+globs:
+alwaysApply: true
+---
+
+# Execution Rules
+
+Default verification commands:
+
+- `git diff --check`
+- `bash -n scripts/create-harness.sh`
+- `./scripts/create-harness.sh --dry-run --profile generic <name> <target-dir>`
+
+MUST:
+
+- Choose the narrowest verification command that proves the change.
+- Report any command you could not run and why.
+- Check the Active Work pointer in `docs/STATUS.md` and the target Work file's Verification/Checkpoints before broader validation.
+- Follow any verification scope defined in the active plan or relevant backlog.
+- Use `docs/backlog/HARNESS.md` for harness/workflow verification scope.
+- Treat failed verification as `FAIL -> RECOVER -> PLAN`; do not proceed to checkpoint until the failure is reported and resolved or explicitly accepted.
+
+NEVER:
+
+- Run destructive commands without explicit approval.
+- Run privileged commands.
+- Assume a Java, Gradle, Docker, database, or application runtime exists in this repository.
+- Use alternate build tools unless the repository explicitly requires them.
+
+## CI Trigger Structure
+
+- `pull_request` targeting `main` or `develop`: docs, prompts, tool rules, scaffold, and workflow changes run lightweight validation.
+- `push` to `main`: same lightweight validation for release-bound changes.
+- develop branch push: no CI trigger unless explicitly added later.
+
+## Verification Commands
+
+- `git diff --check` — whitespace and patch hygiene
+- `bash -n scripts/create-harness.sh` — scaffold shell syntax
+- `./scripts/create-harness.sh --dry-run --profile generic sample /tmp/sample` — generic scaffold plan check

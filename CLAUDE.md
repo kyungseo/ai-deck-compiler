@@ -1,34 +1,25 @@
 # CLAUDE.md
 
-AI-Native Presentation Engineering Framework — Presentation Compiler
+Claude Code entry point for this repository.
+Keep this file thin. Global behavior principles live in `docs/BEHAVIOR-PRINCIPLES.md`. Shared operating rules live in `docs/AGENT-WORKFLOW.md`.
 
-## Project
+@docs/BEHAVIOR-PRINCIPLES.md
+@docs/AGENT-WORKFLOW.md
 
-Blueprint + Design System → Presentation Compiler → Editable PPTX
+## Entry Contract
 
-**Core principle:** AI writes intent. Code renders layout.
+MUST:
 
-- Blueprint format: `blueprint.yaml` (pure YAML, Zod validated)
-- Design system: `design-system/presets/{name}/`
-- Compiler: deterministic TypeScript engine (pptxgenjs)
-- Diagrams: zone-based layout, template-first, no flat image output
+- Treat this file and `AGENTS.md` as equal tool-specific entry points.
+- Follow `docs/BEHAVIOR-PRINCIPLES.md` for global behavioral principles that apply to all tasks.
+- Follow `docs/AGENT-WORKFLOW.md` for common workflow, context routing, status rules, and validation defaults.
+- Read `docs/STATUS.md` current sections before choosing or continuing work.
+- Do not check `docs/BOOTSTRAP.md` just because it exists; use it only when `docs/STATUS.md` Next Actions explicitly points to scaffold bootstrap/onboarding work.
+- Use `.claude/commands/` for repeated Claude Code workflows when available.
+- Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
+- Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, and every commit.
 
-## Key Commands
+NEVER:
 
-```bash
-npm run validate -- --blueprint examples/sample/blueprint.yaml
-npm run typecheck
-npm test
-```
-
-## Workflow
-
-Git workflow rules: `.claude/rules/git-workflow.md` (auto-loaded)
-
-Branch flow: `feature/*` → `develop` → `main`
-Hooks: `sh tools/git-hooks/install.sh` to install
-
-## Project Plan
-
-Full project spec: `temp/work-plans/10-ai-native-pt-engineering-framework-3.md` (in harness repo)
-or carry the plan doc into this repo as `docs/PROJECT-SPEC.md` when starting Work 2.
+- Duplicate shared rules here.
+- Bypass `docs/STATUS.md` or the Approval Matrix.

@@ -19,6 +19,22 @@ const ChartData = z.discriminatedUnion('source', [
 
 // ── Diagram Spec (inline) ─────────────────────────────────────────────────────
 
+// zone은 슬라이드 카드 영역의 3×3 고정 그리드 셀 중심을 가리킵니다.
+//
+// 그리드 구조:
+//   top-left    | top-center    | top-right
+//   center-left | center        | center-right
+//   bottom-left | bottom-center | bottom-right
+//
+// AI가 blueprint를 생성할 때 지켜야 할 규칙:
+//   1. 각 노드에 고유한 zone을 할당하세요. 같은 zone에 두 노드를 넣으면 겹칩니다.
+//   2. 최대 9개 노드(3×3). 10개 이상은 반드시 겹침이 발생합니다.
+//   3. left = center-left, right = center-right 별칭이므로 혼용하지 마세요.
+//   4. 흐름 방향에 따른 권장 배치:
+//      - 좌→우 흐름 (client → gateway → service): left/center-left → center → right/center-right
+//      - 상→하 계층 (user → api → db): top-center → center → bottom-center
+//      - 복합 구조: 외부 시스템을 가장자리에, 핵심 서비스를 center 부근에 배치
+
 const DiagramSpec = z.discriminatedUnion('source', [
   z.object({
     source: z.literal('inline'),
@@ -56,6 +72,8 @@ const base = {
   title: z.string().min(1),
   notes: z.string().optional(),
   variant: z.string().optional(),
+  section_label: z.string().optional(), // e.g. "01. OVERVIEW" — renders above title
+  subtitle: z.string().optional(),       // one-line context below title
 };
 
 // ── Slide Types ───────────────────────────────────────────────────────────────
@@ -65,6 +83,8 @@ const HeroSlide = z.object({
   type: z.literal('hero'),
   subtitle: z.string().optional(),
   cta: z.string().optional(),
+  author: z.string().optional(),      // overrides brand.author when set
+  doc_version: z.string().optional(), // injected from deck.version by compiler
 });
 
 const AgendaSlide = z.object({
@@ -89,15 +109,15 @@ const ContentSlide = z.object({
 const TwoColumnSlide = z.object({
   ...base,
   type: z.literal('two-column'),
-  left: z.object({ body: z.array(z.string()) }),
-  right: z.object({ body: z.array(z.string()) }),
+  left: z.object({ label: z.string().optional(), body: z.array(z.string()) }),
+  right: z.object({ label: z.string().optional(), body: z.array(z.string()) }),
 });
 
 const ComparisonSlide = z.object({
   ...base,
   type: z.literal('comparison'),
-  left: z.object({ label: z.string(), body: z.array(z.string()) }).optional(),
-  right: z.object({ label: z.string(), body: z.array(z.string()) }).optional(),
+  left: z.object({ label: z.string().optional(), body: z.array(z.string()) }).optional(),
+  right: z.object({ label: z.string().optional(), body: z.array(z.string()) }).optional(),
 });
 
 const KpiSlide = z.object({
@@ -173,6 +193,12 @@ const AppendixSlide = z.object({
   body: z.array(z.string()).optional(),
 });
 
+const ClosingSlide = z.object({
+  ...base,
+  type: z.literal('closing'),
+  message: z.string().optional(),  // small label above title (e.g., "발표를 들어주셔서 감사합니다")
+});
+
 // ── Discriminated Union ───────────────────────────────────────────────────────
 
 export const SlideSchema = z.discriminatedUnion('type', [
@@ -191,6 +217,7 @@ export const SlideSchema = z.discriminatedUnion('type', [
   DecisionSlide,
   SummarySlide,
   AppendixSlide,
+  ClosingSlide,
 ]);
 
 // ── Deck ──────────────────────────────────────────────────────────────────────
@@ -200,6 +227,7 @@ export const DeckSchema = z.object({
   design: z.string().min(1),
   theme: z.enum(['light', 'dark']),
   version: z.string().default('1.0'),
+  author: z.string().optional(),  // overrides brand.author for this deck
   audience: z.string().optional(),
 });
 

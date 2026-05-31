@@ -1,0 +1,78 @@
+deck:
+  title: Q2 2026 Business Review
+  design: default-modern
+  theme: dark
+  version: "1.0"
+  audience: Business Stakeholders
+
+slides:
+  - id: kpis
+    type: kpi
+    title: Q2 2026 — Key Metrics
+    kpis:
+      - label: Revenue
+        value: "$4.1M"
+        delta: "+22% QoQ"
+        trend: up
+      - label: New Customers
+        value: "87"
+        delta: "+14% QoQ"
+        trend: up
+      - label: Churn Rate
+        value: "1.8%"
+        delta: "-0.3% QoQ"
+        trend: down
+      - label: Gross Margin
+        value: "71%"
+        delta: "+2% QoQ"
+        trend: up
+
+  - id: revenue-trend
+    type: chart
+    title: "Revenue Trend — 8분기 누적 (단위: $M)"
+    chart:
+      type: bar
+      data:
+        source: inline
+        labels: ["Q3 2024", "Q4 2024", "Q1 2025", "Q2 2025", "Q3 2025", "Q4 2025", "Q1 2026", "Q2 2026"]
+        series:
+          - name: Enterprise
+            values: [0.5, 0.7, 0.8, 1.0, 1.3, 1.7, 2.0, 2.6]
+          - name: Self-serve
+            values: [0.9, 1.1, 1.3, 1.4, 1.4, 1.4, 1.4, 1.5]
+
+  - id: segment-breakdown
+    type: chart
+    title: "핵심 지표 추이 — Churn & NRR"
+    chart:
+      type: line
+      data:
+        source: inline
+        labels: ["Q3 2024", "Q4 2024", "Q1 2025", "Q2 2025", "Q3 2025", "Q4 2025", "Q1 2026", "Q2 2026"]
+        series:
+          - name: NRR (%)
+            values: [104, 107, 109, 112, 113, 115, 116, 118]
+          - name: Churn (%)
+            values: [3.8, 3.5, 3.1, 2.9, 2.6, 2.4, 2.1, 1.8]
+
+  - id: cohort-table
+    type: table
+    title: Cohort Retention — 2025~2026 신규 고객
+    table:
+      headers: ["Cohort", "시작 MRR", "M1", "M3", "M6", "M12"]
+      rows:
+        - ["Q1 2025", "$124K", "99%", "92%", "87%", "81%"]
+        - ["Q2 2025", "$148K", "99%", "94%", "89%", "83%"]
+        - ["Q3 2025", "$167K", "99%", "95%", "91%", "78%"]
+        - ["Q4 2025", "$201K", "99%", "96%", "90%", "—"]
+        - ["Q1 2026", "$238K", "99%", "97%", "—", "—"]
+        - ["Q2 2026", "$291K", "99%", "—", "—", "—"]
+
+  - id: summary
+    type: summary
+    title: Q2 Takeaways & Q3 Focus
+    takeaways:
+      - Enterprise가 전체 매출의 63%로 성장 — 1년 전(38%) 대비 큰 폭 증가
+      - Self-serve 정체 지속 — 온보딩 전환 마찰이 성장 병목으로 확인됨
+      - 코호트 리텐션 전분기 대비 개선, Churn 역대 최저(1.8%)
+      - Q3 우선순위 — Self-serve 전환율 개선 + Enterprise 온보딩 가속화

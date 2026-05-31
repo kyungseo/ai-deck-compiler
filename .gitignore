@@ -1,6 +1,70 @@
-node_modules/
+# Build outputs
+build/
+out/
 dist/
+**/bin/
+
+# Node.js
+node_modules/
+
+# Generated / ephemeral working files
+outputs/
 output/
 *.pptx
+blueprints/
+
+# Compiled files
+*.class
+*.jar
+*.war
+
+# Environment (절대 커밋 금지)
+.env
+.env.local
+.env.*.local
+
+# IDE, Tooling
+.idea/
+*.iml
+*.code-workspace
+# IDE: .vscode는 개인 환경 설정이므로 전체 ignore
+.vscode/
+
+# [ AI 정리 ]
+# commit 권장:
+#   .claude/
+#   .cursor/rules/
+#   .claudeignore
+#   .cursorignore
+#   prompts/
+#
+# ignore:
+#   .vscode/
+#   개인 설정
+#   secrets
+
+# OS
 .DS_Store
-*.local
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Gradle cache
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Misc
+temp/
+tmp/
+bak/
+*.bak
+
+# Office lock files / build manifests
+~$*
+artifact-build-manifest.json
+
+# Claude Code local settings
+.claude/settings.local.json

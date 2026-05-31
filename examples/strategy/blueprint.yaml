@@ -1,0 +1,83 @@
+deck:
+  title: 2026 Product Strategy
+  design: default-modern
+  theme: light
+  version: "1.0"
+  audience: Executive Team
+
+slides:
+  - id: hero
+    type: hero
+    title: 2026 Product Strategy
+    subtitle: Focus, differentiation, and sustainable growth
+    cta: Product · Engineering · Design
+
+  - id: agenda
+    type: agenda
+    title: Agenda
+    items:
+      - "01 — Market Context"
+      - "02 — Strategic Priorities"
+      - "03 — Key Initiatives"
+      - "04 — Resource Plan"
+      - "05 — Decision Required"
+
+  - id: context
+    type: content
+    title: Market Context
+    body:
+      - AI-native tooling is reshaping developer workflows faster than anticipated
+      - Competitors have narrowed the feature gap; differentiation must shift to experience and depth
+      - Enterprise demand is growing — compliance, SSO, and audit logging now table stakes
+      - Self-serve adoption plateau signals onboarding friction as the primary conversion blocker
+
+  - id: kpis
+    type: kpi
+    title: Current Position
+    kpis:
+      - label: Monthly Active Users
+        value: "38K"
+        delta: "+42% YoY"
+        trend: up
+      - label: Enterprise Accounts
+        value: "124"
+        delta: "+31% YoY"
+        trend: up
+      - label: Self-serve Conversion
+        value: "6.2%"
+        delta: "-1.1% vs target"
+        trend: down
+      - label: Net Revenue Retention
+        value: "118%"
+        delta: "+3% YoY"
+        trend: up
+
+  - id: decision
+    type: decision
+    title: Strategic Decision — Build vs. Partner
+    question: Should we build the compliance module in-house or partner with a specialist vendor?
+    options:
+      - label: Build in-house
+        pros:
+          - Full control over roadmap and pricing
+          - Deeper integration with existing data model
+          - No revenue share
+        cons:
+          - 6–9 month timeline to reach feature parity
+          - Requires 2 senior security engineers
+      - label: Partner with vendor
+        pros:
+          - Production-ready in 8 weeks
+          - Vendor handles SOC 2 certification maintenance
+        cons:
+          - Revenue share (est. 12–15%)
+          - Dependency on vendor roadmap
+    recommendation: Partner in 2026, evaluate in-house for 2027
+
+  - id: summary
+    type: summary
+    title: Strategic Priorities — 2026
+    takeaways:
+      - Fix self-serve onboarding to unlock the conversion growth lever
+      - Accelerate enterprise tier — compliance partnership closes the deal blocker
+      - Invest in depth over breadth — three focused initiatives, not ten
