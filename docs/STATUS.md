@@ -28,7 +28,10 @@
 
 ## Recent Decisions
 
-*(없음)*
+| Date | DR | Summary |
+| --- | --- | --- |
+| 2026-06-01 | DR-021 | `teal + dark` = AI workflow 기본 추천 preset. `default-modern` → `modern` rename, alias 호환 유지. |
+| 2026-06-01 | DR-022 | `examples/results/*.pptx` git 추적. 재생성 명령 README 문서화로 staleness 관리. |
 
 ## Next Actions
 
