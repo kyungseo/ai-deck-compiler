@@ -82,9 +82,11 @@ AI-research-first mode에서 실제 외부 검색은 tool 환경에 따라 제�
   의사결정 유도 / 이해도 향상 / 신뢰 구축 / 실행 동기 부여
 
 [프리셋] 사용할 design preset은?
-  default-modern (기본값): modern, minimal, technical, light/dark 지원, brand footer/page number 지원
+  teal (기본 추천): charcoal-dark + teal accent, AI-native, dark 우선 — 새 deck 기본값
+  modern: modern, minimal, technical, light/dark 지원 — light 테마가 필요하거나 기존 blueprint 호환 시 사용
+  vivid: deep-navy + vivid purple, secondary/experimental preset
 
-[테마] light (비즈니스) / dark (기술·엔지니어링)
+[테마] dark (AI-native·기술·엔지니어링, teal/vivid 기본값) / light (비즈니스·보고서 — modern 사용 시 권장)
 
 [작성자/브랜드] 표지와 PPTX metadata에 표시할 이름 또는 팀명?
   (기본값: ai-deck-compiler (Kyungseo.Park@gmail.com) / 생략 시 기본값 사용)
@@ -175,8 +177,8 @@ hero → agenda → content × 2 → two-column → summary
 ```yaml
 deck:
   title: # 발표 제목 (60자 이내)
-  design: default-modern
-  theme: light | dark  # Step 1에서 확인한 값
+  design: teal          # 기본 추천 (dark-first). light 필요 시 modern 사용
+  theme: dark           # teal/vivid는 dark 우선. light 원하면 design: modern
   version: "1.0"       # 문서 버전 — 표지 우측 상단에 자동 표시
   author: # 작성자 — 생략 시 기본값(ai-deck-compiler) 사용, 표지와 PPTX metadata에 표시
   audience: # 청중 (선택)
@@ -384,6 +386,7 @@ AI: 네, blueprint 초안을 작성하겠습니다.
 ## 관련 파일
 
 - `skills/generate-blueprint.md` — blueprint만 집중적으로 생성
-- `src/design/presets/default-modern/ppt-layouts.md` — 슬라이드 타입별 레이아웃
-- `src/design/presets/default-modern/ppt-chart-rules.md` — 차트 데이터 형식
+- `src/design/presets/teal/ppt-layouts.md` — 슬라이드 타입별 레이아웃 (teal 기본값)
+- `src/design/presets/teal/ppt-chart-rules.md` — 차트 데이터 형식
+- `src/design/presets/modern/ppt-layouts.md` — legacy/light 전용 레이아웃 참조
 - `schemas/blueprint.schema.json` — 전체 스키마 참조

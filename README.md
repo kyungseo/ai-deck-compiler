@@ -7,6 +7,10 @@
 `ai-deck-compiler`는 Claude Code, Codex, Claude App과 함께 쓰는 AI-first PPT 생성 도구입니다.
 AI와의 대화로 발표 내용을 빠르게 정제하고, 레이아웃과 디자인은 엔진이 일관되게 처리합니다.
 
+![Preset gallery](examples/results/preset-gallery.png)
+
+대표 preset 결과물과 blueprint는 [examples/results](examples/results/)에서 바로 확인할 수 있습니다.
+
 상세 사용법은 [USER-MANUAL](docs/USER-MANUAL.md), 시스템 구조는 [SYSTEM-MANUAL](docs/SYSTEM-MANUAL.md)을 보세요.
 
 ---
@@ -133,7 +137,7 @@ flowchart LR
 ```yaml
 deck:
   title: Platform Modernization Strategy
-  design: default-modern
+  design: teal
   theme: dark
   version: "1.0"
   author: Kyungseo Park
@@ -174,15 +178,22 @@ slides:
 
 ## Design Preset
 
-기본 preset은 `default-modern`입니다.
+AI workflow 기본 추천은 `teal + dark`입니다.
+
+| Preset | 특징 | 추천 용도 |
+| --- | --- | --- |
+| `teal` | charcoal-dark + deep teal accent, AI-native | **신규 deck 기본 추천** (dark 우선) |
+| `vivid` | deep-navy + vivid purple, bold contrast | secondary/experimental (dark 우선) |
+| `modern` | modern, minimal, technical, light/dark 지원 | light 테마 수요, 기존 blueprint 호환 |
 
 | 항목 | 값 |
 | --- | --- |
 | Canvas | 13.33" × 7.5" (`LAYOUT_WIDE`) |
-| Theme | `light`, `dark` |
+| Theme | `dark` (teal/vivid 권장), `light` (modern 권장) |
 | Default author | `ai-deck-compiler (Kyungseo.Park@gmail.com)` |
 | Brand footer | `ai-deck-compiler` |
 
+`design: modern`이 light/business tone의 canonical preset입니다. 기존 `design: default-modern` blueprint도 alias로 계속 동작합니다.
 회사 브랜드에 맞춘 custom preset은 [USER-MANUAL](docs/USER-MANUAL.md)의 customization 절차와 `skills/customize-preset.md`를 참고하세요.
 
 ---
@@ -212,6 +223,7 @@ examples/
   sample/                    # 엔지니어링 전략 발표 — hero, agenda, kpi, architecture, chart, timeline, summary, appendix
   strategy/                  # 경영진 전략 보고 — hero, agenda, content, kpi, decision, summary
   data-report/               # 분기 데이터 리뷰 — kpi, chart × 2, table, summary
+  results/                   # 대표 preset/theme별 blueprint, PPTX, gallery
 schemas/                     # generated JSON Schema
 ```
 
@@ -226,7 +238,7 @@ npm run validate -- --blueprint examples/sample/blueprint.yaml
 npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sample-v1.0.pptx
 ```
 
-현재 기준: 43개 테스트.
+현재 기준: 44개 테스트.
 
 ---
 
@@ -243,7 +255,7 @@ npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sampl
 
 ## 한계와 제약
 
-- **Design preset**: 현재 `default-modern` 1종만 제공됩니다. `minimal-dark`, `enterprise-clean`은 backlog 예정입니다.
+- **Design preset**: `teal`(AI 기본 추천, dark), `vivid`(secondary, dark skeleton), `modern`(light/legacy) 3종 제공. `default-modern`은 legacy alias로 지원됩니다. `vivid` 고유 요소(callout bar, legend pill)는 후속 Work 예정.
 - **Preview**: LibreOffice + poppler 의존. Keynote, Google Slides 직접 지원 없음.
 - **AI 외부 검색**: AI-research-first mode의 실제 외부 검색은 도구 환경에 따라 제한됩니다.
 

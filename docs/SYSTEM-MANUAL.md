@@ -63,7 +63,9 @@ src/
     slides/                   # slide renderer implementations
   design/
     resolver.ts               # preset + theme -> resolved tokens
-    presets/default-modern/   # default design preset
+    presets/teal/             # AI 기본 추천 (dark-first)
+    presets/vivid/            # secondary preset (dark-first, skeleton)
+    presets/modern/           # legacy/light 수요
   cli/
     validate.ts               # validate blueprint
     deck.ts                   # compile deck
@@ -79,6 +81,7 @@ examples/
   sample/                     # 엔지니어링 전략 발표 — full-stack 예제
   strategy/                   # 경영진 전략 보고 — decision slide 포함
   data-report/                # 분기 데이터 리뷰 — chart × 2, table 포함
+  results/                    # 대표 preset/theme별 blueprint, PPTX, gallery
 schemas/                      # generated JSON schema
 tests/                        # parser, renderer, snapshot tests
 ```
@@ -96,7 +99,7 @@ tests/                        # parser, renderer, snapshot tests
 ```yaml
 deck:
   title: Platform Modernization Strategy
-  design: default-modern
+  design: teal
   theme: dark
   version: "1.0"
   author: Platform Team
@@ -174,12 +177,24 @@ summary, appendix, closing
 Design preset은 `src/design/presets/{name}/` 아래에 있습니다.
 
 ```text
+src/design/presets/
+  teal/              # AI workflow 기본 추천 — charcoal-dark + teal accent (dark-first)
+  vivid/             # secondary/experimental — deep-navy + vivid purple (dark-first, skeleton)
+  modern/            # legacy/light 수요 — modern, minimal, light/dark 지원
+```
+
+각 preset 디렉터리 구성:
+
+```text
 tokens.json          # colors, typography, spacing, shapes, brand
 ppt-design.md        # design principles
 ppt-components.md    # component specs
 ppt-layouts.md       # slide layout specs
 ppt-chart-rules.md   # chart data and rendering rules
 ```
+
+**AI workflow default 정책:**
+`teal + dark`가 신규 deck의 기본 추천값이다. light/business tone은 `design: modern`을 사용한다. 기존 `design: default-modern` blueprint는 resolver alias로 계속 동작한다.
 
 `resolveDesignTokens(presetName, theme)`가 raw token을 읽고 theme colors와 default brand fallback을 합쳐 `ResolvedDesignTokens`를 반환합니다.
 
@@ -188,10 +203,15 @@ ppt-chart-rules.md   # chart data and rendering rules
 | 키 | 역할 |
 | --- | --- |
 | `brand` | `name`, `author`, `show`, `showPageNumbers`, `fontSize` — footer와 PPTX metadata에 사용 |
-| `colors` | `light`/`dark` 테마별 색상 팔레트 (`background`, `surface`, `text-primary` 등) |
+| `colors` | `light`/`dark` 테마별 색상 팔레트 (`background`, `surface`, `text-primary`, `chip-bg`, `chip-text` 등) |
 | `typography` | `title`, `body`, `caption` 등 텍스트 스타일별 `font`, `size` |
 | `spacing` | slide 여백, 컴포넌트 간격 상수 |
-| `shapes` | 버튼, 카드 등 도형의 색상·스타일 |
+| `shapes` | architecture node 도형 종류 맵 |
+
+**`chip-bg` / `chip-text` 토큰:** `section_label` chip 렌더링에 사용. 없으면 `accent` / `#FFFFFF` fallback.
+
+**section_label chip 렌더링 적용 범위:**
+`renderSectionHeader()`를 사용하는 모든 슬라이드 타입 (content, two-column, kpi, chart, table, timeline, flow, comparison, decision, agenda, summary, appendix, architecture). hero / closing / section-divider는 후속 Work P2 대상.
 
 새 preset을 만들 때는 `src/design/presets/{name}/tokens.json`을 작성하고 `--design {name}` CLI 옵션으로 선택합니다.
 
@@ -404,8 +424,8 @@ npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
 현재 기준:
 
 - 16 slide types
-- 43 tests
-- default preset: `default-modern`
+- 44 tests
+- AI 추천 preset: `teal + dark` / legacy/light: `modern`
 - supported themes: `light`, `dark`
 
 테스트 커버리지 구조:

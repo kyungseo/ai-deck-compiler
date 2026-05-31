@@ -54,7 +54,7 @@ describe('Renderer structure snapshot', () => {
   it('basic blueprint produces stable slide XML structure', async () => {
     const slides = await getPptxSlideXmls(
       'examples/basic/blueprint.yaml',
-      'default-modern',
+      'modern',
       'light',
     );
     expect(Object.keys(slides).length).toBe(6);
@@ -66,7 +66,7 @@ describe('Renderer structure snapshot', () => {
   it('architecture blueprint produces stable slide XML structure', async () => {
     const slides = await getPptxSlideXmls(
       'examples/architecture/blueprint.yaml',
-      'default-modern',
+      'modern',
       'dark',
     );
     expect(Object.keys(slides).length).toBe(5);
@@ -78,9 +78,16 @@ describe('Renderer structure snapshot', () => {
 
 describe('Renderer determinism — identical PPTX structure on repeated compile', () => {
   it('same blueprint produces identical slide XMLs on two consecutive compiles', async () => {
-    const run1 = await getPptxSlideXmls('examples/basic/blueprint.yaml', 'default-modern', 'light');
-    const run2 = await getPptxSlideXmls('examples/basic/blueprint.yaml', 'default-modern', 'light');
+    const run1 = await getPptxSlideXmls('examples/basic/blueprint.yaml', 'modern', 'light');
+    const run2 = await getPptxSlideXmls('examples/basic/blueprint.yaml', 'modern', 'light');
     expect(run1).toEqual(run2);
+  });
+});
+
+describe('Design preset alias compatibility', () => {
+  it('keeps default-modern as an alias for modern', () => {
+    expect(resolveDesignTokens('default-modern', 'light').colors)
+      .toEqual(resolveDesignTokens('modern', 'light').colors);
   });
 });
 
@@ -88,7 +95,7 @@ describe('PPTX document metadata', () => {
   it('writes deck metadata into core document properties', async () => {
     const coreXml = await getPptxFileXml(
       'examples/basic/blueprint.yaml',
-      'default-modern',
+      'modern',
       'light',
       'docProps/core.xml',
     );
@@ -102,7 +109,7 @@ describe('PPTX document metadata', () => {
   it('writes brand metadata into app document properties', async () => {
     const appXml = await getPptxFileXml(
       'examples/basic/blueprint.yaml',
-      'default-modern',
+      'modern',
       'light',
       'docProps/app.xml',
     );

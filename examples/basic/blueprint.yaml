@@ -1,6 +1,6 @@
 deck:
   title: Product Overview
-  design: default-modern
+  design: modern
   theme: light
   version: "1.0"
   audience: Internal team

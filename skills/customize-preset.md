@@ -155,7 +155,7 @@ src/design/presets/{name}/
 ### ppt-design.md 생성
 
 분석 결과를 바탕으로 간략한 디자인 시스템 문서를 작성한다.
-`src/design/presets/default-modern/ppt-design.md` 형식을 참고.
+`src/design/presets/modern/ppt-design.md` 형식을 참고.
 
 ---
 
@@ -200,6 +200,6 @@ Pretendard가 설치되어 있으면 기본값으로 사용 가능.
 
 ## 관련 파일
 
-- `src/design/presets/default-modern/tokens.json` — 참고 예시
+- `src/design/presets/modern/tokens.json` — 참고 예시
 - `src/design/resolver.ts` — preset 로딩 로직
 - `docs/SYSTEM-MANUAL.md §5` — Design System 아키텍처
