@@ -34,6 +34,17 @@ AI가 발표 구조를 제안하고 확인을 받습니다. 승인하면 bluepri
 | Codex CLI / App | repo skill `create-deck` 로드 후 요청 |
 | Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
 
+Codex App에서 처음 시작한다면 아래처럼 말하면 됩니다.
+
+```text
+이 repo의 AGENTS.md를 읽고 Product Skill Routing에 따라 create-deck 절차로 PPT 작성을 시작해줘.
+
+Q2 엔지니어링 성과 리뷰 deck을 만들고 싶어.
+청중은 임원진이고, 발표 시간은 15분이야.
+핵심 메시지는 "플랫폼 안정성이 개선됐고 다음 분기에는 배포 자동화 투자가 필요하다"야.
+dark theme, 간결한 executive briefing 톤으로 진행해줘.
+```
+
 ---
 
 ## 왜 이 도구인가요?

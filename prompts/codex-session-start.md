@@ -37,7 +37,7 @@ AI workflow 자체의 개선 항목과 example pack 정비 항목은 `docs/backl
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | generate-blueprint | export-pdf]에
+AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | generate-blueprint | export-pdf | generate-architecture-slide]에
 대응하는 `.agents/skills/{name}/SKILL.md`를 로드하고 절차를 수행해줘.
 ```
 

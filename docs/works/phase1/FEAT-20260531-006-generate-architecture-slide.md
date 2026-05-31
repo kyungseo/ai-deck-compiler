@@ -1,7 +1,8 @@
 ---
 id: FEAT-20260531-006
 title: "generate-architecture-slide skill — 자연어 아키텍처 설명 → architecture slide blueprint"
-status: Planned
+status: Done
+actual_end: 2026-05-31
 type: FEAT
 created: 2026-05-31
 branch: feature/FEAT-20260531-006-generate-architecture-slide
@@ -113,16 +114,16 @@ Step 7 — YAML 출력 + 자체 체크리스트 수행
 
 ## Done Criteria
 
-- [ ] `skills/generate-architecture-slide.md` — 8단계 절차(Step 0~7), node kind 분류 기준표, 토폴로지별 zone 배치 규칙, edge kind 선택 가이드, YAML 예시 3종 포함
-- [ ] `.claude/commands/generate-architecture-slide.md` wrapper 추가 (얇은 wrapper)
-- [ ] `.agents/skills/generate-architecture-slide/SKILL.md` wrapper 추가 (얇은 wrapper)
-- [ ] `AGENTS.md` 상단 skill 목록 문장 + Product Skill Routing 표 업데이트
-- [ ] `prompts/codex-session-start.md` fallback에 generate-architecture-slide 케이스 추가
-- [ ] `docs/SYSTEM-MANUAL.md` §6.1 AI 진입점 표 + Product skills 표 업데이트
-- [ ] `docs/USER-MANUAL.md` §4 AI 요청 표 + 자연어 요청 예시 추가
-- [ ] `README.md` 주요 기능 또는 AI workflow에 architecture slide skill 한 줄 반영
-- [ ] `skills/README.md` 업데이트 (완료 상태 + 호출 관계)
-- [ ] Verification: 아래 검증 입력으로 유효한 YAML 생성 + `npm run validate` 통과 + `npm run deck` PPTX 생성 확인
+- [x] `skills/generate-architecture-slide.md` — 8단계 절차(Step 0~7), node kind 분류 기준표, 토폴로지별 zone 배치 규칙, edge kind 선택 가이드, YAML 예시 3종 포함
+- [x] `.claude/commands/generate-architecture-slide.md` wrapper 추가 (얇은 wrapper)
+- [x] `.agents/skills/generate-architecture-slide/SKILL.md` wrapper 추가 (얇은 wrapper)
+- [x] `AGENTS.md` 상단 skill 목록 문장 + Product Skill Routing 표 업데이트
+- [x] `prompts/codex-session-start.md` fallback + AGENTS.md 있음 목록 모두 업데이트
+- [x] `docs/SYSTEM-MANUAL.md` §6.1 AI 진입점 표 + Product skills 표 업데이트
+- [x] `docs/USER-MANUAL.md` §4 AI 요청 표 + 자연어 요청 예시 추가
+- [x] `README.md` 주요 기능 표에 architecture slide skill 추가
+- [x] `skills/README.md` 업데이트 (완료 상태 + 호출 관계)
+- [x] Verification: 아래 검증 입력으로 유효한 YAML 생성 + `npm run validate` 통과 + `npm run deck` PPTX 생성 확인
 
 ## Verification
 
@@ -155,7 +156,14 @@ Step 7 — YAML 출력 + 자체 체크리스트 수행
 | left/right alias 혼용으로 zone 중복 | Step 4에서 alias 최소화 + zone 중복 체크 명시 |
 | source: file 생성 시 렌더링 불가 | skill 첫 줄에 source: inline 원칙 명시 |
 
-## 착수 전 주의사항
+## Verification 결과 (2026-05-31)
 
-현재 이 Work 파일은 `main` 브랜치에 untracked 상태.
-착수 시 `develop`에서 `feature/FEAT-20260531-006-generate-architecture-slide` 브랜치를 분기한 뒤 진행한다.
+```bash
+npm run validate -- --blueprint blueprints/verify-architecture-skill.yaml
+# ✅ Blueprint valid. slides: 2
+
+npm run deck -- --blueprint blueprints/verify-architecture-skill.yaml --output output/verify-architecture-skill.pptx
+# ✅ Output: output/verify-architecture-skill.pptx
+```
+
+자체 체크: source: inline ✅ / nodes 5 ≤ 9 ✅ / node.id unique ✅ / node.zone unique ✅ / edge from/to valid ✅

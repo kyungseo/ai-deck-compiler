@@ -76,7 +76,41 @@ npm install
 | Codex CLI / App | repo skill `create-deck` 로드 후 요청 |
 | Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
 
-### 4.2 요청 예시
+### 4.2 Codex App 첫 세션 예시
+
+Codex App에서는 slash command를 직접 입력하기보다, repo의 `AGENTS.md`를 기준으로 어떤 product skill을 쓸지 말해주면 됩니다.
+처음 clone한 뒤에는 아래처럼 요청하세요.
+
+```text
+이 repo의 AGENTS.md를 읽고 Product Skill Routing에 따라 create-deck 절차로 PPT 작성을 시작해줘.
+
+주제:
+Q2 엔지니어링 성과 리뷰 deck을 만들고 싶어.
+
+청중:
+임원진
+
+발표 시간:
+15분
+
+핵심 메시지:
+플랫폼 안정성이 개선됐고, 다음 분기에는 배포 자동화 투자가 필요하다.
+
+원하는 스타일:
+dark theme, 간결한 executive briefing 톤
+```
+
+작성해둔 자료가 있다면 source-first로 요청할 수 있습니다.
+
+```text
+이 repo의 AGENTS.md를 읽고 create-deck 절차로 PPT 작성을 시작해줘.
+아래 markdown 보고서를 기반으로 8장짜리 고객 제안 deck을 만들고 싶어.
+원문을 그대로 옮기지 말고 핵심 주장, 근거, 의사결정 포인트 중심으로 구조를 먼저 제안해줘.
+
+[여기에 markdown 붙여넣기]
+```
+
+### 4.3 요청 예시
 
 **주제와 목적만 말할 때 (brief-first)**
 
@@ -120,7 +154,7 @@ Auth Service는 Redis를 쓰고, Order Service는 Kafka로 이벤트를 발행�
 외부 Client가 Gateway를 호출하는 구조야.
 ```
 
-### 4.3 CLI 직접 실행 (디버깅·고급 사용자)
+### 4.4 CLI 직접 실행 (디버깅·고급 사용자)
 
 AI 없이 `blueprint.yaml`을 직접 작성하거나, 동작을 확인할 때 사용합니다.
 
