@@ -3,17 +3,17 @@ import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
 import { SL, CARD, hex, renderSectionHeader, renderCardBackground } from '../layout.js';
 
-type ContentSlide = Extract<Slide, { type: 'content' }>;
+type AppendixSlide = Extract<Slide, { type: 'appendix' }>;
 
-export const contentTemplate: SlideTemplate<ContentSlide> = {
-  id: 'content',
-  supportedType: 'content',
+export const appendixTemplate: SlideTemplate<AppendixSlide> = {
+  id: 'appendix',
+  supportedType: 'appendix',
   variants: ['default'],
-  render(slide: ContentSlide, tokens: ResolvedDesignTokens, pptxSlide: PptxSlide) {
+  render(slide: AppendixSlide, tokens: ResolvedDesignTokens, pptxSlide: PptxSlide) {
     const ty = tokens.typography;
     const co = tokens.colors;
 
-    renderSectionHeader(pptxSlide, slide, tokens);
+    renderSectionHeader(pptxSlide, { ...slide, section_label: slide.section_label ?? 'APPENDIX' }, tokens);
     renderCardBackground(pptxSlide, tokens);
 
     const items = slide.body ?? [];
@@ -22,9 +22,9 @@ export const contentTemplate: SlideTemplate<ContentSlide> = {
     const bullets = items.map(text => ({
       text,
       options: {
-        fontSize: ty['body']?.size ?? 18,
+        fontSize: ty['body']?.size ?? 14,
         fontFace: ty['body']?.font ?? 'Pretendard',
-        color: hex(co['text-secondary'] ?? '374151'),
+        color: hex(co['text-muted'] ?? '6B7280'),
         bullet: { code: '2022', indent: 15 },
         paraSpaceAfter: 8,
       },

@@ -1,7 +1,7 @@
 import type { SlideTemplate, PptxSlide } from '../registry.js';
 import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
-import { SL, hex } from '../layout.js';
+import { SL, CARD, hex, renderSectionHeader, renderCardBackground } from '../layout.js';
 
 type ChartSlide = Extract<Slide, { type: 'chart' }>;
 
@@ -22,19 +22,13 @@ export const chartTemplate: SlideTemplate<ChartSlide> = {
     const ty = tokens.typography;
     const co = tokens.colors;
 
-    pptxSlide.addText(slide.title, {
-      x: SL.cx, y: SL.ty, w: SL.cw, h: SL.th,
-      fontSize: ty['title']?.size ?? 40,
-      bold: true,
-      fontFace: ty['title']?.font ?? 'Pretendard',
-      color: hex(co['text-primary'] ?? '#111827'),
-      valign: 'middle',
-    });
+    renderSectionHeader(pptxSlide, slide, tokens);
+    renderCardBackground(pptxSlide, tokens);
 
     const { chart } = slide;
     if (chart.data.source === 'file') {
       pptxSlide.addText('[Chart data from file — inline source required for rendering]', {
-        x: SL.cx, y: SL.cy, w: SL.cw, h: SL.ch,
+        x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
         fontSize: ty['caption']?.size ?? 14,
         color: hex(co['text-muted'] ?? '6B7280'),
         align: 'center', valign: 'middle',
@@ -54,7 +48,7 @@ export const chartTemplate: SlideTemplate<ChartSlide> = {
     const isPie = chart.type === 'pie' || chart.type === 'donut';
 
     const chartOpts: Record<string, unknown> = {
-      x: SL.cx, y: SL.cy, w: SL.cw, h: SL.ch,
+      x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
       chartColors,
       showLegend: true,
       legendPos: 'b',

@@ -63,7 +63,16 @@ deck:
 
 **id 규칙:** `{type}-{순번}` 또는 의미 있는 식별자. 예: `hero-1`, `kpi-q2`, `chart-revenue`
 
-**내용 작성 원칙:**
+**언어 규칙 (DR-014):**
+
+| 필드 | 규칙 |
+|---|---|
+| `section_label` | 영어 UPPERCASE 고정 — `"01. PROBLEM"`, `"SOLUTION"`, `"Q2 RESULTS"` |
+| `left.label` / `right.label` | 영어 UPPERCASE 권장 — `"CURRENT REALITY"`, `"PROPOSED APPROACH"` |
+| `title` | 발표 언어 + Action Title 원칙 (아래 참조) |
+| `subtitle` | 발표 언어 1문장 — 제목 아래 맥락 보완 |
+| `body` 항목 | 발표 언어 + 기술 용어(제품명·지표)는 영어 원문 유지 |
+| 숫자·단위 | 언어 무관 약식 표기 — `4×`, `+12%`, `48h → 8h`, `$1M` |
 
 **Action Title 원칙 (핵심):**
 슬라이드 `title`은 주제 라벨이 아니라 결론을 담은 선언형 문장이어야 한다.
@@ -77,6 +86,8 @@ deck:
 ✗ "주요 지표"
 ✓ "MTTR 48h → 8h, 변경 실패율 22% → 5%로 안정성 회복"
 ```
+
+예외: `hero`(간결 제목 허용), `agenda`('Agenda' 고정 허용), `section-divider`(섹션명 허용)
 
 - 텍스트는 구체적으로 — 모호한 형용사 대신 수치와 사실 기반
 - body 항목은 3~5개로 제한
@@ -233,11 +244,45 @@ blueprint.yaml 초안입니다.
   body:                      # 핵심 내용 요약, 선택
     - 요약 포인트 1
     - 요약 포인트 2
-  takeaways:                 # 청중이 기억할 것, 선택
+  takeaways:                 # 청중이 기억할 것 — 우측 패널에 ✓ 배지로 표시
     - Takeaway 1
     - Takeaway 2
     - Takeaway 3
 ```
+
+### section-divider
+```yaml
+- id: section-div-1
+  type: section-divider
+  number: "01"               # 좌측 accent 컬럼에 대형으로 표시, 선택
+  section: "SECTION 01"      # 섹션 레이블, 선택 — 영어 UPPERCASE
+  title: 섹션 제목           # 발표 언어, Action Title 예외 허용
+  subtitle: 이 섹션에서 다룰 내용  # 선택
+```
+
+**용도:** 주요 섹션 사이 구분 슬라이드. agenda 항목과 대응.
+
+### comparison
+```yaml
+- id: comparison-1
+  type: comparison
+  section_label: "03. ANALYSIS"
+  title: 기존 방식과 제안 방향의 핵심 차이
+  left:
+    label: "CURRENT APPROACH"  # 영어 UPPERCASE — 생략 시 "BEFORE" 기본값
+    body:
+      - "수동 배포 체크리스트"
+      - "격주 릴리즈 사이클"
+      - "전체 롤백만 가능"
+  right:
+    label: "PROPOSED APPROACH"  # 영어 UPPERCASE — 생략 시 "AFTER" 기본값
+    body:
+      - "자동화 게이트 검증"
+      - "일일 배포 가능"
+      - "서비스별 독립 롤백"
+```
+
+**렌더링:** 좌측(×, 회색) vs 우측(✓, accent) 시각 대비. 항목 수는 양쪽 동일하게 맞추는 것이 좋다.
 
 ---
 

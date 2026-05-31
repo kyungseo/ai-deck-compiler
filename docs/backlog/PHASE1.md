@@ -142,6 +142,11 @@
   - `CONTRIBUTING.md` — 개발 환경 설정, 테스트 실행, PR 가이드
   - `LICENSE` — MIT
   - `README.md` 보완: limitations, roadmap, skill 사용법, custom design 추가 방법
+  - `README.md` + `docs/USER-MANUAL.md` 환경 설정 섹션 보강:
+    - Pretendard 폰트 설치 안내 (macOS: `brew install --cask font-pretendard`, Windows: 수동 설치 링크)
+    - PowerPoint 또는 LibreOffice Impress 필요 여부 명시
+    - preview CLI 선택 의존성 안내 (LibreOffice + poppler/pdftoppm): macOS Homebrew, Windows Scoop/winget, Linux apt 설치 명령
+    - clone 후 실행 체크리스트 (font → npm install → typecheck → test → validate)
 - Verification: 파일 존재 및 내용 검토
 - Preconditions: 없음
 
@@ -162,6 +167,37 @@
 
 ---
 
+**[public-repo-cleanup]** | Priority: P2 | Scope: public 전환 전 repo 경량화 + contributor 최적화 — **remote repo 생성 직전 별도 branch에서 수행**
+
+> harness를 전면 제거하지 않는다. public 이후에도 AI 기반 유지보수가 계속되므로 harness workflow는 유지한다.
+> 대신 "내부 상태 파일"은 정리하고, AI surface는 외부 contributor 친화적으로 재작성한다.
+> harness 문서 자체는 "AI로 개발하는 방법"으로 포지셔닝 — 오픈소스 차별화 요소로 활용.
+
+- Done Criteria:
+  - **제거 (public 가치 없는 내부 상태):**
+    - `docs/works/` — 완료된 작업 내역 제거 또는 archive
+    - `docs/backlog/` — 내부 todo 제거 또는 `.dev/` 하위로 이동
+    - `docs/retrospectives/` — 제거
+    - `prompts/` — 제거
+    - `docs/BOOTSTRAP.md` — 이미 완료된 부팅 절차, 제거
+  - **유지 (설계 철학 공개, 오픈소스 강점):**
+    - `docs/PLAN.md`, `PLAN-SUMMARY.md`, `SYSTEM-MANUAL.md`, `USER-MANUAL.md`
+    - `docs/decisions/` — DR-014(언어정책) 등 product 관련 유지. harness 전용(DR-007, 008, 013)은 archive
+    - `docs/STATUS.md` — 현재 개발 상태 공개 (많은 OSS 프로젝트가 이 형태 사용)
+    - `skills/` — 이 repo의 핵심 AI workflow 기능
+    - `.claude/commands/create-deck.md` — 핵심 product command
+  - **재작성 (contributor 최적화):**
+    - `CLAUDE.md` → 내부 harness 운영 규칙 대신 "이 repo를 AI로 기여하는 방법" 중심으로 재작성
+    - `AGENTS.md` → 동일 방향으로 재작성
+    - `.claude/commands/` harness 전용 커맨드(start, pick, work, close 등)는 숨김 또는 간소화
+  - `npm test`, `npm run typecheck`, `npm run validate` 통과
+- Verification: 외부 contributor가 clone 후 CLAUDE.md만 읽고 기여 방법을 파악할 수 있는지 확인
+- Preconditions: remote repo 생성 직전. 개발 안정화 완료 후.
+
+---
+
+**[slide-layout-fine-tuning]** | Priority: P2 | Scope: 슬라이드 타입별 레이아웃 미세 조정 — 여백, 텍스트 크기, 카드 비율 등 실제 PPTX 확인 후 조정 |
+**[pptx-document-metadata]** | Priority: P2 | Scope: PPTX 문서 속성(제목·저자·회사) 설정 — pptxgenjs 기본값("PptxGenJS") 대신 `deck.title`, `deck.author`/`brand.author`, `deck.version`으로 채우기 (`pptx.title`, `pptx.author`, `pptx.company`, `pptx.revision`) |
 **[preset-enterprise-clean]** | Priority: P3 | Scope: enterprise-clean design preset 추가 |
 **[custom-preset-support]** | Priority: P3 | Scope: `--design custom/my-company` 형식 custom preset 디렉터리 지원 |
 **[skill-validate-deck]** | Priority: P3 | Scope: layout, overlap, typography, editability 검증 skill |

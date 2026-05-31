@@ -3,21 +3,31 @@ import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
 import { SL, CARD, hex, zoneCenter, renderSectionHeader, renderCardBackground } from '../layout.js';
 
-type ArchitectureSlide = Extract<Slide, { type: 'architecture' }>;
+type FlowSlide = Extract<Slide, { type: 'flow' }>;
 
 const NODE_W = 1.8;
 const NODE_H = 0.65;
 
-export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
-  id: 'architecture',
-  supportedType: 'architecture',
+export const flowTemplate: SlideTemplate<FlowSlide> = {
+  id: 'flow',
+  supportedType: 'flow',
   variants: ['default'],
-  render(slide: ArchitectureSlide, tokens: ResolvedDesignTokens, pptxSlide: PptxSlide) {
+  render(slide: FlowSlide, tokens: ResolvedDesignTokens, pptxSlide: PptxSlide) {
     const ty = tokens.typography;
     const co = tokens.colors;
 
     renderSectionHeader(pptxSlide, slide, tokens);
     renderCardBackground(pptxSlide, tokens);
+
+    if (!slide.diagram) {
+      pptxSlide.addText('Flow diagram을 diagram 필드로 추가하세요.', {
+        x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
+        fontSize: ty['caption']?.size ?? 14,
+        color: hex(co['text-muted'] ?? '6B7280'),
+        align: 'center', valign: 'middle',
+      });
+      return;
+    }
 
     if (slide.diagram.source === 'file') {
       pptxSlide.addText('[Diagram from file — inline source required for rendering]', {
@@ -30,14 +40,11 @@ export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
     }
 
     const { nodes, edges, groups } = slide.diagram;
-
-    // Compute node center positions (zone system uses SL.cy/SL.ch — zones land inside card)
     const nodePos = new Map<string, { cx: number; cy: number }>();
     for (const node of nodes) {
       nodePos.set(node.id, zoneCenter(node.zone));
     }
 
-    // Groups (draw first so nodes appear on top)
     if (groups) {
       for (const group of groups) {
         const memberPositions = group.nodes
@@ -69,7 +76,6 @@ export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
       }
     }
 
-    // Edges
     for (const edge of edges) {
       const from = nodePos.get(edge.from);
       const to = nodePos.get(edge.to);
@@ -77,7 +83,6 @@ export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
 
       const dx = to.cx - from.cx;
       const dy = to.cy - from.cy;
-      // OOXML requires non-negative cx/cy — normalize bounding box and use flip flags
       pptxSlide.addShape('line', {
         x: Math.min(from.cx, to.cx),
         y: Math.min(from.cy, to.cy),
@@ -101,7 +106,6 @@ export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
       }
     }
 
-    // Nodes
     for (const node of nodes) {
       const pos = nodePos.get(node.id);
       if (!pos) continue;

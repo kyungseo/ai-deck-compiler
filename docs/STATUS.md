@@ -21,7 +21,6 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
-| FEAT-20260530-002 | skill-create-deck + skill-generate-blueprint | `docs/works/phase1/FEAT-20260530-002-skill-create-deck.md` |
 
 ## Blockers And Open Questions
 
@@ -34,6 +33,5 @@
 
 ## Next Actions
 
-1. `/work skill-create-deck` — AI guided 인터랙티브 워크플로우 skill (P0, 핵심 UX)
-2. `/work p2-slide-types` — P2 slide 6종 구현
-3. `docs/PLAN.md` Project Initialization Plan에 stack 선택 근거 이전
+1. `skill-review-deck` 착수 — 생성된 deck 구조·메시지·디자인 검토 AI skill (P1)
+2. Public 전환 시: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020

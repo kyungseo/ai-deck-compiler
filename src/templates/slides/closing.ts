@@ -1,0 +1,72 @@
+import type { SlideTemplate, PptxSlide } from '../registry.js';
+import type { ResolvedDesignTokens } from '../../compiler/types.js';
+import type { Slide } from '../../schema/blueprint.js';
+import { SL, hex } from '../layout.js';
+
+type ClosingSlide = Extract<Slide, { type: 'closing' }>;
+
+export const closingTemplate: SlideTemplate<ClosingSlide> = {
+  id: 'closing',
+  supportedType: 'closing',
+  variants: ['default'],
+  render(slide: ClosingSlide, tokens: ResolvedDesignTokens, pptxSlide: PptxSlide) {
+    const ty = tokens.typography;
+    const co = tokens.colors;
+    const accent = hex(co['accent'] ?? '4F46E5');
+    const font = ty['title']?.font ?? 'Pretendard';
+
+    // Full-slide accent background
+    pptxSlide.addShape('rect', {
+      x: 0, y: 0, w: SL.w, h: SL.h,
+      fill: { color: accent },
+      line: { color: accent, width: 0 },
+    });
+
+    // Optional message — small label above title
+    if (slide.message) {
+      pptxSlide.addText(slide.message, {
+        x: SL.mx, y: 2.4, w: SL.cw, h: 0.45,
+        fontSize: 16,
+        fontFace: font,
+        color: 'FFFFFF',
+        align: 'center',
+        valign: 'middle',
+        transparency: 20,
+      });
+    }
+
+    // Title — large, centered
+    const titleY = slide.message ? 2.9 : 2.7;
+    pptxSlide.addText(slide.title, {
+      x: SL.mx, y: titleY, w: SL.cw, h: 1.4,
+      fontSize: (ty['title']?.size ?? 40) + 16,  // 56pt — larger than hero
+      bold: true,
+      fontFace: font,
+      color: 'FFFFFF',
+      align: 'center',
+      valign: 'middle',
+    });
+
+    // Accent divider line (white, semi-transparent)
+    const lineY = titleY + 1.5;
+    pptxSlide.addShape('rect', {
+      x: SL.w / 2 - 1.0, y: lineY, w: 2.0, h: 0.05,
+      fill: { color: 'FFFFFF' },
+      line: { color: 'FFFFFF', width: 0 },
+      transparency: 40,
+    });
+
+    // Subtitle — contact or closing note
+    if (slide.subtitle) {
+      pptxSlide.addText(slide.subtitle, {
+        x: SL.mx, y: lineY + 0.2, w: SL.cw, h: 0.5,
+        fontSize: 18,
+        fontFace: font,
+        color: 'FFFFFF',
+        align: 'center',
+        valign: 'middle',
+        transparency: 20,
+      });
+    }
+  },
+};

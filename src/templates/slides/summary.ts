@@ -1,7 +1,7 @@
 import type { SlideTemplate, PptxSlide } from '../registry.js';
 import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
-import { SL, hex } from '../layout.js';
+import { SL, CARD, hex, renderSectionHeader, renderCardBackground } from '../layout.js';
 
 type SummarySlide = Extract<Slide, { type: 'summary' }>;
 
@@ -13,65 +13,86 @@ export const summaryTemplate: SlideTemplate<SummarySlide> = {
     const ty = tokens.typography;
     const co = tokens.colors;
 
-    pptxSlide.addText(slide.title, {
-      x: SL.cx, y: SL.ty, w: SL.cw, h: SL.th,
-      fontSize: ty['title']?.size ?? 40,
-      bold: true,
-      fontFace: ty['title']?.font ?? 'Pretendard',
-      color: hex(co['text-primary'] ?? '#111827'),
-      valign: 'middle',
-    });
+    renderSectionHeader(pptxSlide, slide, tokens);
+    renderCardBackground(pptxSlide, tokens);
 
-    const hasTakeaways = (slide.takeaways ?? []).length > 0;
-    const bodyW = hasTakeaways ? SL.cw * 0.55 : SL.cw;
-    const takeawayX = SL.cx + bodyW + 0.3;
-    const takeawayW = SL.cw - bodyW - 0.3;
-
-    // Body
+    const takeaways = slide.takeaways ?? [];
     const bodyItems = slide.body ?? [];
+    const hasTakeaways = takeaways.length > 0;
+
+    // When takeaways are present: body on left (60%), takeaway panel on right (38%)
+    const bodyW = hasTakeaways ? SL.cw * 0.58 : SL.cw;
+    const panelX = SL.cx + bodyW + 0.3;
+    const panelW = SL.cw - bodyW - 0.3;
+
     if (bodyItems.length > 0) {
       const bullets = bodyItems.map(text => ({
         text,
         options: {
           fontSize: ty['body']?.size ?? 18,
           fontFace: ty['body']?.font ?? 'Pretendard',
-          color: hex(co['text-secondary'] ?? '#374151'),
+          color: hex(co['text-secondary'] ?? '374151'),
           bullet: { code: '2022', indent: 15 },
-          paraSpaceAfter: 6,
+          paraSpaceAfter: 8,
         },
       }));
       pptxSlide.addText(bullets, {
-        x: SL.cx, y: SL.cy, w: bodyW, h: SL.ch, valign: 'top',
+        x: SL.cx, y: CARD.iy, w: bodyW, h: CARD.ih, valign: 'top',
       });
     }
 
-    // Takeaways panel
     if (hasTakeaways) {
+      // Takeaway panel with accent header
       pptxSlide.addShape('roundRect', {
-        x: takeawayX, y: SL.cy, w: takeawayW, h: SL.ch,
-        fill: { color: hex(co['surface'] ?? 'F8F9FA') },
-        line: { color: hex(co['border'] ?? 'E5E7EB'), width: 1 },
+        x: panelX, y: CARD.iy, w: panelW, h: CARD.ih,
+        fill: { color: hex(co['card-item-bg'] ?? 'EEF2FF') },
+        line: { color: hex(co['card-item-bg'] ?? 'EEF2FF'), width: 0 },
+        rectRadius: 0.1,
+      });
+
+      // Accent header bar
+      pptxSlide.addShape('roundRect', {
+        x: panelX, y: CARD.iy, w: panelW, h: 0.5,
+        fill: { color: hex(co['accent'] ?? '2563EB') },
+        line: { color: hex(co['accent'] ?? '2563EB'), width: 0 },
         rectRadius: 0.1,
       });
       pptxSlide.addText('Key Takeaways', {
-        x: takeawayX, y: SL.cy + 0.2, w: takeawayW, h: 0.45,
+        x: panelX, y: CARD.iy, w: panelW, h: 0.5,
         fontSize: ty['label']?.size ?? 12,
         bold: true,
         fontFace: ty['label']?.font ?? 'Pretendard',
-        color: hex(co['accent'] ?? '2563EB'),
+        color: 'FFFFFF',
         align: 'center',
+        valign: 'middle',
       });
 
-      slide.takeaways!.forEach((item, i) => {
-        pptxSlide.addText(`${i + 1}. ${item}`, {
-          x: takeawayX + 0.2,
-          y: SL.cy + 0.75 + i * 0.75,
-          w: takeawayW - 0.4,
-          h: 0.65,
-          fontSize: ty['body']?.size ?? 18,
+      const itemH = Math.min(0.9, (CARD.ih - 0.65) / takeaways.length);
+      const checkSize = 0.24;
+      takeaways.forEach((item, i) => {
+        const itemY = CARD.iy + 0.6 + i * itemH;
+        const checkY = itemY + (itemH - checkSize) / 2;
+        pptxSlide.addShape('rect', {
+          x: panelX + 0.22, y: checkY, w: checkSize, h: checkSize,
+          fill: { color: hex(co['accent'] ?? '4F46E5') },
+          line: { color: hex(co['accent'] ?? '4F46E5'), width: 0 },
+        });
+        pptxSlide.addText('✓', {
+          x: panelX + 0.22, y: checkY, w: checkSize, h: checkSize,
+          fontSize: 9,
+          bold: true,
+          fontFace: ty['label']?.font ?? 'Pretendard',
+          color: 'FFFFFF',
+          align: 'center',
+          valign: 'middle',
+        });
+        pptxSlide.addText(item, {
+          x: panelX + 0.56, y: itemY, w: panelW - 0.72, h: itemH,
+          fontSize: ty['body']?.size ? ty['body'].size - 2 : 16,
           fontFace: ty['body']?.font ?? 'Pretendard',
-          color: hex(co['text-secondary'] ?? '374151'),
-          valign: 'top',
+          color: hex(co['text-primary'] ?? '111827'),
+          valign: 'middle',
+          wrap: true,
         });
       });
     }

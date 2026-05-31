@@ -12,12 +12,18 @@
 ```
 사용자 의도 표현
   → Step 1: 목적·청중·구조 파악 (대화)
-  → Step 2: 슬라이드 구조 제안 + 승인
-  → Step 3: blueprint.yaml 초안 작성
+  ── [GATE 1] 사용자 답변 수신 후 진행 ──
+  → Step 2: 슬라이드 구조 제안 + 승인 대기
+  ── [GATE 2] 구조 승인 후 진행 ──
+  → Step 3: blueprint.yaml 초안 작성 + 검토 대기
+  ── [GATE 3] 검토 완료 확인 후 진행 ──
   → Step 4: 슬라이드 내용 검토·보완 반복
+  ── [GATE 4] "생성해줘" 확인 후 진행 ──
   → Step 5: PPTX 생성 (npm run deck)
   → Step 6: 결과 확인 + 필요 시 재수정
 ```
+
+**MUST:** 각 GATE에서 반드시 멈추고 사용자 응답을 기다린다. "간단하게", "빠르게", "테스트용" 등의 말도 GATE를 건너뛰는 허가가 아니다.
 
 ---
 
@@ -52,6 +58,9 @@
   의사결정 유도 / 이해도 향상 / 신뢰 구축 / 실행 동기 부여
 
 [테마] light (비즈니스) / dark (기술·엔지니어링)
+
+[작성자] 표지에 표시할 이름 또는 팀명?
+  (기본값: 박경서 / 생략 시 기본값 사용)
 ```
 
 ---
@@ -66,9 +75,11 @@
 | --- | --- |
 | 항상 첫 슬라이드 | `hero` |
 | 4개 이상 섹션 있을 때 | `agenda` |
+| 주요 섹션 사이 구분 | `section-divider` |
 | 핵심 지표 3~4개 강조 | `kpi` |
 | 텍스트 설명·불렛 포인트 | `content` |
 | 좌우 비교 또는 두 관점 | `two-column` |
+| 기존 vs 제안 명확한 대비 | `comparison` |
 | 시계열·비교 데이터 | `chart` |
 | 행/열 구조 데이터 | `table` |
 | 시스템·인프라 구조 설명 | `architecture` |
@@ -99,9 +110,10 @@ hero → agenda → content × 2 → two-column → summary
 05. [content]     — {슬라이드 제목}
 06. [summary]     — Key Takeaways
 
-수정하거나 추가할 슬라이드가 있으면 말씀해 주세요.
-확인되면 blueprint.yaml 초안을 작성하겠습니다.
+이 구조로 진행할까요? 슬라이드를 추가·제거하거나 순서를 바꾸고 싶으면 말씀해 주세요.
 ```
+
+→ **[GATE 2] 사용자 승인 후에만 blueprint 작성으로 진행한다.**
 
 ---
 
@@ -116,11 +128,18 @@ deck:
   title: # 발표 제목 (60자 이내)
   design: default-modern
   theme: light | dark  # Step 1에서 확인한 값
-  version: "1.0"
+  version: "1.0"       # 문서 버전 — 표지 우측 상단에 자동 표시
+  author: # 작성자 — 생략 시 기본값(박경서) 사용, 표지에 표시
   audience: # 청중 (선택)
 ```
 
 **id 규칙:** 소문자, 하이픈, 고유값. 예: `hero-1`, `kpi-q2`, `arch-overview`
+
+**언어 규칙 (DR-014):**
+- `section_label`: 영어 UPPERCASE 고정 — `"01. PROBLEM"`, `"SOLUTION"`
+- `left.label` / `right.label` (패널 라벨): 영어 UPPERCASE 권장 — `"CURRENT REALITY"`, `"OUR APPROACH"`
+- `title`: 발표 언어 + Action Title 원칙 (결론 선언형 문장)
+- `body` 항목: 발표 언어 + 기술 용어·지표는 영어 원문 유지
 
 **슬라이드 타입별 필수 필드:**
 
@@ -196,10 +215,13 @@ deck:
 초안 작성 후:
 ```
 blueprints/{slug}.yaml을 작성했습니다.
-각 슬라이드를 검토해 주세요. 수정할 내용을 말씀해 주시면 반영하겠습니다.
 
 [blueprint.yaml 내용 전체 표시]
+
+각 슬라이드를 검토해 주세요. 수정할 내용이 있으면 말씀해 주세요.
 ```
+
+→ **[GATE 3] 사용자가 검토 완료를 확인한 뒤에만 PPTX 생성으로 진행한다.**
 
 ---
 
@@ -219,6 +241,8 @@ blueprints/{slug}.yaml을 작성했습니다.
 수정했습니다. 다른 변경 사항이 있으신가요?
 없으면 PPTX를 생성하겠습니다.
 ```
+
+→ **[GATE 4] "없다" 또는 "생성해줘" 확인 후에만 Step 5로 진행한다.**
 
 ---
 

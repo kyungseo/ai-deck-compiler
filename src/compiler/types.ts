@@ -18,6 +18,7 @@ export type BrandToken = {
   show: boolean;
   showPageNumbers: boolean;
   fontSize: number;
+  author: string;
 };
 
 export type ResolvedDesignTokens = {

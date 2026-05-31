@@ -36,7 +36,7 @@ Scaffold 직후 이 파일을 먼저 채운다. 목표는 빈 harness를 프로�
 - [x] `docs/PLAN-SUMMARY.md` Implementation Baseline 표의 항목을 하나씩 결정한다 — 완료
 - [x] 결정된 항목은 Readiness를 Ready로 업데이트한다 — 완료
 - [x] 코드 개발이 필요 없는 항목은 Readiness를 Not Applicable로 표시한다 — Data storage, Profiles/Environments → Not Applicable
-- [ ] 결정 근거는 `docs/PLAN.md` Project Initialization Plan에 기록한다 — stack 선택 근거는 `temp/work-plans/10-ai-native-pt-engineering-framework-3.md` §7에 있음. `docs/PLAN.md`로 이전 예정.
+- [x] 결정 근거는 `docs/PLAN.md` Project Initialization Plan에 기록한다 — 완료 (2026-05-30)
 - [x] `docs/AGENT-WORKFLOW.md` Project Constants 작성 (Runtime, Framework, Build, Base package/module, Architecture) — feature/bootstrap-project-identity 브랜치에서 완료 예정
 
 > 이 단계가 완료(또는 Not Applicable 처리)되지 않으면 `docs/backlog/PHASE1.md`에 기능 후보를 등록하지 않는다.

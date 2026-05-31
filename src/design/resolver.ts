@@ -10,6 +10,7 @@ const DEFAULT_BRAND: BrandToken = {
   show: true,
   showPageNumbers: true,
   fontSize: 10,
+  author: '박경서 (Kyungseo.Park@gmail.com)',
 };
 
 interface RawTokens {
