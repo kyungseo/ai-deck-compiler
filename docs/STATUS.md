@@ -21,6 +21,7 @@
 
 | ID | Title | Work File |
 | --- | --- | --- |
+| FEAT-20260531-002 | skill-review-deck | docs/works/phase1/FEAT-20260531-002-skill-review-deck.md |
 
 ## Blockers And Open Questions
 
