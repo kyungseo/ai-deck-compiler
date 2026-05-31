@@ -98,16 +98,6 @@
 
 ---
 
-**[examples-expanded]** | Priority: P1 | Scope: examples/strategy/, examples/data-report/ 추가 및 각 예제에 README 포함
-
-- Done Criteria:
-  - `examples/strategy/blueprint.yaml` — 전략 보고 형식 (hero, agenda, content, kpi, decision, summary)
-  - `examples/data-report/blueprint.yaml` — 데이터 리포트 형식 (kpi, chart × 2, table, summary)
-  - 각 예제 디렉토리에 README.md 포함 (사용법, 슬라이드 구성 설명)
-  - 예제 PPTX 정상 생성 확인
-- Verification: `npm run deck` 각 예제 정상 실행
-- Preconditions: P1 compiler 완료 (✅)
-
 ---
 
 ### P2 — 공개 repo 완성도 및 preset 확장
@@ -163,18 +153,6 @@
 
 ---
 
-**[vitest-security-upgrade]** | Priority: P2 | Scope: vitest 2.x 이상 업그레이드 — Dependabot medium 취약점 2건 해소
-
-> 취약점 경로: `vitest@1.x → vite@5.4.21 → esbuild@0.21.5`. dev 전용, 개발 서버 미사용이라 실제 익스플로잇 조건 미충족. public 전환 전 해소 권장.
-> 취약점 요약: vite Path Traversal (CVE, ≤ 6.4.1), esbuild dev server arbitrary request (≤ 0.24.2).
-
-- Done Criteria:
-  - `vitest` 2.x 이상으로 업그레이드
-  - `npm test` 전체 통과
-  - `gh api /repos/kyungseo/ai-deck-compiler/dependabot/alerts` 상태 open 0건 확인
-- Verification: `npm test` 통과, Dependabot alert 해소 확인
-- Preconditions: public 전환 전
-
 ---
 
 ### P3 — 장기 확장
@@ -226,3 +204,5 @@
 | ID | Title | actual_end |
 | --- | --- | --- |
 | FEAT-20260530-001 | Work 2 — default-modern preset + P1 slide render + PPTX CLI | 2026-05-30 |
+| vitest-security-upgrade | vitest 3.x 업그레이드 — Dependabot 취약점 2건 해소 | 2026-05-31 |
+| examples-expanded | examples/strategy + examples/data-report 추가 | 2026-05-31 |
