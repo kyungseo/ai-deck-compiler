@@ -56,24 +56,42 @@ cd ai-deck-compiler
 npm install
 ```
 
-### PPTX 생성
+### 시작 방법 — AI 워크플로우 (권장)
+
+설치 후 AI에게 요청하는 것이 가장 빠른 시작입니다.
+
+| 환경 | 진입 방법 |
+| --- | --- |
+| Claude Code | `/create-deck` 입력 |
+| Codex CLI/App | repo skill `create-deck` 로드 후 요청 |
+| Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
+
+```text
+# Claude Code 예시
+/create-deck
+
+Q2 엔지니어링 성과 리뷰 deck을 만들어줘.
+청중은 임원진이고, 15분 발표야. dark theme.
+```
+
+AI가 구조 협의 → `blueprint.yaml` 작성 → `npm run deck` 실행 → PPTX 생성까지 진행합니다.
+
+### 시작 방법 — CLI 직접 실행
+
+AI 없이 blueprint를 직접 작성하거나, 동작을 확인할 때 사용합니다.
 
 ```bash
+# blueprint 검증
 npm run validate -- --blueprint examples/sample/blueprint.yaml
 
+# PPTX 생성
 npm run deck -- \
   --blueprint examples/sample/blueprint.yaml \
   --output output/sample-v1.0.pptx
-```
 
-### Preview 확인
-
-```bash
+# Preview (LibreOffice + pdftoppm 필요)
 npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
 ```
-
-Preview는 PPTX를 PNG로 변환해 AI가 slide screenshot을 보고 visual review를 할 수 있게 합니다.
-환경에 LibreOffice 또는 `pdftoppm`이 없으면 PowerPoint/Keynote 수동 확인으로 대체할 수 있습니다.
 
 ---
 

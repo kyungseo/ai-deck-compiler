@@ -26,28 +26,27 @@
 
 ```mermaid
 flowchart TD
-  A["Repo clone"] --> B["npm install"]
-  B --> C["AI에게 deck 요청 또는 blueprint 직접 작성"]
-  C --> D["blueprint.yaml 초안 생성"]
-  D --> E["사용자 검토와 수정"]
-  E --> F["npm run validate"]
-  F --> G["npm run deck"]
-  G --> H["editable PPTX 생성"]
-  H --> I{"preview 생성할까요?"}
-  I -->|Yes| J["npm run preview"]
+  A["Repo clone + npm install"] --> B{"시작 방법 선택"}
+  B -->|AI 워크플로우 권장| C["/create-deck 또는 skill 요청"]
+  B -->|CLI 직접 실행| D["blueprint.yaml 직접 작성"]
+  C --> E["AI: 구조 협의 → blueprint.yaml 작성"]
+  E --> F["사용자 검토·수정"]
+  D --> F
+  F --> G["npm run validate"]
+  G --> H["npm run deck → editable PPTX"]
+  H --> I{"Preview 가능?"}
+  I -->|Yes| J["npm run preview → PNG"]
   I -->|No| K["PowerPoint/Keynote에서 직접 확인"]
-  J --> L["AI visual review"]
+  J --> L["AI visual review + /review-deck"]
   K --> L
   L --> M{"수정 필요?"}
-  M -->|Yes| D
+  M -->|Yes| F
   M -->|No| N["최종 deck"]
 ```
 
 ---
 
-## 3. 설치와 첫 PPT 만들기
-
-### 3.1 설치
+## 3. 설치
 
 ```bash
 git clone https://github.com/kyungseo/ai-deck-compiler.git
@@ -63,48 +62,49 @@ npm install
 | macOS | `brew install --cask font-pretendard` |
 | Windows / Linux | [Pretendard 릴리스 페이지](https://github.com/orioncactus/pretendard)에서 다운로드 |
 
-### 3.2 예제 blueprint 검증
+---
 
-세 가지 예제 중 하나를 골라 시작하세요.
+## 4. 시작 방법 — AI 워크플로우 vs CLI 직접 실행
+
+두 가지 경로 중 하나를 선택합니다.
+
+### 4.1 AI 워크플로우 (권장)
+
+AI에게 deck 생성을 요청하면 구조 협의 → `blueprint.yaml` 작성 → `npm run deck` 실행 → PPTX 생성까지 AI가 진행합니다.
+
+| 환경 | 진입 방법 | 비고 |
+| --- | --- | --- |
+| Claude Code | `/create-deck` 입력 | `.claude/commands/create-deck.md` wrapper |
+| Claude Code | `/generate-blueprint` | blueprint만 생성할 때 |
+| Claude Code | `/review-deck` | 생성된 deck 검토 |
+| Codex CLI/App | repo skill `create-deck` 로드 후 요청 | `.agents/skills/create-deck/SKILL.md` |
+| Claude App | `skills/create-deck.md` 내용 참조 후 요청 | native slash command 미지원 |
+
+프롬프트 예시는 §5를 참고하세요.
+
+### 4.2 CLI 직접 실행
+
+AI 없이 `blueprint.yaml`을 직접 작성하거나, 동작 확인·디버깅 용도로 사용합니다.
 
 ```bash
+# 예제 blueprint 검증 (세 가지 중 선택)
 npm run validate -- --blueprint examples/sample/blueprint.yaml
 npm run validate -- --blueprint examples/strategy/blueprint.yaml
 npm run validate -- --blueprint examples/data-report/blueprint.yaml
-```
 
-### 3.3 PPTX 생성
-
-```bash
+# PPTX 생성
 npm run deck -- \
   --blueprint examples/sample/blueprint.yaml \
   --output output/sample-v1.0.pptx
-```
 
-### 3.4 Preview 생성
-
-```bash
+# Preview (LibreOffice + pdftoppm 필요, optional)
 npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
+
+# PDF 내보내기 (LibreOffice 필요)
+npm run export-pdf -- output/sample-v1.0.pptx
 ```
 
-Preview는 optional입니다.
-LibreOffice와 `pdftoppm`이 없으면 실패할 수 있으며, 그 경우 PowerPoint 또는 Keynote에서 직접 확인하면 됩니다.
-
----
-
-## 4. AI 환경별 빠른 시작
-
-| 환경 | 시작 방법 | 설명 |
-| --- | --- | --- |
-| Claude Code | `/create-deck` | `.claude/commands/create-deck.md` wrapper가 canonical skill을 따라갑니다. |
-| Claude Code | `/generate-blueprint` | 이미 구조가 정해진 deck의 blueprint만 빠르게 만듭니다. |
-| Claude Code | `/review-deck` | 생성된 blueprint/PPTX/preview를 검토합니다. |
-| Codex CLI | repo skill `create-deck` 사용 | `.agents/skills/create-deck/SKILL.md`를 통해 `skills/create-deck.md`를 로드합니다. |
-| Codex App | repo-local skill 또는 SKILL.md 수동 로드 | 자동 노출은 환경별로 다를 수 있어 수동 로드 기준으로 설명합니다. |
-| Claude App | `skills/*.md` 내용을 복사/참조 | native slash command 실행은 가정하지 않습니다. |
-| Manual CLI | 직접 `blueprint.yaml` 작성 | AI 없이도 validate/deck/preview 명령으로 사용할 수 있습니다. |
-
-가장 일반적인 시작은 `/create-deck` 또는 `skills/create-deck.md`입니다.
+Preview가 없으면 PowerPoint 또는 Keynote에서 직접 확인하면 됩니다.
 
 ---
 
