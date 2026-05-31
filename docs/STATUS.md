@@ -1,4 +1,4 @@
-# STATUS.md — Presentation Compiler
+# STATUS.md — ai-deck-compiler
 
 ## Current State
 

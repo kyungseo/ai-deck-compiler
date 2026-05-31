@@ -124,7 +124,7 @@ deck:
   design: default-modern
   theme: dark
   version: "1.0"
-  author: Platform Team
+  author: Kyungseo Park
   audience: Engineering Leadership
 
 slides:
@@ -250,7 +250,7 @@ Apache License 2.0 — [LICENSE](LICENSE) 참조.
 
 ---
 
-## ai-workflow-harness로 구현됨
+## 어떻게 만들었나
 
 `ai-deck-compiler`는 [ai-workflow-harness](https://github.com/kyungseo/ai-workflow-harness)를 scaffold하여 구현된 실제 적용 사례입니다.
 

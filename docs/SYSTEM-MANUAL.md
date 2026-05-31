@@ -241,6 +241,8 @@ AI 도구에서 아래 skill을 통해 deck 생성·검토·내보내기를 요�
 | PDF 내보내기 | `/export-pdf` | skill `export-pdf` | PPTX → PDF, 환경 체크 포함 |
 
 Skill 파일 위치: `skills/*.md` (canonical), `.claude/commands/*.md` (Claude Code wrapper), `.agents/skills/*/SKILL.md` (Codex wrapper).
+Claude App은 native slash command 실행을 전제로 하지 않고 `skills/*.md`를 참조/복사해 진행한다.
+Codex App은 repo-local skill을 로드하거나 `.agents/skills/*/SKILL.md`를 수동 참조하는 흐름으로 다룬다.
 
 ### 6.2 CLI 직접 실행 (개발자·디버깅용)
 

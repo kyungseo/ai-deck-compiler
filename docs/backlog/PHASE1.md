@@ -207,3 +207,4 @@
 | FEAT-20260530-001 | Work 2 — default-modern preset + P1 slide render + PPTX CLI | 2026-05-30 |
 | vitest-security-upgrade | vitest 3.x 업그레이드 — Dependabot 취약점 2건 해소 | 2026-05-31 |
 | examples-expanded | examples/strategy + examples/data-report 추가 | 2026-05-31 |
+| repo-rebranding | ai-deck-compiler 리브랜딩 — README 업데이트, GitHub remote/About/Topics 설정, 디렉터리 정리 | 2026-05-31 |
