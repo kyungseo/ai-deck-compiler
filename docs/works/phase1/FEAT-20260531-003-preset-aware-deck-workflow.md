@@ -1,9 +1,10 @@
 ---
 id: FEAT-20260531-003
 title: "preset-aware deck creation + metadata/source input workflow"
-status: Active
+status: Done
 type: FEAT
 created: 2026-05-31
+actual_end: 2026-05-31
 branch: feature/feat-20260531-003-preset-aware-deck-workflow
 ---
 
