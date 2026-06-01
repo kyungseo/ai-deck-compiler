@@ -55,17 +55,19 @@ export const timelineTemplate: SlideTemplate<TimelineSlide> = {
         flipV: true,
       });
 
-      // Date — above the line
-      pptxSlide.addText(item.date, {
-        x: lineX + itemW * i + 0.1, y: lineY - markerR - 0.48,
-        w: itemW - 0.2, h: 0.35,
-        fontSize: 11,
-        bold: true,
-        fontFace: font,
-        color: accent,
-        align: 'center',
-        valign: 'middle',
-      });
+      // Date — above the line (optional)
+      if (item.date) {
+        pptxSlide.addText(item.date, {
+          x: lineX + itemW * i + 0.1, y: lineY - markerR - 0.48,
+          w: itemW - 0.2, h: 0.35,
+          fontSize: 11,
+          bold: true,
+          fontFace: font,
+          color: accent,
+          align: 'center',
+          valign: 'middle',
+        });
+      }
 
       // Label — below the marker
       pptxSlide.addText(item.label, {

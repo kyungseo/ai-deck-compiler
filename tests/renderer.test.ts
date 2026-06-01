@@ -382,6 +382,43 @@ describe('All P2 types compile without error', () => {
     }, tokens, slide)).not.toThrow();
   });
 
+  it('timeline:circular — with descriptions', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('timeline', 'circular');
+    expect(() => template.render({
+      id: 'tlc', type: 'timeline', title: 'Roadmap', variant: 'circular',
+      items: [
+        { label: '기획', description: '요구사항 정의' },
+        { label: '개발', description: '기능 구현' },
+        { label: '배포', description: '운영 릴리스' },
+      ],
+    }, tokens, slide)).not.toThrow();
+  });
+
+  it('timeline:circular — with dates', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('timeline', 'circular');
+    expect(() => template.render({
+      id: 'tlcd', type: 'timeline', title: 'Milestones', variant: 'circular',
+      items: [
+        { label: 'Alpha', date: '2026 Q1', description: '내부 테스트' },
+        { label: 'Beta',  date: '2026 Q2', description: '외부 파일럿' },
+        { label: 'GA',    date: '2026 Q3', description: '일반 출시' },
+      ],
+    }, tokens, slide)).not.toThrow();
+  });
+
+  it('timeline:circular — 5 items, no description', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('timeline', 'circular');
+    expect(() => template.render({
+      id: 'tlc5', type: 'timeline', title: 'Process', variant: 'circular',
+      items: [
+        { label: 'A' }, { label: 'B' }, { label: 'C' }, { label: 'D' }, { label: 'E' },
+      ],
+    }, tokens, slide)).not.toThrow();
+  });
+
   it('flow: no diagram (placeholder)', () => {
     const slide = makeMockSlide();
     const template = defaultRegistry.resolve('flow');

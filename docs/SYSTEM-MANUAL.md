@@ -173,6 +173,12 @@ kpi, timeline, architecture, flow, table, chart, decision,
 summary, appendix, closing
 ```
 
+**Variant 지원 (초기 구현):** `timeline`은 `variant: circular`를 blueprint에 지정하면 `timeline:circular` renderer로 라우팅됩니다. registry key는 `"timeline:circular"`이며 `src/templates/slides/timeline-circular.ts`에 구현되어 있습니다. variant 미지정 시 기본 일자형(`timeline`)을 사용합니다.
+
+> **Note:** `timeline:circular`는 초기 구현으로, 레이아웃 비율·타원 크기·연결선 스타일 등이 향후 다듬어질 예정입니다. 현재는 실험적 기능으로 간주하며 user-facing 문서에는 아직 노출하지 않습니다.
+
+새 variant를 추가할 때는 `SlideTemplate.variants` 배열에 variant 이름을 선언하고 `id`를 `"type:variant"` 형식으로 지정한 뒤 `src/templates/index.ts`에 등록합니다.
+
 ### 4.5 Design Preset
 
 Design preset은 `src/design/presets/{name}/` 아래에 있습니다.
