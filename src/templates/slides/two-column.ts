@@ -1,7 +1,7 @@
 import type { SlideTemplate, PptxSlide } from '../registry.js';
 import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
-import { SL, CARD, hex, renderSectionHeader, renderCardBackground, renderPanelLabel } from '../layout.js';
+import { SL, CARD, hex, renderSectionHeader, renderCardBackground, renderPanelLabel, renderBodyWithCodeBlocks } from '../layout.js';
 
 type TwoColumnSlide = Extract<Slide, { type: 'two-column' }>;
 
@@ -41,18 +41,11 @@ export const twoColumnTemplate: SlideTemplate<TwoColumnSlide> = {
 
     const renderCol = (items: string[], x: number) => {
       if (items.length === 0) return;
-      const bullets = items.map(text => ({
-        text,
-        options: {
-          fontSize: ty['body']?.size ?? 18,
-          fontFace: ty['body']?.font ?? 'Pretendard',
-          color: hex(co['text-secondary'] ?? '374151'),
-          bullet: { code: '2022', indent: 15 },
-          paraSpaceAfter: 8,
-        },
-      }));
-      pptxSlide.addText(bullets, {
-        x, y: contentY, w: colW, h: contentH, valign: 'top',
+      renderBodyWithCodeBlocks(pptxSlide, items, tokens, {
+        x, y: contentY, w: colW, h: contentH,
+      }, {
+        fontSize: ty['body']?.size ?? 18,
+        color: hex(co['text-secondary'] ?? '374151'),
       });
     };
 

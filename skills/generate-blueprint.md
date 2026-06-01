@@ -142,7 +142,8 @@ body 항목 코드 표기 기준:
 
 - CLI 명령, 파일 경로, 코드 스니펫은 backtick(`` ` ``)으로 감싼다.
   - 예: `` `npm run deck -- --blueprint example.yaml --output out.pptx` ``
-- backtick으로 감싼 항목은 렌더러가 자동으로 모노스페이스 + accent 색상으로 처리한다.
+- 여러 줄 코드는 body 항목 하나에 fenced code string으로 작성할 수 있다. 첫 줄은 세 개의 backtick과 언어명(예: bash), 마지막 줄은 세 개의 backtick만 둔다.
+- backtick/fenced code 항목은 지원 slide에서 boxed monospace block으로 렌더링된다.
 - 일반 설명 문장과 코드 항목을 같은 body 안에 혼용할 수 있다.
 
 callout 작성 기준:
