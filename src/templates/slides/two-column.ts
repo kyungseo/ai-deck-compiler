@@ -20,8 +20,8 @@ export const twoColumnTemplate: SlideTemplate<TwoColumnSlide> = {
 
     const dividerX = SL.cx + colW + 0.15;
     const hasLabels = !!(slide.left.label || slide.right.label);
-    const contentY = hasLabels ? CARD.iy + 0.45 : CARD.iy;
-    const contentH = CARD.ih - (hasLabels ? 0.45 : 0);
+    const contentY = hasLabels ? CARD.iy + 0.55 : CARD.iy;
+    const contentH = CARD.ih - (hasLabels ? 0.55 : 0);
 
     // Panel labels
     if (slide.left.label) {

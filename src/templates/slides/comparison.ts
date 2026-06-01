@@ -42,20 +42,20 @@ export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
 
       // Panel label header bar
       pptxSlide.addShape('rect', {
-        x, y: CARD.iy, w: colW, h: 0.42,
+        x, y: CARD.iy, w: colW, h: 0.48,
         fill: { color: isLeft ? hex(co['surface'] ?? 'F0F4F8') : hex(co['card-item-bg'] ?? 'EEF4FE') },
         line: { color: hex(co['divider-light'] ?? 'E8F0FE'), width: 0 },
       });
 
       // Panel label accent square + text
       pptxSlide.addShape('rect', {
-        x: x + 0.15, y: CARD.iy + 0.09, w: 0.08, h: 0.25,
+        x: x + 0.15, y: CARD.iy + 0.09, w: 0.08, h: 0.30,
         fill: { color: labelColor },
         line: { color: labelColor, width: 0 },
       });
       pptxSlide.addText(label.toUpperCase(), {
-        x: x + 0.33, y: CARD.iy, w: colW - 0.35, h: 0.42,
-        fontSize: 16,
+        x: x + 0.33, y: CARD.iy, w: colW - 0.35, h: 0.48,
+        fontSize: 18,
         bold: true,
         fontFace: ty['label']?.font ?? 'Pretendard',
         color: labelColor,
@@ -63,7 +63,7 @@ export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
       });
 
       // Items
-      const itemStartY = CARD.iy + 0.52;
+      const itemStartY = CARD.iy + 0.60;
       const itemH = 0.72;
       panel.body.forEach((item, i) => {
         const itemY = itemStartY + i * itemH;

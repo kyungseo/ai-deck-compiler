@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
+| FEAT-20260601-003 | Showcase deck results — ai-deck-compiler 소개 PPTX + preset gallery 교체 | `feature/FEAT-20260601-003-showcase-deck-results` |
 
 ## Done (Archive Pending)
 

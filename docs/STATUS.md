@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 (FEAT-20260601-002 Done) |
+| Last updated | 2026-06-01 (FEAT-20260601-003 Active) |
 
 ## Work Context Rule
 
@@ -21,6 +21,7 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
+| FEAT-20260601-003 | Showcase deck results — ai-deck-compiler 소개 PPTX + preset gallery 교체 | `docs/works/phase1/FEAT-20260601-003-showcase-deck-results.md` |
 
 ## Blockers And Open Questions
 

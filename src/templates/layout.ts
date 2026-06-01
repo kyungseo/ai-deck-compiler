@@ -116,13 +116,13 @@ export function renderPanelLabel(
   const { typography: ty, colors: co } = tokens;
   const accent = hex(co['accent'] ?? '2563EB');
   s.addShape('rect', {
-    x, y: CARD.iy, w: 0.08, h: 0.30,
+    x, y: CARD.iy, w: 0.08, h: 0.36,
     fill: { color: accent },
     line: { color: accent, width: 0 },
   });
   s.addText(label.toUpperCase(), {
-    x: x + 0.18, y: CARD.iy, w: 5.5, h: 0.30,
-    fontSize: 14,
+    x: x + 0.18, y: CARD.iy, w: 5.5, h: 0.40,
+    fontSize: 18,
     bold: true,
     fontFace: ty['label']?.font ?? 'Pretendard',
     color: accent,

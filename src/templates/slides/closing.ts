@@ -47,10 +47,11 @@ export const closingTemplate: SlideTemplate<ClosingSlide> = {
       valign: 'middle',
     });
 
-    // Accent divider line (white, semi-transparent)
-    const lineY = titleY + 1.5;
+    // Accent divider line — title-length dynamic width, positioned close to title bottom.
+    const lineY = titleY + 1.15;
+    const lineW = Math.min(Math.max(2.0, slide.title.length * 0.36), SL.cw * 0.88);
     pptxSlide.addShape('rect', {
-      x: SL.w / 2 - 1.0, y: lineY, w: 2.0, h: 0.05,
+      x: SL.w / 2 - lineW / 2, y: lineY, w: lineW, h: 0.05,
       fill: { color: 'FFFFFF' },
       line: { color: 'FFFFFF', width: 0 },
       transparency: 40,
@@ -59,7 +60,7 @@ export const closingTemplate: SlideTemplate<ClosingSlide> = {
     // Subtitle — contact or closing note
     if (slide.subtitle) {
       pptxSlide.addText(slide.subtitle, {
-        x: SL.mx, y: lineY + 0.2, w: SL.cw, h: 0.5,
+        x: SL.mx, y: lineY + 0.28, w: SL.cw, h: 0.5,
         fontSize: 18,
         fontFace: font,
         color: 'FFFFFF',

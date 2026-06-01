@@ -30,7 +30,7 @@ preset별 대표 PPTX 결과물을 git으로 추적할 것인가, gitignore로 �
 ## Consequences
 
 - `.gitignore`: `!examples/results/*.pptx` 예외 추가 (불필요한 `!examples/results/` 디렉터리 예외는 제거)
-- `examples/results/`: blueprint 3개 + pptx 3개 + preset-gallery.png + README.md 추적
+- `examples/results/`: blueprint 3개 + pptx 3개 + showcase gallery 이미지 + README.md 추적
 - 렌더러 변경 시 `examples/results/README.md`의 재생성 명령으로 수동 업데이트 필요
 - CI 미도입 상태에서는 staleness가 발생할 수 있음 — 허용된 trade-off
 

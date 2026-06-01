@@ -94,16 +94,16 @@ describe('Design preset alias compatibility', () => {
 
 describe('Compiler callout footer suppression', () => {
   it('callout slide omits brand footer; adjacent non-callout slide retains it', async () => {
-    // strategy-vivid-dark: slide 3 = content with callout, slide 2 = agenda (no callout)
+    // showcase-vivid-dark: slide 4 = content with callout, slide 2 = agenda (no callout)
     const slides = await getPptxSlideXmls(
-      'examples/results/strategy-vivid-dark.blueprint.yaml',
+      'examples/results/showcase-vivid-dark.blueprint.yaml',
       'vivid',
       'dark',
     );
     const slide2Xml = slides['ppt/slides/slide2.xml']!;
-    const slide3Xml = slides['ppt/slides/slide3.xml']!;
+    const slide4Xml = slides['ppt/slides/slide4.xml']!;
 
-    expect(slide3Xml, 'callout slide must NOT contain brand footer').not.toContain('ai-deck-compiler');
+    expect(slide4Xml, 'callout slide must NOT contain brand footer').not.toContain('ai-deck-compiler');
     expect(slide2Xml, 'non-callout slide must contain brand footer').toContain('ai-deck-compiler');
   });
 

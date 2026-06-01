@@ -24,17 +24,20 @@ export const timelineTemplate: SlideTemplate<TimelineSlide> = {
     const n = items.length;
     const lineY = CARD.iy + CARD.ih * 0.38;   // horizontal line vertical position
     const markerR = 0.14;                        // marker circle radius
-    const itemW = SL.cw / n;
+    const padX = 0.40;                           // inner horizontal margin within card
+    const lineX = SL.cx + padX;
+    const lineW = SL.cw - padX * 2;
+    const itemW = lineW / n;
 
-    // Horizontal timeline line
+    // Horizontal timeline line — inset from card edges
     pptxSlide.addShape('line', {
-      x: SL.cx, y: lineY,
-      w: SL.cw, h: 0,
+      x: lineX, y: lineY,
+      w: lineW, h: 0,
       line: { color: hex(co['divider-light'] ?? 'E5E7EB'), width: 2 },
     });
 
     items.forEach((item, i) => {
-      const cx = SL.cx + itemW * i + itemW / 2;
+      const cx = lineX + itemW * i + itemW / 2;
 
       // Accent marker circle
       pptxSlide.addShape('ellipse', {
@@ -54,7 +57,7 @@ export const timelineTemplate: SlideTemplate<TimelineSlide> = {
 
       // Date — above the line
       pptxSlide.addText(item.date, {
-        x: cx - itemW / 2 + 0.1, y: lineY - markerR - 0.48,
+        x: lineX + itemW * i + 0.1, y: lineY - markerR - 0.48,
         w: itemW - 0.2, h: 0.35,
         fontSize: 11,
         bold: true,
@@ -66,7 +69,7 @@ export const timelineTemplate: SlideTemplate<TimelineSlide> = {
 
       // Label — below the marker
       pptxSlide.addText(item.label, {
-        x: cx - itemW / 2 + 0.1, y: lineY + markerR + 0.1,
+        x: lineX + itemW * i + 0.1, y: lineY + markerR + 0.1,
         w: itemW - 0.2, h: 0.42,
         fontSize: ty['body']?.size ?? 14,
         bold: true,
@@ -79,7 +82,7 @@ export const timelineTemplate: SlideTemplate<TimelineSlide> = {
       // Description — below label
       if (item.description) {
         pptxSlide.addText(item.description, {
-          x: cx - itemW / 2 + 0.1, y: lineY + markerR + 0.58,
+          x: lineX + itemW * i + 0.1, y: lineY + markerR + 0.58,
           w: itemW - 0.2, h: 1.6,
           fontSize: 12,
           fontFace: font,

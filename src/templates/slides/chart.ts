@@ -53,7 +53,7 @@ export const chartTemplate: SlideTemplate<ChartSlide> = {
     const chartOpts: Record<string, unknown> = {
       x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
       chartColors,
-      showLegend: true,
+      showLegend: chartData.length > 1,
       legendPos: 'b',
       legendFontSize: ty['caption']?.size ?? 14,
       legendFontColor: textColor,

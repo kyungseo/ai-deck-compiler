@@ -1,0 +1,316 @@
+deck:
+  title: ai-deck-compiler Showcase
+  design: vivid
+  theme: dark
+  version: "1.0"
+  audience: Product, Engineering, and AI Workflow Leads
+  author: ai-deck-compiler
+
+slides:
+  - id: hero
+    type: hero
+    title: ai-deck-compiler
+    subtitle: 자연어를 의미 기반 blueprint로 바꾸고, editable PPTX로 컴파일한다
+    cta: Semantic Blueprint Planning · Editable PowerPoint · Preset System
+
+  - id: agenda
+    type: agenda
+    title: 오늘 볼 것
+    section_label: "00. AGENDA"
+    items:
+      - 왜 bullet deck 생성만으로는 부족한가
+      - ai-deck-compiler가 blueprint 품질을 다루는 방식
+      - 지원 slide type과 preset 결과물
+      - create-deck workflow와 검증 루프
+      - 대표 showcase 결과물이 갖춰야 할 기준
+
+  - id: section-overview
+    type: section-divider
+    title: From Prompt To Deck
+    section: "01"
+    number: "01"
+
+  - id: product-principle
+    type: content
+    title: 결과물은 편집 가능한 구조다
+    section_label: "01. PRINCIPLE"
+    callout: "AI는 내용을 읽고 표현 방식을 고르며, renderer는 그 결정을 안정적인 PPTX로 만든다."
+    body:
+      - 자연어 요청은 narrative spine과 slide plan으로 먼저 정리된다.
+      - 수치, 구조, 결정, 요약은 각각 KPI, chart, architecture, decision, summary로 승격된다.
+      - 최종 산출물은 이미지가 아니라 텍스트, 표, 차트, 도형으로 편집 가능한 PowerPoint다.
+
+  - id: before-after
+    type: two-column
+    title: Bullet-first와 Blueprint-first
+    section_label: "01. CONTRAST"
+    left:
+      label: Bullet-first deck
+      body:
+        - 모든 내용을 비슷한 bullet slide로 압축
+        - chart와 architecture가 수동 후처리로 밀림
+        - 디자인과 구조가 prompt마다 흔들림
+        - 검토 기준이 주관적 시각 확인에 머무름
+    right:
+      label: Blueprint-first deck
+      body:
+        - 내용의 성격에 맞는 slide type을 먼저 선택
+        - schema가 chart, table, diagram data를 보존
+        - preset token으로 일관된 visual system 적용
+        - validate, deck, preview 루프로 검증 가능
+
+  - id: semantic-comparison
+    type: comparison
+    title: 의미에 맞는 표현을 고른다
+    section_label: "02. QUALITY"
+    left:
+      label: 입력만 보는 방식
+      body:
+        - “요약해줘”를 여러 bullet로 변환
+        - 중요 문장을 모두 같은 레벨로 표시
+        - 수치와 흐름을 텍스트에 묻어둠
+    right:
+      label: 의미를 보는 방식
+      body:
+        - 수치는 KPI와 chart로 승격
+        - 결정 문장은 recommendation으로 분리
+        - 시스템 관계는 architecture로 구조화
+
+  - id: capability-kpis
+    type: kpi
+    title: 발표 자료의 기본 블록을 지원한다
+    section_label: "02. CAPABILITY"
+    kpis:
+      - label: Slide Types
+        value: "16"
+        delta: "P1 + P2 coverage"
+        trend: up
+      - label: Tests
+        value: "51"
+        delta: "parser/render/snapshot"
+        trend: up
+      - label: Presets
+        value: "3"
+        delta: "teal/vivid/modern"
+        trend: up
+      - label: Result Sets
+        value: "3"
+        delta: "tracked PPTX"
+        trend: neutral
+
+  - id: delivery-chart
+    type: chart
+    title: 구현 이력은 빠르게 누적됐다
+    section_label: "03. BUILD HISTORY"
+    chart:
+      type: bar
+      data:
+        source: inline
+        labels: ["May 30", "May 31", "Jun 01"]
+        series:
+          - name: Commits by day
+            values: [24, 33, 9]
+
+  - id: cleanup-chart
+    type: chart
+    title: 구조화는 후처리 부담을 줄인다
+    section_label: "03. QUALITY LOOP"
+    chart:
+      type: line
+      data:
+        source: inline
+        labels: ["Draft", "Review", "Preview", "Final"]
+        series:
+          - name: Cleanup load index
+            values: [100, 64, 38, 20]
+
+  - id: section-system
+    type: section-divider
+    title: How It Works
+    section: "02"
+    number: "02"
+
+  - id: architecture
+    type: architecture
+    title: Planning과 rendering을 분리한다
+    section_label: "04. ARCHITECTURE"
+    diagram:
+      source: inline
+      version: "1.0"
+      nodes:
+        - id: request
+          kind: client
+          label: User Request
+          zone: center-left
+        - id: skill
+          kind: service
+          label: create-deck
+          zone: top-center
+        - id: blueprint
+          kind: storage
+          label: blueprint.yaml
+          zone: center
+        - id: tokens
+          kind: database
+          label: Preset Tokens
+          zone: bottom-center
+        - id: compiler
+          kind: service
+          label: Compiler
+          zone: center-right
+        - id: pptx
+          kind: external
+          label: Editable PPTX
+          zone: bottom-right
+      edges:
+        - from: request
+          to: skill
+          kind: data-flow
+          label: intent
+        - from: skill
+          to: blueprint
+          kind: sync
+          label: plan
+        - from: blueprint
+          to: compiler
+          kind: sync
+          label: schema
+        - from: tokens
+          to: compiler
+          kind: data-flow
+          label: design
+        - from: compiler
+          to: pptx
+          kind: data-flow
+          label: render
+
+  - id: create-flow
+    type: flow
+    title: 작성과 검토를 하나의 루프로 묶는다
+    section_label: "04. WORKFLOW"
+    callout: "Preview는 자동 종료점이 아니라, 사용자가 확인하고 조정하는 품질 게이트다."
+    diagram:
+      source: inline
+      version: "1.0"
+      nodes:
+        - id: brief
+          kind: client
+          label: Brief
+          zone: center-left
+        - id: plan
+          kind: service
+          label: Slide Plan
+          zone: top-center
+        - id: blueprint
+          kind: storage
+          label: Blueprint
+          zone: center
+        - id: deck
+          kind: external
+          label: PPTX
+          zone: center-right
+        - id: preview
+          kind: cloud
+          label: Preview
+          zone: bottom-center
+        - id: review
+          kind: service
+          label: Review Loop
+          zone: bottom-right
+      edges:
+        - from: brief
+          to: plan
+          kind: sync
+        - from: plan
+          to: blueprint
+          kind: sync
+        - from: blueprint
+          to: deck
+          kind: data-flow
+        - from: deck
+          to: preview
+          kind: data-flow
+        - from: preview
+          to: review
+          kind: sync
+        - from: review
+          to: blueprint
+          kind: async
+
+  - id: preset-table
+    type: table
+    title: 같은 구조를 다른 톤으로 바꾼다
+    section_label: "05. PRESETS"
+    headers: ["Preset", "Theme", "Use case", "Signal"]
+    rows:
+      - ["teal", "dark", "AI workflow 기본 추천", "차분한 technical executive tone"]
+      - ["vivid", "dark", "제품 데모와 feature showcase", "강한 accent와 callout bar"]
+      - ["modern", "light", "비즈니스 보고와 공유 문서", "밝고 보수적인 office tone"]
+
+  - id: development-timeline
+    type: timeline
+    title: 짧은 주기로 품질을 쌓았다
+    section_label: "06. TIMELINE"
+    items:
+      - date: "May 30"
+        label: Compiler baseline
+        description: blueprint schema, renderer, CLI, metadata 기반 구축
+      - date: "May 31"
+        label: Workflow expansion
+        description: create/review/export skills, examples, architecture slide 강화
+      - date: "Jun 01"
+        label: Preset system
+        description: teal/vivid/modern, results tracking, semantic planning 강화
+      - date: "Now"
+        label: Showcase results
+        description: 제품 소개 deck을 examples/results 대표 산출물로 승격
+
+  - id: results-decision
+    type: decision
+    title: 대표 산출물은 제품을 보여줘야 한다
+    section_label: "07. DECISION"
+    options:
+      - label: Generic sample
+        pros:
+          - 일반적인 비즈니스 deck처럼 읽기 쉽다
+          - 도메인 지식 없이 빠르게 이해된다
+        cons:
+          - 제품의 실제 강점을 직접 보여주기 어렵다
+          - preset과 slide type coverage가 약하게 드러난다
+      - label: Product showcase
+        pros:
+          - 첫 화면에서 제품 가치를 바로 설명한다
+          - preset 차이와 slide type coverage를 함께 보여준다
+        cons:
+          - 예제 자체의 메시지 설계가 더 중요해진다
+    recommendation: 대표 산출물은 제품 자체의 작성 경험과 결과 품질을 보여주는 showcase deck으로 둔다.
+
+  - id: summary
+    type: summary
+    title: AI 판단과 안정적 출력의 결합
+    section_label: "08. TAKEAWAYS"
+    body:
+      - AI는 source를 읽고 slide type, component, emphasis를 선택한다.
+      - Compiler는 blueprint와 preset token을 기반으로 재현 가능한 PPTX를 만든다.
+      - Preview와 review loop가 deck 품질을 사람이 확인할 수 있는 단계로 만든다.
+    takeaways:
+      - 자연어 요청을 편집 가능한 PowerPoint 구조로 바꾼다
+      - 같은 blueprint를 여러 preset으로 재사용할 수 있다
+      - examples/results는 제품 기능을 보여주는 살아있는 showcase가 된다
+
+  - id: appendix
+    type: appendix
+    title: Regeneration commands
+    section_label: "APPENDIX"
+    body:
+      - "`npm run deck -- --blueprint examples/results/showcase-teal-dark.blueprint.yaml --output examples/results/showcase-teal-dark.pptx`"
+      - "`npm run deck -- --blueprint examples/results/showcase-vivid-dark.blueprint.yaml --output examples/results/showcase-vivid-dark.pptx`"
+      - "`npm run deck -- --blueprint examples/results/showcase-modern-light.blueprint.yaml --output examples/results/showcase-modern-light.pptx`"
+      - "`npm run preview -- examples/results/showcase-teal-dark.pptx --out temp/showcase-teal-preview`"
+      - "Preview vivid/modern: 같은 명령에서 파일명과 --out 경로만 vivid 또는 modern으로 바꾼다."
+
+  - id: closing
+    type: closing
+    title: Decks as structured artifacts
+    subtitle: Prompt로 시작해도 결과는 검증 가능한 blueprint와 editable PPTX로 남는다
+    message: ai-deck-compiler showcase
