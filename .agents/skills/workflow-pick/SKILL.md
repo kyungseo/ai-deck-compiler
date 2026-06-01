@@ -13,12 +13,12 @@ docs/STATUS.md를 확인한 뒤, 작업 성격에 맞는 backlog를 선택해 �
 
 - Product track 작업: docs/backlog/PHASE{n}.md
 - Harness / workflow 작업: docs/backlog/HARNESS.md
-- Scaffold 직후 부팅 작업: docs/STATUS.md Next Actions가 bootstrap/onboarding을 명시할 때 docs/BOOTSTRAP.md
+- Scaffold/adoption 지침: 이 repo에서는 완료 상태. 필요하면 source workflow repo 참조
 - 성격이 불명확하면 두 backlog의 제목과 우선순위만 비교하고, 불필요한 상세 로드는 하지 마.
 
-Product backlog가 비어 있고 `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시하면 `docs/BOOTSTRAP.md`를 기준으로 프로젝트 identity와 production 성격을 확인한 뒤
-`docs/PLAN-SUMMARY.md` Implementation Baseline을 확인해줘. baseline이 비어 있으면 feature 후보 대신 Project Initialization을 첫 후보로 제안하고,
-baseline이 완료된 뒤에만 feature 후보를 제안해줘. example pack, role/rule/prompt 정비는 Harness 후보로 분리해줘.
+Product backlog가 비어 있으면 `docs/PLAN-SUMMARY.md`와 `docs/STATUS.md`를 기준으로 현재 제품 상태를 확인해줘.
+baseline이 불충분하면 feature 후보 대신 Project Initialization을 첫 후보로 제안하고, baseline이 완료된 뒤에만 feature 후보를 제안해줘.
+example pack, role/rule/prompt 정비는 Harness 후보로 분리해줘.
 backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work 착수 승인 시 확정됨을 명시해줘.
 
 후보 우선순위가 비슷하거나 harness/plan/idea 성격의 작업을 고르는 경우,

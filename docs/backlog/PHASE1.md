@@ -1,232 +1,179 @@
-# Product Backlog — Phase 1
+# Product Backlog — Public Release / Maintenance
 
 ## 상태 요약
 
 | 항목 | 내용 |
 | --- | --- |
-| Phase | Phase 1 |
-| 제품 목표 | blueprint.yaml + design preset → editable PPTX 일관 생성 |
-| 주요 사용자 | AI-assisted presentation author |
-| Phase 1 범위 | 엔진(compiler) + AI guided workflow(skills) + P2 slide types |
-| 상태 | In Progress |
+| Phase | Public release gate → Maintenance |
+| 제품 목표 | AI와 대화해 `blueprint.yaml`을 만들고 editable PPTX/PDF를 안정적으로 생성 |
+| 주요 사용자 | AI-assisted presentation author, repo maintainer, contributor |
+| 현재 상태 | Public 전환 준비 |
 
-## Phase 1 목표
+## 현재 제품 흐름
 
-사용자가 repo를 clone한 뒤, AI와 대화하여 blueprint를 작성하고 editable PPTX를 생성하는 전체 워크플로우를 완성한다.
-
-**핵심 흐름:**
-```
+```text
 사용자 의도 표현
-  → AI가 목적·대상·구조 질의 (skill: generate-blueprint)
+  → create-deck이 brief-first / source-first / AI-draft-first 입력 모드 판별
   → 슬라이드 구조 제안 및 승인
   → blueprint.yaml 초안 생성 및 검토 반복
-  → npm run deck 실행 → PPTX 생성
-  → AI 리뷰 및 재수정 반복 (skill: review-deck)
+  → npm run deck 실행 → editable PPTX 생성
+  → 사용자 승인 시 preview / review-deck 검토
+  → 필요 시 blueprint 수정 및 재생성
+  → 선택적으로 export-pdf로 PDF 반출
 ```
 
-엔진(compiler, P1 slide 9종)은 완료. 남은 작업은 workflow layer와 P2 확장.
+Phase 1의 핵심 엔진, 16종 slide type, design preset, product skill routing, showcase examples는 구현 완료 상태다.
+public 전환 전에는 새 기능 추가보다 release gate 정리와 검증을 우선한다.
 
 ---
 
 ## Active Candidates
 
-### P0 — 핵심 워크플로우 (엔진 가치를 실현하는 드라이버)
+### P0 — Public Release Gate
+
+**[public-release-gate]** | Priority: P0 | Scope: public 전환 전 repo 표면, 문서, 예제, 설정, 잔여 작업 정리
+
+- Work: `CHORE-20260601-001`
+- Done Criteria:
+  - `STATUS`, backlog, plan, Work index가 실제 상태와 일치
+  - README / USER-MANUAL / SYSTEM-MANUAL 현행화
+  - 불필요한 harness prompt/manual 표면 최소화
+  - showcase, AI tool simulation, code audit, repo settings, social post task가 후속 실행 가능 상태로 등록
+  - final validation checklist 정의
+- Verification: `git diff --check`, stale phrase search, release gate checklist review
 
 ---
 
-**[skill-create-deck]** | Priority: P0 | Scope: 사용자와 대화하며 blueprint 작성 후 PPTX 생성까지 안내하는 end-to-end interactive workflow
+**[showcase-final-polish]** | Priority: P0 | Scope: ai-deck-compiler 소개 showcase deck 품질 최대화
 
-이 skill이 없으면 사용자는 blueprint.yaml을 직접 작성해야 한다. 이것이 Phase 1의 핵심 UX 목표다.
+- Goal:
+  - repo 소개를 위한 `examples/results/showcase-*` blueprint/PPTX/PDF/gallery를 최종 품질로 정리
+  - create-deck self-dogfood 결과가 기존 showcase보다 좋으면 교체
+- Done Criteria:
+  - teal/dark, vivid/dark, modern/light showcase blueprint 최신화
+  - PPTX, PDF, preview/gallery 재생성
+  - chart, architecture, decision, callout, code block 등 핵심 기능이 자연스럽게 드러남
+  - README gallery가 최신 산출물을 반영
+- Verification:
+  - `npm run validate -- --blueprint examples/results/showcase-teal-dark.blueprint.yaml`
+  - `npm run deck`, `npm run export-pdf`, `npm run preview`
+  - visual review
+
+---
+
+**[headline-wrap-polish]** | Priority: P0 | Scope: action-title headline wrapping 보정 + showcase 산출물 재생성
+
+- Goal:
+  - 문장형 headline title이 불필요하게 두 줄로 떨어지는 문제를 줄인다.
+  - title typography, layout width/height, dynamic font sizing, 또는 slide별 title copy 조정 중 가장 작은 변경으로 PPT 가독성을 개선한다.
+  - 보정 후 `examples/results/showcase-*` PPTX/PDF/preview/gallery를 다시 생성해 public-facing showcase 품질을 갱신한다.
+- Done Criteria:
+  - showcase preview 기준으로 headline title wrapping이 과도한 slide를 식별한다.
+  - renderer/design token/layout/content 중 최소 변경 지점을 선택하고 근거를 Work Discovery에 기록한다.
+  - teal/dark, vivid/dark, modern/light showcase PPTX/PDF/preview/gallery가 재생성된다.
+  - README 또는 `examples/results/README.md`가 gallery 변경을 반영한다.
+- Verification:
+  - `npm run validate -- --blueprint examples/results/showcase-teal-dark.blueprint.yaml`
+  - `npm run deck`, `npm run export-pdf`, `npm run preview`
+  - representative preview visual QA
+  - `npm run typecheck`, `npm test`, `git diff --check`
+
+---
+
+**[ai-tool-simulation]** | Priority: P0 | Scope: Claude Code, Codex, Cursor, Claude App 작업 케이스별 routing 검증
+
+- Cases:
+  - brief-first deck 생성
+  - source-first markdown 기반 deck 생성
+  - blueprint-only 요청이 create-deck으로 연결되는지
+  - review-deck
+  - generate-architecture-slide
+  - export-pdf
+  - preview는 사용자 승인 후 진행되는지
+- Done Criteria:
+  - 도구별 진입점과 prompt 예시가 문서와 일치
+  - 실패/애매한 케이스는 public 전 수정 또는 maintenance backlog로 분류
+- Verification: simulation log 또는 Work Discovery 기록
+
+---
+
+**[docs-final-review]** | Priority: P0 | Scope: README, USER-MANUAL, SYSTEM-MANUAL, examples 문서 최종 현행화
 
 - Done Criteria:
-  - `skills/create-deck.md` 작성 — Claude Code가 순서대로 실행할 수 있는 단계별 절차 포함
-  - `.claude/commands/create-deck.md` 커맨드 파일 작성 — `/create-deck` 으로 진입 가능
-  - 절차: ① 목적·청중·분량 파악 → ② 슬라이드 구조 제안 및 승인 → ③ blueprint.yaml 초안 작성 → ④ 사용자 검토·보완 반복 → ⑤ `npm run deck` 실행 → ⑥ 결과 확인 및 재수정
-  - 각 단계에서 사용자 확인을 받고 다음 단계로 진행하는 구조
-  - 예제 세션 로그 1개 포함 (예: Q2 엔지니어링 리뷰 PPT)
-- Verification: Claude Code에서 `/create-deck` 실행 후 사용자 대화 없이 blueprint 초안이 생성되는지 확인
-- Preconditions: P1 compiler 완료 (✅)
+  - public 사용자가 README만 보고 설치/예제 확인/create-deck 시작 가능
+  - USER-MANUAL은 사용자 흐름 중심, SYSTEM-MANUAL은 유지보수자 구조 중심으로 역할 분리
+  - examples/results의 `blueprint.yaml`, `.pptx`, `.pdf`, gallery 구조 설명 명확
+  - 오래된 `generate-blueprint` 독립 진입점, `default-modern` 기본값, stale command 설명 제거
+- Verification: 문서 리뷰 + stale phrase search
 
 ---
 
-**[skill-generate-blueprint]** | Priority: P0 | Scope: 발표 목적·구조를 기반으로 blueprint.yaml 초안을 생성하는 AI skill 문서
+**[public-repo-settings]** | Priority: P0 | Scope: GitHub public 전환 전 repo settings 확인
+
+- Reference: `/Users/kyungseo/dev-home/vibe/ai-workflow-harness/docs/decisions/DR-020-github-repo-settings.md`
+- Done Criteria:
+  - protect-main / protect-develop ruleset 확인
+  - secret scanning + push protection 확인
+  - vulnerability alerts 확인
+  - delete_branch_on_merge, allow_update_branch, discussions 확인
+  - About, topics, description 확인
+- Verification: `gh repo view`, `gh api repos/{owner}/{repo}`, `gh api repos/{owner}/{repo}/rulesets`
+
+---
+
+**[social-post-prep]** | Priority: P1 | Scope: public 전환용 소셜 포스팅 초안 준비
 
 - Done Criteria:
-  - `skills/generate-blueprint.md` 작성
-  - 포함 내용: 목적 파악 질의 목록, 슬라이드 타입 선택 가이드, blueprint.yaml 작성 규칙, 검토·보완 루프 절차
-  - P1/P2 slide 타입별 적합한 사용 케이스 명시
-- Verification: skill 문서를 Claude에 제공 후 실제 blueprint.yaml 생성 가능 여부 확인
-- Preconditions: P1 compiler 완료 (✅)
+  - 한국어 짧은 소개글
+  - 영어 짧은 소개글
+  - 핵심 메시지 3개
+  - showcase/gallery 링크 또는 이미지 첨부 후보
+  - 과장 없는 limitations/roadmap 문구
+- Verification: 사용자 리뷰
 
 ---
 
-### P1 — 워크플로우 완성 및 콘텐츠 확장
+### P1 — Code Quality / Maintenance
 
----
-
-**[p2-slide-types]** | Priority: P1 | Scope: P2 slide 6종 구현 — section-divider, comparison, timeline, flow, decision, appendix
+**[code-quality-audit]** | Priority: P1 | Scope: public 전 `src/`, tests, CLI 개선 포인트 audit
 
 - Done Criteria:
-  - `src/templates/slides/` 에 6종 renderer 추가 및 defaultRegistry 등록
-  - 각 타입 blueprint 예제 포함
-  - `npm test` 통과 (renderer test 포함)
-  - sample.pptx 의 timeline, appendix placeholder가 실제 렌더링으로 교체
-- Verification: `npm run deck -- --blueprint examples/sample/blueprint.yaml` 전체 슬라이드 정상 렌더링
-- Preconditions: P1 compiler 완료 (✅)
+  - `src/schema`, `src/compiler`, `src/templates/slides`, `src/design`, `src/cli`, `tests` 점검
+  - low-risk fix와 post-public refactor 후보 분리
+  - 즉시 수정하지 않을 항목은 maintenance backlog로 등록
+- Verification: `npm run typecheck`, `npm test`, `npm run validate -- --blueprint examples/sample/blueprint.yaml`
 
 ---
 
-**[skill-review-deck]** | Priority: P1 | Scope: 생성된 deck의 구조·메시지·디자인 일관성을 AI가 검토하는 skill 문서
+**[contributing-license]** | Priority: P1 | Scope: public contributor 기본 문서 보강
 
 - Done Criteria:
-  - `skills/review-deck.md` 작성
-  - 검토 항목: 슬라이드 흐름, 메시지 일관성, 텍스트 분량, 차트/표 데이터 명확성, 청중 적합성
-  - 검토 결과를 blueprint 수정 제안 형식으로 출력하는 절차 포함
-- Verification: skill 문서 기반으로 실제 deck 검토 후 actionable 수정 제안 생성 가능 여부 확인
-- Preconditions: skill-create-deck 완료
+  - `LICENSE` Apache License 2.0 유지 확인
+  - `CONTRIBUTING.md` 필요 여부 재검토
+  - package metadata 확인
+- Verification: 파일 존재 및 내용 리뷰
 
 ---
 
----
+### P2 — Post-public Maintenance Candidates
 
+**[layout-fine-tuning]** | Priority: P2 | Scope: 슬라이드 타입별 여백, 텍스트 크기, 카드 비율 미세 조정
 
-### P2 — 공개 repo 완성도 및 preset 확장
+**[cli-list-designs]** | Priority: P2 | Scope: `npm run list-designs`로 사용 가능한 design preset 목록 출력
 
----
+**[preset-enterprise-clean]** | Priority: P3 | Scope: enterprise-clean design preset 추가
 
-**[preset-minimal-dark]** | Priority: P2 | Scope: minimal-dark design preset 추가
+**[custom-preset-support]** | Priority: P3 | Scope: `--design custom/my-company` 형식 custom preset 디렉터리 지원
 
-- Done Criteria:
-  - `src/design/presets/minimal-dark/tokens.json` 및 문서 4종 작성
-  - `--design minimal-dark` CLI 옵션으로 선택 가능
-  - 기존 테스트 영향 없음
-- Verification: `npm run deck -- --design minimal-dark` 정상 실행
-- Preconditions: P1 compiler 완료 (✅)
+**[skill-validate-deck]** | Priority: P3 | Scope: layout, overlap, typography, editability 검증 skill
 
----
+**[cli-convert-design]** | Priority: P3 | Scope: `npm run convert-design` — design.md → ppt-design.md CLI
 
-**[timeline-circular-variant]** | Priority: P2 | Scope: 원형 타임라인 variant 추가 — 단계별 원 + 곡선 화살표 연결 형태
+**[mermaid-fallback]** | Priority: P3 | Scope: draft/appendix용 Mermaid 렌더링 fallback
 
-- Done Criteria:
-  - `src/templates/slides/timeline.ts`에 `variant: 'circular'` 처리 추가
-  - 각 항목을 `ellipse` 도형으로 표현, 곡선 화살표로 연결
-  - label과 description을 원 내부 또는 하단에 배치
-  - blueprint에서 `variant: circular`로 선택 가능
-- Verification: preview로 원형 타임라인 시각 확인, 기존 linear variant 회귀 없음
-- Preconditions: P1 compiler 완료 (✅)
+**[npm-package-global-cli]** | Priority: P3 | Scope: npm package 공개 및 전역 CLI 제공
 
----
-
-**[general-code-block-component]** | Priority: P2 | Scope: 본문형 slide에서 boxed monospace code block 공통 표현 지원
-
-- Work: FEAT-20260601-005
-- Done Criteria:
-  - `content`, `two-column`, `appendix` 중 1차 대상에서 code block을 boxed monospace block으로 표현
-  - blueprint 표현 방식 결정(string convention vs structured body item vs slide-level code field)
-  - 공통 renderer helper 도입 또는 동등한 중복 없는 구현
-  - line wrapping/height/overflow 기본 검증
-  - README/USER-MANUAL/SYSTEM-MANUAL 지원 범위 정합화
-- Verification: sample/showcase preview에서 code block 시각 확인
-- Preconditions: P1 compiler 완료 (✅)
-
----
-
-**[code-syntax-highlight]** | Priority: P2 | Scope: code block syntax highlighting — 키워드·문자열 등 토큰별 색상 분리
-
-- Work: FEAT-20260601-006
-- Done Criteria:
-  - 언어 감지(JS/TS/bash 등) 또는 blueprint field `lang` 힌트 기반 기본 토크나이저 구현
-  - `const`, `let`, `await`, `new` 등 키워드 색상 분리
-  - 문자열 리터럴(`"..."`, `'...'`) 색상 분리
-  - pptxgenjs 다중 text run으로 한 줄 내 mixed color 렌더링
-  - teal/vivid/modern 토큰에 `code-keyword`, `code-string` 색상 토큰 추가
-- Verification: showcase appendix 슬라이드에서 syntax highlight 시각 확인
-- Preconditions: general code block component 완료
-
----
-
-**[cli-list-designs]** | Priority: P2 | Scope: `npm run list-designs` — 사용 가능한 design preset 목록 출력 CLI
-
-- Done Criteria:
-  - `src/cli/list-designs.ts` 구현
-  - `src/design/presets/` 디렉토리를 스캔하여 preset 이름과 지원 theme 출력
-  - `npm run list-designs` script 추가
-- Verification: `npm run list-designs` 실행 시 default-modern (light, dark) 등 목록 출력
-- Preconditions: P1 compiler 완료 (✅)
-
----
-
-**[public-repo-docs]** | Priority: P2 | Scope: CONTRIBUTING.md, LICENSE, README 보완 (limitations, roadmap, skill 사용법)
-
-- Done Criteria:
-  - `CONTRIBUTING.md` — 개발 환경 설정, 테스트 실행, PR 가이드
-  - `LICENSE` — MIT
-  - `README.md` 보완: limitations, roadmap, skill 사용법, custom design 추가 방법
-  - `README.md` + `docs/USER-MANUAL.md` 환경 설정 섹션 보강:
-    - Pretendard 폰트 설치 안내 (macOS: `brew install --cask font-pretendard`, Windows: 수동 설치 링크)
-    - PowerPoint 또는 LibreOffice Impress 필요 여부 명시
-    - preview CLI 선택 의존성 안내 (LibreOffice + poppler/pdftoppm): macOS Homebrew, Windows Scoop/winget, Linux apt 설치 명령
-    - clone 후 실행 체크리스트 (font → npm install → typecheck → test → validate)
-- Verification: 파일 존재 및 내용 검토
-- Preconditions: 없음
-
----
-
-**[skill-convert-design-system]** | Priority: P2 | Scope: HTML/CSS design.md → ppt-design.md 변환 AI skill 문서
-
-- Done Criteria:
-  - `skills/convert-design-system.md` 작성
-  - 변환 규칙: 웹 단위(px/rem) → PPT 단위(pt/inch), color token 추출, 폰트 fallback 처리
-  - 변환 결과 검토 절차 포함
-- Verification: 샘플 design.md 입력 시 ppt-design.md 초안 생성 가능 여부 확인
-- Preconditions: 없음
-
----
-
----
-
-### P3 — 장기 확장
-
----
-
-**[public-repo-cleanup]** | Priority: P2 | Scope: public 전환 전 repo 경량화 + contributor 최적화 — **remote repo 생성 직전 별도 branch에서 수행**
-
-> harness를 전면 제거하지 않는다. public 이후에도 AI 기반 유지보수가 계속되므로 harness workflow는 유지한다.
-> 대신 "내부 상태 파일"은 정리하고, AI surface는 외부 contributor 친화적으로 재작성한다.
-> harness 문서 자체는 "AI로 개발하는 방법"으로 포지셔닝 — 오픈소스 차별화 요소로 활용.
-
-- Done Criteria:
-  - **제거 (public 가치 없는 내부 상태):**
-    - `docs/works/` — 완료된 작업 내역 제거 또는 archive
-    - `docs/backlog/` — 내부 todo 제거 또는 `.dev/` 하위로 이동
-    - `docs/retrospectives/` — 제거
-    - `prompts/` — 제거
-    - `docs/BOOTSTRAP.md` — 이미 완료된 부팅 절차, 제거
-  - **유지 (설계 철학 공개, 오픈소스 강점):**
-    - `docs/PLAN.md`, `PLAN-SUMMARY.md`, `SYSTEM-MANUAL.md`, `USER-MANUAL.md`
-    - `docs/decisions/` — DR-014(언어정책) 등 product 관련 유지. harness 전용(DR-007, 008, 013)은 archive
-    - `docs/STATUS.md` — 현재 개발 상태 공개 (많은 OSS 프로젝트가 이 형태 사용)
-    - `skills/` — 이 repo의 핵심 AI workflow 기능
-    - `.claude/commands/create-deck.md` — 핵심 product command
-  - **재작성 (contributor 최적화):**
-    - `CLAUDE.md` → 내부 harness 운영 규칙 대신 "이 repo를 AI로 기여하는 방법" 중심으로 재작성
-    - `AGENTS.md` → 동일 방향으로 재작성
-    - `.claude/commands/` harness 전용 커맨드(start, pick, work, close 등)는 숨김 또는 간소화
-  - `npm test`, `npm run typecheck`, `npm run validate` 통과
-- Verification: 외부 contributor가 clone 후 CLAUDE.md만 읽고 기여 방법을 파악할 수 있는지 확인
-- Preconditions: remote repo 생성 직전. 개발 안정화 완료 후.
-
----
-
-**[slide-layout-fine-tuning]** | Priority: P2 | Scope: 슬라이드 타입별 레이아웃 미세 조정 — 여백, 텍스트 크기, 카드 비율 등 실제 PPTX 확인 후 조정 |
-**[pptx-document-metadata]** | Priority: P2 | Scope: PPTX 문서 속성(제목·저자·회사) 설정 — pptxgenjs 기본값("PptxGenJS") 대신 `deck.title`, `deck.author`/`brand.author`, `deck.version`으로 채우기 (`pptx.title`, `pptx.author`, `pptx.company`, `pptx.revision`) |
-**[preset-enterprise-clean]** | Priority: P3 | Scope: enterprise-clean design preset 추가 |
-**[custom-preset-support]** | Priority: P3 | Scope: `--design custom/my-company` 형식 custom preset 디렉터리 지원 |
-**[skill-validate-deck]** | Priority: P3 | Scope: layout, overlap, typography, editability 검증 skill |
-**[cli-convert-design]** | Priority: P3 | Scope: `npm run convert-design` — design.md → ppt-design.md CLI |
-**[mermaid-fallback]** | Priority: P3 | Scope: draft/appendix용 Mermaid 렌더링 fallback |
-**[pef-cli-global]** | Priority: P3 | Scope: npm package 공개 및 `pef` 전역 설치 |
-**[export-pdf-hardening]** | Priority: P3 | Scope: `export-pdf.ts` edge case 강화 — `.pptx` 확장자 미검증 시 친절한 오류 메시지, 대문자 `.PPTX` 처리 |
+**[export-pdf-hardening]** | Priority: P3 | Scope: export-pdf edge case 강화
 
 ---
 
@@ -234,17 +181,24 @@
 
 | ID | Title | actual_end |
 | --- | --- | --- |
-| FEAT-20260530-001 | Work 2 — default-modern preset + P1 slide render + PPTX CLI | 2026-05-30 |
-| vitest-security-upgrade | vitest 3.x 업그레이드 — Dependabot 취약점 2건 해소 | 2026-05-31 |
-| examples-expanded | examples/strategy + examples/data-report 추가 | 2026-05-31 |
-| repo-rebranding | ai-deck-compiler 리브랜딩 — README 업데이트, GitHub remote/About/Topics 설정, 디렉터리 정리 | 2026-05-31 |
-| FEAT-20260531-006 | generate-architecture-slide skill — 자연어 설명 → architecture slide diagram spec 생성 | 2026-05-31 |
-| skill-create-deck | create-deck end-to-end interactive workflow skill | 2026-05-31 |
-| skill-generate-blueprint | generate-blueprint skill 문서 | 2026-05-31 |
-| p2-slide-types | P2 slide 6종 구현 — timeline, flow, decision, comparison, section-divider, appendix | 2026-05-31 |
-| skill-review-deck | review-deck AI skill 문서 | 2026-05-31 |
-| pptx-document-metadata | PPTX 문서 속성 설정 — title/author/company/revision (compiler.ts 구현 완료) | 2026-05-31 |
-| FEAT-20260531-007 | Design Preset 고도화 — teal/vivid 추가, section_label chip, hero accent line | 2026-06-01 |
-| FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | 2026-06-01 |
-| FEAT-20260601-002 | Blueprint generation quality rules — semantic component selection + AI tool alignment | 2026-06-01 |
-| FEAT-20260601-003 | Showcase deck results — ai-deck-compiler 소개 PPTX + preset gallery 교체 | 2026-06-01 |
+| FEAT-20260530-001 | default-modern preset + P1 slide render + PPTX CLI | 2026-05-30 |
+| FEAT-20260530-002 | create-deck + initial generate-blueprint skill | 2026-05-31 |
+| FEAT-20260531-001 | P2 slide type 구현 | 2026-05-31 |
+| FEAT-20260531-002 | review-deck skill | 2026-05-31 |
+| FEAT-20260531-003 | preset-aware deck creation + metadata/source input workflow | 2026-05-31 |
+| FEAT-20260531-004 | export-pdf CLI + AI skill | 2026-05-31 |
+| FEAT-20260531-005 | examples/strategy + examples/data-report | 2026-05-31 |
+| FEAT-20260531-006 | generate-architecture-slide skill | 2026-05-31 |
+| FEAT-20260531-007 | teal/vivid preset 고도화 | 2026-06-01 |
+| FEAT-20260601-001 | vivid preset 고도화 | 2026-06-01 |
+| FEAT-20260601-002 | Blueprint generation quality rules | 2026-06-01 |
+| FEAT-20260601-003 | Showcase deck results | 2026-06-01 |
+| FEAT-20260601-004 | Card inner horizontal padding | 2026-06-01 |
+| FEAT-20260601-005 | General code block component | 2026-06-01 |
+| FEAT-20260601-006 | Code syntax highlighting | 2026-06-01 |
+| FEAT-20260601-007 | Code block polish | 2026-06-01 |
+| FEAT-20260601-008 | Cross-platform first-run setup | 2026-06-01 |
+| FEAT-20260601-009 | Timeline circular variant | 2026-06-01 |
+| FEAT-20260601-010 | create-deck blueprint 규칙 내재화 | 2026-06-01 |
+| FEAT-20260601-011 | create-deck skill 콘텐츠 정비 | 2026-06-01 |
+| FEAT-20260601-012 | generate-blueprint canonical 파일 폐기 | 2026-06-01 |

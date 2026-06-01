@@ -468,7 +468,7 @@ npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
 현재 기준:
 
 - 16 slide types
-- 51 tests
+- 59 tests
 - AI 추천 preset: `teal + dark` / legacy/light: `modern`
 - supported themes: `light`, `dark`
 

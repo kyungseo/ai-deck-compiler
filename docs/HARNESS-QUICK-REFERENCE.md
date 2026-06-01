@@ -38,7 +38,6 @@ scaffold된 신규/기존 프로젝트는 Product track과 Harness track을 함�
 
 | 필요 상황 | 로드할 문서 |
 | --- | --- |
-| Scaffold 직후 프로젝트 부팅 | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
 | Product track 작업 선택 | `docs/backlog/PHASE{n}.md` |
 | Harness track 작업 선택 | `docs/backlog/HARNESS.md` |
 | Architecture 요약 | `docs/PLAN-SUMMARY.md` |
@@ -128,7 +127,7 @@ Proposal shape:
 
 - DR-worthy accepted decision: `docs/decisions/` 기록 제안.
 - commit/PR 전: STATUS Finalization(T15)과 Tracking Finalization(T16) 판정.
-- structure/development flow 변경: `HARNESS-ARCHITECTURE` 또는 `HARNESS-MAINTAINER-GUIDE` 영향 확인.
+- structure/development flow 변경: `docs/SYSTEM-MANUAL.md` 또는 `docs/PLAN-SUMMARY.md` 영향 확인.
 - workflow/tool/scaffold 변경: 관련 command/rule/prompt/`.agents/skills/`/`.codex/hooks.json`/manual/scaffold 정렬 확인.
 - scaffold 또는 canonical workflow 변경: `scripts/create-harness.sh`가 있으면 dry-run과 필요 시 temp scaffold 검증. scaffold 적용 repository처럼 script가 없으면 Skipped / Not Applicable로 보고.
 - non-trivial issue resolved: `docs/troubleshooting/` 기록 제안.

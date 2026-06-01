@@ -52,6 +52,17 @@ AI-research-first mode에서 실제 외부 검색은 tool 환경에 따라 제�
 다음 속성을 확인한다. 사용자가 이미 제공한 정보는 건너뛴다.
 처음에는 최대 3문항만 묻고, 부족한 항목은 후속 질문으로 채운다.
 
+### Adaptive Interaction Rules
+
+질문은 checklist를 채우기 위한 절차가 아니라, 좋은 deck을 만들기 위해 부족한 정보를 좁히는 대화다.
+
+- 사용자가 이미 충분한 brief/source를 제공했다면 같은 내용을 다시 묻지 않는다.
+- 처음 질문은 최대 3문항으로 제한한다. 목적·청중·분량/핵심 메시지가 이미 보이면 데이터·톤·근거 중 가장 중요한 항목만 추가 확인한다.
+- 답변이 불완전해도 진행 가능한 경우에는 `Assumptions`를 짧게 제시하고, 사용자가 승인하면 Narrative Spine으로 이동한다.
+- content가 약하면 바로 slide를 늘리지 않는다. 먼저 핵심 메시지, 근거 데이터, 청중 관점 중 무엇이 부족한지 짚고 보강 질문을 한다.
+- 사용자가 “빠르게”, “초안만”, “예시로”라고 말하면 질문 수와 세부도를 줄일 수 있지만, GATE 승인 자체는 유지한다.
+- 사용자가 특정 tone/preset/slide 수를 강하게 지정하면 기본 추천보다 사용자 의도를 우선한다. 단, 결과 품질 리스크가 있으면 한 문장으로 알려준다.
+
 **초기 확인 (최대 3문항, 한 번에 묻는다):**
 
 ```
@@ -165,8 +176,11 @@ AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 
 | 행/열 구조의 다차원 비교 | `table` | 수치 추세가 핵심이면 `chart`. |
 | 시스템·컴포넌트와 관계 | `architecture` | 구조·연결이 핵심. 순서가 핵심이면 `flow`. |
 | 단계별 처리·업무 흐름 | `flow` | 방향·순서가 핵심. 구조·연결이 핵심이면 `architecture`. |
+| 일정·로드맵·변화 과정 | `timeline` | 시간 순서나 milestone이 핵심. 인과 설명이 핵심이면 `content`. |
 | 선택지·승인 요청·권고안 | `decision` | `recommendation`에 선택안을 쓴다. |
+| 근거·명령·참고 자료 | `appendix` | 본문 흐름을 방해하지 않는 보조 정보. 핵심 메시지는 본문 slide에 둔다. |
 | 결론·다음 단계 | `summary` | — |
+| 마지막 한 문장·Q&A | `closing` | 간결한 title/message. 새 정보 추가보다 기억할 문장에 집중. |
 
 ### 타입 선택 판단 예시 — 모호한 경계
 
@@ -185,6 +199,11 @@ AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 
 **flow vs architecture:**
 - "PR 생성 → 리뷰 → CI 통과 → 병합 → 배포" → `flow` (순서가 핵심)
 - "API 서버, DB, 캐시, CDN이 어떻게 연결되는가" → `architecture` (연결 관계가 핵심)
+
+**summary vs closing vs appendix:**
+- "오늘 결론 3가지와 다음 행동" → `summary`
+- "From plan to editable deck"처럼 마지막에 남길 한 문장 → `closing`
+- "재생성 명령, 상세 수치 출처, 참고 링크" → `appendix`
 
 ### Action Title 원칙
 
@@ -215,6 +234,7 @@ AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 
 | `callout` | 해당 슬라이드에서 기억할 한 문장. |
 | `recommendation` | decision slide의 권고/선택. |
 | `takeaways` | deck 또는 섹션 전체 요약. |
+| `notes` | 발표자용 메모. 핵심 전달 메시지, 예상 질문, 전환 멘트를 담는다. |
 
 title 작성 기준:
 
@@ -252,6 +272,32 @@ callout 부가 기준:
 - body bullet을 그대로 복사하지 않는다.
 - 권장 밀도: 6장 deck 기준 1~2장. hard rule이 아니라 산만함을 막는 품질 가이드.
 
+### Speaker Notes
+
+blueprint 초안에는 기본적으로 모든 slide에 `notes`를 작성한다.
+사용자가 "notes 제외" 또는 "슬라이드 본문만"을 명시한 경우에만 생략한다.
+
+notes는 슬라이드 화면에 보이지 않는 발표자용 정보다. 본문을 반복하지 말고 발표자가 실제로 말할 내용을 압축한다.
+
+권장 구성:
+
+```text
+Key message: 이 슬라이드에서 반드시 전달할 한 문장.
+Talk track: 발표자가 20~40초 안에 설명할 요지.
+Expected question: 청중이 물을 수 있는 질문 또는 확인 포인트.
+Transition: 다음 슬라이드로 넘어가는 연결 멘트.
+```
+
+작성 기준:
+
+- `hero`: 발표 목적과 오늘의 약속을 짧게 설명한다.
+- `agenda`/`section-divider`: 왜 이 순서로 보는지, 다음 섹션에서 확인할 질문을 적는다.
+- `chart`/`kpi`/`table`: 숫자의 해석, 주의할 기준, 데이터 한계를 적는다.
+- `architecture`/`flow`: diagram을 읽는 순서와 강조할 boundary를 적는다.
+- `decision`: 권고 이유와 trade-off 질문에 대한 답변 포인트를 적는다.
+- `summary`/`closing`: 청중이 가져가야 할 결론과 next action을 적는다.
+- notes가 길어져야 할 정보는 slide body로 끌어올리지 말고 appendix 또는 source 문서로 분리한다.
+
 Icon policy:
 
 - title에 arbitrary emoji를 자동 삽입하지 않는다.
@@ -265,6 +311,12 @@ hero → agenda → kpi → chart → content → summary
 
 **기술 제안서 (엔지니어링 팀, 30분):**
 hero → agenda → content → architecture → two-column → chart → summary
+
+**제품/도구 showcase (외부 공개, 10~15분):**
+hero → agenda → content → comparison → kpi → chart → architecture → flow → table → summary → appendix → closing
+
+**실행 계획/roadmap 공유 (팀 리드, 20분):**
+hero → content → timeline → decision → summary
 
 **분기 리뷰 (전사, 10분):**
 hero → kpi → chart → summary
@@ -327,6 +379,11 @@ deck:
   title: 발표 제목
   subtitle: 부제목 (선택)
   cta: 날짜 또는 팀명 (선택)
+  notes: |
+    Key message: 오늘 발표의 목적과 청중이 얻어갈 결론을 먼저 고정한다.
+    Talk track: 제목과 부제를 연결해 왜 이 주제가 지금 중요한지 설명한다.
+    Expected question: 발표 범위와 의사결정 필요 여부.
+    Transition: 먼저 전체 흐름을 짚고 핵심 지표나 문제 정의로 이동한다.
 
 # kpi — kpis 배열, 최대 4개
 - id: kpi-1
@@ -359,6 +416,11 @@ deck:
     - 핵심 포인트 1
     - 핵심 포인트 2
     - 핵심 포인트 3
+  notes: |
+    Key message: 이 슬라이드는 핵심 주장의 근거를 압축해 설명한다.
+    Talk track: body 항목을 그대로 읽지 말고 원인, 영향, 다음 행동 순서로 풀어 말한다.
+    Expected question: 근거 데이터와 적용 범위.
+    Transition: 다음 slide에서 숫자, 구조, 또는 선택지로 구체화한다.
 
 # architecture — zone 기반 배치
 - id: arch-1
@@ -425,6 +487,92 @@ deck:
     body:
       - "자동화 게이트 검증"
       - "일일 배포 가능"
+
+# table — 행/열 비교
+- id: table-1
+  type: table
+  title: 세 가지 preset은 같은 content를 다른 발표 톤으로 전환한다
+  headers: [Preset, Theme, Best for]
+  rows:
+    - [teal, dark, AI-native technical story]
+    - [modern, light, Executive report]
+    - [vivid, dark, Product showcase]
+
+# timeline — 일정·milestone
+- id: timeline-1
+  type: timeline
+  title: 3단계 전환으로 rollout risk를 낮춘다
+  items:
+    - date: Week 1
+      label: Baseline
+      description: 현재 지표와 pain point 정리
+    - date: Week 2
+      label: Pilot
+      description: 핵심 workflow 1개에 적용
+    - date: Week 3
+      label: Rollout
+      description: 검증 결과를 기준으로 확장
+
+# flow — 단계별 처리 흐름
+- id: flow-1
+  type: flow
+  title: Review gate를 통과하며 초안이 산출물로 바뀐다
+  diagram:
+    source: inline
+    version: "1.0"
+    nodes:
+      - id: brief
+        kind: client
+        label: Brief
+        zone: left
+      - id: blueprint
+        kind: service
+        label: blueprint.yaml
+        zone: center
+      - id: pptx
+        kind: storage
+        label: Editable PPTX
+        zone: right
+    edges:
+      - from: brief
+        to: blueprint
+        kind: data-flow
+      - from: blueprint
+        to: pptx
+        kind: data-flow
+  callout: Preview review 후 필요한 수정만 blueprint에 반영한다
+
+# decision — 선택지와 권고
+- id: decision-1
+  type: decision
+  title: Public showcase는 제품 자체를 설명하는 deck으로 둔다
+  options:
+    - label: Generic sample
+      pros:
+        - 만들기 쉽다
+      cons:
+        - 제품 메시지가 약하다
+    - label: Product proof deck
+      pros:
+        - workflow와 출력 품질을 동시에 보여준다
+      cons:
+        - content 품질 기준이 높다
+  recommendation: Product proof deck을 대표 예제로 유지한다
+
+# appendix — 보조 정보와 code block
+- id: appendix-1
+  type: appendix
+  title: Appendix
+  body:
+    - "```bash\nnpm run validate -- --blueprint blueprints/example.yaml\nnpm run deck -- --blueprint blueprints/example.yaml --output output/example-v1.0.pptx\n```"
+    - 상세 근거와 source는 speaker notes 또는 별도 문서에 둔다
+
+# closing — 마지막 메시지
+- id: closing-1
+  type: closing
+  message: Thank you
+  title: From prompt to editable proof artifact
+  subtitle: Questions and next steps
 ```
 
 comparison은 좌측(×, 회색) vs 우측(✓, accent) 시각 대비. 양쪽 항목 수를 맞추는 것이 좋다.
@@ -438,7 +586,7 @@ blueprints/{slug}.yaml을 작성했습니다.
 각 슬라이드를 검토해 주세요. 수정할 내용이 있으면 말씀해 주세요.
 ```
 
-→ **[GATE 3] 사용자가 검토 완료를 확인한 뒤에만 PPTX 생성으로 진행한다.**
+→ **[GATE 3] 사용자가 검토 완료를 확인한 뒤에만 Step 4 검토·보완 반복으로 진행한다.**
 
 ---
 

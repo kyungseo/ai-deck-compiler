@@ -2,6 +2,7 @@
 
 이 디렉터리는 `ai-deck-compiler` 자체를 소개하는 대표 showcase deck을 보관합니다.
 같은 발표 내용을 preset/theme별 blueprint, PPTX, export PDF로 재생성할 수 있습니다.
+showcase v1.1은 제품 메시지, repo 기반 evidence, architecture/flow, preset 비교, code block component를 하나의 실전형 deck 흐름 안에 담습니다.
 PDF는 PPTX에서 `npm run export-pdf`로 반출한 파일입니다.
 
 ![Showcase gallery](showcase-gallery.png)
