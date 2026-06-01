@@ -103,6 +103,28 @@ describe('Editable object invariant', () => {
     expect(slide.addImageCalled).toBe(false);
   });
 
+  it('content: long action title uses compact header typography', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('content');
+    const title = '집중적인 구현이 compiler와 workflow를 동시에 밀어 올렸다';
+
+    template.render({
+      id: 'c-long-title',
+      type: 'content',
+      section_label: '03. EVIDENCE',
+      title,
+      body: ['Item A'],
+    }, tokens, slide);
+
+    const titleCall = (slide.addText as ReturnType<typeof vi.fn>).mock.calls.find(
+      (args: unknown[]) => args[0] === title,
+    );
+
+    expect(titleCall).toBeDefined();
+    expect((titleCall?.[1] as { fontSize?: number }).fontSize).toBeLessThan(tokens.typography.title.size);
+    expect((titleCall?.[1] as { h?: number }).h).toBeGreaterThan(0.82);
+  });
+
   it('chart: renders native chart without addImage (inline data)', () => {
     const slide = makeMockSlide();
     const template = defaultRegistry.resolve('chart');

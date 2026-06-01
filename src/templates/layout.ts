@@ -38,6 +38,34 @@ type HeaderOpts = {
   subtitle?: string;
 };
 
+function estimateTitleUnits(title: string): number {
+  return Array.from(title).reduce((sum, ch) => {
+    if (ch === ' ') return sum + 0.35;
+    return sum + (/[\x00-\x7F]/.test(ch) ? 0.55 : 1);
+  }, 0);
+}
+
+function resolveHeaderTitleMetrics(
+  title: string,
+  baseFontSize: number,
+  hasSectionLabel: boolean,
+  hasSubtitle: boolean,
+): { fontSize: number; height: number } {
+  const units = estimateTitleUnits(title);
+  const pressure = hasSectionLabel ? units : units - 4;
+  let fontSize = baseFontSize;
+
+  if (pressure > 34) fontSize = Math.min(baseFontSize, 32);
+  else if (pressure > 24) fontSize = Math.min(baseFontSize, 34);
+
+  const baseHeight = hasSubtitle ? 0.60 : SL.th;
+  const height = fontSize < baseFontSize
+    ? (hasSubtitle ? 0.72 : 1.03)
+    : baseHeight;
+
+  return { fontSize, height };
+}
+
 /** Renders section label (optional), title, and subtitle (optional). */
 export function renderSectionHeader(
   s: PptxSlide,
@@ -72,20 +100,25 @@ export function renderSectionHeader(
   }
 
   const titleY = opts.section_label ? 0.62 : SL.ty;
-  const titleH = opts.subtitle ? 0.60 : SL.th;
+  const titleMetrics = resolveHeaderTitleMetrics(
+    opts.title,
+    ty['title']?.size ?? 40,
+    !!opts.section_label,
+    !!opts.subtitle,
+  );
 
   s.addText(opts.title, {
-    x: SL.cx, y: titleY, w: SL.cw, h: titleH,
-    fontSize: ty['title']?.size ?? 40,
+    x: SL.cx, y: titleY, w: SL.cw, h: titleMetrics.height,
+    fontSize: titleMetrics.fontSize,
     bold: ty['title']?.bold ?? true,
     fontFace: font,
     color: primary,
-    valign: 'middle',
+    valign: titleMetrics.fontSize < (ty['title']?.size ?? 40) ? 'top' : 'middle',
   });
 
   if (opts.subtitle) {
     s.addText(opts.subtitle, {
-      x: SL.cx, y: titleY + titleH + 0.05, w: SL.cw, h: 0.38,
+      x: SL.cx, y: titleY + titleMetrics.height + 0.05, w: SL.cw, h: 0.38,
       fontSize: 18,
       fontFace: ty['title']?.font ?? 'Pretendard',
       color: secondary,
