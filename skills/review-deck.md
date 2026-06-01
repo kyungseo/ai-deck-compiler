@@ -329,7 +329,6 @@ AI: ### 수정 제안
 
 ## 관련 파일
 
-- `skills/create-deck.md` — blueprint 작성 skill
-- `skills/generate-blueprint.md` — blueprint 집중 생성 skill
+- `skills/create-deck.md` — brief → blueprint → PPTX 생성 canonical skill
 - `src/design/presets/modern/ppt-layouts.md` — 슬라이드 타입별 레이아웃
 - `schemas/blueprint.schema.json` — 전체 스키마 참조

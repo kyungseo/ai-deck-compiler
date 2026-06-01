@@ -37,16 +37,17 @@ AI workflow 자체의 개선 항목과 example pack 정비 항목은 `docs/backl
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | generate-blueprint | export-pdf | generate-architecture-slide]에
+AGENTS.md Product Skill Routing에 따라 [create-deck | review-deck | export-pdf | generate-architecture-slide]에
 대응하는 `.agents/skills/{name}/SKILL.md`를 로드하고 절차를 수행해줘.
 ```
 
 **AGENTS.md 없음 — 요청한 skill에 맞는 파일을 선택한다:**
 
-PPT 생성 / create-deck:
+PPT 생성 / blueprint 작성 / create-deck:
 ```text
 `skills/create-deck.md`를 읽고 절차를 따라줘.
 MUST: 각 GATE에서 반드시 멈추고 사용자 응답을 기다린다. 승인 없이 다음 Step으로 진행하지 않는다.
+blueprint 작성만 요청받은 경우에도 이 절차를 사용한다.
 ```
 
 deck 검토 / review-deck:
@@ -59,11 +60,6 @@ PDF 내보내기 / export-pdf:
 ```text
 `skills/export-pdf.md`를 읽고 절차를 따라줘.
 MUST: 파일 경로 없이 변환을 실행하지 않는다. LibreOffice가 없으면 설치 안내만 제공한다.
-```
-
-blueprint 생성 / generate-blueprint:
-```text
-`skills/generate-blueprint.md`를 읽고 절차를 따라줘.
 ```
 
 아키텍처 슬라이드 생성 / generate-architecture-slide:
