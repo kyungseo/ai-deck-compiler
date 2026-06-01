@@ -180,6 +180,7 @@ body 항목 코드 표기 기준:
   - 예: `` `npm run deck -- --blueprint example.yaml --output out.pptx` ``
 - 여러 줄 코드는 body 항목 하나에 fenced code string으로 작성할 수 있다. 첫 줄은 세 개의 backtick과 언어명(예: bash), 마지막 줄은 세 개의 backtick만 둔다.
 - backtick/fenced code 항목은 지원 slide에서 boxed monospace block으로 렌더링된다.
+- `bash`, `js`/`ts`, `java` fenced code는 기본 syntax color가 적용된다.
 - 일반 설명 문장과 코드 항목을 같은 body 안에 혼용할 수 있다.
 
 callout 사용 기준:
