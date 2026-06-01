@@ -20,7 +20,7 @@ markdown/source 처리와 slide plan 결정이 필요하면 `/create-deck`의 so
 2. 청중 (임원 / 팀 내부 / 고객 등)
 3. 슬라이드 목록 (타입 + 제목)
 4. 각 슬라이드의 주요 내용 또는 데이터
-5. design preset (기본: default-modern)
+5. design preset (기본: teal — dark-first AI 추천. light 필요 시 modern)
 6. theme (light | dark)
 7. author/team (선택)
 8. version (기본: "1.0")
@@ -33,7 +33,7 @@ blueprint 작성 전 전체 스토리를 5~10문장으로 요약한다.
 
 ## Step 3 — Blueprint 초안 생성
 
-`skills/generate-blueprint.md`의 슬라이드 타입별 작성 가이드를 따라 `blueprints/{slug}.yaml`을 작성한다.
+`skills/generate-blueprint.md`의 semantic component selection과 슬라이드 타입별 작성 가이드를 따라 `blueprints/{slug}.yaml`을 작성한다.
 
 - blueprints/ 디렉토리가 없으면 생성한다
 - 작성 후 전체 내용을 보여준다
@@ -58,5 +58,5 @@ npm run deck -- --blueprint blueprints/{slug}.yaml --output output/{slug}-v{vers
 
 **참고:**
 - 전체 생성 절차: `skills/generate-blueprint.md`
-- 슬라이드 타입 레이아웃: `src/design/presets/default-modern/ppt-layouts.md`
+- 슬라이드 타입 레이아웃: `src/design/presets/teal/ppt-layouts.md` (기본), `src/design/presets/modern/ppt-layouts.md` (light/legacy)
 - Blueprint 스키마: `schemas/blueprint.schema.json`

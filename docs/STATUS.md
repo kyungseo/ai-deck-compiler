@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 (FEAT-20260601-001 Done) |
+| Last updated | 2026-06-01 (FEAT-20260601-002 Done) |
 
 ## Work Context Rule
 

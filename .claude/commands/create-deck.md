@@ -35,9 +35,9 @@ PPT 제작을 도와드리겠습니다. 몇 가지 확인할게요.
 
 6. 데이터·차트: 포함할 숫자·데이터가 있나요?
 
-7. design preset: default-modern (기본값) 또는 custom preset?
+7. design preset: teal (기본 추천, dark-first) / modern (light) / vivid?
 
-8. 테마: light (비즈니스) / dark (기술·엔지니어링) 중?
+8. 테마: dark (teal/vivid 권장) / light (modern 권장) 중?
 
 9. 작성자/브랜드와 문서 버전?
 ```
@@ -46,7 +46,7 @@ PPT 제작을 도와드리겠습니다. 몇 가지 확인할게요.
 
 ## Step 2 — 슬라이드 구조 제안
 
-`skills/create-deck.md` §Step 2의 슬라이드 타입 선택 가이드와 목적별 권장 구성을 참고해서 구조를 번호 목록으로 제안한다.
+`skills/create-deck.md` §Step 2의 슬라이드 타입 선택 가이드, semantic component selection, 목적별 권장 구성을 참고해서 구조를 번호 목록으로 제안한다.
 
 제안 후 반드시 아래 문장으로 끝낸다:
 ```
@@ -58,7 +58,7 @@ PPT 제작을 도와드리겠습니다. 몇 가지 확인할게요.
 ## Step 3 — Blueprint 초안 작성
 
 승인된 구조를 기반으로 `blueprints/{제목-slug}.yaml`을 작성한다.
-`skills/generate-blueprint.md`의 슬라이드 타입별 작성 가이드를 따른다.
+`skills/generate-blueprint.md`의 semantic component selection과 슬라이드 타입별 작성 가이드를 따른다.
 
 - blueprints/ 디렉토리가 없으면 생성한다
 - 파일명: 발표 제목을 소문자 하이픈으로 변환 (예: `q2-engineering-review.yaml`)
@@ -112,6 +112,6 @@ deck 검토를 원하시면 `/review-deck`을 사용하세요:
 ---
 
 **참고:**
-- 슬라이드 타입 목록: `src/design/presets/default-modern/ppt-layouts.md`
+- 슬라이드 타입 목록: `skills/create-deck.md` §Step 2, `src/design/presets/teal/ppt-layouts.md`
 - Blueprint 스키마: `schemas/blueprint.schema.json`
 - 전체 워크플로우 상세: `skills/create-deck.md`
