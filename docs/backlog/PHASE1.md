@@ -133,6 +133,7 @@
 
 **[code-syntax-highlight]** | Priority: P2 | Scope: code block syntax highlighting — 키워드·문자열 등 토큰별 색상 분리
 
+- Work: FEAT-20260601-006
 - Done Criteria:
   - 언어 감지(JS/TS/bash 등) 또는 blueprint field `lang` 힌트 기반 기본 토크나이저 구현
   - `const`, `let`, `await`, `new` 등 키워드 색상 분리

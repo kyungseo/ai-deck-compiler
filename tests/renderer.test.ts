@@ -260,6 +260,14 @@ describe('renderCalloutBar', () => {
 // ── Body code blocks ─────────────────────────────────────────────────────────
 
 describe('Body code blocks', () => {
+  const textFromArg = (arg: unknown): string => {
+    if (typeof arg === 'string') return arg;
+    if (Array.isArray(arg)) {
+      return arg.map(run => typeof run === 'object' && run !== null && 'text' in run ? String((run as { text?: string }).text ?? '') : '').join('');
+    }
+    return '';
+  };
+
   it('content slide renders fenced code as boxed monospace text without fence markers', () => {
     const slide = makeMockSlide();
     const template = defaultRegistry.resolve('content');
@@ -277,12 +285,40 @@ describe('Body code blocks', () => {
     const codeShape = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls.find(
       (args: unknown[]) => typeof args[1] === 'object' && args[1] !== null && (args[1] as { rectRadius?: number }).rectRadius === 0.06,
     );
-    const codeText = (slide.addText as ReturnType<typeof vi.fn>).mock.calls.find(
-      (args: unknown[]) => typeof args[0] === 'string' && (args[0] as string).includes('npm run validate'),
-    );
+    const codeText = (slide.addText as ReturnType<typeof vi.fn>).mock.calls
+      .map(args => textFromArg(args[0]))
+      .find(text => text.includes('npm run validate'));
 
     expect(codeShape).toBeTruthy();
-    expect(codeText?.[0]).not.toContain('```');
+    expect(codeText).not.toContain('```');
+  });
+
+  it('content slide applies syntax colors to supported fenced code', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('content');
+    template.render({
+      id: 'code-color',
+      type: 'content',
+      title: 'Code',
+      body: ['```ts\nconst value = \"ready\" // comment\n```'],
+    }, {
+      ...tokens,
+      colors: {
+        ...tokens.colors,
+        'code-keyword': '#AA0000',
+        'code-string': '#00AA00',
+        'code-comment': '#777777',
+      },
+    }, slide);
+
+    const richTextCall = (slide.addText as ReturnType<typeof vi.fn>).mock.calls.find(
+      (args: unknown[]) => Array.isArray(args[0]) && textFromArg(args[0]).includes('const value'),
+    );
+    const runs = richTextCall?.[0] as Array<{ text?: string; options?: { color?: string } }>;
+
+    expect(runs.some(run => run.text === 'const' && run.options?.color === 'AA0000')).toBe(true);
+    expect(runs.some(run => run.text === '"ready"' && run.options?.color === '00AA00')).toBe(true);
+    expect(runs.some(run => run.text === '// comment' && run.options?.color === '777777')).toBe(true);
   });
 
   it('appendix slide keeps inline code and fenced code as separate blocks', () => {
@@ -300,9 +336,8 @@ describe('Body code blocks', () => {
       ],
     }, tokens, slide);
 
-    const codeTexts = (slide.addText as ReturnType<typeof vi.fn>).mock.calls.filter(
-      (args: unknown[]) => typeof args[0] === 'string',
-    ).map(args => args[0] as string);
+    const codeTexts = (slide.addText as ReturnType<typeof vi.fn>).mock.calls
+      .map(args => textFromArg(args[0]));
 
     expect(codeTexts.some(text => text.includes('npm run typecheck') && text.includes('npm test'))).toBe(true);
     expect(codeTexts.some(text => text.includes('npm run preview') && !text.includes('```'))).toBe(true);

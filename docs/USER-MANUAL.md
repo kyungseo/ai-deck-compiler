@@ -360,7 +360,7 @@ AI는 source 내용을 그대로 bullet로 옮기기보다, 의미에 맞는 표
 
 callout은 slide type이 아니라 선택 필드입니다. `teal`과 `vivid`에서는 `content` / `flow` 슬라이드 하단 강조 bar로 렌더링됩니다. 모든 슬라이드에 넣으면 산만해지므로 6장 deck 기준 1~2장 정도를 권장합니다.
 
-code block은 `content`, `two-column`, `appendix` slide에서 백틱 또는 fenced code로 감싼 body 항목을 boxed monospace block으로 표현하는 기능입니다. 현재는 코드 블록 박스와 monospace 렌더링을 지원하며, 언어별 syntax highlighting은 후속 backlog입니다.
+code block은 `content`, `two-column`, `appendix` slide에서 백틱 또는 fenced code로 감싼 body 항목을 boxed monospace block으로 표현하는 기능입니다. `bash`, `js`/`ts`, `java` fenced code는 keyword, string, comment, number에 기본 syntax color를 적용합니다. 지원하지 않는 언어와 inline code는 단색 monospace block으로 표시됩니다.
 
 ---
 
