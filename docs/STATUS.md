@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 |
+| Last updated | 2026-06-01 (FEAT-20260601-002 Done) |
 
 ## Work Context Rule
 
@@ -19,7 +19,8 @@
 
 ## Active Work
 
-*(없음)*
+| ID | Title | Work 파일 |
+| --- | --- | --- |
 
 ## Blockers And Open Questions
 

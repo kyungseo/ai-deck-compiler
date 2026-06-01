@@ -102,6 +102,54 @@ deck:
 - kpi value는 따옴표로 감싸기 (`value: "124K"`)
 - chart labels와 values 길이 일치 확인
 
+### 2-1. Semantic component selection
+
+슬라이드 타입은 사용자가 적은 표현을 그대로 따르기보다 내용의 의미로 선택한다.
+
+| 입력 내용 | 우선 표현 | 작성 규칙 |
+| --- | --- | --- |
+| 핵심 숫자 3~4개 | `kpi` | `value`, `delta`, `trend` 중심. 설명은 최소화. |
+| 시간 추세 | `chart` line/area | labels와 series.values 길이 일치. |
+| 항목 간 수치 비교 | `chart` bar/stacked-bar | 수치 비교는 bullet보다 chart 우선. |
+| 구성비·비율 | `chart` pie/donut | 항목이 많으면 table 고려. |
+| 행/열 기반 비교 | `table` | headers와 rows 컬럼 수 일치. |
+| 시스템 구성·의존성 | `architecture` | nodes, edges, zones로 구조화. |
+| 단계별 절차·업무 흐름 | `flow` | 순서와 방향성이 핵심일 때. |
+| 승인·선택·권고 | `decision` | 선택지는 `options`, 결론은 `recommendation`. |
+| 현재 vs 제안 대비 | `comparison` 또는 `two-column` | 명확한 대비는 comparison 우선. |
+| 전체 결론·다음 행동 | `summary` | `takeaways`에 청중이 기억할 문장 작성. |
+| 슬라이드 내부 강조 문장 | `content`/`flow`의 `callout` | callout은 slide type이 아니라 optional field. |
+
+### 2-2. Emphasis hierarchy
+
+| Field | 역할 |
+| --- | --- |
+| `title` | 슬라이드 결론. 주제 라벨보다 선언형 문장. |
+| `subtitle` | 맥락 보완. |
+| `body` | 근거와 설명. |
+| `callout` | 해당 슬라이드에서 기억할 한 문장. |
+| `recommendation` | decision slide의 권고/선택. |
+| `takeaways` | deck 또는 섹션 전체 요약. |
+
+callout 작성 기준:
+
+- 핵심 메시지/결론/주의 문장/의사결정 포인트가 1문장으로 분명할 때 사용한다.
+- 선택 또는 승인 요청이면 먼저 `decision.recommendation`으로 승격할지 검토한다.
+- deck 전체 결론이면 먼저 `summary.takeaways`로 보낸다.
+- body bullet과 같은 문장을 중복하지 않는다.
+- 권장 밀도는 6장 deck 기준 1~2장 정도다. 모든 content slide에 넣지 않는다.
+
+판단 예시:
+
+| 입력 문장 | 선택 |
+| --- | --- |
+| "2026년은 파트너십으로 진입하고 2027년 내재화를 재검토한다." | 선택/승인 맥락이면 `decision.recommendation`, 배경 설명 중 강조면 `content.callout`, deck 결론이면 `summary.takeaways` |
+
+Icon policy:
+
+- title에 arbitrary emoji를 자동 삽입하지 않는다.
+- 이번 schema에는 icon field가 없다. 아이콘 요청이 있으면 제한된 semantic icon set과 별도 renderer 설계를 후속 작업으로 제안한다.
+
 ### 3. 검토 후 제시
 
 작성 완료 후:
@@ -158,6 +206,7 @@ blueprint.yaml 초안입니다.
 - id: content-1
   type: content
   title: 슬라이드 제목
+  callout: 핵심 메시지 1문장       # 선택 — callout-bar token이 있는 preset에서만 렌더링
   body:                      # 3~5개 권장
     - 불렛 포인트 1
     - 불렛 포인트 2

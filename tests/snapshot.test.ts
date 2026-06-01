@@ -3,6 +3,7 @@ import JSZip from 'jszip';
 import { parseBlueprint } from '../src/compiler/parser';
 import { resolveDesignTokens } from '../src/design/resolver';
 import { compile } from '../src/compiler/compiler';
+import type { Blueprint } from '../src/schema/blueprint';
 
 // Normalize timestamps and generated IDs so snapshots are stable
 function normalizeXml(xml: string): string {
@@ -88,6 +89,41 @@ describe('Design preset alias compatibility', () => {
   it('keeps default-modern as an alias for modern', () => {
     expect(resolveDesignTokens('default-modern', 'light').colors)
       .toEqual(resolveDesignTokens('modern', 'light').colors);
+  });
+});
+
+describe('Compiler callout footer suppression', () => {
+  it('callout slide omits brand footer; adjacent non-callout slide retains it', async () => {
+    // strategy-vivid-dark: slide 3 = content with callout, slide 2 = agenda (no callout)
+    const slides = await getPptxSlideXmls(
+      'examples/results/strategy-vivid-dark.blueprint.yaml',
+      'vivid',
+      'dark',
+    );
+    const slide2Xml = slides['ppt/slides/slide2.xml']!;
+    const slide3Xml = slides['ppt/slides/slide3.xml']!;
+
+    expect(slide3Xml, 'callout slide must NOT contain brand footer').not.toContain('ai-deck-compiler');
+    expect(slide2Xml, 'non-callout slide must contain brand footer').toContain('ai-deck-compiler');
+  });
+
+  it('callout field present but callout-bar token absent: footer is NOT suppressed', async () => {
+    // Simulate a preset without callout-bar token: footer renders even when slide.callout exists.
+    const blueprint: Blueprint = {
+      deck: { title: 'Test', design: 'teal', theme: 'dark', version: '1.0' },
+      slides: [
+        { id: 's1', type: 'content', title: 'Market', callout: 'This should not suppress footer' },
+      ],
+    };
+    const tokens = resolveDesignTokens('teal', 'dark');
+    delete tokens.colors['callout-bar'];
+    delete tokens.colors['callout-bar-text'];
+    const pptx = await compile({ blueprint, tokens });
+    const buffer = await (pptx as any).write({ outputType: 'nodebuffer' }) as Buffer;
+    const zip = await JSZip.loadAsync(buffer);
+    const slideXml = await zip.file('ppt/slides/slide1.xml')!.async('string');
+
+    expect(slideXml, 'slide with callout but no token must retain brand footer').toContain('ai-deck-compiler');
   });
 });
 
