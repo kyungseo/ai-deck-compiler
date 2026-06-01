@@ -117,7 +117,21 @@
 
 ---
 
-**[code-syntax-highlight]** | Priority: P2 | Scope: appendix/body 코드 블럭 기본 syntax highlighting — 키워드·문자열 등 토큰별 색상 분리
+**[general-code-block-component]** | Priority: P2 | Scope: 본문형 slide에서 boxed monospace code block 공통 표현 지원
+
+- Work: FEAT-20260601-005
+- Done Criteria:
+  - `content`, `two-column`, `appendix` 중 1차 대상에서 code block을 boxed monospace block으로 표현
+  - blueprint 표현 방식 결정(string convention vs structured body item vs slide-level code field)
+  - 공통 renderer helper 도입 또는 동등한 중복 없는 구현
+  - line wrapping/height/overflow 기본 검증
+  - README/USER-MANUAL/SYSTEM-MANUAL 지원 범위 정합화
+- Verification: sample/showcase preview에서 code block 시각 확인
+- Preconditions: P1 compiler 완료 (✅)
+
+---
+
+**[code-syntax-highlight]** | Priority: P2 | Scope: code block syntax highlighting — 키워드·문자열 등 토큰별 색상 분리
 
 - Done Criteria:
   - 언어 감지(JS/TS/bash 등) 또는 blueprint field `lang` 힌트 기반 기본 토크나이저 구현
@@ -126,7 +140,7 @@
   - pptxgenjs 다중 text run으로 한 줄 내 mixed color 렌더링
   - teal/vivid/modern 토큰에 `code-keyword`, `code-string` 색상 토큰 추가
 - Verification: showcase appendix 슬라이드에서 syntax highlight 시각 확인
-- Preconditions: 코드 박스 기본 렌더링 완료 (✅)
+- Preconditions: general code block component 완료
 
 ---
 

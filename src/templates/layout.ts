@@ -172,6 +172,169 @@ export function renderCalloutBar(
   });
 }
 
+type BodyBlockOptions = {
+  fontSize?: number;
+  color?: string;
+  bullet?: boolean;
+};
+
+type CodeBlock = {
+  lines: string[];
+  lang?: string;
+};
+
+const isInlineCodeItem = (text: string): boolean =>
+  text.startsWith('`') && text.endsWith('`') && !text.startsWith('```') && text.length > 2;
+
+const isFencedCodeItem = (text: string): boolean =>
+  text.trimStart().startsWith('```') && text.trimEnd().endsWith('```');
+
+const parseCodeBlock = (items: string[]): CodeBlock => {
+  if (items.length === 1 && isFencedCodeItem(items[0])) {
+    const raw = items[0].trim();
+    const withoutOpen = raw.replace(/^```[ \t]*/, '');
+    const withoutClose = withoutOpen.replace(/[ \t]*```$/, '');
+    const lines = withoutClose.split(/\r?\n/);
+    const first = lines[0]?.trim() ?? '';
+    const hasLang = /^[A-Za-z][\w.+-]*$/.test(first) && lines.length > 1;
+    return {
+      lang: hasLang ? first : undefined,
+      lines: (hasLang ? lines.slice(1) : lines).filter((line, i, arr) => line.length > 0 || i < arr.length - 1),
+    };
+  }
+  return { lines: items.map(text => isInlineCodeItem(text) ? text.slice(1, -1) : text) };
+};
+
+const isCodeItem = (text: string): boolean => isInlineCodeItem(text) || isFencedCodeItem(text);
+
+const estimateWrappedLines = (lines: string[], width: number, charsPerInch = 11): number => {
+  const charsPerLine = Math.max(24, Math.floor(width * charsPerInch));
+  return lines.reduce((sum, line) => sum + Math.max(1, Math.ceil(line.length / charsPerLine)), 0);
+};
+
+const estimateBulletHeight = (items: string[], width: number, fontSize: number): number => {
+  const charsPerLine = Math.max(24, Math.floor(width * 7.8));
+  const lineH = Math.max(0.20, fontSize / 72 * 1.28);
+  return items.reduce((sum, text) => {
+    const lines = Math.max(1, Math.ceil(text.length / charsPerLine));
+    return sum + lines * lineH + 0.08;
+  }, 0);
+};
+
+export function renderBodyWithCodeBlocks(
+  s: PptxSlide,
+  items: string[],
+  tokens: ResolvedDesignTokens,
+  bounds: { x: number; y: number; w: number; h: number },
+  options: BodyBlockOptions = {},
+): void {
+  const { typography: ty, colors: co } = tokens;
+  const bodyFontSize = options.fontSize ?? ty['body']?.size ?? 16;
+  const bodyColor = options.color ?? hex(co['text-secondary'] ?? '374151');
+  const codeColor = hex(co['accent-text'] ?? co['accent'] ?? '2563EB');
+  const codeBg = hex(co['card-item-bg'] ?? '1E2124');
+  const codeBorder = hex(co['border'] ?? '3A3F44');
+  const maxY = bounds.y + bounds.h;
+  let y = bounds.y;
+  let i = 0;
+
+  if (!items.some(isCodeItem)) {
+    s.addText(items.map(text => ({
+      text,
+      options: {
+        fontSize: bodyFontSize,
+        fontFace: ty['body']?.font ?? 'Pretendard',
+        color: bodyColor,
+        bullet: options.bullet === false ? undefined : { code: '2022', indent: 15 },
+        paraSpaceAfter: 8,
+      },
+    })), { x: bounds.x, y: bounds.y, w: bounds.w, h: bounds.h, valign: 'top' });
+    return;
+  }
+
+  const renderBulletGroup = (group: string[]) => {
+    if (group.length === 0 || y >= maxY) return;
+    const estimatedH = Math.min(maxY - y, estimateBulletHeight(group, bounds.w, bodyFontSize));
+    s.addText(group.map(text => ({
+      text,
+      options: {
+        fontSize: bodyFontSize,
+        fontFace: ty['body']?.font ?? 'Pretendard',
+        color: bodyColor,
+        bullet: options.bullet === false ? undefined : { code: '2022', indent: 15 },
+        paraSpaceAfter: 8,
+      },
+    })), { x: bounds.x, y, w: bounds.w, h: estimatedH, valign: 'top' });
+    y += estimatedH + 0.10;
+  };
+
+  const renderCodeGroup = (group: string[]) => {
+    if (group.length === 0 || y >= maxY) return;
+    const parsed = parseCodeBlock(group);
+    const lines = parsed.lines.length > 0 ? parsed.lines : [''];
+    const pad = 0.14;
+    const lineH = 0.20;
+    const labelH = parsed.lang ? 0.22 : 0;
+    const wrappedLines = estimateWrappedLines(lines, bounds.w - pad * 2);
+    const boxH = Math.min(maxY - y, Math.max(0.50, wrappedLines * lineH + pad * 2 + labelH));
+    if (boxH <= 0.16) return;
+
+    s.addShape('roundRect', {
+      x: bounds.x, y, w: bounds.w, h: boxH,
+      fill: { color: codeBg },
+      line: { color: codeBorder, width: 0.75 },
+      rectRadius: 0.06,
+    });
+
+    if (parsed.lang) {
+      s.addText(parsed.lang.toUpperCase(), {
+        x: bounds.x + pad, y: y + 0.06, w: bounds.w - pad * 2, h: 0.18,
+        fontSize: 8,
+        bold: true,
+        fontFace: ty['caption']?.font ?? 'Pretendard',
+        color: hex(co['text-muted'] ?? '6B7280'),
+        valign: 'middle',
+      });
+    }
+
+    s.addText(lines.join('\n'), {
+      x: bounds.x + pad,
+      y: y + pad + labelH,
+      w: bounds.w - pad * 2,
+      h: Math.max(0.1, boxH - pad * 2 - labelH),
+      fontSize: 11,
+      fontFace: 'Courier New',
+      color: codeColor,
+      valign: 'top',
+    });
+
+    y += boxH + 0.16;
+  };
+
+  while (i < items.length && y < maxY) {
+    if (isCodeItem(items[i])) {
+      const codeItems: string[] = [];
+      if (isFencedCodeItem(items[i])) {
+        codeItems.push(items[i]);
+        i += 1;
+      } else {
+        while (i < items.length && isInlineCodeItem(items[i])) {
+          codeItems.push(items[i]);
+          i += 1;
+        }
+      }
+      renderCodeGroup(codeItems);
+    } else {
+      const bullets: string[] = [];
+      while (i < items.length && !isCodeItem(items[i])) {
+        bullets.push(items[i]);
+        i += 1;
+      }
+      renderBulletGroup(bullets);
+    }
+  }
+}
+
 export function zoneCenter(zone: string): { cx: number; cy: number } {
   const entry = ZONE_GRID[zone as Zone] ?? [1, 1]; // default: center
   const [col, row] = entry;
