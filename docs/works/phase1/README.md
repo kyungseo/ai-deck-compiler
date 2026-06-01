@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
+| FEAT-20260601-009 | Timeline circular variant — 타원 + 곡선 화살표 타임라인 | feature/FEAT-20260601-009-timeline-circular-variant |
 
 ## Done (Archive Pending)
 
