@@ -25,7 +25,7 @@ MUST:
 MUST NOT:
 
 - 과거 맥락이 필요하지 않은데 `docs/archive/`, `docs/works/`, `docs/PLAN.md`를 읽지 않는다.
-- `docs/BOOTSTRAP.md`가 존재한다는 이유만으로 매 세션 로드하지 않는다.
+- Bootstrap/onboarding은 완료 상태다. scaffold adoption 지침이 필요하면 source workflow repo를 참조한다.
 - 승인 없이 넓은 변경, L3 변경, scope 확장을 실행하지 않는다.
 
 Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 없으면 clean idle 상태로 보고한다.
@@ -46,8 +46,7 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 | Need | Load |
 | --- | --- |
 | 현재 상태 | `docs/STATUS.md` |
-| Scaffold 직후 프로젝트 부팅 | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
-| Scaffold source onboarding 기준 확인 | `docs/SCAFFOLD-BOOTSTRAP.md` |
+| Scaffold/adoption 기준 확인 | source workflow repo |
 | 세션 실행 규칙 빠른 확인 | `docs/HARNESS-QUICK-REFERENCE.md` |
 | Work ID·OQ ID·DR ID 부여·검증, 파일명 규칙 | `docs/HARNESS-NAMING-RULES.md` — `/register`·`/work` Work ID 확정 시, branch/Work ID slug 대응 논의 시에만 로드. `/start`, `/pick`, 일반 status 확인, cascade 검증에서는 로드하지 않는다 |
 | failure state 진입, Validation Checklist, Commit Approval 판단, `/health` 조건부 recovery 확인 | `docs/HARNESS-RECOVERY-VALIDATION.md` — `/start`, `/pick`, 일반 `/work`·`/close`·`/done` 흐름에서는 로드하지 않는다. validation failure·recovery·commit approval 판단이 필요한 경우에만 로드한다 |
@@ -65,7 +64,7 @@ Active Work, Next Actions, archive 대기 Work가 모두 없고 Open Blocker도 
 조건이 없으면 추가 문서를 로드하지 않는다.
 core 문서에 조건부로만 실행되는 상세 절차·체크리스트가 축적될 경우, 별도 slice 파일로 분리하고 조건부 pointer로 교체한다.
 회고는 backlog를 대체하지 않는다. 작업 선택, 계획 수립, 아이디어 도출, 반복 리스크 확인이 필요할 때 최신 또는 관련 회고 1개만 선택적으로 확인한다.
-`docs/WORKFLOW-MANUAL.md`는 사용자용 레퍼런스다. 평시 AI 실행 규칙 로드 대상에서 제외하고, 사용자가 매뉴얼 검토를 요청했거나 user-facing workflow 변경/cascade 감사가 필요할 때만 확인한다.
+이 repo는 workflow 사용자 매뉴얼을 중복 유지하지 않는다. workflow manual이 필요하면 source workflow repo인 `ai-workflow-harness`의 manual을 참조한다.
 
 ## State Machine
 
@@ -111,7 +110,6 @@ MUST NOT:
 | 지금 진행 중인 작업 | `docs/STATUS.md` Active Work |
 | 다음 후보 Product track 작업 | `docs/backlog/PHASE{n}.md` |
 | 하네스/명령/rule/hook 개선 | `docs/backlog/HARNESS.md` |
-| Scaffold bootstrapping checklist | `docs/STATUS.md` Next Actions가 bootstrap/onboarding을 명시할 때 `docs/BOOTSTRAP.md` |
 | 한 작업의 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
 | 결정 근거 | `docs/decisions/DR-*.md` |
 | 완료된 과거 상태 | `docs/archive/` |

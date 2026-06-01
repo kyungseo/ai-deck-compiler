@@ -1,71 +1,67 @@
-# PLAN-SUMMARY.md — Presentation Compiler
+# PLAN-SUMMARY.md — ai-deck-compiler
 
-> 전체 근거와 상세 아키텍처: `docs/PLAN.md`
+> 상세 설계 기록: `docs/PLAN.md`
 
 ## Project Summary
 
 | 항목 | 내용 |
 | --- | --- |
-| 프로젝트 목표 | blueprint.yaml + design preset → editable PPTX 일관 생성 |
-| 주요 사용자 | AI-assisted presentation author (개인 / 팀 내부) |
-| production 성격 | library / internal tool (public open-source) |
-| 배포 또는 공개 방식 | public GitHub, npm package (Post-MVP) |
-| 제품 핵심 workflow | blueprint.yaml → Schema Validation (Zod) → Compiler → TemplateRegistry → pptxgenjs → Editable PPTX → Validation Report |
-| AI 작업 도구 | Claude Code / Codex / Cursor |
-| 주요 제약 조건 | AI가 x/y 좌표를 결정하지 않음. 규칙 기반 렌더링만 허용 (같은 입력 = 같은 결과). pptxgenjs editable output 필수. |
+| 프로젝트 목표 | AI와 대화해 `blueprint.yaml`을 작성하고 editable PPTX/PDF를 생성 |
+| 주요 사용자 | AI-assisted presentation author, repo maintainer, contributor |
+| 공개 방식 | public GitHub repo, npm package는 post-MVP |
+| 핵심 workflow | create-deck → blueprint.yaml → Schema Validation → Compiler → TemplateRegistry → pptxgenjs → Editable PPTX → optional preview/PDF |
+| AI 작업 도구 | Claude Code, Codex CLI/App, Cursor, Claude App |
+| 핵심 제약 | AI는 intent/content를 작성하고, code는 layout을 deterministic하게 렌더링한다. AI가 x/y 좌표를 결정하지 않는다. |
 
-## Implementation Baseline
+## Current Product Baseline
 
-코드 개발이 없는 프로젝트(content/research/no-code 운영 등)는 전체 표를 Not Applicable로 처리한다.
-baseline이 비어 있으면 feature candidate은 Not Ready로 보고하고, 첫 후보로 Project Initialization을 제안한다.
+| 영역 | 상태 |
+| --- | --- |
+| Runtime / Language | Node.js 18+, TypeScript |
+| Rendering | pptxgenjs editable PPTX |
+| Schema | Zod discriminated union + generated JSON Schema |
+| CLI | `validate`, `deck`, `preview`, `export-pdf`, `schema` |
+| Slide types | 16종: hero, agenda, section-divider, content, two-column, comparison, kpi, timeline, architecture, flow, table, chart, decision, summary, appendix, closing |
+| Design presets | `teal`, `vivid`, `modern` |
+| AI workflow | `create-deck` canonical. `review-deck`, `export-pdf`, `generate-architecture-slide` 보조 skill |
+| Examples | `examples/results`에 showcase blueprint/PPTX/PDF/gallery 추적 |
 
-| 항목 | 결정 내용 | Readiness |
-| --- | --- | --- |
-| Runtime / Language | Node.js 18+, TypeScript | Ready |
-| Framework / Library | pptxgenjs ^3.12, zod ^3.23, yaml ^2.4 (eemeli), vitest ^1, tsx ^4 | Ready |
-| Build tool | tsconfig.json (ES2022, strict, bundler resolution) | Ready |
-| Base package / Module | src/ (schema/, compiler/, templates/, design/, cli/) | Ready |
-| Module shape | CLI (`npm run validate`, `npm run deck`) + TypeScript library | Ready |
-| Data storage | 없음 — file-based input/output (blueprint.yaml, tokens.json, output/*.pptx) | Not Applicable |
-| Profiles / Environments | 없음 — CLI flags: `--blueprint`, `--design`, `--theme`, `--output` | Not Applicable |
-| Verification defaults | `npm run typecheck`, `npm test` (vitest), `npm run validate -- --blueprint examples/sample/blueprint.yaml` | Ready |
+## Public Release Gate
 
-*(Readiness: Not Started / Partial / Ready / Not Applicable)*
+Public 전환 전에는 새 기능 추가보다 아래 gate를 우선한다.
 
-## Core Architecture
+1. Showcase 품질 최종화
+2. README / USER-MANUAL / SYSTEM-MANUAL 현행화
+3. Claude/Codex/Cursor/Claude App 작업 케이스별 시뮬레이션
+4. `src/` code quality audit 및 low-risk fix만 반영
+5. backlog/status/plan 정리 및 유지보수 phase 전환
+6. 불필요한 harness prompt/manual 표면 최소화
+7. GitHub repo settings 확인
+8. final validation 및 clean clone smoke
 
-```text
-User / AI
-  ↓ (structured input: blueprint.yaml, design preset)
-Schema Validation (Zod — src/schema/blueprint.ts)
-  ↓
-Deterministic Compiler (src/compiler/compiler.ts)
-  ↓ (TemplateRegistry → layout engine → token resolution)
-pptxgenjs
-  ↓
-Editable PPTX
-  ↓
-Validation Report → AI Review / Human Review
-```
+## Maintenance Phase Direction
 
-**핵심 원칙: AI writes intent. Code renders layout.**
+Public 이후 plan은 기능 구축 목록보다 유지보수와 품질 개선 중심으로 운영한다.
 
-- AI 역할: blueprint.yaml 생성·수정, slide narrative 개선, diagram semantic spec 생성
-- 규칙 기반 엔진 역할: blueprint 파싱, design token 해석, template 선택, 좌표 계산, PPTX 생성
-- AI 금지: 임의 x/y 좌표 결정, 미등록 layout 발명, design token 무시
+| Track | 예시 |
+| --- | --- |
+| Showcase / docs | showcase refresh, docs polish, social post, examples curation |
+| Quality | layout fine tuning, code quality audit, validation skill |
+| Preset | custom preset support, enterprise-clean preset |
+| CLI | list-designs, convert-design, npm package/global CLI |
+| Export / preview | PDF export hardening, preview reliability |
 
 ## Verification Defaults
 
 - TypeScript 변경: `npm run typecheck`
-- 로직 변경: `npm test` (vitest, 19 tests)
-- Blueprint schema 변경: `npm run validate -- --blueprint examples/sample/blueprint.yaml`
-- 문서 전용 변경: `git diff --check`, stale phrase 점검
-- Scaffold/script 없음 — Not Applicable
+- 로직 변경: `npm test`
+- Blueprint/schema 변경: `npm run validate -- --blueprint examples/sample/blueprint.yaml`
+- Showcase 변경: validate + deck + export-pdf + preview + visual review
+- 문서 전용 변경: `git diff --check`, stale phrase search
 
 ## Active References
 
-- 프로젝트 정의 전체: `temp/work-plans/10-ai-native-pt-engineering-framework-3.md`
-- Blueprint DSL: §9 Blueprint DSL Reference
-- Slide type 목록 (15종): §5 Supported Slide Types
-- Tech stack 선택 근거: §7 Tech Stack
-- MVP scope: §12 (Work 1 완료, Work 2 다음)
+- Public release gate: `docs/works/phase1/CHORE-20260601-001-public-release-gate.md`
+- Backlog: `docs/backlog/PHASE1.md`
+- User guide: `docs/USER-MANUAL.md`
+- Maintainer guide: `docs/SYSTEM-MANUAL.md`

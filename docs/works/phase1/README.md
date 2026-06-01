@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
+| CHORE-20260601-001 | Public release gate — 공개 전 최종 정리 | chore/CHORE-20260601-001-public-release-gate |
 
 ## Done (Archive Pending)
 

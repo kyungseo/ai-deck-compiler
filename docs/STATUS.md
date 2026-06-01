@@ -5,11 +5,12 @@
 | Field | Value |
 | --- | --- |
 | Phase | Phase 1 — Blueprint → Editable PPTX 일관 출력 엔진 구축 |
+| Workflow profile | Scaffold-adoption product repo; generator script not included |
 | Active plan | — |
-| Bootstrap checklist | `docs/BOOTSTRAP.md` |
+| Bootstrap checklist | Complete / inactive; local bootstrap document removed |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 (FEAT-20260601-012 Done) |
+| Last updated | 2026-06-01 (CHORE-20260601-001 Active) |
 
 ## Work Context Rule
 
@@ -21,6 +22,7 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
+| CHORE-20260601-001 | Public release gate — 공개 전 최종 정리 | docs/works/phase1/CHORE-20260601-001-public-release-gate.md |
 
 ## Blockers And Open Questions
 
@@ -37,4 +39,5 @@
 
 ## Next Actions
 
-1. Public 전환 시: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020
+1. CHORE-20260601-001: public release gate를 기준으로 showcase, docs, AI tool simulation, code audit, repo settings를 순차 정리한다.
+2. Public 전환 직전: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020
