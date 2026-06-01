@@ -22,12 +22,13 @@ export const kpiTemplate: SlideTemplate<KpiSlide> = {
     if (count === 0) return;
 
     const gap = 0.3;
-    const cardW = (SL.cw - (count - 1) * gap) / count;
+    const innerW = SL.cw - CARD.px * 2;
+    const cardW = (innerW - (count - 1) * gap) / count;
     const cardH = CARD.ih - 0.15;
     const cardY = CARD.iy + 0.08;
 
     kpis.slice(0, count).forEach((kpi, i) => {
-      const x = SL.cx + i * (cardW + gap);
+      const x = SL.cx + CARD.px + i * (cardW + gap);
 
       pptxSlide.addShape('roundRect', {
         x, y: cardY, w: cardW, h: cardH,

@@ -25,16 +25,14 @@ export const agendaTemplate: SlideTemplate<AgendaSlide> = {
     const cols = count <= 3 ? count : Math.ceil(count / 2);
     const rows = count <= 3 ? 1 : 2;
     const gap = 0.28;
-    const innerPad = 0.3; // left/right padding inside the white card
-
-    const availW = SL.cw - innerPad * 2;
+    const availW = SL.cw - CARD.px * 2;
     const cardW = (availW - (cols - 1) * gap) / cols;
     const cardH = (CARD.ih - (rows - 1) * gap) / rows;
 
     items.slice(0, count).forEach((item, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
-      const x = SL.cx + innerPad + col * (cardW + gap);
+      const x = SL.cx + CARD.px + col * (cardW + gap);
       const y = CARD.iy + row * (cardH + gap);
 
       // Card background

@@ -51,9 +51,9 @@ export const chartTemplate: SlideTemplate<ChartSlide> = {
     const axisColor = hex(co['text-muted'] ?? '9CA3AF');
 
     const chartOpts: Record<string, unknown> = {
-      x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
+      x: SL.cx + CARD.px, y: CARD.iy, w: SL.cw - CARD.px * 2, h: CARD.ih,
       chartColors,
-      showLegend: true,
+      showLegend: chartData.length > 1,
       legendPos: 'b',
       legendFontSize: ty['caption']?.size ?? 14,
       legendFontColor: textColor,

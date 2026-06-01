@@ -105,6 +105,31 @@
 
 ---
 
+**[timeline-circular-variant]** | Priority: P2 | Scope: 원형 타임라인 variant 추가 — 단계별 원 + 곡선 화살표 연결 형태
+
+- Done Criteria:
+  - `src/templates/slides/timeline.ts`에 `variant: 'circular'` 처리 추가
+  - 각 항목을 `ellipse` 도형으로 표현, 곡선 화살표로 연결
+  - label과 description을 원 내부 또는 하단에 배치
+  - blueprint에서 `variant: circular`로 선택 가능
+- Verification: preview로 원형 타임라인 시각 확인, 기존 linear variant 회귀 없음
+- Preconditions: P1 compiler 완료 (✅)
+
+---
+
+**[code-syntax-highlight]** | Priority: P2 | Scope: appendix/body 코드 블럭 기본 syntax highlighting — 키워드·문자열 등 토큰별 색상 분리
+
+- Done Criteria:
+  - 언어 감지(JS/TS/bash 등) 또는 blueprint field `lang` 힌트 기반 기본 토크나이저 구현
+  - `const`, `let`, `await`, `new` 등 키워드 색상 분리
+  - 문자열 리터럴(`"..."`, `'...'`) 색상 분리
+  - pptxgenjs 다중 text run으로 한 줄 내 mixed color 렌더링
+  - teal/vivid/modern 토큰에 `code-keyword`, `code-string` 색상 토큰 추가
+- Verification: showcase appendix 슬라이드에서 syntax highlight 시각 확인
+- Preconditions: 코드 박스 기본 렌더링 완료 (✅)
+
+---
+
 **[cli-list-designs]** | Priority: P2 | Scope: `npm run list-designs` — 사용 가능한 design preset 목록 출력 CLI
 
 - Done Criteria:
@@ -207,3 +232,4 @@
 | FEAT-20260531-007 | Design Preset 고도화 — teal/vivid 추가, section_label chip, hero accent line | 2026-06-01 |
 | FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | 2026-06-01 |
 | FEAT-20260601-002 | Blueprint generation quality rules — semantic component selection + AI tool alignment | 2026-06-01 |
+| FEAT-20260601-003 | Showcase deck results — ai-deck-compiler 소개 PPTX + preset gallery 교체 | 2026-06-01 |

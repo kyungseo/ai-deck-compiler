@@ -27,10 +27,11 @@ export const decisionTemplate: SlideTemplate<DecisionSlide> = {
 
     const n = Math.min(options.length, 3);
     const gap = 0.2;
-    const cardW = (SL.cw - gap * (n - 1)) / n;
+    const innerW = SL.cw - CARD.px * 2;
+    const cardW = (innerW - gap * (n - 1)) / n;
 
     options.slice(0, n).forEach((opt, i) => {
-      const cx = SL.cx + i * (cardW + gap);
+      const cx = SL.cx + CARD.px + i * (cardW + gap);
       const cy = CARD.iy;
 
       // Option card background
@@ -103,13 +104,13 @@ export const decisionTemplate: SlideTemplate<DecisionSlide> = {
     if (slide.recommendation) {
       const recY = CARD.iy + cardH + 0.2;
       pptxSlide.addShape('roundRect', {
-        x: SL.cx, y: recY, w: SL.cw, h: recH,
+        x: SL.cx + CARD.px, y: recY, w: SL.cw - CARD.px * 2, h: recH,
         fill: { color: accent },
         line: { color: accent, width: 0 },
         rectRadius: 0.08,
       });
       pptxSlide.addText('► ' + slide.recommendation, {
-        x: SL.cx + 0.3, y: recY, w: SL.cw - 0.6, h: recH,
+        x: SL.cx + CARD.px + 0.3, y: recY, w: SL.cw - CARD.px * 2 - 0.6, h: recH,
         fontSize: 14,
         bold: true,
         fontFace: font,

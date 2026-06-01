@@ -24,6 +24,7 @@ export const CARD = {
   h:  5.1,   // card height — bottom at 6.85 (footer at 7.15)
   iy: 2.05,  // inner content Y  (0.3 padding from card top)
   ih: 4.65,  // inner content height (ends at 6.70)
+  px: 0.25,  // inner horizontal padding (content stays inside card edges)
 } as const;
 
 // Strip leading '#' — pptxgenjs expects hex without it.
@@ -116,13 +117,13 @@ export function renderPanelLabel(
   const { typography: ty, colors: co } = tokens;
   const accent = hex(co['accent'] ?? '2563EB');
   s.addShape('rect', {
-    x, y: CARD.iy, w: 0.08, h: 0.30,
+    x, y: CARD.iy, w: 0.08, h: 0.36,
     fill: { color: accent },
     line: { color: accent, width: 0 },
   });
   s.addText(label.toUpperCase(), {
-    x: x + 0.18, y: CARD.iy, w: 5.5, h: 0.30,
-    fontSize: 14,
+    x: x + 0.18, y: CARD.iy, w: 5.5, h: 0.40,
+    fontSize: 18,
     bold: true,
     fontFace: ty['label']?.font ?? 'Pretendard',
     color: accent,
@@ -174,10 +175,11 @@ export function renderCalloutBar(
 export function zoneCenter(zone: string): { cx: number; cy: number } {
   const entry = ZONE_GRID[zone as Zone] ?? [1, 1]; // default: center
   const [col, row] = entry;
-  const cellW = SL.cw / 3;
+  const innerW = SL.cw - CARD.px * 2;
+  const cellW = innerW / 3;
   const cellH = CARD.ih / 3; // anchor to card inner area so top-row nodes stay inside card
   return {
-    cx: SL.cx + cellW * col + cellW / 2,
+    cx: SL.cx + CARD.px + cellW * col + cellW / 2,
     cy: CARD.iy + cellH * row + cellH / 2,
   };
 }
