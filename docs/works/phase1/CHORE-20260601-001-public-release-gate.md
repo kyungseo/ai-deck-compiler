@@ -1,8 +1,9 @@
 ---
 id: CHORE-20260601-001
 title: "Public release gate — 공개 전 최종 정리"
-status: Active
+status: Done
 created: 2026-06-01
+actual_end: 2026-06-01
 type: CHORE
 branch: chore/CHORE-20260601-001-public-release-gate
 ---
@@ -118,7 +119,7 @@ generator/maintainer 문서가 과하게 남아 있지 않은지를 기준으로
 | OQ-2 | harness 상세 문서 중 어떤 파일을 유지할 것인가? | `AGENT-WORKFLOW`, `BEHAVIOR-PRINCIPLES`, `GIT-WORKFLOW`는 당분간 유지. 상세 protocol류는 삭제/후속 검토 후보 |
 | OQ-3 | showcase deck을 create-deck self-dogfood 결과로 교체할 것인가? | 사용자가 실제 실행한 결과가 더 좋으면 교체 |
 | OQ-4 | default author/email 노출을 공개용으로 유지할 것인가? | 별도 확인 필요 |
-| OQ-5 | LICENSE는 MIT로 확정할 것인가? | backlog 기준 MIT 추천 |
+| OQ-5 | LICENSE를 Apache License 2.0으로 유지할 것인가? | 유지. 기존 공개 repo와 일관성을 맞추고 명시적 patent grant를 선호 |
 
 ---
 
@@ -237,3 +238,9 @@ generator/maintainer 문서가 과하게 남아 있지 않은지를 기준으로
   - 해당 이름은 이 Work의 cleanup 기록에만 남김.
 - README / USER-MANUAL / SYSTEM-MANUAL quick stale check: 삭제 문서와 generic prompt 참조 없음.
 - `git diff --check`: 통과.
+
+### 2026-06-01 — Pre-close public text cleanup
+
+- README의 `CONTRIBUTING.md` 준비 중 문구는 삭제했다. 아직 협업 운영 계획이 구체화되지 않았으므로 issue 기반 피드백 안내만 유지한다.
+- License는 Apache License 2.0을 유지하기로 했다. 기존 공개 repo와의 일관성, compiler/tool 성격, 명시적 patent grant를 MIT 전환보다 우선했다.
+- README / SYSTEM-MANUAL의 테스트 수를 현재 검증 결과인 57 tests로 보정했다.

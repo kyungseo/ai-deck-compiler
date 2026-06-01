@@ -6,12 +6,12 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
-| CHORE-20260601-001 | Public release gate — 공개 전 최종 정리 | chore/CHORE-20260601-001-public-release-gate |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
+| CHORE-20260601-001 | Public release gate — 공개 전 최종 정리 | 2026-06-01 | — |
 | FEAT-20260601-012 | generate-blueprint canonical 파일 폐기 및 참조 정리 | 2026-06-01 | — |
 | FEAT-20260601-011 | create-deck skill 콘텐츠 정비 — B안 구조 개선 | 2026-06-01 | — |
 | FEAT-20260601-010 | create-deck blueprint 규칙 내재화 — generate-blueprint 통합 | 2026-06-01 | — |

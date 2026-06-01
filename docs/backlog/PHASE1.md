@@ -129,8 +129,8 @@ public 전환 전에는 새 기능 추가보다 release gate 정리와 검증을
 **[contributing-license]** | Priority: P1 | Scope: public contributor 기본 문서 보강
 
 - Done Criteria:
-  - `LICENSE` 추가 또는 확인 (MIT 권장)
-  - `CONTRIBUTING.md` 추가 또는 확인
+  - `LICENSE` Apache License 2.0 유지 확인
+  - `CONTRIBUTING.md` 필요 여부 재검토
   - package metadata 확인
 - Verification: 파일 존재 및 내용 리뷰
 
