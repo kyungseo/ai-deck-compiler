@@ -4,12 +4,13 @@
 >
 > 한 문장으로 요청하면 AI가 구조를 협의하고, 슬라이드를 기획하고, **편집 가능한 PowerPoint 파일**을 만들어줍니다.
 
-`ai-deck-compiler`는 Claude Code, Codex, Claude App과 함께 쓰는 AI-first PPT 생성 도구입니다.
+`ai-deck-compiler`는 Claude Code, Codex, Cursor, Claude App과 함께 쓰는 AI-first PPT 생성 도구입니다.
 AI와의 대화로 발표 내용을 빠르게 정제하고, 레이아웃과 디자인은 엔진이 일관되게 처리합니다.
 
 ![Showcase gallery](examples/results/showcase-gallery.png)
 
-대표 showcase PPTX와 preset별 blueprint는 [examples/results](examples/results/)에서 바로 확인할 수 있습니다.
+대표 showcase blueprint, PPTX, export PDF는 [examples/results](examples/results/)에서 바로 확인할 수 있습니다.
+PDF는 PPTX에서 `npm run export-pdf`로 반출한 결과물입니다.
 
 상세 사용법은 [USER-MANUAL](docs/USER-MANUAL.md), 시스템 구조는 [SYSTEM-MANUAL](docs/SYSTEM-MANUAL.md)을 보세요.
 
@@ -18,10 +19,17 @@ AI와의 대화로 발표 내용을 빠르게 정제하고, 레이아웃과 디�
 ## 어떻게 쓰나요?
 
 AI에게 요청하면 됩니다. 나머지는 AI와 엔진이 처리합니다.
+Claude Code에서는 slash command를 먼저 단독 실행하고, 이어지는 질문에 내용을 답변합니다.
+
+Command:
 
 ```text
 /create-deck
+```
 
+Prompt 1: Claude Code 질문에 답변
+
+```text
 Q2 엔지니어링 성과 리뷰 deck 만들어줘.
 청중은 임원진, 15분 발표야.
 핵심 메시지는 "플랫폼 안정성 개선, 다음 분기 배포 자동화 투자 필요"야.
@@ -36,9 +44,12 @@ AI가 발표 구조를 제안하고 확인을 받습니다. 승인하면 bluepri
 | --- | --- |
 | Claude Code | `/create-deck` 입력 후 요청 |
 | Codex CLI / App | repo skill `create-deck` 로드 후 요청 |
+| Cursor | product skill intent로 요청하면 `skills/create-deck.md` 절차 참조 |
 | Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
 
 Codex App에서 처음 시작한다면 아래처럼 말하면 됩니다.
+
+Prompt 2: Codex App에서 product skill routing 사용
 
 ```text
 이 repo의 AGENTS.md를 읽고 Product Skill Routing에 따라 create-deck 절차로 PPT 작성을 시작해줘.
@@ -47,6 +58,18 @@ Q2 엔지니어링 성과 리뷰 deck을 만들고 싶어.
 청중은 임원진이고, 발표 시간은 15분이야.
 핵심 메시지는 "플랫폼 안정성이 개선됐고 다음 분기에는 배포 자동화 투자가 필요하다"야.
 dark theme, 간결한 executive briefing 톤으로 진행해줘.
+```
+
+Cursor에서는 아래처럼 product skill intent를 직접 말하면 됩니다.
+
+Prompt 3: Cursor에서 product skill routing 사용
+
+```text
+이 repo의 Cursor product skill routing에 따라 skills/create-deck.md 절차로 PPT 작성을 시작해줘.
+
+Q2 엔지니어링 성과 리뷰 deck을 만들고 싶어.
+청중은 임원진이고, 발표 시간은 15분이야.
+먼저 슬라이드 구조를 제안하고, 승인 후 blueprint와 PPTX를 생성해줘.
 ```
 
 ---
@@ -127,7 +150,7 @@ flowchart LR
 | PDF 내보내기 | `/export-pdf`로 PPTX를 PDF로 바로 변환합니다. LibreOffice 필요. |
 | 아키텍처 슬라이드 | `/generate-architecture-slide`로 자연어 설명에서 node/edge/zone을 추출해 다이어그램 슬라이드를 생성합니다. |
 | 16종 슬라이드 타입 | hero, agenda, kpi, chart, table, architecture, timeline, decision 등 발표에 필요한 타입이 미리 정의되어 있습니다. |
-| 멀티툴 지원 | Claude Code, Codex CLI/App, Claude App 세 환경에서 동일한 skill로 작동합니다. |
+| 멀티툴 지원 | Claude Code, Codex CLI/App, Cursor, Claude App에서 동일한 canonical skill 문서를 기준으로 작동합니다. |
 
 ---
 
@@ -244,7 +267,7 @@ examples/
   strategy/                  # 경영진 전략 보고 — hero, agenda, content, kpi, decision, summary
   data-report/               # 분기 데이터 리뷰 — kpi, chart × 2, table, summary
   semantic-planning/         # semantic component selection 예제 — callout, kpi, chart, architecture, decision
-  results/                   # 대표 preset/theme별 blueprint, PPTX, gallery
+  results/                   # 대표 showcase blueprint, PPTX, export PDF, gallery
 schemas/                     # generated JSON Schema
 ```
 

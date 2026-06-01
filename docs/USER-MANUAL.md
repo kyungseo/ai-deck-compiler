@@ -9,6 +9,8 @@ AI와 대화하면서 발표 자료를 빠르게 만드는 방법을 안내합�
 
 Claude Code에서 한 줄이면 됩니다.
 
+Command:
+
 ```text
 /create-deck
 ```
@@ -73,13 +75,17 @@ npm install
 | Claude Code | `/generate-blueprint` — blueprint만 생성할 때 |
 | Claude Code | `/review-deck` — 생성된 deck 검토·개선 |
 | Claude Code | `/generate-architecture-slide` — 아키텍처 다이어그램 슬라이드만 생성할 때 |
-| Codex CLI / App | repo skill `create-deck` 로드 후 요청 |
-| Claude App | `skills/create-deck.md` 내용 참조 후 요청 |
+| Claude Code | `/export-pdf` — PPTX를 PDF로 반출할 때 |
+| Codex CLI / App | `AGENTS.md` Product Skill Routing에 따라 `create-deck`, `generate-blueprint`, `review-deck`, `export-pdf`, `generate-architecture-slide` skill 요청 |
+| Cursor | `.cursor/rules/product-skills.mdc`에 따라 product skill intent를 `skills/*.md` canonical 절차로 처리 |
+| Claude App | 필요한 `skills/*.md` 내용 참조 후 요청 |
 
 ### 4.2 Codex App 첫 세션 예시
 
 Codex App에서는 slash command를 직접 입력하기보다, repo의 `AGENTS.md`를 기준으로 어떤 product skill을 쓸지 말해주면 됩니다.
 처음 clone한 뒤에는 아래처럼 요청하세요.
+
+Prompt 1: Codex App에서 brief-first deck 생성
 
 ```text
 이 repo의 AGENTS.md를 읽고 Product Skill Routing에 따라 create-deck 절차로 PPT 작성을 시작해줘.
@@ -102,6 +108,8 @@ dark theme, 간결한 executive briefing 톤
 
 작성해둔 자료가 있다면 source-first로 요청할 수 있습니다.
 
+Prompt 2: Codex App에서 source-first deck 생성
+
 ```text
 이 repo의 AGENTS.md를 읽고 create-deck 절차로 PPT 작성을 시작해줘.
 아래 markdown 보고서를 기반으로 8장짜리 고객 제안 deck을 만들고 싶어.
@@ -110,13 +118,51 @@ dark theme, 간결한 executive briefing 톤
 [여기에 markdown 붙여넣기]
 ```
 
-### 4.3 요청 예시
+### 4.3 Cursor 첫 세션 예시
+
+Cursor에서는 slash command wrapper가 아니라 `.cursor/rules/product-skills.mdc`가 product skill intent를 canonical `skills/*.md` 문서로 연결합니다.
+처음 시작할 때는 아래처럼 요청하세요.
+
+Prompt 1: Cursor에서 brief-first deck 생성
+
+```text
+이 repo의 Cursor product skill routing에 따라 skills/create-deck.md 절차로 PPT 작성을 시작해줘.
+
+주제:
+Q2 엔지니어링 성과 리뷰 deck을 만들고 싶어.
+
+청중:
+임원진
+
+발표 시간:
+15분
+
+진행 방식:
+먼저 슬라이드 구조를 제안하고, 내가 승인하면 blueprint.yaml과 PPTX를 생성해줘.
+```
+
+이미 blueprint가 있거나 검토만 필요하면 skill 이름을 직접 지정합니다.
+
+Prompt 2: Cursor에서 deck 검토
+
+```text
+skills/review-deck.md 절차에 따라 examples/results/showcase-teal-dark.blueprint.yaml을 검토해줘.
+가능하면 PPTX와 preview까지 함께 확인하는 방향으로 진행해줘.
+```
+
+### 4.4 요청 예시
 
 **주제와 목적만 말할 때 (brief-first)**
 
+Command:
+
 ```text
 /create-deck
+```
 
+Prompt 1: Brief-first
+
+```text
 Q2 엔지니어링 성과 리뷰 deck을 만들어줘.
 청중은 임원진이고, 15분 발표야.
 핵심 메시지는 "플랫폼 안정성이 개선됐고 다음 분기에는 배포 자동화에 투자해야 한다"야.
@@ -125,9 +171,15 @@ dark theme로 해줘.
 
 **작성해둔 자료가 있을 때 (source-first)**
 
+Command:
+
 ```text
 /create-deck
+```
 
+Prompt 2: Source-first
+
+```text
 아래 markdown 보고서를 기반으로 고객 제안용 8장 deck을 만들어줘.
 원문을 그대로 복붙하지 말고 핵심 주장과 근거만 뽑아줘.
 
@@ -136,9 +188,15 @@ dark theme로 해줘.
 
 **AI에게 조사와 작성을 맡길 때 (AI-research-first)**
 
+Command:
+
 ```text
 /create-deck
+```
 
+Prompt 3: AI-research-first
+
+```text
 "AI-native presentation workflow"를 주제로 10장짜리 소개 deck을 만들어줘.
 대상은 스타트업 CTO들이고, 기술적이지만 너무 깊지 않게.
 필요하면 자료 조사 범위와 출처 기준을 먼저 물어봐.
@@ -146,15 +204,21 @@ dark theme로 해줘.
 
 **아키텍처 슬라이드만 생성할 때**
 
+Command:
+
 ```text
 /generate-architecture-slide
+```
 
+Prompt 4: Architecture slide
+
+```text
 API Gateway가 앞단에 있고, 뒤에 Auth Service와 Order Service가 붙어 있어.
 Auth Service는 Redis를 쓰고, Order Service는 Kafka로 이벤트를 발행해.
 외부 Client가 Gateway를 호출하는 구조야.
 ```
 
-### 4.4 CLI 직접 실행 (디버깅·고급 사용자)
+### 4.5 CLI 직접 실행 (디버깅·고급 사용자)
 
 AI 없이 `blueprint.yaml`을 직접 작성하거나, 동작을 확인할 때 사용합니다.
 
@@ -188,7 +252,7 @@ blueprint는 "어떤 슬라이드를 어떤 내용으로 만들지"를 기술하
 
 ### 6.0 제공 예제
 
-repo에 세 가지 예제가 포함되어 있습니다. 처음 시작할 때 가장 비슷한 형식을 골라 수정하면 됩니다.
+repo에 네 가지 source 예제가 포함되어 있습니다. 처음 시작할 때 가장 비슷한 형식을 골라 수정하면 됩니다.
 
 | 예제 | 경로 | 시나리오 | 사용된 slide type |
 | --- | --- | --- | --- |
@@ -203,7 +267,8 @@ npm run validate -- --blueprint examples/strategy/blueprint.yaml
 npm run deck -- --blueprint examples/strategy/blueprint.yaml
 ```
 
-대표 preset/theme별 blueprint와 PPTX 결과물은 `examples/results/`에서 바로 확인할 수 있습니다.
+대표 showcase 결과물은 `examples/results/`에서 바로 확인할 수 있습니다.
+이 디렉터리의 PDF는 PPTX에서 `npm run export-pdf`로 반출한 파일이며, 같은 발표 내용을 preset/theme별 blueprint, PPTX, export PDF, gallery 이미지로 비교할 수 있습니다.
 
 `blueprint.yaml`은 deck의 title, design, theme, metadata, slide list를 담습니다.
 
@@ -360,6 +425,8 @@ custom preset은 다음 자료를 기반으로 만들 수 있습니다.
 
 AI 요청 예시:
 
+Prompt 1: Custom preset 생성
+
 ```text
 custom preset을 만들고 싶어.
 우리 회사 브랜드 가이드와 기존 발표 자료 캡처를 줄게.
@@ -374,6 +441,8 @@ custom preset을 만들고 싶어.
 ```
 
 레이아웃 조정 요청 예시:
+
+Prompt 2: Custom preset 레이아웃 조정
 
 ```text
 modern 기반으로 우리 팀용 preset을 만들고 싶어.
@@ -409,6 +478,8 @@ npm run deck -- \
 ## 11. Preview와 Review Loop
 
 PPTX 생성 후 AI는 preview 생성 가능 여부를 판단하고, 사용자에게 다음과 같이 질문합니다.
+
+AI confirmation prompt:
 
 ```text
 preview PNG를 생성해서 visual review까지 진행할까요?
