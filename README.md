@@ -83,6 +83,7 @@ AI에게 "PPT 만들어줘"라고 맡기면 보통 이런 문제가 생깁니다
 - 매번 레이아웃이 달라져 재현성이 낮다.
 - 차트, 표, 도형이 이미지로 들어가 편집이 어렵다.
 - 생성 후 사람이 다시 PPT를 다듬느라 자동화 효과가 줄어든다.
+- 개발자들이 자주 작성하는 Code 구문에 대한 syntax highlighting이 어렵다.
 
 이 도구에서 **사용자가 하는 일은 두 가지**입니다.
 
@@ -173,8 +174,7 @@ AI는 자연어 요청이나 source 문서를 곧바로 bullet slide로 옮기�
 | 슬라이드 내부 핵심 문장 | `content` / `flow`의 `callout` |
 | 명령어·코드·재생성 절차 | `content` / `two-column` / `appendix`의 code block |
 
-renderer는 여전히 deterministic합니다. AI는 `blueprint.yaml`의 의미 구조를 작성하고, 엔진은 preset과 slide type 규칙에 따라 editable PowerPoint 객체를 생성합니다.
-code block은 백틱 또는 fenced code body 항목을 boxed monospace block으로 렌더링합니다. `bash`, `js`/`ts`, `java` fenced code는 keyword, string, comment, number에 기본 syntax color를 적용합니다.
+renderer는 여전히 deterministic합니다. AI는 `blueprint.yaml`의 의미 구조를 작성하고, 엔진은 preset과 slide type 규칙에 따라 editable PowerPoint 객체를 생성합니다. code block은 백틱 또는 fenced code body 항목을 boxed monospace block으로 렌더링합니다. `bash`, `js`/`ts`, `java` fenced code는 keyword, string, comment, number에 기본 syntax color를 적용합니다.
 
 ---
 
@@ -243,8 +243,7 @@ AI workflow 기본 추천은 `teal + dark`입니다.
 | Default author | `ai-deck-compiler (Kyungseo.Park@gmail.com)` |
 | Brand footer | `ai-deck-compiler` |
 
-`design: modern`이 light/business tone의 canonical preset입니다. 기존 `design: default-modern` blueprint도 alias로 계속 동작합니다.
-회사 브랜드에 맞춘 custom preset은 [USER-MANUAL](docs/USER-MANUAL.md)의 customization 절차와 `skills/customize-preset.md`를 참고하세요.
+`design: modern`이 light/business tone의 canonical preset입니다. 기존 `design: default-modern` blueprint도 alias로 계속 동작합니다. 회사 브랜드에 맞춘 custom preset은 [USER-MANUAL](docs/USER-MANUAL.md)의 customization 절차와 `skills/customize-preset.md`를 참고하세요.
 
 ---
 

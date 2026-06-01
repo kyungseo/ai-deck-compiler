@@ -362,6 +362,21 @@ callout은 slide type이 아니라 선택 필드입니다. `teal`과 `vivid`에�
 
 code block은 `content`, `two-column`, `appendix` slide에서 백틱 또는 fenced code로 감싼 body 항목을 boxed monospace block으로 표현하는 기능입니다. `bash`, `js`/`ts`, `java` fenced code는 keyword, string, comment, number에 기본 syntax color를 적용합니다. 지원하지 않는 언어와 inline code는 단색 monospace block으로 표시됩니다.
 
+여러 줄 fenced code block은 YAML literal block scalar(`|`)를 사용해 단일 `body` 항목으로 작성합니다.
+
+```yaml
+body:
+  - 실행 전 유효성 검사를 먼저 수행한다.
+  - |
+    ```bash
+    npm run validate -- --blueprint deck.yaml
+    npm run deck -- --blueprint deck.yaml --output out.pptx
+    ```
+  - 결과 파일은 output/ 디렉터리에 저장된다.
+```
+
+`|` 없이 배열 항목을 분리하면 fenced code로 인식되지 않아 일반 텍스트로 렌더링됩니다.
+
 ---
 
 ## 8. Preset, Theme, Branding
