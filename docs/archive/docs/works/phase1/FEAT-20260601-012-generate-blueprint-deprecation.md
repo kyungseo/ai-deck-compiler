@@ -1,8 +1,9 @@
 ---
 id: FEAT-20260601-012
 title: "generate-blueprint canonical 파일 폐기 및 참조 정리"
-status: Done
+status: Archived
 created: 2026-06-01
+actual_end: 2026-06-01
 type: FEAT
 branch: feature/FEAT-20260601-012-generate-blueprint-deprecation
 ---

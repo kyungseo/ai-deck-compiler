@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260531-001
 title: "AI 구조 정렬 — 멀티툴 product skill 라우팅 완성"
-status: Done
+status: Archived
 type: CHORE
 created: 2026-05-31
 actual_end: 2026-05-31

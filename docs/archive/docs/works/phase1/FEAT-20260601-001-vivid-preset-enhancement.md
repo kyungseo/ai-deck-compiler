@@ -1,9 +1,10 @@
 ---
 id: FEAT-20260601-001
 title: "vivid preset 고도화 — callout bar + chart palette 심화"
-status: Done
+status: Archived
 type: FEAT
 created: 2026-06-01
+actual_end: 2026-06-01
 branch: feature/FEAT-20260601-001-vivid-preset-enhancement
 ---
 

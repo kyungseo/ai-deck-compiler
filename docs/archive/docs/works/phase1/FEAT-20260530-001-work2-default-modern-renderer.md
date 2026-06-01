@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260530-001
 title: "Work 2 — default-modern preset + P1 slide render + PPTX CLI"
-status: Done
+status: Archived
 type: FEAT
 created: 2026-05-30
 actual_end: 2026-05-30

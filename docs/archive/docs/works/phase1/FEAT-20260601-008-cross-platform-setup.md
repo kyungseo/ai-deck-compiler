@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260601-008
 title: "Cross-platform first-run setup — macOS + Windows 환경 설정 문서 보강 + export-pdf 확장자 검증"
-status: Done
+status: Archived
 created: 2026-06-01
 actual_end: 2026-06-01
 type: FEAT

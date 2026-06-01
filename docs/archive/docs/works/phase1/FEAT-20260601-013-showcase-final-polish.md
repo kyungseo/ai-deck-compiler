@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260601-013
 title: "Showcase final polish — ai-deck-compiler 실전형 대표 deck"
-status: Done
+status: Archived
 created: 2026-06-01
 actual_end: 2026-06-02
 type: FEAT

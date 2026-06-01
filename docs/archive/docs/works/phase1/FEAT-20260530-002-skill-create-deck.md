@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260530-002
 title: "skill-create-deck + skill-generate-blueprint"
-status: Done
+status: Archived
 type: FEAT
 created: 2026-05-30
 actual_end: 2026-05-31

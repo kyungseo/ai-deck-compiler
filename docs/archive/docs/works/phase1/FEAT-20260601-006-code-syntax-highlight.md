@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260601-006
 title: "Code syntax highlighting — code block token color support"
-status: Done
+status: Archived
 actual_end: 2026-06-01
 type: FEAT
 created: 2026-06-01

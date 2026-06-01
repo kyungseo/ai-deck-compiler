@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260531-005
 title: "예제 확장 — examples/strategy + examples/data-report"
-status: Done
+status: Archived
 actual_end: 2026-05-31
 type: FEAT
 created: 2026-05-31

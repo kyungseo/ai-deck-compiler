@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260601-005
 title: "General code block component — 본문 코드 블럭 표현 공통화"
-status: Done
+status: Archived
 actual_end: 2026-06-01
 type: FEAT
 created: 2026-06-01

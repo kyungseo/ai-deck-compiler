@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260601-004
 title: "Card inner horizontal padding — 카드 내부 콘텐츠 좌우 여백 통일"
-status: Done
+status: Archived
 actual_end: 2026-06-01
 type: FEAT
 created: 2026-06-01

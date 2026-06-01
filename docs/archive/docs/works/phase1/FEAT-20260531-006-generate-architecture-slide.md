@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260531-006
 title: "generate-architecture-slide skill — 자연어 아키텍처 설명 → architecture slide blueprint"
-status: Done
+status: Archived
 actual_end: 2026-05-31
 type: FEAT
 created: 2026-05-31

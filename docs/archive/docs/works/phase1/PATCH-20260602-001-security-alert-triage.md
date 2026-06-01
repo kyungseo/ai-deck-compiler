@@ -1,7 +1,7 @@
 ---
 id: PATCH-20260602-001
 title: "Security alert triage — public 전 critical vulnerability 확인"
-status: Done
+status: Archived
 created: 2026-06-02
 actual_end: 2026-06-02
 type: PATCH

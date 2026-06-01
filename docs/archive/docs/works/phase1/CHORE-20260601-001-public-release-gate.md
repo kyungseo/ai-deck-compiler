@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260601-001
 title: "Public release gate — 공개 전 최종 정리"
-status: Done
+status: Archived
 created: 2026-06-01
 actual_end: 2026-06-01
 type: CHORE
