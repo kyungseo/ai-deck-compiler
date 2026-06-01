@@ -10,8 +10,12 @@ Claude Code / Codex / Cursor가 사용하는 AI agent skill 문서 모음.
 - `/create-deck` — 대화식 PPT 생성 워크플로우 시작
 - Claude에게 직접 skill 문서를 공유하거나 참조 요청
 
-**Codex / Cursor:**
-- skill 파일 내용을 세션 초반에 붙여넣거나 참조 요청
+**Codex:**
+- `AGENTS.md` Product Skill Routing에 따라 `.agents/skills/{name}/SKILL.md` wrapper를 로드
+
+**Cursor:**
+- `.cursor/rules/product-skills.mdc`가 product skill intent를 canonical `skills/*.md`로 라우팅
+- 예: `skills/create-deck.md 절차로 PPT 작성을 시작해줘. 먼저 구조를 제안하고 승인 후 생성해줘.`
 
 ## Core Skill 삼각형
 

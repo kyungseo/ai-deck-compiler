@@ -82,7 +82,7 @@ examples/
   strategy/                   # 경영진 전략 보고 — decision slide 포함
   data-report/                # 분기 데이터 리뷰 — chart × 2, table 포함
   semantic-planning/          # 의미 기반 component 선택 예제
-  results/                    # 대표 preset/theme별 blueprint, PPTX, gallery
+  results/                    # 대표 showcase blueprint, PPTX, export PDF, gallery
 schemas/                      # generated JSON schema
 tests/                        # parser, renderer, snapshot tests
 ```
@@ -214,6 +214,11 @@ ppt-chart-rules.md   # chart data and rendering rules
 **section_label chip 렌더링 적용 범위:**
 `renderSectionHeader()`를 사용하는 모든 슬라이드 타입 (content, two-column, kpi, chart, table, timeline, flow, comparison, decision, agenda, summary, appendix, architecture). hero / closing / section-divider는 후속 Work P2 대상.
 
+**card inner padding 규칙:**
+content card 내부의 렌더링 영역은 `src/templates/layout.ts`의 `CARD.iy`, `CARD.ih`, `CARD.px`를 기준으로 계산한다.
+일반 content renderer는 카드 배경의 좌우 경계에 붙지 않도록 `SL.cx + CARD.px`, `SL.cw - CARD.px * 2`를 기본 content bounds로 사용한다.
+예외 renderer를 추가할 때는 시각적 이유와 preview 검증 결과를 함께 남긴다.
+
 새 preset을 만들 때는 `src/design/presets/{name}/tokens.json`을 작성하고 `--design {name}` CLI 옵션으로 선택합니다.
 
 ---
@@ -238,7 +243,7 @@ Product skills:
 | `review-deck` | 구조/메시지/텍스트/데이터/청중/preview/metadata 검토 |
 | `export-pdf` | PPTX → PDF 변환. LibreOffice 환경 체크 + 설치 안내 |
 | `generate-architecture-slide` | 자연어 설명 → architecture slide diagram spec 생성. node/zone/edge 유효성 보장 |
-| `customize-preset` | 브랜드 자료 기반 custom preset 생성 절차 |
+| `customize-preset` | 브랜드 자료 기반 custom preset 생성 절차. 현재는 documented/reference skill이며 Claude/Codex wrapper는 없음 |
 
 중요한 책임 분리:
 
@@ -279,17 +284,18 @@ compiler/renderer layer는 이 blueprint를 deterministic하게 PPTX로 렌더�
 
 AI 도구에서 아래 skill을 통해 deck 생성·검토·내보내기를 요청할 수 있습니다.
 
-| 목적 | Claude Code | Codex CLI/App | 설명 |
-| --- | --- | --- | --- |
-| Deck 생성 | `/create-deck` | skill `create-deck` | brief → blueprint → PPTX end-to-end |
-| Blueprint만 | `/generate-blueprint` | skill `generate-blueprint` | 구조가 정해진 경우 blueprint만 생성 |
-| 검토 | `/review-deck` | skill `review-deck` | blueprint + PPTX + preview 검토 |
-| PDF 내보내기 | `/export-pdf` | skill `export-pdf` | PPTX → PDF, 환경 체크 포함 |
-| Architecture 슬라이드 | `/generate-architecture-slide` | skill `generate-architecture-slide` | 자연어 설명 → diagram spec 생성 |
+| 목적 | Claude Code | Codex CLI/App | Cursor | 설명 |
+| --- | --- | --- | --- | --- |
+| Deck 생성 | `/create-deck` | skill `create-deck` | product skill intent → `skills/create-deck.md` | brief → blueprint → PPTX end-to-end |
+| Blueprint만 | `/generate-blueprint` | skill `generate-blueprint` | product skill intent → `skills/generate-blueprint.md` | 구조가 정해진 경우 blueprint만 생성 |
+| 검토 | `/review-deck` | skill `review-deck` | product skill intent → `skills/review-deck.md` | blueprint + PPTX + preview 검토 |
+| PDF 내보내기 | `/export-pdf` | skill `export-pdf` | product skill intent → `skills/export-pdf.md` | PPTX → PDF, 환경 체크 포함 |
+| Architecture 슬라이드 | `/generate-architecture-slide` | skill `generate-architecture-slide` | product skill intent → `skills/generate-architecture-slide.md` | 자연어 설명 → diagram spec 생성 |
 
-Skill 파일 위치: `skills/*.md` (canonical), `.claude/commands/*.md` (Claude Code wrapper), `.agents/skills/*/SKILL.md` (Codex wrapper).
+Skill 파일 위치: `skills/*.md` (canonical), `.claude/commands/*.md` (Claude Code wrapper), `.agents/skills/*/SKILL.md` (Codex wrapper), `.cursor/rules/product-skills.mdc` (Cursor routing).
 Claude App은 native slash command 실행을 전제로 하지 않고 `skills/*.md`를 참조/복사해 진행한다.
 Codex App은 repo-local skill을 로드하거나 `.agents/skills/*/SKILL.md`를 수동 참조하는 흐름으로 다룬다.
+Cursor는 slash command wrapper가 아니라 product skill intent를 canonical `skills/*.md`로 연결하는 rule 방식으로 다룬다.
 
 ### 6.2 CLI 직접 실행 (개발자·디버깅용)
 
@@ -330,6 +336,7 @@ Preview와 export-pdf는 외부 도구에 의존합니다:
 
 - **Claude Code**: `CLAUDE.md`와 `AGENTS.md`를 읽은 뒤 자유롭게 파일을 수정하고 `npm test`로 검증
 - **Codex CLI/App**: `AGENTS.md`의 Workflow Skill Routing을 통해 harness workflow 진입
+- **Cursor**: `.cursor/rules/*.mdc`를 통해 workflow와 product skill intent를 canonical docs/skills로 라우팅
 - **일반 원칙**: 코드 수정 후 반드시 `npm run typecheck && npm test` 통과를 확인
 
 아래 §7.1~7.6의 각 절차는 AI가 순서대로 실행할 수 있도록 작성되어 있습니다.

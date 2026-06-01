@@ -1,0 +1,32 @@
+---
+description: Product skill intent routing for presentation generation, review, export, and architecture slide drafting.
+globs:
+alwaysApply: true
+---
+
+# Product Skill Routing
+
+Use this rule when the user asks to create, generate, review, export, or refine presentation deck artifacts in this repository.
+
+Canonical source: `skills/*.md`
+
+MUST:
+
+- Route product-skill requests to the canonical skill document first.
+- Keep `.claude/commands/*.md` and `.agents/skills/*/SKILL.md` as tool-specific wrappers, not the source of truth.
+- Follow gates in the canonical skill document. Do not skip user confirmation gates for speed.
+- For PPTX/PDF/preview generation, use the npm scripts documented by the skill.
+
+| User intent | Canonical skill |
+| --- | --- |
+| Create a presentation, deck, PPT, or blueprint end to end | `skills/create-deck.md` |
+| Generate only `blueprint.yaml` from an approved structure | `skills/generate-blueprint.md` |
+| Review a deck, PPTX, preview, or blueprint | `skills/review-deck.md` |
+| Export a PPTX to PDF | `skills/export-pdf.md` |
+| Generate an architecture slide diagram spec | `skills/generate-architecture-slide.md` |
+| Create a custom design preset from brand assets | `skills/customize-preset.md` |
+
+Notes:
+
+- Cursor does not use the Claude Code slash-command wrappers directly.
+- `customize-preset` is currently a documented/reference skill. Treat it as guidance unless a dedicated wrapper or validated end-to-end workflow is added.
