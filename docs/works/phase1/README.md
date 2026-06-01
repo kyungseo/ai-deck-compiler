@@ -11,6 +11,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
+| FEAT-20260601-013 | Showcase final polish — ai-deck-compiler 실전형 대표 deck | 2026-06-02 | — |
 | CHORE-20260601-001 | Public release gate — 공개 전 최종 정리 | 2026-06-01 | — |
 | FEAT-20260601-012 | generate-blueprint canonical 파일 폐기 및 참조 정리 | 2026-06-01 | — |
 | FEAT-20260601-011 | create-deck skill 콘텐츠 정비 — B안 구조 개선 | 2026-06-01 | — |

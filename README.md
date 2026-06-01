@@ -301,7 +301,7 @@ npm run validate -- --blueprint examples/sample/blueprint.yaml
 npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sample-v1.0.pptx
 ```
 
-현재 기준: 57개 테스트.
+현재 기준: 58개 테스트.
 
 ---
 
