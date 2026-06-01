@@ -87,7 +87,7 @@ slides:
         delta: "core, data, diagram"
         trend: up
       - label: Tests
-        value: "58"
+        value: "59"
         delta: "parser/render/snapshot"
         trend: up
       - label: Presets

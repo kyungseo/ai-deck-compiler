@@ -61,6 +61,25 @@ public 전환 전에는 새 기능 추가보다 release gate 정리와 검증을
 
 ---
 
+**[headline-wrap-polish]** | Priority: P0 | Scope: action-title headline wrapping 보정 + showcase 산출물 재생성
+
+- Goal:
+  - 문장형 headline title이 불필요하게 두 줄로 떨어지는 문제를 줄인다.
+  - title typography, layout width/height, dynamic font sizing, 또는 slide별 title copy 조정 중 가장 작은 변경으로 PPT 가독성을 개선한다.
+  - 보정 후 `examples/results/showcase-*` PPTX/PDF/preview/gallery를 다시 생성해 public-facing showcase 품질을 갱신한다.
+- Done Criteria:
+  - showcase preview 기준으로 headline title wrapping이 과도한 slide를 식별한다.
+  - renderer/design token/layout/content 중 최소 변경 지점을 선택하고 근거를 Work Discovery에 기록한다.
+  - teal/dark, vivid/dark, modern/light showcase PPTX/PDF/preview/gallery가 재생성된다.
+  - README 또는 `examples/results/README.md`가 gallery 변경을 반영한다.
+- Verification:
+  - `npm run validate -- --blueprint examples/results/showcase-teal-dark.blueprint.yaml`
+  - `npm run deck`, `npm run export-pdf`, `npm run preview`
+  - representative preview visual QA
+  - `npm run typecheck`, `npm test`, `git diff --check`
+
+---
+
 **[ai-tool-simulation]** | Priority: P0 | Scope: Claude Code, Codex, Cursor, Claude App 작업 케이스별 routing 검증
 
 - Cases:
