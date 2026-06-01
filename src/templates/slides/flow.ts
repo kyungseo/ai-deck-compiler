@@ -22,7 +22,7 @@ export const flowTemplate: SlideTemplate<FlowSlide> = {
 
     if (!slide.diagram) {
       pptxSlide.addText('Flow diagram을 diagram 필드로 추가하세요.', {
-        x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
+        x: SL.cx + CARD.px, y: CARD.iy, w: SL.cw - CARD.px * 2, h: CARD.ih,
         fontSize: ty['caption']?.size ?? 14,
         color: hex(co['text-muted'] ?? '6B7280'),
         align: 'center', valign: 'middle',
@@ -32,7 +32,7 @@ export const flowTemplate: SlideTemplate<FlowSlide> = {
 
     if (slide.diagram.source === 'file') {
       pptxSlide.addText('[Diagram from file — inline source required for rendering]', {
-        x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
+        x: SL.cx + CARD.px, y: CARD.iy, w: SL.cw - CARD.px * 2, h: CARD.ih,
         fontSize: ty['caption']?.size ?? 14,
         color: hex(co['text-muted'] ?? '6B7280'),
         align: 'center', valign: 'middle',

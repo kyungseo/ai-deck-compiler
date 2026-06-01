@@ -32,7 +32,7 @@ export const contentTemplate: SlideTemplate<ContentSlide> = {
     }));
 
     pptxSlide.addText(bullets, {
-      x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
+      x: SL.cx + CARD.px, y: CARD.iy, w: SL.cw - CARD.px * 2, h: CARD.ih,
       valign: 'top',
     });
 

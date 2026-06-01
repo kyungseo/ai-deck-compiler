@@ -5,8 +5,6 @@ import { SL, CARD, hex, renderSectionHeader, renderCardBackground } from '../lay
 
 type ComparisonSlide = Extract<Slide, { type: 'comparison' }>;
 
-const colW = SL.cw / 2 - 0.15;
-
 export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
   id: 'comparison',
   supportedType: 'comparison',
@@ -16,11 +14,15 @@ export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
     const co = tokens.colors;
     const accent = hex(co['accent'] ?? '2563EB');
     const muted = hex(co['text-muted'] ?? '6B7280');
+    const onAccent = hex(co['text-on-accent'] ?? 'FFFFFF');
 
     renderSectionHeader(pptxSlide, slide, tokens);
     renderCardBackground(pptxSlide, tokens);
 
-    const dividerX = SL.cx + colW + 0.15;
+    const innerW = SL.cw - CARD.px * 2;
+    const colW = innerW / 2 - 0.15;
+    const leftX = SL.cx + CARD.px;
+    const dividerX = leftX + colW + 0.15;
 
     // Vertical divider
     pptxSlide.addShape('rect', {
@@ -40,30 +42,30 @@ export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
       const labelDefault = isLeft ? 'BEFORE' : 'AFTER';
       const label = panel.label ?? labelDefault;
 
-      // Panel label header bar
+      // Panel label header bar — filled with accent/muted so header is visually distinct from items
       pptxSlide.addShape('rect', {
-        x, y: CARD.iy, w: colW, h: 0.42,
-        fill: { color: isLeft ? hex(co['surface'] ?? 'F0F4F8') : hex(co['card-item-bg'] ?? 'EEF4FE') },
-        line: { color: hex(co['divider-light'] ?? 'E8F0FE'), width: 0 },
-      });
-
-      // Panel label accent square + text
-      pptxSlide.addShape('rect', {
-        x: x + 0.15, y: CARD.iy + 0.09, w: 0.08, h: 0.25,
+        x, y: CARD.iy, w: colW, h: 0.48,
         fill: { color: labelColor },
         line: { color: labelColor, width: 0 },
       });
+
+      // Panel label accent bar (on-accent contrast color)
+      pptxSlide.addShape('rect', {
+        x: x + 0.15, y: CARD.iy + 0.09, w: 0.08, h: 0.30,
+        fill: { color: onAccent },
+        line: { color: onAccent, width: 0 },
+      });
       pptxSlide.addText(label.toUpperCase(), {
-        x: x + 0.33, y: CARD.iy, w: colW - 0.35, h: 0.42,
-        fontSize: 16,
+        x: x + 0.33, y: CARD.iy, w: colW - 0.35, h: 0.48,
+        fontSize: 18,
         bold: true,
         fontFace: ty['label']?.font ?? 'Pretendard',
-        color: labelColor,
+        color: onAccent,
         valign: 'middle',
       });
 
       // Items
-      const itemStartY = CARD.iy + 0.52;
+      const itemStartY = CARD.iy + 0.60;
       const itemH = 0.72;
       panel.body.forEach((item, i) => {
         const itemY = itemStartY + i * itemH;
@@ -108,7 +110,7 @@ export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
       });
     };
 
-    renderPanel(slide.left, SL.cx, true);
+    renderPanel(slide.left, leftX, true);
     renderPanel(slide.right, dividerX + 0.15, false);
   },
 };

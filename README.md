@@ -7,9 +7,9 @@
 `ai-deck-compiler`는 Claude Code, Codex, Claude App과 함께 쓰는 AI-first PPT 생성 도구입니다.
 AI와의 대화로 발표 내용을 빠르게 정제하고, 레이아웃과 디자인은 엔진이 일관되게 처리합니다.
 
-![Preset gallery](examples/results/preset-gallery.png)
+![Showcase gallery](examples/results/showcase-gallery.png)
 
-대표 preset 결과물과 blueprint는 [examples/results](examples/results/)에서 바로 확인할 수 있습니다.
+대표 showcase PPTX와 preset별 blueprint는 [examples/results](examples/results/)에서 바로 확인할 수 있습니다.
 
 상세 사용법은 [USER-MANUAL](docs/USER-MANUAL.md), 시스템 구조는 [SYSTEM-MANUAL](docs/SYSTEM-MANUAL.md)을 보세요.
 

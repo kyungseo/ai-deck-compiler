@@ -167,6 +167,20 @@ AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 
 | `recommendation` | decision slide의 권고/선택. |
 | `takeaways` | deck 또는 섹션 전체 요약. |
 
+title 작성 기준:
+
+- 일반 슬라이드 title은 한 줄에 들어갈 정도의 핵심 결론으로 축약한다.
+- 제목이 두 줄로 넘어갈 것 같으면 핵심 명사구나 짧은 선언문으로 줄이고, 맥락은 `subtitle`, `body`, `callout`으로 보낸다.
+- hero/closing처럼 큰 타이포그래피를 쓰는 슬라이드는 특히 짧은 제목을 우선한다.
+- 긴 설명형 제목보다 스캔 가능한 action title을 선호한다.
+
+body 항목 코드 표기 기준:
+
+- CLI 명령, 파일 경로, 코드 스니펫은 backtick(`` ` ``)으로 감싼다.
+  - 예: `` `npm run deck -- --blueprint example.yaml --output out.pptx` ``
+- backtick으로 감싼 항목은 렌더러가 자동으로 모노스페이스 + accent 색상으로 처리한다.
+- 일반 설명 문장과 코드 항목을 같은 body 안에 혼용할 수 있다.
+
 callout 사용 기준:
 
 - 핵심 메시지, 결론, 주의 문장, 의사결정 포인트가 1문장으로 분명할 때만 쓴다.

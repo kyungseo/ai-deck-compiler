@@ -21,7 +21,7 @@ export const architectureTemplate: SlideTemplate<ArchitectureSlide> = {
 
     if (slide.diagram.source === 'file') {
       pptxSlide.addText('[Diagram from file — inline source required for rendering]', {
-        x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
+        x: SL.cx + CARD.px, y: CARD.iy, w: SL.cw - CARD.px * 2, h: CARD.ih,
         fontSize: ty['caption']?.size ?? 14,
         color: hex(co['text-muted'] ?? '6B7280'),
         align: 'center', valign: 'middle',

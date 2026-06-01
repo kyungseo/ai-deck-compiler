@@ -50,7 +50,7 @@ export const tableTemplate: SlideTemplate<TableSlide> = {
     const tableRows = headers.length > 0 ? [headerRow, ...dataRows] : dataRows;
 
     pptxSlide.addTable(tableRows, {
-      x: SL.cx, y: CARD.iy, w: SL.cw,
+      x: SL.cx + CARD.px, y: CARD.iy, w: SL.cw - CARD.px * 2,
       rowH: 0.45,
       border: { pt: 0.5, color: hex(co['divider-light'] ?? 'E0E7FF') },
     });

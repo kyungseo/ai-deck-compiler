@@ -65,7 +65,7 @@ export async function compile(opts: CompilerOptions): Promise<pptxgen> {
     const hasCallout = CALLOUT_TYPES.has(slide.type) &&
       !!(slide as SlideWithCallout).callout &&
       !!tokens.colors['callout-bar'];
-    const skipFooter = slide.type === 'closing' || hasCallout;
+    const skipFooter = slide.type === 'closing' || slide.type === 'section-divider' || hasCallout;
     if (!skipFooter) {
       renderFooter(s, tokens, blueprint.slides.indexOf(slide), blueprint.slides.length);
     }

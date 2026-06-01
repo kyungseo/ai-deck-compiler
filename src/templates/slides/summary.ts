@@ -21,9 +21,10 @@ export const summaryTemplate: SlideTemplate<SummarySlide> = {
     const hasTakeaways = takeaways.length > 0;
 
     // When takeaways are present: body on left (60%), takeaway panel on right (38%)
-    const bodyW = hasTakeaways ? SL.cw * 0.58 : SL.cw;
-    const panelX = SL.cx + bodyW + 0.3;
-    const panelW = SL.cw - bodyW - 0.3 - 0.15;
+    const innerW = SL.cw - CARD.px * 2;
+    const bodyW = hasTakeaways ? innerW * 0.58 : innerW;
+    const panelX = SL.cx + CARD.px + bodyW + 0.3;
+    const panelW = innerW - bodyW - 0.3 - 0.15;
 
     if (bodyItems.length > 0) {
       const bullets = bodyItems.map(text => ({
@@ -37,7 +38,7 @@ export const summaryTemplate: SlideTemplate<SummarySlide> = {
         },
       }));
       pptxSlide.addText(bullets, {
-        x: SL.cx, y: CARD.iy, w: bodyW, h: CARD.ih, valign: 'top',
+        x: SL.cx + CARD.px, y: CARD.iy, w: bodyW, h: CARD.ih, valign: 'top',
       });
     }
 

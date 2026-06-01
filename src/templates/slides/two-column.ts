@@ -5,8 +5,6 @@ import { SL, CARD, hex, renderSectionHeader, renderCardBackground, renderPanelLa
 
 type TwoColumnSlide = Extract<Slide, { type: 'two-column' }>;
 
-const colW = SL.cw / 2 - 0.15;
-
 export const twoColumnTemplate: SlideTemplate<TwoColumnSlide> = {
   id: 'two-column',
   supportedType: 'two-column',
@@ -18,14 +16,17 @@ export const twoColumnTemplate: SlideTemplate<TwoColumnSlide> = {
     renderSectionHeader(pptxSlide, slide, tokens);
     renderCardBackground(pptxSlide, tokens);
 
-    const dividerX = SL.cx + colW + 0.15;
+    const innerW = SL.cw - CARD.px * 2;
+    const leftX = SL.cx + CARD.px;
+    const colW = innerW / 2 - 0.15;
+    const dividerX = leftX + colW + 0.15;
     const hasLabels = !!(slide.left.label || slide.right.label);
-    const contentY = hasLabels ? CARD.iy + 0.45 : CARD.iy;
-    const contentH = CARD.ih - (hasLabels ? 0.45 : 0);
+    const contentY = hasLabels ? CARD.iy + 0.55 : CARD.iy;
+    const contentH = CARD.ih - (hasLabels ? 0.55 : 0);
 
     // Panel labels
     if (slide.left.label) {
-      renderPanelLabel(pptxSlide, slide.left.label, SL.cx, tokens);
+      renderPanelLabel(pptxSlide, slide.left.label, leftX, tokens);
     }
     if (slide.right.label) {
       renderPanelLabel(pptxSlide, slide.right.label, dividerX + 0.15, tokens);
@@ -55,7 +56,7 @@ export const twoColumnTemplate: SlideTemplate<TwoColumnSlide> = {
       });
     };
 
-    renderCol(slide.left.body, SL.cx);
+    renderCol(slide.left.body, leftX);
     renderCol(slide.right.body, dividerX + 0.3);
   },
 };
