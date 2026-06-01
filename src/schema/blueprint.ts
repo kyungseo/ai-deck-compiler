@@ -136,7 +136,7 @@ const TimelineSlide = z.object({
   ...base,
   type: z.literal('timeline'),
   items: z.array(z.object({
-    date: z.string(),
+    date: z.string().optional(),
     label: z.string(),
     description: z.string().optional(),
   })).optional(),

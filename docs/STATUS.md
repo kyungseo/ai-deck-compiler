@@ -21,6 +21,7 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
+| FEAT-20260601-009 | Timeline circular variant | docs/works/phase1/FEAT-20260601-009-timeline-circular-variant.md |
 
 ## Blockers And Open Questions
 
