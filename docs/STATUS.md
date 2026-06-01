@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 (FEAT-20260601-009 Done) |
+| Last updated | 2026-06-01 (FEAT-20260601-011 Done) |
 
 ## Work Context Rule
 
@@ -22,7 +22,6 @@
 | ID | Title | Work 파일 |
 | --- | --- | --- |
 | FEAT-20260601-010 | create-deck blueprint 규칙 내재화 | docs/works/phase1/FEAT-20260601-010-create-deck-blueprint-consolidation.md |
-| FEAT-20260601-011 | create-deck skill 콘텐츠 정비 | docs/works/phase1/FEAT-20260601-011-create-deck-skill-improvement.md |
 
 ## Blockers And Open Questions
 
