@@ -58,7 +58,7 @@ PPT 제작을 도와드리겠습니다. 몇 가지 확인할게요.
 ## Step 3 — Blueprint 초안 작성
 
 승인된 구조를 기반으로 `blueprints/{제목-slug}.yaml`을 작성한다.
-`skills/generate-blueprint.md`의 semantic component selection과 슬라이드 타입별 작성 가이드를 따른다.
+`skills/create-deck.md`의 Step 3 blueprint 작성 규칙(Action Title 원칙, 언어 규칙, 슬라이드 타입별 YAML)을 따른다.
 
 - blueprints/ 디렉토리가 없으면 생성한다
 - 파일명: 발표 제목을 소문자 하이픈으로 변환 (예: `q2-engineering-review.yaml`)
