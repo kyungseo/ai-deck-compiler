@@ -195,6 +195,7 @@ repo에 세 가지 예제가 포함되어 있습니다. 처음 시작할 때 가
 | sample | `examples/sample/` | 엔지니어링 플랫폼 전략 발표 | hero, agenda, kpi, architecture, chart, timeline, summary, appendix |
 | strategy | `examples/strategy/` | 경영진 대상 제품 전략 보고 | hero, agenda, content, kpi, decision, summary |
 | data-report | `examples/data-report/` | 분기 비즈니스 데이터 리뷰 | kpi, chart × 2, table, summary |
+| semantic-planning | `examples/semantic-planning/` | 의미 기반 component 선택 예시 | content callout, kpi, chart, architecture, decision, summary |
 
 ```bash
 # 원하는 예제를 골라 실행
@@ -264,13 +265,42 @@ output/              ← 생성된 PPTX가 여기에 저장됩니다 (.gitignore
 
 ---
 
+## 7.1 AI가 slide type과 component를 고르는 기준
+
+AI는 source 내용을 그대로 bullet로 옮기기보다, 의미에 맞는 표현을 먼저 고릅니다.
+
+| 입력 내용의 성격 | 생성 후보 |
+| --- | --- |
+| 핵심 숫자 3~4개 | `kpi` |
+| 시간에 따른 변화 | `chart` line/area |
+| 항목 간 수치 비교 | `chart` bar/stacked-bar |
+| 구성비·비율 | `chart` pie/donut |
+| 여러 항목의 행/열 비교 | `table` |
+| 시스템 구성요소와 관계 | `architecture` |
+| 단계별 절차·업무 흐름 | `flow` |
+| 선택지·승인·권고 | `decision` |
+| deck 전체 결론·다음 행동 | `summary.takeaways` |
+| 한 슬라이드 안의 핵심 메시지 | `content` 또는 `flow`의 `callout` |
+
+예를 들어 "2026년은 파트너십으로 진입하고 2027년 내재화를 재검토한다"는 문장은 상황에 따라 다르게 배치됩니다.
+
+| 맥락 | 적합한 표현 |
+| --- | --- |
+| 승인받아야 할 선택안 | `decision.recommendation` |
+| 배경 설명 중 강조할 한 문장 | `content.callout` |
+| 발표 전체의 결론 | `summary.takeaways` |
+
+callout은 slide type이 아니라 선택 필드입니다. `teal`과 `vivid`에서는 `content` / `flow` 슬라이드 하단 강조 bar로 렌더링됩니다. 모든 슬라이드에 넣으면 산만해지므로 6장 deck 기준 1~2장 정도를 권장합니다.
+
+---
+
 ## 8. Preset, Theme, Branding
 
 AI workflow 기본 추천은 `teal + dark`입니다.
 
 | Preset | 특징 | 추천 테마 |
 | --- | --- | --- |
-| `teal` | charcoal-dark + deep teal accent, AI-native. **신규 deck 기본 추천** | `dark` |
+| `teal` | charcoal-dark + deep teal accent, AI-native, callout 지원. **신규 deck 기본 추천** | `dark` |
 | `vivid` | deep-navy + vivid purple, bold contrast. secondary/experimental | `dark` |
 | `modern` | modern, minimal, technical. light/dark 모두 지원 | `light` 또는 `dark` |
 

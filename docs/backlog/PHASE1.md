@@ -206,3 +206,4 @@
 | pptx-document-metadata | PPTX 문서 속성 설정 — title/author/company/revision (compiler.ts 구현 완료) | 2026-05-31 |
 | FEAT-20260531-007 | Design Preset 고도화 — teal/vivid 추가, section_label chip, hero accent line | 2026-06-01 |
 | FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | 2026-06-01 |
+| FEAT-20260601-002 | Blueprint generation quality rules — semantic component selection + AI tool alignment | 2026-06-01 |

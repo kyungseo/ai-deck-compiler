@@ -64,6 +64,8 @@
 | danger | `#F87171` | Negative trend text |
 | chip-bg | `#2D6B5E` | Section label chip background |
 | chip-text | `#FFFFFF` | Section label chip text |
+| callout-bar | `#2D6B5E` | Bottom callout bar background (content/flow opt-in) |
+| callout-bar-text | `#FFFFFF` | Bottom callout bar text |
 | node-fill | `#2D3235` | Architecture node background |
 | node-text | `#FFFFFF` | Architecture node label |
 | node-border | `#2D6B5E` | Architecture node outline |
@@ -99,6 +101,20 @@ light 테마가 필요하면 `modern light`를 사용하세요. 기존 `default-
 적용 슬라이드: `renderSectionHeader()`를 사용하는 모든 타입 (content, two-column, kpi, chart, table, timeline, flow, comparison, decision, agenda, summary, appendix, architecture)
 
 미적용: hero, closing, section-divider (후속 Work P2)
+
+---
+
+## Callout Bar
+
+`content` / `flow` 슬라이드에서 `callout` 필드가 있을 때 하단 full-width bar를 렌더링한다.
+callout은 slide type이 아니라 optional emphasis field이며, 핵심 메시지·결론·주의 문장 1개만 강조할 때 사용한다.
+
+| 속성 | 값 |
+| --- | --- |
+| Fill | `callout-bar` (`#2D6B5E`) |
+| Text color | `callout-bar-text` (`#FFFFFF`) |
+| 위치 | x=0, y=6.85", w=13.33", h=0.34" |
+| Footer | callout bar 렌더 시 brand footer 미표시 |
 
 ---
 
