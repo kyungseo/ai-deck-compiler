@@ -21,6 +21,7 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
+| FEAT-20260601-005 | General code block component — 본문 코드 블럭 표현 공통화 | `docs/works/phase1/FEAT-20260601-005-general-code-block-component.md` |
 
 ## Blockers And Open Questions
 

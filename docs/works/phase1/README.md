@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
+| FEAT-20260601-005 | General code block component — 본문 코드 블럭 표현 공통화 | feature/readme-semantic-code-block-docs |
 
 ## Done (Archive Pending)
 
