@@ -89,6 +89,18 @@
 
 ---
 
+### P1 — vivid 고도화
+
+---
+
+**[vivid-preset-enhancement]** `FEAT-20260601-001` | Priority: P1 | Scope: vivid callout bar + chart palette 심화
+
+- Done Criteria: Work 파일 `docs/works/phase1/FEAT-20260601-001-vivid-preset-enhancement.md` 참조
+- Verification: preview로 callout bar 시각 확인, teal/modern 회귀 없음
+- Preconditions: FEAT-20260531-007 완료 (✅)
+
+---
+
 ### P2 — 공개 repo 완성도 및 preset 확장
 
 ---

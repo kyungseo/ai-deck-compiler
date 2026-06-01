@@ -1,7 +1,7 @@
 import type { SlideTemplate, PptxSlide } from '../registry.js';
 import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
-import { SL, CARD, hex, zoneCenter, renderSectionHeader, renderCardBackground } from '../layout.js';
+import { SL, CARD, hex, zoneCenter, renderSectionHeader, renderCardBackground, renderCalloutBar } from '../layout.js';
 
 type FlowSlide = Extract<Slide, { type: 'flow' }>;
 
@@ -18,6 +18,7 @@ export const flowTemplate: SlideTemplate<FlowSlide> = {
 
     renderSectionHeader(pptxSlide, slide, tokens);
     renderCardBackground(pptxSlide, tokens);
+    if (slide.callout) renderCalloutBar(pptxSlide, slide.callout, tokens);
 
     if (!slide.diagram) {
       pptxSlide.addText('Flow diagram을 diagram 필드로 추가하세요.', {
@@ -127,5 +128,6 @@ export const flowTemplate: SlideTemplate<FlowSlide> = {
         bold: true,
       });
     }
+
   },
 };

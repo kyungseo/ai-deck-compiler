@@ -19,7 +19,9 @@
 
 ## Active Work
 
-*(없음)*
+| ID | Title | Work 파일 |
+| --- | --- | --- |
+| FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | `docs/works/phase1/FEAT-20260601-001-vivid-preset-enhancement.md` |
 
 ## Blockers And Open Questions
 

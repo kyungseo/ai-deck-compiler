@@ -104,6 +104,7 @@ const ContentSlide = z.object({
   ...base,
   type: z.literal('content'),
   body: z.array(z.string()).optional(),
+  callout: z.string().optional(),
 });
 
 const TwoColumnSlide = z.object({
@@ -151,6 +152,7 @@ const FlowSlide = z.object({
   ...base,
   type: z.literal('flow'),
   diagram: DiagramSpec.optional(),
+  callout: z.string().optional(),
 });
 
 const TableSlide = z.object({

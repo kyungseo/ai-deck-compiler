@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { PptxSlide } from '../src/templates/registry';
 import { defaultRegistry } from '../src/templates/index';
+import { renderCalloutBar } from '../src/templates/layout';
 import type { ResolvedDesignTokens } from '../src/compiler/types';
 
 // ── Mock slide factory ────────────────────────────────────────────────────────
@@ -179,6 +180,80 @@ describe('Structural determinism', () => {
     template.render(slideData, tokens, slideB);
 
     expect(slideA.calls).toEqual(slideB.calls);
+  });
+});
+
+// ── Callout bar ───────────────────────────────────────────────────────────────
+
+describe('renderCalloutBar', () => {
+  it('no-op when callout-bar token is absent', () => {
+    const slide = makeMockSlide();
+    renderCalloutBar(slide, 'Hello', tokens);
+    expect(slide.calls['addShape'] ?? 0).toBe(0);
+    expect(slide.calls['addText'] ?? 0).toBe(0);
+  });
+
+  it('renders shape + text when callout-bar token is present', () => {
+    const slide = makeMockSlide();
+    const tokensWithCallout: ResolvedDesignTokens = {
+      ...tokens,
+      colors: { ...tokens.colors, 'callout-bar': '#6957E8', 'callout-bar-text': '#FFFFFF' },
+    };
+    renderCalloutBar(slide, '2026년은 파트너십으로 진입', tokensWithCallout);
+    expect(slide.calls['addShape']).toBe(1);
+    expect(slide.calls['addText']).toBe(1);
+  });
+
+  it('content slide: callout field renders callout bar at y=6.85 (even with empty body)', () => {
+    const slide = makeMockSlide();
+    const tokensWithCallout: ResolvedDesignTokens = {
+      ...tokens,
+      colors: { ...tokens.colors, 'callout-bar': '#6957E8' },
+    };
+    const template = defaultRegistry.resolve('content');
+    template.render(
+      { id: 'c1', type: 'content', title: 'Market Context', callout: 'Key Takeaway' },
+      tokensWithCallout, slide,
+    );
+    const calloutShapes = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls.filter(
+      (args: unknown[]) => typeof args[1] === 'object' && args[1] !== null && (args[1] as { y?: number }).y === 6.85,
+    );
+    expect(calloutShapes).toHaveLength(1);
+  });
+
+  it('flow slide: callout renders at y=6.85 even when diagram is absent (early return path)', () => {
+    const slide = makeMockSlide();
+    const tokensWithCallout: ResolvedDesignTokens = {
+      ...tokens,
+      colors: { ...tokens.colors, 'callout-bar': '#6957E8' },
+    };
+    const template = defaultRegistry.resolve('flow');
+    template.render(
+      { id: 'f1', type: 'flow', title: 'Deployment Flow', callout: 'Phase 1 Goal' },
+      tokensWithCallout, slide,
+    );
+    const calloutShapes = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls.filter(
+      (args: unknown[]) => typeof args[1] === 'object' && args[1] !== null && (args[1] as { y?: number }).y === 6.85,
+    );
+    expect(calloutShapes).toHaveLength(1);
+  });
+
+  it('content slide: no callout field — callout bar not rendered', () => {
+    const slide = makeMockSlide();
+    const tokensWithCallout: ResolvedDesignTokens = {
+      ...tokens,
+      colors: { ...tokens.colors, 'callout-bar': '#6957E8' },
+    };
+    const template = defaultRegistry.resolve('content');
+    template.render(
+      { id: 'c2', type: 'content', title: 'Normal Slide', body: ['Item A'] },
+      tokensWithCallout, slide,
+    );
+    const addShapeArgs = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls;
+    const calloutBarCalls = addShapeArgs.filter(
+      (args: unknown[]) => typeof args[1] === 'object' && args[1] !== null && (args[1] as { y?: number }).y === 6.85,
+    );
+    expect(calloutBarCalls).toHaveLength(0);
   });
 });
 

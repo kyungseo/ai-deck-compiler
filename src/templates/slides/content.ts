@@ -1,7 +1,7 @@
 import type { SlideTemplate, PptxSlide } from '../registry.js';
 import type { ResolvedDesignTokens } from '../../compiler/types.js';
 import type { Slide } from '../../schema/blueprint.js';
-import { SL, CARD, hex, renderSectionHeader, renderCardBackground } from '../layout.js';
+import { SL, CARD, hex, renderSectionHeader, renderCardBackground, renderCalloutBar } from '../layout.js';
 
 type ContentSlide = Extract<Slide, { type: 'content' }>;
 
@@ -15,6 +15,7 @@ export const contentTemplate: SlideTemplate<ContentSlide> = {
 
     renderSectionHeader(pptxSlide, slide, tokens);
     renderCardBackground(pptxSlide, tokens);
+    if (slide.callout) renderCalloutBar(pptxSlide, slide.callout, tokens);
 
     const items = slide.body ?? [];
     if (items.length === 0) return;
@@ -34,5 +35,6 @@ export const contentTemplate: SlideTemplate<ContentSlide> = {
       x: SL.cx, y: CARD.iy, w: SL.cw, h: CARD.ih,
       valign: 'top',
     });
+
   },
 };

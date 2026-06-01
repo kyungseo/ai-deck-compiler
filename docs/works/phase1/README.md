@@ -4,7 +4,9 @@ Product track Phase 1 작업 인덱스다.
 
 ## Active
 
-*(없음)*
+| ID | Title | branch |
+| --- | --- | --- |
+| FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | feature/FEAT-20260601-001-vivid-preset-enhancement |
 
 ## Done (Archive Pending)
 
