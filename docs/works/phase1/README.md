@@ -6,7 +6,6 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
-| FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | feature/FEAT-20260601-001-vivid-preset-enhancement |
 
 ## Done (Archive Pending)
 
@@ -20,6 +19,7 @@ Product track Phase 1 작업 인덱스다.
 | FEAT-20260531-002 | skill-review-deck | 2026-05-31 | — |
 | FEAT-20260531-001 | P2 slide type 5종 구현 — timeline, flow, decision, appendix, closing | 2026-05-31 | — |
 | FEAT-20260530-002 | skill-create-deck + skill-generate-blueprint | 2026-05-31 | — |
+| FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | 2026-06-01 | — |
 | FEAT-20260530-001 | Work 2 — default-modern preset + P1 slide render + PPTX CLI | 2026-05-30 | — |
 
 ## Archived

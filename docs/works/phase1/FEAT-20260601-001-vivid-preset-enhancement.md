@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260601-001
 title: "vivid preset 고도화 — callout bar + chart palette 심화"
-status: Active
+status: Done
 type: FEAT
 created: 2026-06-01
 branch: feature/FEAT-20260601-001-vivid-preset-enhancement
@@ -125,31 +125,31 @@ const skipFooter = slide.type === 'closing' || hasCallout;
 ## Done Criteria
 
 **Schema / 토큰:**
-- [ ] `src/schema/blueprint.ts` — `callout` optional 필드 추가
-- [ ] `vivid/tokens.json` — `callout-bar`, `callout-bar-text` 추가, chart-1/2 순서 조정
+- [x] `src/schema/blueprint.ts` — `callout` optional 필드 추가
+- [x] `vivid/tokens.json` — `callout-bar`, `callout-bar-text` 추가, chart-1/2 순서 조정
 
 **렌더러:**
-- [ ] `src/templates/layout.ts` — `renderCalloutBar()` 구현, `callout-bar` 토큰 없으면 no-op
-- [ ] `content.ts`, `flow.ts` — callout 있을 때 `renderCalloutBar()` 호출
-- [ ] callout 있는 슬라이드에서 footer 억제 확인
+- [x] `src/templates/layout.ts` — `renderCalloutBar()` 구현, `callout-bar` 토큰 없으면 no-op
+- [x] `content.ts`, `flow.ts` — callout 있을 때 `renderCalloutBar()` 호출 (early return 앞에 배치)
+- [x] callout 있는 슬라이드에서 footer 억제 확인
 
 **vivid 문서:**
-- [ ] `vivid/ppt-design.md` — 스펙 현행화
-- [ ] `vivid/ppt-components.md` — Callout Bar 스펙 추가
+- [x] `vivid/ppt-design.md` — 스펙 현행화
+- [x] `vivid/ppt-components.md` — Callout Bar 스펙 추가
 
 **예제 / 검증:**
-- [ ] `strategy-vivid-dark.blueprint.yaml` — `callout` 필드 사용 슬라이드 포함
-- [ ] `strategy-vivid-dark.pptx` — 재생성
-- [ ] `npm run typecheck` 통과
-- [ ] `npm test` 통과 (단위 테스트 포함)
+- [x] `strategy-vivid-dark.blueprint.yaml` — `callout` 필드 사용 슬라이드 포함
+- [x] `strategy-vivid-dark.pptx` — 재생성
+- [x] `npm run typecheck` 통과
+- [x] `npm test` 통과 (단위 테스트 포함)
   - content/flow: `callout` 있는 blueprint parse 성공
   - `callout-bar` 토큰 없을 때 `renderCalloutBar` no-op (shape 미추가)
   - `callout-bar` 토큰 있을 때 shape + text 2개 추가
   - callout slide에서 footer가 추가되지 않음 확인
   - callout 없는 teal/modern deck은 footer 유지 확인
-- [ ] `npm run validate -- --blueprint examples/results/strategy-vivid-dark.blueprint.yaml` 통과
-- [ ] teal/modern blueprint 회귀 없음 확인
-- [ ] preview 시각 QA: Korean text clipping 없음, callout bar와 card 경계 명확, footer 미노출
+- [x] `npm run validate -- --blueprint examples/results/strategy-vivid-dark.blueprint.yaml` 통과
+- [x] teal/modern blueprint 회귀 없음 확인
+- [x] preview 시각 QA: Korean text clipping 없음, callout bar와 card 경계 명확, footer 미노출
 
 ---
 
