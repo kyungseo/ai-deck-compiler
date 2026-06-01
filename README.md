@@ -99,9 +99,21 @@ AI에게 "PPT 만들어줘"라고 맡기면 보통 이런 문제가 생깁니다
 ### 요구사항
 
 - Node.js 18+, npm 9+
-- Pretendard 폰트 권장 ([설치 안내](https://github.com/orioncactus/pretendard)) — 미설치 시 시스템 fallback 폰트 사용
-- Optional PDF export: LibreOffice (`brew install --cask libreoffice`)
-- Optional preview: LibreOffice + `pdftoppm` (`brew install poppler`)
+
+**Pretendard 폰트** (권장 — 미설치 시 시스템 fallback 폰트로 렌더링)
+
+| OS | 설치 방법 |
+| --- | --- |
+| macOS | `brew install --cask font-pretendard` |
+| Windows / Linux | [Pretendard 릴리스 페이지](https://github.com/orioncactus/pretendard)에서 다운로드 |
+
+**Optional — PDF export / Preview** (LibreOffice + pdftoppm)
+
+| OS | LibreOffice | pdftoppm (poppler) |
+| --- | --- | --- |
+| macOS | `brew install --cask libreoffice` | `brew install poppler` |
+| Windows | [libreoffice.org/download](https://www.libreoffice.org/download/) | [poppler-windows releases](https://github.com/oschwartz10612/poppler-windows/releases) — 압축 해제 후 `bin/` 폴더를 PATH에 추가 |
+| Ubuntu/Debian | `sudo apt install libreoffice` | `sudo apt install poppler-utils` |
 
 ### 설치
 
