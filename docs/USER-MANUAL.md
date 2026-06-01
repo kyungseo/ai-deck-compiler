@@ -328,6 +328,8 @@ output/              ← 생성된 PPTX가 여기에 저장됩니다 (.gitignore
 | 구조/아키텍처 | `architecture` |
 | 구분/부록 | `section-divider`, `appendix` |
 
+`appendix`는 일반 bullet뿐 아니라 명령어·코드·재생성 절차를 boxed code block으로 보여줄 때도 사용합니다.
+
 ---
 
 ## 7.1 AI가 slide type과 component를 고르는 기준
@@ -346,6 +348,7 @@ AI는 source 내용을 그대로 bullet로 옮기기보다, 의미에 맞는 표
 | 선택지·승인·권고 | `decision` |
 | deck 전체 결론·다음 행동 | `summary.takeaways` |
 | 한 슬라이드 안의 핵심 메시지 | `content` 또는 `flow`의 `callout` |
+| 명령어·코드·재생성 절차 | `appendix`의 code block |
 
 예를 들어 "2026년은 파트너십으로 진입하고 2027년 내재화를 재검토한다"는 문장은 상황에 따라 다르게 배치됩니다.
 
@@ -356,6 +359,8 @@ AI는 source 내용을 그대로 bullet로 옮기기보다, 의미에 맞는 표
 | 발표 전체의 결론 | `summary.takeaways` |
 
 callout은 slide type이 아니라 선택 필드입니다. `teal`과 `vivid`에서는 `content` / `flow` 슬라이드 하단 강조 bar로 렌더링됩니다. 모든 슬라이드에 넣으면 산만해지므로 6장 deck 기준 1~2장 정도를 권장합니다.
+
+code block은 `appendix` slide에서 백틱으로 감싼 body 항목을 boxed monospace block으로 표현하는 기능입니다. 현재는 코드 블록 박스와 monospace 렌더링을 지원하며, 언어별 syntax highlighting은 후속 backlog입니다.
 
 ---
 
