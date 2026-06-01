@@ -17,7 +17,7 @@
 
 | 영역 | 상태 |
 | --- | --- |
-| Runtime / Language | Node.js 18+, TypeScript |
+| Runtime / Language | Node.js 20+, TypeScript |
 | Rendering | pptxgenjs editable PPTX |
 | Schema | Zod discriminated union + generated JSON Schema |
 | CLI | `validate`, `deck`, `preview`, `export-pdf`, `schema` |

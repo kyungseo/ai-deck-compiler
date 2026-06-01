@@ -173,8 +173,8 @@ ID prefix와 파일명 상세 기준:
 
 ## Project Constants
 
-- Runtime: Node.js 18+, TypeScript
-- Framework: pptxgenjs ^3.12, zod ^3.23, yaml ^2.4 (eemeli), vitest ^1, tsx ^4
+- Runtime: Node.js 20+, TypeScript
+- Framework: pptxgenjs ^3.12, zod ^3.23, yaml ^2.4 (eemeli), vitest ^4, tsx ^4
 - Build: tsconfig.json (ES2022, strict). `npm run typecheck` (tsc), `tsx` for CLI dev.
 - Architecture: blueprint.yaml → Schema Validation (Zod) → Compiler → TemplateRegistry → pptxgenjs → Editable PPTX
 - Base package/module: `src/` (schema/, compiler/, templates/, design/, cli/)

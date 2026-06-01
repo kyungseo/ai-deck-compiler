@@ -11,6 +11,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
+| PATCH-20260602-001 | Security alert triage — public 전 critical vulnerability 확인 | 2026-06-02 | default branch `main` alert closure requires release merge |
 | FEAT-20260602-001 | Headline wrap polish — action-title 가독성 보정 | 2026-06-02 | — |
 | FEAT-20260601-013 | Showcase final polish — ai-deck-compiler 실전형 대표 deck | 2026-06-02 | — |
 | CHORE-20260601-001 | Public release gate — 공개 전 최종 정리 | 2026-06-01 | — |
