@@ -1,0 +1,136 @@
+deck:
+  title: Semantic Blueprint Planning Sample
+  design: teal
+  theme: dark
+  version: "1.0"
+  audience: Product and Engineering Leads
+
+slides:
+  - id: hero
+    type: hero
+    title: Semantic Blueprint Planning Sample
+    subtitle: 자연어 입력을 의미 기반 slide type과 component로 변환
+    cta: ai-deck-compiler
+
+  - id: planning-principle
+    type: content
+    title: AI는 bullet 나열보다 의미에 맞는 표현을 먼저 고른다
+    section_label: "01. PRINCIPLE"
+    callout: "핵심은 자동 디자인이 아니라, 내용을 올바른 blueprint 구조로 번역하는 것이다."
+    body:
+      - source 문서의 주장, 수치, 구조, 결정 포인트를 먼저 분리한다.
+      - 숫자는 KPI나 chart로, 시스템 관계는 architecture로, 선택지는 decision으로 승격한다.
+      - renderer는 명시된 blueprint를 deterministic하게 editable PPTX로 컴파일한다.
+
+  - id: quality-signals
+    type: kpi
+    title: 좋은 deck은 핵심 신호를 4개 이하로 압축한다
+    section_label: "02. SIGNALS"
+    kpis:
+      - label: Slide Types
+        value: "16"
+        delta: "semantic choices"
+        trend: neutral
+      - label: Callout Density
+        value: "1-2"
+        delta: "per 6 slides"
+        trend: neutral
+      - label: Editable Objects
+        value: "100%"
+        delta: "text/chart/shape"
+        trend: up
+      - label: Review Loop
+        value: "3"
+        delta: "validate/deck/preview"
+        trend: up
+
+  - id: adoption-trend
+    type: chart
+    title: 의미 기반 planning은 재작업 시간을 줄인다
+    section_label: "03. EVIDENCE"
+    chart:
+      type: line
+      data:
+        source: inline
+        labels: [Draft, Review, Revision, Final]
+        series:
+          - name: Manual cleanup
+            values: [100, 80, 55, 35]
+          - name: Semantic planning
+            values: [100, 62, 35, 18]
+
+  - id: planning-architecture
+    type: architecture
+    title: Planning layer와 renderer를 분리한다
+    section_label: "04. ARCHITECTURE"
+    diagram:
+      source: inline
+      version: "1.0"
+      nodes:
+        - id: source
+          kind: client
+          label: Source
+          zone: left
+        - id: planner
+          kind: service
+          label: AI Planner
+          zone: center
+        - id: blueprint
+          kind: storage
+          label: Blueprint
+          zone: bottom-center
+        - id: compiler
+          kind: service
+          label: Compiler
+          zone: right
+        - id: pptx
+          kind: external
+          label: PPTX
+          zone: bottom-right
+      edges:
+        - from: source
+          to: planner
+          kind: data-flow
+          label: intent
+        - from: planner
+          to: blueprint
+          kind: sync
+          label: schema
+        - from: blueprint
+          to: compiler
+          kind: sync
+          label: tokens
+        - from: compiler
+          to: pptx
+          kind: data-flow
+          label: editable
+
+  - id: decision-boundary
+    type: decision
+    title: 아이콘은 정책만 정의하고 구현은 분리한다
+    section_label: "05. DECISION"
+    options:
+      - label: Policy Only
+        pros:
+          - arbitrary emoji 남발을 즉시 막을 수 있다.
+          - schema와 renderer scope를 늘리지 않는다.
+        cons:
+          - 실제 아이콘 렌더링은 아직 제공하지 않는다.
+      - label: Renderer Now
+        pros:
+          - title icon 요구를 바로 충족한다.
+        cons:
+          - schema, renderer, visual QA 범위가 커진다.
+    recommendation: 이번 Work는 icon policy만 정의하고, schema/render 구현은 별도 Work로 분리한다.
+
+  - id: takeaways
+    type: summary
+    title: Semantic planning은 ai-deck-compiler의 핵심 품질 계층이다
+    section_label: "06. TAKEAWAYS"
+    body:
+      - AI는 source를 그대로 복사하지 않고 의미를 blueprint 구조로 변환한다.
+      - 사용자는 blueprint를 검토하고, 엔진은 항상 편집 가능한 PPTX를 생성한다.
+    takeaways:
+      - 수치와 구조와 결정 포인트를 각각 맞는 slide type으로 승격한다.
+      - callout은 slide type이 아니라 핵심 문장 1개를 위한 optional field다.
+      - icon은 과하지 않게 정책부터 정하고, renderer는 후속으로 분리한다.

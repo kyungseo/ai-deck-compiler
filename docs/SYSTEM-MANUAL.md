@@ -81,6 +81,7 @@ examples/
   sample/                     # 엔지니어링 전략 발표 — full-stack 예제
   strategy/                   # 경영진 전략 보고 — decision slide 포함
   data-report/                # 분기 데이터 리뷰 — chart × 2, table 포함
+  semantic-planning/          # 의미 기반 component 선택 예제
   results/                    # 대표 preset/theme별 blueprint, PPTX, gallery
 schemas/                      # generated JSON schema
 tests/                        # parser, renderer, snapshot tests
@@ -246,6 +247,29 @@ Product skills:
 - `review-deck`: blueprint와 optional PPTX/preview를 함께 검토합니다.
 - `export-pdf`: PPTX 파일을 PDF로 변환합니다. LibreOffice만 필요하며 poppler 불필요.
 - `generate-architecture-slide`: 자연어 설명에서 node/edge/zone을 추출하고 유효한 diagram spec을 생성합니다. 단독 또는 `generate-blueprint` 내부에서 호출합니다.
+
+### 5.1 Semantic blueprint planning
+
+AI planning layer는 사용자의 자연어/source를 곧바로 bullet slide로 복사하지 않고, 의미에 맞는 blueprint 구조로 변환한다.
+compiler/renderer layer는 이 blueprint를 deterministic하게 PPTX로 렌더링한다.
+
+| Meaning | Blueprint expression |
+| --- | --- |
+| 핵심 숫자 3~4개 | `kpi` |
+| 시간 추세·항목 비교·구성비 | `chart` |
+| 행/열 비교 | `table` |
+| 시스템 구성·의존성 | `architecture` |
+| 단계별 절차·업무 흐름 | `flow` |
+| 선택지·승인·권고안 | `decision` |
+| deck 전체 결론 | `summary.takeaways` |
+| 슬라이드 내부 강조 문장 | `content` / `flow`의 `callout` |
+
+책임 경계:
+
+- canonical skill(`skills/create-deck.md`, `skills/generate-blueprint.md`)은 semantic selection과 emphasis hierarchy를 정의한다.
+- wrapper(`.claude/commands/*`, `.agents/skills/*`)는 canonical skill을 thin routing으로 호출한다.
+- schema/renderer는 명시된 blueprint field만 렌더링한다. LLM 판단을 런타임 코드에 내장하지 않는다.
+- icon은 현재 정책만 정의한다. schema/render field는 후속 Work에서 결정한다.
 
 ---
 
@@ -424,7 +448,7 @@ npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
 현재 기준:
 
 - 16 slide types
-- 44 tests
+- 51 tests
 - AI 추천 preset: `teal + dark` / legacy/light: `modern`
 - supported themes: `light`, `dark`
 

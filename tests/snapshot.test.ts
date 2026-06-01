@@ -108,7 +108,7 @@ describe('Compiler callout footer suppression', () => {
   });
 
   it('callout field present but callout-bar token absent: footer is NOT suppressed', async () => {
-    // teal has no callout-bar token → footer renders even when slide.callout exists
+    // Simulate a preset without callout-bar token: footer renders even when slide.callout exists.
     const blueprint: Blueprint = {
       deck: { title: 'Test', design: 'teal', theme: 'dark', version: '1.0' },
       slides: [
@@ -116,12 +116,14 @@ describe('Compiler callout footer suppression', () => {
       ],
     };
     const tokens = resolveDesignTokens('teal', 'dark');
+    delete tokens.colors['callout-bar'];
+    delete tokens.colors['callout-bar-text'];
     const pptx = await compile({ blueprint, tokens });
     const buffer = await (pptx as any).write({ outputType: 'nodebuffer' }) as Buffer;
     const zip = await JSZip.loadAsync(buffer);
     const slideXml = await zip.file('ppt/slides/slide1.xml')!.async('string');
 
-    expect(slideXml, 'teal slide with callout but no token must retain brand footer').toContain('ai-deck-compiler');
+    expect(slideXml, 'slide with callout but no token must retain brand footer').toContain('ai-deck-compiler');
   });
 });
 

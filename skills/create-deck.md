@@ -127,14 +127,59 @@ content가 빈약하면 바로 PPTX를 만들지 않고 추가 질문, source �
 | 항상 첫 슬라이드 | `hero` |
 | 4개 이상 섹션 있을 때 | `agenda` |
 | 주요 섹션 사이 구분 | `section-divider` |
-| 핵심 지표 3~4개 강조 | `kpi` |
+| 핵심 숫자 3~4개 강조 | `kpi` |
 | 텍스트 설명·불렛 포인트 | `content` |
 | 좌우 비교 또는 두 관점 | `two-column` |
 | 기존 vs 제안 명확한 대비 | `comparison` |
-| 시계열·비교 데이터 | `chart` |
-| 행/열 구조 데이터 | `table` |
-| 시스템·인프라 구조 설명 | `architecture` |
+| 시간 추세·항목 비교·구성비 데이터 | `chart` |
+| 행/열 구조의 다차원 비교 | `table` |
+| 시스템·인프라 구성요소와 관계 | `architecture` |
+| 단계별 처리·업무 흐름 | `flow` |
+| 선택지·승인 요청·권고안 | `decision` |
 | 결론·다음 단계 | `summary` |
+
+### Semantic component selection
+
+AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 표현으로 승격한다.
+
+| 입력 내용 | 우선 표현 | 작성 규칙 |
+| --- | --- | --- |
+| 숫자 3~4개가 핵심 | `kpi` | 숫자, delta, trend 중심. 긴 설명은 줄인다. |
+| 시간에 따른 변화 | `chart` line/area | labels와 values 길이를 맞춘다. |
+| 항목 간 수치 비교 | `chart` bar/stacked-bar | 수치가 핵심이면 table보다 chart 우선. |
+| 구성비·비율 | `chart` pie/donut | 항목이 많으면 table로 전환. |
+| 여러 속성의 행/열 비교 | `table` | headers와 rows 컬럼 수 일치. |
+| 컴포넌트·시스템 관계 | `architecture` | node/edge/zone으로 구조화. |
+| 순서·단계·처리 흐름 | `flow` | A → B → C 방향성이 핵심일 때. |
+| 양자택일·승인·권고 | `decision` | `recommendation`에 선택안을 쓴다. |
+| 현재 vs 제안 비교 | `comparison` 또는 `two-column` | 대비가 핵심이면 comparison 우선. |
+| 청중이 기억할 결론 | `summary.takeaways` | deck 또는 섹션 전체 결론. |
+| 슬라이드 내부 강조 문장 1개 | `content`/`flow`의 `callout` | slide type이 아니라 optional field. 남발 금지. |
+
+### Emphasis hierarchy
+
+| Field | 역할 |
+| --- | --- |
+| `title` | 슬라이드 결론. Action Title 원칙을 따른다. |
+| `subtitle` | 제목 아래 맥락 보완. |
+| `body` | 근거와 설명. |
+| `callout` | 해당 슬라이드에서 기억할 한 문장. |
+| `recommendation` | decision slide의 권고/선택. |
+| `takeaways` | deck 또는 섹션 전체 요약. |
+
+callout 사용 기준:
+
+- 핵심 메시지, 결론, 주의 문장, 의사결정 포인트가 1문장으로 분명할 때만 쓴다.
+- 선택/승인/권고 문장은 먼저 `decision.recommendation` 후보로 본다.
+- deck 전체 결론은 먼저 `summary.takeaways` 후보로 본다.
+- body bullet을 그대로 복사하지 않는다.
+- 권장 밀도: 6장 deck 기준 1~2장 정도. hard rule이 아니라 산만함을 막는 품질 가이드다.
+
+Icon policy:
+
+- title에 arbitrary emoji를 자동 삽입하지 않는다.
+- 아이콘은 이번 workflow에서 schema/render 대상이 아니다.
+- 향후 icon을 지원할 때도 제한된 semantic icon set을 사용하고, title 문자열보다 section_label chip 또는 title-leading icon을 우선 검토한다.
 
 ### 목적별 권장 구성
 

@@ -12,6 +12,7 @@ outputs/
 output/
 *.pptx
 !examples/results/*.pptx
+examples/results/preview/
 blueprints/
 
 # Compiled files

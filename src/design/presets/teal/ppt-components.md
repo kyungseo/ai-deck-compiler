@@ -28,6 +28,32 @@ section_label 없는 슬라이드: chip 미렌더링, title Y = 0.35" (SL.ty 기
 
 ---
 
+## Callout Bar
+
+`content` / `flow` 슬라이드에서 `callout` 필드가 있을 때 렌더링되는 하단 full-width 강조 바.
+
+| 속성 | 값 |
+| --- | --- |
+| 위치 | x=0, y=6.85", w=13.33", h=0.34" |
+| Fill | `callout-bar` (`#2D6B5E`) |
+| Text color | `callout-bar-text` (`#FFFFFF`) |
+| Font | caption 14pt, Bold, center align, valign middle |
+| Footer 억제 | callout bar 렌더 시 brand footer 미표시 |
+| 적용 조건 | `callout-bar` 토큰 존재 + `content`/`flow` slide의 `callout` field 존재 |
+
+blueprint 예시:
+
+```yaml
+- id: context
+  type: content
+  title: 온보딩 병목이 self-serve 전환을 막고 있다
+  callout: "전환 개선의 우선순위는 기능 추가보다 첫 성공 경험 단축이다."
+  body:
+    - "..."
+```
+
+---
+
 ## Title Bar
 
 모든 슬라이드 상단에 공통으로 적용.

@@ -120,6 +120,7 @@ flowchart LR
 | 기능 | 사용자 관점 |
 | --- | --- |
 | 대화식 deck 생성 | 주제·청중·메시지를 말하면 AI가 슬라이드 구조를 제안하고 초안을 만듭니다. |
+| Semantic blueprint planning | AI가 내용을 읽고 chart/kpi/table, architecture/flow, decision/summary, callout 중 적절한 표현을 고릅니다. |
 | 편집 가능한 PPTX | chart, table, shape, text가 이미지가 아닌 PowerPoint 객체로 생성됩니다. 생성 후 직접 편집할 수 있습니다. |
 | 일관된 레이아웃 | 같은 blueprint와 preset이면 같은 구조와 레이아웃 규칙으로 생성됩니다. AI가 좌표나 디자인을 즉흥 결정하지 않습니다. |
 | Preview 기반 검토 | AI가 슬라이드 PNG를 보고 텍스트 밀도, 가독성, 구성을 검토합니다. |
@@ -127,6 +128,25 @@ flowchart LR
 | 아키텍처 슬라이드 | `/generate-architecture-slide`로 자연어 설명에서 node/edge/zone을 추출해 다이어그램 슬라이드를 생성합니다. |
 | 16종 슬라이드 타입 | hero, agenda, kpi, chart, table, architecture, timeline, decision 등 발표에 필요한 타입이 미리 정의되어 있습니다. |
 | 멀티툴 지원 | Claude Code, Codex CLI/App, Claude App 세 환경에서 동일한 skill로 작동합니다. |
+
+---
+
+## Semantic Blueprint Planning
+
+AI는 자연어 요청이나 source 문서를 곧바로 bullet slide로 옮기지 않고, 먼저 의미를 구조로 바꿉니다.
+
+| 내용의 성격 | 생성되는 표현 |
+| --- | --- |
+| 핵심 숫자 3~4개 | `kpi` |
+| 시간 추세·항목 비교·구성비 | `chart` |
+| 행/열 기반 비교 | `table` |
+| 시스템 구성·의존성 | `architecture` |
+| 단계별 절차·업무 흐름 | `flow` |
+| 선택지·승인·권고안 | `decision` |
+| deck 전체 결론 | `summary.takeaways` |
+| 슬라이드 내부 핵심 문장 | `content` / `flow`의 `callout` |
+
+renderer는 여전히 deterministic합니다. AI는 `blueprint.yaml`의 의미 구조를 작성하고, 엔진은 preset과 slide type 규칙에 따라 editable PowerPoint 객체를 생성합니다.
 
 ---
 
@@ -223,6 +243,7 @@ examples/
   sample/                    # 엔지니어링 전략 발표 — hero, agenda, kpi, architecture, chart, timeline, summary, appendix
   strategy/                  # 경영진 전략 보고 — hero, agenda, content, kpi, decision, summary
   data-report/               # 분기 데이터 리뷰 — kpi, chart × 2, table, summary
+  semantic-planning/         # semantic component selection 예제 — callout, kpi, chart, architecture, decision
   results/                   # 대표 preset/theme별 blueprint, PPTX, gallery
 schemas/                     # generated JSON Schema
 ```
@@ -238,7 +259,7 @@ npm run validate -- --blueprint examples/sample/blueprint.yaml
 npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sample-v1.0.pptx
 ```
 
-현재 기준: 44개 테스트.
+현재 기준: 51개 테스트.
 
 ---
 
@@ -255,7 +276,8 @@ npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sampl
 
 ## 한계와 제약
 
-- **Design preset**: `teal`(AI 기본 추천, dark), `vivid`(secondary, dark skeleton), `modern`(light/legacy) 3종 제공. `default-modern`은 legacy alias로 지원됩니다. `vivid` 고유 요소(callout bar, legend pill)는 후속 Work 예정.
+- **Design preset**: `teal`(AI 기본 추천, dark), `vivid`(secondary, dark), `modern`(light/legacy) 3종 제공. `default-modern`은 legacy alias로 지원됩니다. `teal`/`vivid`는 callout bar를 지원하며, legend pill은 후속 후보입니다.
+- **Callout**: `teal`과 `vivid`는 content/flow slide의 `callout` field를 하단 강조 bar로 렌더링합니다. `modern`은 light tone에 맞는 별도 treatment 후보입니다.
 - **Preview**: LibreOffice + poppler 의존. Keynote, Google Slides 직접 지원 없음.
 - **AI 외부 검색**: AI-research-first mode의 실제 외부 검색은 도구 환경에 따라 제한됩니다.
 
