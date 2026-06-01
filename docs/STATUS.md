@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 (FEAT-20260601-003 Active) |
+| Last updated | 2026-06-01 (FEAT-20260601-004 Active) |
 
 ## Work Context Rule
 
@@ -21,7 +21,7 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
-| FEAT-20260601-003 | Showcase deck results — ai-deck-compiler 소개 PPTX + preset gallery 교체 | `docs/works/phase1/FEAT-20260601-003-showcase-deck-results.md` |
+| FEAT-20260601-004 | Card inner horizontal padding — 카드 내부 콘텐츠 좌우 여백 통일 | `docs/works/phase1/FEAT-20260601-004-card-inner-padding.md` |
 
 ## Blockers And Open Questions
 

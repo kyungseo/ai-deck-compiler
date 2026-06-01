@@ -232,3 +232,4 @@
 | FEAT-20260531-007 | Design Preset 고도화 — teal/vivid 추가, section_label chip, hero accent line | 2026-06-01 |
 | FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | 2026-06-01 |
 | FEAT-20260601-002 | Blueprint generation quality rules — semantic component selection + AI tool alignment | 2026-06-01 |
+| FEAT-20260601-003 | Showcase deck results — ai-deck-compiler 소개 PPTX + preset gallery 교체 | 2026-06-01 |

@@ -5,8 +5,6 @@ import { SL, CARD, hex, renderSectionHeader, renderCardBackground } from '../lay
 
 type ComparisonSlide = Extract<Slide, { type: 'comparison' }>;
 
-const colW = SL.cw / 2 - 0.15;
-
 export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
   id: 'comparison',
   supportedType: 'comparison',
@@ -20,7 +18,10 @@ export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
     renderSectionHeader(pptxSlide, slide, tokens);
     renderCardBackground(pptxSlide, tokens);
 
-    const dividerX = SL.cx + colW + 0.15;
+    const innerW = SL.cw - CARD.px * 2;
+    const colW = innerW / 2 - 0.15;
+    const leftX = SL.cx + CARD.px;
+    const dividerX = leftX + colW + 0.15;
 
     // Vertical divider
     pptxSlide.addShape('rect', {
@@ -108,7 +109,7 @@ export const comparisonTemplate: SlideTemplate<ComparisonSlide> = {
       });
     };
 
-    renderPanel(slide.left, SL.cx, true);
+    renderPanel(slide.left, leftX, true);
     renderPanel(slide.right, dividerX + 0.15, false);
   },
 };
