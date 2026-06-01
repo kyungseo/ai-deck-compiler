@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 |
+| Last updated | 2026-06-01 (FEAT-20260601-001 Done) |
 
 ## Work Context Rule
 
@@ -19,7 +19,8 @@
 
 ## Active Work
 
-*(없음)*
+| ID | Title | Work 파일 |
+| --- | --- | --- |
 
 ## Blockers And Open Questions
 
@@ -28,7 +29,10 @@
 
 ## Recent Decisions
 
-*(없음)*
+| Date | DR | Summary |
+| --- | --- | --- |
+| 2026-06-01 | DR-021 | `teal + dark` = AI workflow 기본 추천 preset. `default-modern` → `modern` rename, alias 호환 유지. |
+| 2026-06-01 | DR-022 | `examples/results/*.pptx` git 추적. 재생성 명령 README 문서화로 staleness 관리. |
 
 ## Next Actions
 

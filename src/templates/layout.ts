@@ -146,6 +146,31 @@ const ZONE_GRID: Record<Zone, [number, number]> = {
   'left':          [0, 1], 'right':         [2, 1],
 };
 
+/** Renders a full-width callout bar at slide bottom. No-op if callout-bar token absent. */
+export function renderCalloutBar(
+  s: PptxSlide,
+  callout: string,
+  tokens: ResolvedDesignTokens,
+): void {
+  const { colors: co, typography: ty } = tokens;
+  if (!co['callout-bar']) return;
+  const bg = hex(co['callout-bar']);
+  const fg = hex(co['callout-bar-text'] ?? 'FFFFFF');
+  s.addShape('rect', {
+    x: 0, y: 6.85, w: SL.w, h: 0.34,
+    fill: { color: bg }, line: { color: bg, width: 0 },
+  });
+  s.addText(callout, {
+    x: SL.mx, y: 6.85, w: SL.cw, h: 0.34,
+    fontSize: ty['caption']?.size ?? 14,
+    bold: true,
+    fontFace: ty['caption']?.font ?? 'Pretendard',
+    color: fg,
+    valign: 'middle',
+    align: 'center',
+  });
+}
+
 export function zoneCenter(zone: string): { cx: number; cy: number } {
   const entry = ZONE_GRID[zone as Zone] ?? [1, 1]; // default: center
   const [col, row] = entry;

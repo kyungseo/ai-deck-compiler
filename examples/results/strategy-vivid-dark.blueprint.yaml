@@ -26,6 +26,7 @@ slides:
     type: content
     title: Market Context
     section_label: "MARKET CONTEXT"
+    callout: "2026년은 파트너십으로 진입하고, 2027년 내재화를 재검토한다."
     body:
       - AI-native tooling이 developer workflow를 빠르게 재편하고 있으며, 현재 onboarding 모델이 이 속도를 따라가지 못하고 있다.
       - 경쟁사와의 feature gap은 빠르게 좁혀지고 있어, 차별화 포인트는 workflow depth와 신뢰로 이동해야 한다.

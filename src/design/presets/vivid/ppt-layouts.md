@@ -2,7 +2,20 @@
 
 **skeleton** — teal과 동일한 레이아웃 구조를 사용한다. 색상 토큰만 vivid 계열로 다르다.
 
-A 시리즈 고유 요소(callout bar, chart legend pill)는 후속 Work에서 구현한다.
+A 시리즈 고유 요소 중 callout bar는 구현 완료. chart legend pill은 후속 Work 예정.
+
+## Callout Bar 레이아웃
+
+content / flow 슬라이드에서 `callout` 필드가 있을 때 카드 하단에 full-width bar 렌더링.
+
+| 항목 | 값 |
+| --- | --- |
+| x | 0 |
+| y | 6.85" |
+| w | 13.33" (full-width) |
+| h | 0.34" |
+| Fill | `callout-bar` token (`#6957E8`) |
+| Footer | callout bar 렌더 시 brand footer 억제
 
 ---
 
