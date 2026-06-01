@@ -21,6 +21,7 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
+| FEAT-20260601-008 | Cross-platform first-run setup | docs/works/phase1/FEAT-20260601-008-cross-platform-setup.md |
 
 ## Blockers And Open Questions
 

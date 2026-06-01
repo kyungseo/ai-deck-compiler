@@ -587,6 +587,13 @@ Pretendard 폰트가 설치되지 않으면 시스템 fallback 폰트로 렌더�
 ### `npm run preview`가 실패해요
 
 LibreOffice와 `pdftoppm`(poppler) 설치 여부를 확인하세요.
+
+| OS | LibreOffice | pdftoppm (poppler) |
+| --- | --- | --- |
+| macOS | `brew install --cask libreoffice` | `brew install poppler` |
+| Windows | [libreoffice.org/download](https://www.libreoffice.org/download/) | [poppler-windows releases](https://github.com/oschwartz10612/poppler-windows/releases) — 압축 해제 후 `bin/` 폴더를 PATH에 추가 |
+| Ubuntu/Debian | `sudo apt install libreoffice` | `sudo apt install poppler-utils` |
+
 설치되지 않은 환경에서는 PowerPoint/Keynote에서 직접 열어 확인하세요.
 
 ### `npm run validate`가 오류를 내요

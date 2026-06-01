@@ -138,6 +138,11 @@ function parseArgs(argv: string[]): Args {
     process.exit(1);
   }
 
+  if (!basename(resolved).toLowerCase().endsWith('.pptx')) {
+    console.error(`[오류] .pptx 파일이 필요합니다: ${resolved}`);
+    process.exit(1);
+  }
+
   return {
     pptxPath: resolved,
     outDir:   outDir ? resolve(outDir) : join(dirname(resolved), 'preview'),
@@ -181,7 +186,8 @@ function main() {
 
   if (hasError) process.exit(1);
 
-  const stem = basename(pptxPath, '.pptx');
+  const pptxName = basename(pptxPath);
+  const stem = pptxName.slice(0, pptxName.length - '.pptx'.length);
   console.log(`Preview: ${stem}`);
   console.log(`LibreOffice: ${soffice}`);
   console.log(`pdftoppm:    ${pdftoppm}`);
