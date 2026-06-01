@@ -44,26 +44,29 @@ export function renderSectionHeader(
   tokens: ResolvedDesignTokens,
 ): void {
   const { typography: ty, colors: co } = tokens;
-  const accent = hex(co['accent'] ?? '2563EB');
   const primary = hex(co['text-primary'] ?? '111827');
   const secondary = hex(co['text-secondary'] ?? '374151');
   const font = ty['title']?.font ?? 'Pretendard';
 
   if (opts.section_label) {
-    // Small accent square marker
-    s.addShape('rect', {
-      x: SL.mx, y: 0.28, w: 0.12, h: 0.14,
-      fill: { color: accent },
-      line: { color: accent, width: 0 },
+    const chipBg = hex(co['chip-bg'] ?? co['accent'] ?? '2D6B5E');
+    const chipText = hex(co['chip-text'] ?? 'FFFFFF');
+    const chipW = Math.min(Math.max(1.0, opts.section_label.length * 0.10 + 0.40), 4.0);
+    s.addShape('roundRect', {
+      x: SL.mx, y: 0.20, w: chipW, h: 0.28,
+      fill: { color: chipBg },
+      line: { color: chipBg, width: 0 },
+      rectRadius: 0.04,
     });
-    // Section label text
     s.addText(opts.section_label.toUpperCase(), {
-      x: SL.mx + 0.22, y: 0.22, w: 9.0, h: 0.35,
+      x: SL.mx + 0.14, y: 0.20, w: chipW - 0.28, h: 0.28,
       fontSize: 11,
       bold: true,
       fontFace: ty['label']?.font ?? 'Pretendard',
-      color: accent,
+      color: chipText,
       valign: 'middle',
+      align: 'left',
+      wrap: false,
     });
   }
 
@@ -143,13 +146,38 @@ const ZONE_GRID: Record<Zone, [number, number]> = {
   'left':          [0, 1], 'right':         [2, 1],
 };
 
+/** Renders a full-width callout bar at slide bottom. No-op if callout-bar token absent. */
+export function renderCalloutBar(
+  s: PptxSlide,
+  callout: string,
+  tokens: ResolvedDesignTokens,
+): void {
+  const { colors: co, typography: ty } = tokens;
+  if (!co['callout-bar']) return;
+  const bg = hex(co['callout-bar']);
+  const fg = hex(co['callout-bar-text'] ?? 'FFFFFF');
+  s.addShape('rect', {
+    x: 0, y: 6.85, w: SL.w, h: 0.34,
+    fill: { color: bg }, line: { color: bg, width: 0 },
+  });
+  s.addText(callout, {
+    x: SL.mx, y: 6.85, w: SL.cw, h: 0.34,
+    fontSize: ty['caption']?.size ?? 14,
+    bold: true,
+    fontFace: ty['caption']?.font ?? 'Pretendard',
+    color: fg,
+    valign: 'middle',
+    align: 'center',
+  });
+}
+
 export function zoneCenter(zone: string): { cx: number; cy: number } {
   const entry = ZONE_GRID[zone as Zone] ?? [1, 1]; // default: center
   const [col, row] = entry;
   const cellW = SL.cw / 3;
-  const cellH = SL.ch / 3;
+  const cellH = CARD.ih / 3; // anchor to card inner area so top-row nodes stay inside card
   return {
     cx: SL.cx + cellW * col + cellW / 2,
-    cy: SL.cy + cellH * row + cellH / 2,
+    cy: CARD.iy + cellH * row + cellH / 2,
   };
 }

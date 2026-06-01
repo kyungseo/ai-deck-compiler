@@ -1,0 +1,96 @@
+deck:
+  title: 2026 Product Strategy
+  design: vivid
+  theme: dark
+  version: "1.0"
+  audience: Executive Team
+
+slides:
+  - id: hero
+    type: hero
+    title: 2026 Product Strategy
+    subtitle: 선택과 집중, 차별화, 지속 가능한 성장
+    cta: Product · Engineering · Design
+
+  - id: agenda
+    type: agenda
+    title: Agenda
+    items:
+      - 시장 현황과 Adoption Signal
+      - 2026년 전략 우선순위
+      - 핵심 과제와 실행 순서
+      - 투자 및 인력 배분
+      - 오늘의 의사결정 사항
+
+  - id: context
+    type: content
+    title: Market Context
+    section_label: "MARKET CONTEXT"
+    callout: "2026년은 파트너십으로 진입하고, 2027년 내재화를 재검토한다."
+    body:
+      - AI-native tooling이 developer workflow를 빠르게 재편하고 있으며, 현재 onboarding 모델이 이 속도를 따라가지 못하고 있다.
+      - 경쟁사와의 feature gap은 빠르게 좁혀지고 있어, 차별화 포인트는 workflow depth와 신뢰로 이동해야 한다.
+      - Enterprise 수요가 본격화되고 있으며, compliance, SSO, audit logging은 이제 기본 요건이다.
+      - Self-serve 전환율은 정체 상태이며, onboarding friction이 가장 큰 conversion blocker로 확인됐다.
+      - AI agent 기반 워크플로우 자동화가 mainstream으로 진입하면서 productivity tool 시장이 빠르게 재편되고 있다.
+      - 글로벌 SaaS pricing model이 seat-based에서 usage-based로 전환되는 흐름이 가속화되고 있다.
+
+  - id: kpis
+    type: kpi
+    title: Current Position
+    section_label: "CURRENT STATE"
+    kpis:
+      - label: Monthly Active Users
+        value: "38K"
+        delta: "+42% YoY"
+        trend: up
+      - label: Enterprise Accounts
+        value: "124"
+        delta: "+31% YoY"
+        trend: up
+      - label: Self-serve Conversion
+        value: "6.2%"
+        delta: "-1.1% vs target"
+        trend: down
+      - label: Net Revenue Retention
+        value: "118%"
+        delta: "+3% YoY"
+        trend: up
+
+  - id: decision
+    type: decision
+    title: Strategic Decision — Build vs. Partner
+    section_label: "DECISION"
+    question: Compliance 모듈을 자체 개발할 것인가, 전문 벤더와 협력할 것인가?
+    options:
+      - label: Build In-House
+        pros:
+          - Roadmap과 pricing에 대한 완전한 통제권 확보
+          - 기존 data model과 깊은 통합 가능
+          - Revenue share 없음
+        cons:
+          - Feature parity까지 6–9개월 소요
+          - Senior security engineer 2명 추가 필요
+      - label: Partner with Vendor
+        pros:
+          - 8주 내 production-ready 상태 달성 가능
+          - SOC 2 certification 유지를 벤더가 담당
+        cons:
+          - Revenue share 발생 (예상 12–15%)
+          - Vendor roadmap 의존성
+    recommendation: 2026년은 파트너십으로 진입하고, 2027년 내재화 여부를 재검토한다.
+
+  - id: summary
+    type: summary
+    title: Strategic Priorities — 2026
+    section_label: "WRAP-UP"
+    body:
+      - "Roadmap을 세 가지 핵심 과제로 집중한다: onboarding 개선, enterprise readiness, workflow depth."
+      - Enterprise deal blocker는 partner-first compliance path로 먼저 해소하고, 2027년 내재화 옵션을 유지한다.
+      - 분기별 리뷰 지표는 activation, conversion, expansion 세 가지로 단순화한다.
+      - 팀 역량과 시장 속도를 고려한 현실적인 12개월 실행 계획을 수립한다.
+    takeaways:
+      - Self-serve onboarding 개선으로 전환 성장의 병목을 제거한다
+      - Compliance partnership으로 Enterprise deal blocker를 해소하고 tier를 가속화한다
+      - 열 개의 과제보다 세 개의 깊은 과제에 집중한다
+      - Usage-based pricing 전환 로드맵을 수립하고 장기 경쟁력을 확보한다

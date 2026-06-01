@@ -1,6 +1,6 @@
 deck:
   title: Platform Modernization Strategy
-  design: default-modern
+  design: teal
   theme: dark
   version: "1.0"
   audience: Engineering Leadership

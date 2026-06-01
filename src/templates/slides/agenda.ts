@@ -12,6 +12,7 @@ export const agendaTemplate: SlideTemplate<AgendaSlide> = {
   render(slide: AgendaSlide, tokens: ResolvedDesignTokens, pptxSlide: PptxSlide) {
     const ty = tokens.typography;
     const co = tokens.colors;
+    const accentText = hex(co['accent-text'] ?? co['accent'] ?? '2563EB');
 
     renderSectionHeader(pptxSlide, slide, tokens);
     renderCardBackground(pptxSlide, tokens);
@@ -51,7 +52,7 @@ export const agendaTemplate: SlideTemplate<AgendaSlide> = {
         fontSize: 13,
         bold: true,
         fontFace: ty['label']?.font ?? 'Pretendard',
-        color: hex(co['accent'] ?? '2563EB'),
+        color: accentText,
         valign: 'middle',
       });
 

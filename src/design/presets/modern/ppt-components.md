@@ -1,4 +1,4 @@
-# default-modern Components
+# modern Components
 
 컴파일러가 렌더링하는 재사용 UI 컴포넌트 명세.
 모든 좌표는 inches 단위.

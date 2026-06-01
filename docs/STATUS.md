@@ -1,4 +1,4 @@
-# STATUS.md — Presentation Compiler
+# STATUS.md — ai-deck-compiler
 
 ## Current State
 
@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-05-30 |
+| Last updated | 2026-06-01 (FEAT-20260601-001 Done) |
 
 ## Work Context Rule
 
@@ -19,7 +19,7 @@
 
 ## Active Work
 
-| ID | Title | Work File |
+| ID | Title | Work 파일 |
 | --- | --- | --- |
 
 ## Blockers And Open Questions
@@ -29,9 +29,11 @@
 
 ## Recent Decisions
 
-*(없음)*
+| Date | DR | Summary |
+| --- | --- | --- |
+| 2026-06-01 | DR-021 | `teal + dark` = AI workflow 기본 추천 preset. `default-modern` → `modern` rename, alias 호환 유지. |
+| 2026-06-01 | DR-022 | `examples/results/*.pptx` git 추적. 재생성 명령 README 문서화로 staleness 관리. |
 
 ## Next Actions
 
-1. `skill-review-deck` 착수 — 생성된 deck 구조·메시지·디자인 검토 AI skill (P1)
-2. Public 전환 시: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020
+1. Public 전환 시: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020

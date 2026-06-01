@@ -1,4 +1,4 @@
-# default-modern Design System
+# modern Design System
 
 **방향:** modern, minimal, technical, clean, premium, AI-native
 
@@ -28,7 +28,7 @@
 | title | 40pt | Bold | Slide title |
 | subtitle | 24pt | Regular | Hero subtitle |
 | section-title | 32pt | Bold | Section divider headline |
-| body | 18pt | Regular | Bullet list, paragraph text |
+| body | 16pt | Regular | Bullet list, paragraph text |
 | caption | 14pt | Regular | Labels, footnotes, chart legend |
 | label | 12pt | Regular | Badge text, small UI elements |
 | kpi-value | 52pt | Bold | KPI main number |
@@ -45,21 +45,26 @@
 
 | Token | Hex | Usage |
 | --- | --- | --- |
-| background | `#FFFFFF` | Slide background |
-| surface | `#F8F9FA` | Card, panel background |
+| background | `#F9F9F9` | Slide background |
+| surface | `#F0F0F2` | Card, panel background |
+| card-bg | `#FFFFFF` | Content card background |
+| card-item-bg | `#EEF2FF` | Inner item background |
 | border | `#E5E7EB` | Divider, card outline |
 | text-primary | `#111827` | Title, heading |
 | text-secondary | `#374151` | Body text |
 | text-muted | `#6B7280` | Caption, placeholder |
-| accent | `#2563EB` | Primary CTA, highlight |
+| accent | `#4F46E5` | Filled UI, primary highlight |
+| accent-text | `#4F46E5` | Text highlight |
 | accent-alt | `#7C3AED` | Secondary accent |
+| chip-bg | `#4F46E5` | Section label chip background |
+| chip-text | `#FFFFFF` | Section label chip text |
 | node-fill | `#EFF6FF` | Architecture node background |
 | node-text | `#1D4ED8` | Architecture node label |
 | node-border | `#93C5FD` | Architecture node outline |
 | group-fill | `#F9FAFB` | Diagram group background |
 | group-border | `#D1D5DB` | Diagram group dashed border |
 | edge | `#9CA3AF` | Diagram edge line |
-| chart-0…5 | `#2563EB` `#7C3AED` `#059669` `#DC2626` `#D97706` `#0891B2` | Chart series colors |
+| chart-0…5 | `#4F46E5` `#7C3AED` `#059669` `#DC2626` `#D97706` `#0891B2` | Chart series colors |
 
 ---
 
@@ -67,21 +72,26 @@
 
 | Token | Hex | Usage |
 | --- | --- | --- |
-| background | `#0F172A` | Slide background |
-| surface | `#1E293B` | Card, panel background |
+| background | `#0E1117` | Slide background |
+| surface | `#161B27` | Card, panel background |
+| card-bg | `#1C2333` | Content card background |
+| card-item-bg | `#1E2D4A` | Inner item background |
 | border | `#334155` | Divider, card outline |
 | text-primary | `#F1F5F9` | Title, heading |
 | text-secondary | `#CBD5E1` | Body text |
-| text-muted | `#64748B` | Caption, placeholder |
-| accent | `#60A5FA` | Primary CTA, highlight |
+| text-muted | `#8A8A9A` | Caption, placeholder |
+| accent | `#4F46E5` | Filled UI, primary highlight |
+| accent-text | `#818CF8` | Text highlight |
 | accent-alt | `#A78BFA` | Secondary accent |
+| chip-bg | `#4F46E5` | Section label chip background |
+| chip-text | `#FFFFFF` | Section label chip text |
 | node-fill | `#1E3A5F` | Architecture node background |
 | node-text | `#93C5FD` | Architecture node label |
 | node-border | `#3B82F6` | Architecture node outline |
 | group-fill | `#1E293B` | Diagram group background |
 | group-border | `#475569` | Diagram group dashed border |
 | edge | `#64748B` | Diagram edge line |
-| chart-0…5 | `#60A5FA` `#A78BFA` `#34D399` `#F87171` `#FBBF24` `#22D3EE` | Chart series colors |
+| chart-0…5 | `#818CF8` `#A78BFA` `#34D399` `#F87171` `#FBBF24` `#22D3EE` | Chart series colors |
 
 ---
 

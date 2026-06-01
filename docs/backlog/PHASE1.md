@@ -87,28 +87,8 @@
 
 ---
 
-**[skill-generate-architecture-slide]** | Priority: P1 | Scope: 기술 아키텍처 설명 → diagram-spec → architecture slide blueprint 생성 skill
-
-- Done Criteria:
-  - `skills/generate-architecture-slide.md` 작성
-  - node kind, zone 배치, edge 관계를 자연어 설명에서 추출하는 절차 포함
-  - 생성된 diagram spec을 blueprint.yaml architecture slide로 변환하는 규칙 포함
-- Verification: "API Gateway → Service → DB 구조" 설명 입력 시 유효한 architecture slide blueprint 생성
-- Preconditions: P1 compiler 완료 (✅)
-
 ---
 
-**[examples-expanded]** | Priority: P1 | Scope: examples/strategy/, examples/data-report/ 추가 및 각 예제에 README 포함
-
-- Done Criteria:
-  - `examples/strategy/blueprint.yaml` — 전략 보고 형식 (hero, agenda, content, kpi, decision, summary)
-  - `examples/data-report/blueprint.yaml` — 데이터 리포트 형식 (kpi, chart × 2, table, summary)
-  - 각 예제 디렉토리에 README.md 포함 (사용법, 슬라이드 구성 설명)
-  - 예제 PPTX 정상 생성 확인
-- Verification: `npm run deck` 각 예제 정상 실행
-- Preconditions: P1 compiler 완료 (✅)
-
----
 
 ### P2 — 공개 repo 완성도 및 preset 확장
 
@@ -163,6 +143,8 @@
 
 ---
 
+---
+
 ### P3 — 장기 확장
 
 ---
@@ -204,6 +186,7 @@
 **[cli-convert-design]** | Priority: P3 | Scope: `npm run convert-design` — design.md → ppt-design.md CLI |
 **[mermaid-fallback]** | Priority: P3 | Scope: draft/appendix용 Mermaid 렌더링 fallback |
 **[pef-cli-global]** | Priority: P3 | Scope: npm package 공개 및 `pef` 전역 설치 |
+**[export-pdf-hardening]** | Priority: P3 | Scope: `export-pdf.ts` edge case 강화 — `.pptx` 확장자 미검증 시 친절한 오류 메시지, 대문자 `.PPTX` 처리 |
 
 ---
 
@@ -212,3 +195,14 @@
 | ID | Title | actual_end |
 | --- | --- | --- |
 | FEAT-20260530-001 | Work 2 — default-modern preset + P1 slide render + PPTX CLI | 2026-05-30 |
+| vitest-security-upgrade | vitest 3.x 업그레이드 — Dependabot 취약점 2건 해소 | 2026-05-31 |
+| examples-expanded | examples/strategy + examples/data-report 추가 | 2026-05-31 |
+| repo-rebranding | ai-deck-compiler 리브랜딩 — README 업데이트, GitHub remote/About/Topics 설정, 디렉터리 정리 | 2026-05-31 |
+| FEAT-20260531-006 | generate-architecture-slide skill — 자연어 설명 → architecture slide diagram spec 생성 | 2026-05-31 |
+| skill-create-deck | create-deck end-to-end interactive workflow skill | 2026-05-31 |
+| skill-generate-blueprint | generate-blueprint skill 문서 | 2026-05-31 |
+| p2-slide-types | P2 slide 6종 구현 — timeline, flow, decision, comparison, section-divider, appendix | 2026-05-31 |
+| skill-review-deck | review-deck AI skill 문서 | 2026-05-31 |
+| pptx-document-metadata | PPTX 문서 속성 설정 — title/author/company/revision (compiler.ts 구현 완료) | 2026-05-31 |
+| FEAT-20260531-007 | Design Preset 고도화 — teal/vivid 추가, section_label chip, hero accent line | 2026-06-01 |
+| FEAT-20260601-001 | vivid preset 고도화 — callout bar + chart palette 심화 | 2026-06-01 |

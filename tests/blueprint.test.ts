@@ -3,7 +3,7 @@ import { BlueprintSchema } from '../src/schema/blueprint';
 
 const validDeck = {
   title: 'Test Deck',
-  design: 'default-modern',
+  design: 'modern',
   theme: 'dark' as const,
   version: '1.0',
 };
@@ -120,7 +120,7 @@ describe('BlueprintSchema', () => {
   describe('invalid blueprints', () => {
     it('fails on missing deck.title', () => {
       const result = BlueprintSchema.safeParse({
-        deck: { design: 'default-modern', theme: 'dark' },
+        deck: { design: 'modern', theme: 'dark' },
         slides: [{ id: 's1', type: 'hero', title: 'T' }],
       });
       expect(result.success).toBe(false);
