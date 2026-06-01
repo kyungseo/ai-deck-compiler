@@ -9,8 +9,9 @@ alwaysApply: true
 Default verification commands:
 
 - `git diff --check`
-- `bash -n scripts/create-harness.sh`
-- `./scripts/create-harness.sh --dry-run --profile generic <name> <target-dir>`
+- `npm run typecheck`
+- `npm test`
+- `npm run validate -- --blueprint examples/sample/blueprint.yaml`
 
 MUST:
 
@@ -37,5 +38,7 @@ NEVER:
 ## Verification Commands
 
 - `git diff --check` — whitespace and patch hygiene
-- `bash -n scripts/create-harness.sh` — scaffold shell syntax
-- `./scripts/create-harness.sh --dry-run --profile generic sample /tmp/sample` — generic scaffold plan check
+- `npm run typecheck` — TypeScript compile check
+- `npm test` — unit and snapshot tests
+- `npm run validate -- --blueprint examples/sample/blueprint.yaml` — sample blueprint schema validation
+- `npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sample.pptx` — deck generation smoke test when renderer/schema changes

@@ -8,6 +8,19 @@ disable-model-invocation: true
 Work Done 처리가 끝나면 다음 작업을 계속 진행하면 된다.
 세션 전체 요약이 필요하면 이후에 `/done`을 실행한다.
 
+## Step 0 — Mandatory Gate
+
+Done 처리 전에 아래를 먼저 확인하고 결과를 보고한다.
+
+```bash
+git branch --show-current
+```
+
+- `docs/STATUS.md`의 Active Work와 대상 Work 파일이 일치하는지 확인한다.
+- `docs/GIT-WORKFLOW.md`가 있으면 branch/commit/PR finalization 규칙을 따른다.
+- Work 상태, Work index, STATUS pointer 변경은 Approval Matrix state gate 이후에만 수행한다.
+- `/close`는 Work lifecycle 처리이며 commit/PR/merge gate를 대체하지 않는다.
+
 ## Work Done Processing
 
 **1. 대상 Work 확인**

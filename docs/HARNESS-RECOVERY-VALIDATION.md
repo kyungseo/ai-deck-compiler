@@ -98,4 +98,4 @@ enforcement는 세 층으로 분리한다.
 
 `tools/git-hooks/pre-commit`은 harness source repo에서만 운영한다.
 develop/main에서 protected files 직접 staged 시 WARNING 출력 (exit 0).
-scaffold product repo에는 기본 미포함 — `docs/HARNESS-MAINTAINER-GUIDE.md` §10 참조.
+scaffold product repo에는 기본 미포함 — source workflow repo의 maintainer guide를 참조한다.

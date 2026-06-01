@@ -301,7 +301,7 @@ npm run validate -- --blueprint examples/sample/blueprint.yaml
 npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sample-v1.0.pptx
 ```
 
-현재 기준: 51개 테스트.
+현재 기준: 57개 테스트.
 
 ---
 
@@ -329,7 +329,6 @@ npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sampl
 ## 기여
 
 버그 리포트와 기능 제안은 [GitHub Issues](https://github.com/kyungseo/ai-deck-compiler/issues)에서 환영합니다.
-기여 가이드(`CONTRIBUTING.md`)는 준비 중입니다.
 
 ---
 

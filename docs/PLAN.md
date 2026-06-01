@@ -3,6 +3,12 @@
 > 요약: `docs/PLAN-SUMMARY.md`
 > 원본 프로젝트 정의: `temp/work-plans/10-ai-native-pt-engineering-framework-3.md`
 
+> **Public release note (2026-06-01):**
+> 이 문서는 Phase 1 구축 계획과 설계 근거를 보존하는 상세 기록이다.
+> public 전환 직전에는 완료된 구축 계획을 archive 대상으로 분류하고,
+> 이후 active plan은 `docs/PLAN-SUMMARY.md`와 `docs/backlog/PHASE1.md`의 maintenance phase 기준으로 운영한다.
+> 새 작업 후보는 showcase/docs/quality/preset/CLI/export 중심의 유지보수 backlog로 등록한다.
+
 ---
 
 ## 목표
@@ -444,7 +450,7 @@ src/design/presets/{preset-name}/
 | CLI: validate, deck, schema | ✅ 완료 |
 | CLI: preview (PPTX → PNG, 선택 설치) | ✅ 완료 |
 | 테스트 44개 | ✅ 완료 |
-| Skills: create-deck, generate-blueprint, review-deck | ✅ 완료 |
+| Skills: create-deck, review-deck, export-pdf, generate-architecture-slide | ✅ 완료 |
 | 멀티툴 product skill routing (Claude Code / Codex / Claude 채팅) | ✅ 완료 |
 | README, SYSTEM-MANUAL, USER-MANUAL | ✅ 완료 |
 | Preset-aware deck creation + metadata/source input workflow | ✅ 완료 |

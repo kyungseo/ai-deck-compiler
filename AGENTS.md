@@ -3,6 +3,17 @@
 Codex entry point for this repository.
 Keep this file thin. Global behavior principles live in `docs/BEHAVIOR-PRINCIPLES.md`. Shared operating rules live in `docs/AGENT-WORKFLOW.md`.
 
+## Non-Negotiable Preflight
+
+Before planning, editing, committing, opening a PR, or merging:
+
+1. Check the current branch.
+2. Read `docs/STATUS.md` Current State, Active Work, Blockers And Open Questions, and Next Actions.
+3. If Active Work exists, load that Work file before proposing a different task.
+4. If `docs/GIT-WORKFLOW.md` exists, follow its branch, PR base, merge, and commit rules.
+5. If the task changes workflow, command, rule, prompt, status, backlog, or Work files, treat it as L2 unless the active Work says otherwise.
+6. Do not change state files, commit, create PRs, or merge without passing the Approval Matrix gate.
+
 ## Entry Contract
 
 MUST:
@@ -11,7 +22,7 @@ MUST:
 - Read and follow `docs/BEHAVIOR-PRINCIPLES.md` at session start for global behavioral principles that apply to all tasks.
 - Read and follow `docs/AGENT-WORKFLOW.md` at session start for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
-- Do not check `docs/BOOTSTRAP.md` just because it exists; use it only when `docs/STATUS.md` Next Actions explicitly points to scaffold bootstrap/onboarding work.
+- Bootstrap/onboarding is complete for this repo; if scaffold adoption guidance is needed, refer to the source workflow repo instead of local bootstrap files.
 - Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
 - Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
 - When a Claude command is relevant, follow the same procedure manually.

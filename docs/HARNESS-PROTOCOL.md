@@ -4,7 +4,8 @@
 전역 행동 원칙은 `docs/BEHAVIOR-PRINCIPLES.md`를 따른다.
 세션 중 빠른 실행 규칙은 `docs/HARNESS-QUICK-REFERENCE.md`, 공통 운영 규칙은 `docs/AGENT-WORKFLOW.md`, 상세 판단은 이 문서를 따른다.
 
-`docs/WORKFLOW-MANUAL.md`는 사람이 읽는 사용자 매뉴얼이다.
+이 repo는 workflow 사용자 매뉴얼을 중복 유지하지 않는다.
+Product-facing overview는 `README.md`를, workflow manual은 source workflow repo인 `ai-workflow-harness`를 참조한다.
 Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, 이 문서다.
 
 ## 1. Purpose
@@ -39,15 +40,11 @@ Agent 실행 규칙의 원본은 `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORK
 | `docs/BEHAVIOR-PRINCIPLES.md` | 전역 행동 원칙 |
 | `docs/AGENT-WORKFLOW.md` | 도구 공통 운영 규칙 |
 | `docs/STATUS.md` | 현재 상태 live board |
-| `docs/BOOTSTRAP.md` | `STATUS.md` Next Actions가 scaffold bootstrap/onboarding을 명시할 때 사용하는 project identity, production 성격, backlog, example pack setup checklist |
-| `docs/SCAFFOLD-BOOTSTRAP.md` | source repository의 scaffold onboarding 설계 기준 |
 | `docs/HARNESS-QUICK-REFERENCE.md` | 일상 실행 카드 |
 | `docs/HARNESS-PROTOCOL.md` | Agent 실행 상세 프로토콜 |
 | `docs/backlog/PHASE{n}.md` | product/Phase{n} 후보 작업 |
 | `docs/backlog/HARNESS.md` | harness, command/rule, automation 후보 |
 | `docs/PLAN.md` | WHY, Phase/아키텍처 근거 |
-| `docs/HARNESS-ARCHITECTURE.md` | WHAT, 현재 아키텍처 |
-| `docs/HARNESS-MAINTAINER-GUIDE.md` | HOW, 유지보수 절차 |
 | `docs/decisions/` | 결정 기록 |
 | `docs/reports/` | 보고서, review package, decision brief |
 | `docs/presentations/` | 발표자료, deck, slide source |
@@ -163,9 +160,9 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 | 큰 작업 세부 분해 | `docs/works/{category}/{ID}-{topic}.md` |
 | 작업 우선순위·아이디어·반복 리스크 검토 | `docs/retrospectives/` |
 | 과거 이력 | `docs/archive/` |
-| user-facing workflow 변경 또는 cascade 감사 | `docs/WORKFLOW-MANUAL.md` 관련 섹션 |
+| user-facing workflow 변경 또는 cascade 감사 | `README.md`와 source workflow repo manual의 관련 섹션 |
 
-`docs/WORKFLOW-MANUAL.md`는 평시 AI 실행 규칙 로드 대상이 아니다.
+User-facing 문서는 평시 AI 실행 규칙 로드 대상이 아니다.
 사용자가 매뉴얼 검토를 요청했거나 user-facing workflow 변경/cascade 감사가 필요할 때만 확인한다.
 
 ### Anti-Patterns
@@ -174,7 +171,7 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 - 모든 회고를 먼저 읽지 않는다.
 - 과거 이력이 필요하지 않은데 archive를 열지 않는다.
 - PLAN-SUMMARY로 충분한데 PLAN 전체를 읽지 않는다.
-- 실행 규칙 확인만 필요한데 `docs/WORKFLOW-MANUAL.md` 전체를 읽지 않는다.
+- 실행 규칙 확인만 필요한데 product-facing/user-facing 문서 전체를 읽지 않는다.
 - 동일 문서를 반복해서 읽지 않는다.
 
 ### Retrospective Loading
@@ -207,8 +204,8 @@ AI Workflow Harness는 적용 대상 repository에 Product track과 Harness trac
 | 확정된 기술 결정 | `docs/decisions/DR-*.md` |
 | 발표/보고 산출물 | `docs/presentations/` 또는 `docs/reports/` |
 | 미결 질문 | `docs/STATUS.md` Blockers/OQ |
-| 현재 시스템 구조 | `docs/HARNESS-ARCHITECTURE.md` |
-| 유지보수 절차 | `docs/HARNESS-MAINTAINER-GUIDE.md` |
+| 현재 시스템 구조 | `docs/SYSTEM-MANUAL.md`, `docs/PLAN-SUMMARY.md` |
+| 유지보수 절차 | `docs/SYSTEM-MANUAL.md` |
 | 완료된 Phase 이력 | `docs/archive/` |
 
 새 항목 등록은 `/register`로 수행한다. 긴급도와 성격에 따라 위 위치 중 적절한 곳으로 라우팅된다.
@@ -322,10 +319,8 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | `docs/reports/` | 보고서, review package, decision brief |
 | `docs/presentations/` | 발표자료, deck, slide source |
 | `docs/HARNESS-PROTOCOL.md` | Agent 실행 상세 프로토콜 |
-| `docs/WORKFLOW-MANUAL.md` | 사용자용 워크플로우 매뉴얼 |
+| `README.md` | public-facing quick start와 repo 소개 |
 | `docs/PLAN.md` | WHY |
-| `docs/HARNESS-ARCHITECTURE.md` | WHAT |
-| `docs/HARNESS-MAINTAINER-GUIDE.md` | HOW |
 | `docs/GIT-WORKFLOW.md` | Git 브랜치 전략, release gate, commit format (source repo) |
 | `docs/archive/` | 완료된 이력 |
 | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 기록 |
@@ -349,8 +344,8 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 | --- | --- | --- |
 | Canonical AI operations | `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md`, `docs/HARNESS-QUICK-REFERENCE.md` | Agent 실행 규칙의 현재 기준 |
 | Live state and trackers | `docs/STATUS.md`, `docs/backlog/`, `docs/works/`, `docs/decisions/` | 현재 상태, 후보, Work SSoT, 결정 근거 |
-| Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/HARNESS-ARCHITECTURE.md`, `docs/HARNESS-MAINTAINER-GUIDE.md`, `docs/GIT-WORKFLOW.md` (source repo only) | project/harness 구조와 유지보수 지식 |
-| User-facing workflow docs | `docs/WORKFLOW-MANUAL.md` | 사람이 읽는 매뉴얼. 평시 Agent 자동 로드 대상 아님 |
+| Project and architecture docs | `docs/PLAN-SUMMARY.md`, `docs/PLAN.md`, `docs/SYSTEM-MANUAL.md`, `docs/GIT-WORKFLOW.md` | project/harness 구조와 유지보수 지식 |
+| User-facing workflow docs | `README.md`, source workflow repo manual | product-facing overview와 workflow manual. 평시 Agent 자동 로드 대상 아님 |
 | Historical and evaluation docs | `docs/archive/`, `docs/retrospectives/`, reference-only plans | 완료 이력, snapshot, 시점별 평가, 완료된 계획의 참조 기록 |
 | Troubleshooting docs | `docs/troubleshooting/` | 증상 -> 원인 -> 조치 패턴의 재사용 가능한 incident record |
 | Artifacts | `docs/reports/`, `docs/presentations/` | `/doc` 산출물. source traceability와 version naming 유지 |
@@ -359,8 +354,7 @@ CREATE -> UPDATE -> LINK -> VALIDATE -> ARCHIVE
 ### Update Rules
 
 - 현재 상태가 바뀌면 `STATUS.md` 갱신 여부를 확인한다.
-- 구조가 바뀌면 `HARNESS-ARCHITECTURE.md` 업데이트를 제안한다.
-- 유지보수 절차가 바뀌면 `HARNESS-MAINTAINER-GUIDE.md` 업데이트를 제안한다.
+- 구조나 유지보수 절차가 바뀌면 `docs/SYSTEM-MANUAL.md` 또는 `docs/PLAN-SUMMARY.md` 업데이트를 제안한다.
 - 결정 근거가 생기면 DR 생성을 제안한다.
 - 완료된 Phase 상세는 archive로 이동한다.
 - 비자명 이슈(환경 문제, 비직관적 원인)가 해결되면 `docs/troubleshooting/`에 기록을 제안한다.
@@ -421,7 +415,7 @@ cascade 감사 시 `docs/retrospectives/README.md` 인덱스를 참조하여 최
 | T3 | Phase 완료 또는 새 Phase 시작 | STATUS/PLAN archive |
 | T4 | 큰 작업 분해 필요 | Work 파일 생성 제안 |
 | T5 | PLAN 영향 결정 | PLAN/summary/rules 관련 문서 확인 |
-| T6 | 구조/흐름 구현 변경 | HARNESS-ARCHITECTURE/HARNESS-MAINTAINER-GUIDE 확인 |
+| T6 | 구조/흐름 구현 변경 | `docs/SYSTEM-MANUAL.md` / `docs/PLAN-SUMMARY.md` 확인 |
 | T7 | workflow rule/command 변경 | `docs/HARNESS-PROTOCOL.md` 업데이트 |
 | T8 | 비자명 이슈 해결 | `docs/troubleshooting/` 기록 제안 |
 | T9 | 발표/보고 산출물 생성 | source traceability, output path, STATUS/backlog 참조 필요 여부 확인 |
@@ -476,10 +470,9 @@ Cascade는 자동 실행이 아니라 제안과 검증 대상이다.
 | `.claude/rules/*.md` 또는 `.cursor/rules/*.mdc` | 반대 tool rule, `docs/AGENT-WORKFLOW.md`, `docs/HARNESS-PROTOCOL.md` |
 | `.codex/hooks.json` | `AGENTS.md`, `docs/HARNESS-PROTOCOL.md` hook 관련 섹션 |
 | `prompts/*session-start.md` | `prompts/README.md`, `AGENTS.md`, `CLAUDE.md`, relevant command/rule |
-| `scripts/create-harness.sh`가 존재할 때 | `docs/SCAFFOLD-BOOTSTRAP.md`와 Boot Sequence·Completion Rule 동기화 확인, generic/spring-boot dry-run, temp scaffold 생성 결과, scaffold 내부 stale phrase 검색 |
-| `docs/SCAFFOLD-BOOTSTRAP.md` | `scripts/create-harness.sh`가 있으면 생성 BOOTSTRAP.md 템플릿과 Boot Sequence·Completion Rule 정합성 확인, 없으면 source repo 전용 기준으로 표시 |
+| `scripts/create-harness.sh`가 존재할 때 | source workflow repo 기준 scaffold source 정합성 확인 |
 | `docs/decisions/DR-*.md` Accepted | `docs/STATUS.md` Recent Decisions 필요 여부 필수 판정, 관련 backlog/Work 파일, PLAN 영향 여부 |
-| maintainer-facing docs (`README.md`, `HARNESS-MAINTAINER-GUIDE.md`) | 실제 config/script/source와 기술 내용 대조 |
+| maintainer-facing docs (`README.md`, `docs/SYSTEM-MANUAL.md`) | 실제 config/script/source와 기술 내용 대조 |
 | `docs/` 하위 디렉토리 신규 추가 또는 삭제 | T5(PLAN 영향 여부), T7(harness protocol 업데이트 필요 여부), Context Routing 갱신 여부, `scripts/create-harness.sh`가 있으면 scaffold 동기화 여부 확인 |
 
 ### STATUS.md Section Deletion Cascade Checklist

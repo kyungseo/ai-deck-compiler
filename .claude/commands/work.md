@@ -6,6 +6,20 @@ disable-model-invocation: true
 
 docs/STATUS.md를 확인한 뒤 $ARGUMENTS 항목을 진행할 backlog에서 찾아 계획을 세워줘.
 
+## Step 0 — Mandatory Gate
+
+계획 전에 아래를 먼저 확인하고 결과를 계획 서두에 적어줘.
+
+```bash
+git branch --show-current
+```
+
+- `docs/STATUS.md`의 Current State, Active Work, Blockers And Open Questions, Next Actions를 확인한다.
+- Active Work가 있으면 해당 Work 파일을 먼저 로드하고, 새 작업이 Active Work와 충돌하는지 판단한다.
+- `docs/GIT-WORKFLOW.md`가 있으면 branch/PR base/merge/commit 규칙을 따른다.
+- workflow/command/rule/prompt/status/backlog/Work 파일을 건드리면 기본 L2로 다룬다.
+- state 변경, commit, PR, merge는 Approval Matrix gate 이후에만 진행한다.
+
 - `FEAT-*`, `PATCH-*`, `HOTFIX-*`: docs/backlog/PHASE{n}.md 또는 docs/backlog/HARNESS.md (track에 따라 — product track이면 PHASE{n}.md, harness track이면 HARNESS.md)
 - `CHORE-*`: docs/backlog/HARNESS.md (항상)
 - `P{n}-*`, `PRE-*` (historical): docs/backlog/PHASE{n}.md

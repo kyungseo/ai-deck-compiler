@@ -144,11 +144,10 @@ STATUS.md 변경이 필요하면 Approval Matrix state rules에 맞게 먼저 �
 - docs/backlog/HARNESS.md (harness, command/rule, automation 후보 작업)
 - docs/decisions/ (DECISION-TEMPLATE.md 포함)
 - docs/archive/ (빈 폴더)
-- docs/WORKFLOW-MANUAL.md (선택, 사용자 매뉴얼)
 - .claude/settings.json (defaultMode=plan, 금지 명령 목록, 필요 시 hook)
 - .claude/rules/ (docs-workflow, git-workflow, infra, [언어]-[프레임워크], testing)
 - .claude/commands/ (start, pick, work, resume, debug, close, done, record-decision, health)
-- prompts/ (세션 fallback + 재사용 task prompt)
+- prompts/ (세션 시작 fallback만 유지)
 
 구현이나 파일 생성은 내가 승인한 뒤 진행해줘.
 ```

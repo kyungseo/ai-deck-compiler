@@ -5,11 +5,12 @@
 | Field | Value |
 | --- | --- |
 | Phase | Phase 1 — Blueprint → Editable PPTX 일관 출력 엔진 구축 |
+| Workflow profile | Scaffold-adoption product repo; generator script not included |
 | Active plan | — |
-| Bootstrap checklist | `docs/BOOTSTRAP.md` |
+| Bootstrap checklist | Complete / inactive; local bootstrap document removed |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 (FEAT-20260601-012 Done) |
+| Last updated | 2026-06-01 (CHORE-20260601-001 Done) |
 
 ## Work Context Rule
 
@@ -37,4 +38,5 @@
 
 ## Next Actions
 
-1. Public 전환 시: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020
+1. 다음 후보: `showcase-final-polish` — repo 소개 showcase deck 품질 최대화, examples/results 최신화.
+2. Public 전환 직전: GitHub repo ruleset 적용 — `protect-main`(deletion, non_fast_forward, pull_request, required_status_checks: validate), `protect-develop`(deletion, non_fast_forward, pull_request), bypass: RepositoryRole Admin. Secret scanning + push protection 활성화. `has_discussions: true`. 참조: DR-020
