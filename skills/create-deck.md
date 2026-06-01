@@ -41,7 +41,6 @@
 | AI-research-first | "알아서 작성", "자료 찾아서 작성" 등 | research 범위와 출처 기준 확인 → content draft → blueprint |
 
 `source-first`의 source 처리와 구조 결정은 이 skill의 책임이다.
-`generate-blueprint`는 구조가 정리된 뒤 Step 3~4의 blueprint 작성 단계만 위임받는다.
 
 AI-research-first mode에서 실제 외부 검색은 tool 환경에 따라 제한될 수 있다.
 검색 도구를 사용할 수 없으면 사용자 제공 source, 명시적 가정, 또는 추가 질문 기반으로 진행한다.
@@ -120,6 +119,31 @@ content가 빈약하면 바로 PPTX를 만들지 않고 추가 질문, source �
 
 수집한 정보를 바탕으로 슬라이드 구조를 제안한다.
 
+### Narrative Spine — 구조 제안 전 스토리 뼈대 작성
+
+슬라이드 목록을 나열하기 전, 발표 전체를 5~10문장으로 먼저 요약한다.
+이 단계에서 발표 흐름의 논리적 정합성을 확인하고, 누락된 논리 단계를 발견한다.
+
+**Story Arc (기승전결) 구조:**
+
+| 구간 | 핵심 질문 | 슬라이드 매핑 |
+| --- | --- | --- |
+| 기 (Context) | 배경·현황이 무엇인가? | hero, agenda, kpi(현황) |
+| 승 (Complication) | 어떤 문제·한계가 있는가? | content, chart(문제 데이터) |
+| 전 (Resolution) | 어떻게 해결하는가? | architecture, content(해결책) |
+| 결 (Impact) | 기대 효과와 다음 단계는? | chart(성과), summary |
+
+예시:
+```
+현재 플랫폼은 월 4회 배포로 시장 속도를 따라가지 못하고 있다. [기]
+배포 지연의 핵심 원인은 수동 릴리즈 프로세스와 관찰 가능성 부재다. [승]
+클라우드 네이티브 마이그레이션으로 자동화된 배포 파이프라인을 구축한다. [전]
+12개월 내 배포 빈도 4배 향상, MTTR 48h → 8h 달성이 목표다. [결]
+```
+
+source-first 모드에서는 source 요약 후 반드시 Narrative Spine을 먼저 제시하고 승인받는다.
+brief-first 모드에서는 구조 제안 직전에 한 단락으로 스토리 흐름을 서술한다.
+
 ### 슬라이드 타입 선택 가이드
 
 | 상황 | 추천 타입 |
@@ -191,6 +215,12 @@ callout 사용 기준:
 - body bullet을 그대로 복사하지 않는다.
 - 권장 밀도: 6장 deck 기준 1~2장 정도. hard rule이 아니라 산만함을 막는 품질 가이드다.
 
+판단 예시:
+
+| 입력 문장 | 선택 |
+| --- | --- |
+| "2026년은 파트너십으로 진입하고 2027년 내재화를 재검토한다." | 선택·승인 맥락 → `decision.recommendation` / 배경 설명 중 강조 → `content.callout` / deck 결론 → `summary.takeaways` |
+
 Icon policy:
 
 - title에 arbitrary emoji를 자동 삽입하지 않는다.
@@ -252,6 +282,20 @@ deck:
 - `left.label` / `right.label` (패널 라벨): 영어 UPPERCASE 권장 — `"CURRENT REALITY"`, `"OUR APPROACH"`
 - `title`: 발표 언어 + Action Title 원칙 (결론 선언형 문장)
 - `body` 항목: 발표 언어 + 기술 용어·지표는 영어 원문 유지
+
+**Action Title 원칙:**
+슬라이드 `title`은 주제 라벨이 아니라 결론을 담은 선언형 문장이어야 한다.
+```
+✗ "Q2 성과"
+✓ "배포 빈도 4배 향상으로 Q2 목표 초과 달성"
+
+✗ "아키텍처 개요"
+✓ "마이크로서비스 전환으로 장애 격리와 독립 배포 확보"
+
+✗ "주요 지표"
+✓ "MTTR 48h → 8h, 변경 실패율 22% → 5%로 안정성 회복"
+```
+예외: `hero`(간결 제목 허용), `agenda`('Agenda' 고정 허용), `section-divider`(섹션명 허용)
 
 **슬라이드 타입별 필수 필드:**
 
@@ -322,7 +366,46 @@ deck:
   takeaways:
     - 청중이 기억할 것 1
     - 청중이 기억할 것 2
+
+# two-column — 좌우 두 관점 또는 비교
+- id: two-col-1
+  type: two-column
+  title: 슬라이드 제목
+  left:
+    label: "CURRENT APPROACH"   # 영어 UPPERCASE 권장, 선택
+    body:
+      - 왼쪽 항목 1
+      - 왼쪽 항목 2
+  right:
+    label: "PROPOSED APPROACH"  # 영어 UPPERCASE 권장, 선택
+    body:
+      - 오른쪽 항목 1
+      - 오른쪽 항목 2
+
+# section-divider — 섹션 구분 슬라이드
+- id: section-div-1
+  type: section-divider
+  number: "01"              # 좌측 accent 컬럼 대형 숫자, 선택
+  section: "SECTION 01"    # 영어 UPPERCASE, 선택
+  title: 섹션 제목          # Action Title 예외 허용
+  subtitle: 이 섹션에서 다룰 내용  # 선택
+
+# comparison — 기존 vs 제안 명확한 대비
+- id: comparison-1
+  type: comparison
+  title: 기존 방식과 제안 방향의 핵심 차이
+  left:
+    label: "CURRENT APPROACH"   # 생략 시 "BEFORE" 기본값
+    body:
+      - "수동 배포 체크리스트"
+      - "격주 릴리즈 사이클"
+  right:
+    label: "PROPOSED APPROACH"  # 생략 시 "AFTER" 기본값
+    body:
+      - "자동화 게이트 검증"
+      - "일일 배포 가능"
 ```
+comparison은 좌측(×, 회색) vs 우측(✓, accent) 시각 대비. 양쪽 항목 수를 맞추는 것이 좋다.
 
 초안 작성 후:
 ```
@@ -446,7 +529,6 @@ AI: 네, blueprint 초안을 작성하겠습니다.
 
 ## 관련 파일
 
-- `skills/generate-blueprint.md` — blueprint만 집중적으로 생성
 - `src/design/presets/teal/ppt-layouts.md` — 슬라이드 타입별 레이아웃 (teal 기본값)
 - `src/design/presets/teal/ppt-chart-rules.md` — 차트 데이터 형식
 - `src/design/presets/modern/ppt-layouts.md` — legacy/light 전용 레이아웃 참조

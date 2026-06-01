@@ -19,8 +19,7 @@ MUST:
 
 | User intent | Canonical skill |
 | --- | --- |
-| Create a presentation, deck, PPT, or blueprint end to end | `skills/create-deck.md` |
-| Generate only `blueprint.yaml` from an approved structure | `skills/generate-blueprint.md` |
+| Create a presentation, deck, PPT, or write a blueprint | `skills/create-deck.md` |
 | Review a deck, PPTX, preview, or blueprint | `skills/review-deck.md` |
 | Export a PPTX to PDF | `skills/export-pdf.md` |
 | Generate an architecture slide diagram spec | `skills/generate-architecture-slide.md` |

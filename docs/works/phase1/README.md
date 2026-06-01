@@ -6,6 +6,8 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
+| FEAT-20260601-010 | create-deck blueprint 규칙 내재화 — generate-blueprint 통합 | feature/FEAT-20260601-010-create-deck-blueprint-consolidation |
+| FEAT-20260601-011 | create-deck skill 콘텐츠 정비 — B안 구조 개선 | feature/FEAT-20260601-011-create-deck-skill-improvement |
 
 ## Done (Archive Pending)
 

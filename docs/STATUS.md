@@ -21,6 +21,8 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
+| FEAT-20260601-010 | create-deck blueprint 규칙 내재화 | docs/works/phase1/FEAT-20260601-010-create-deck-blueprint-consolidation.md |
+| FEAT-20260601-011 | create-deck skill 콘텐츠 정비 | docs/works/phase1/FEAT-20260601-011-create-deck-skill-improvement.md |
 
 ## Blockers And Open Questions
 
@@ -33,6 +35,7 @@
 | --- | --- | --- |
 | 2026-06-01 | DR-021 | `teal + dark` = AI workflow 기본 추천 preset. `default-modern` → `modern` rename, alias 호환 유지. |
 | 2026-06-01 | DR-022 | `examples/results/*.pptx` git 추적. 재생성 명령 README 문서화로 staleness 관리. |
+| 2026-06-01 | DR-023 | `generate-blueprint` → `create-deck` 통합. Narrative Spine/Story Arc/Action Title/3종 YAML을 create-deck Step 2~3에 흡수. generate-blueprint를 user-facing 진입점에서 제거. |
 
 ## Next Actions
 
