@@ -223,7 +223,9 @@ content card 내부의 렌더링 영역은 `src/templates/layout.ts`의 `CARD.iy
 `src/templates/layout.ts`의 `renderBodyWithCodeBlocks()`는 `body` 항목 중 백틱 또는 fenced code로 감싼 항목을 code block으로 인식한다.
 현재 적용 범위는 `content`, `two-column`, `appendix`이며, 일반 bullet과 code block을 같은 body 안에 혼용할 수 있다.
 해당 항목은 rounded box, monospace font, accent text color로 렌더링하고, 일반 body bullet은 앞뒤 순서에 맞춰 배치한다.
-현재는 code block grouping과 boxed rendering만 담당한다. 언어별 tokenization/syntax highlighting은 `code-syntax-highlight` backlog 범위다.
+fenced code의 language hint가 `bash`, `sh`, `js`, `ts`, `javascript`, `typescript`, `java` 중 하나이면 lightweight tokenizer가 keyword, string, comment, number를 색상 분리한다.
+지원하지 않는 언어와 inline code block은 기존 단색 monospace 렌더링으로 fallback한다.
+syntax color는 `code-keyword`, `code-string`, `code-comment`, `code-number` token을 우선 사용하고, 없으면 기존 accent/success/muted/chart token으로 fallback한다.
 
 새 preset을 만들 때는 `src/design/presets/{name}/tokens.json`을 작성하고 `--design {name}` CLI 옵션으로 선택합니다.
 
@@ -281,7 +283,7 @@ compiler/renderer layer는 이 blueprint를 deterministic하게 PPTX로 렌더�
 - canonical skill(`skills/create-deck.md`, `skills/generate-blueprint.md`)은 semantic selection과 emphasis hierarchy를 정의한다.
 - wrapper(`.claude/commands/*`, `.agents/skills/*`)는 canonical skill을 thin routing으로 호출한다.
 - schema/renderer는 명시된 blueprint field만 렌더링한다. LLM 판단을 런타임 코드에 내장하지 않는다.
-- code block component는 백틱/fenced-code 기반 표시 규칙만 처리한다. syntax highlighting은 후속 renderer/token 작업으로 분리한다.
+- code block component는 백틱/fenced-code 기반 표시 규칙을 처리한다. fenced code의 지원 언어에는 lightweight syntax highlighting을 적용하며, unsupported language와 inline code는 단색 fallback을 유지한다.
 - icon은 현재 정책만 정의한다. schema/render field는 후속 Work에서 결정한다.
 
 ---

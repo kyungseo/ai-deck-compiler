@@ -183,6 +183,11 @@ type CodeBlock = {
   lang?: string;
 };
 
+type CodeToken = {
+  text: string;
+  kind: 'plain' | 'keyword' | 'string' | 'comment' | 'number';
+};
+
 const isInlineCodeItem = (text: string): boolean =>
   text.startsWith('`') && text.endsWith('`') && !text.startsWith('```') && text.length > 2;
 
@@ -206,6 +211,85 @@ const parseCodeBlock = (items: string[]): CodeBlock => {
 };
 
 const isCodeItem = (text: string): boolean => isInlineCodeItem(text) || isFencedCodeItem(text);
+
+const normalizeCodeLang = (lang?: string): 'bash' | 'js' | 'java' | undefined => {
+  const normalized = lang?.toLowerCase();
+  if (!normalized) return undefined;
+  if (['bash', 'sh', 'shell', 'zsh'].includes(normalized)) return 'bash';
+  if (['js', 'jsx', 'ts', 'tsx', 'javascript', 'typescript'].includes(normalized)) return 'js';
+  if (normalized === 'java') return 'java';
+  return undefined;
+};
+
+const KEYWORDS: Record<NonNullable<ReturnType<typeof normalizeCodeLang>>, Set<string>> = {
+  bash: new Set([
+    'if', 'then', 'else', 'elif', 'fi', 'for', 'while', 'do', 'done', 'case', 'esac',
+    'function', 'export', 'local', 'readonly', 'return', 'in',
+  ]),
+  js: new Set([
+    'await', 'async', 'break', 'case', 'catch', 'class', 'const', 'continue', 'default',
+    'else', 'export', 'extends', 'finally', 'for', 'from', 'function', 'if', 'import',
+    'interface', 'let', 'new', 'private', 'protected', 'public', 'return', 'static',
+    'switch', 'throw', 'try', 'type', 'typeof', 'var', 'void', 'while',
+  ]),
+  java: new Set([
+    'abstract', 'boolean', 'break', 'case', 'catch', 'class', 'const', 'continue',
+    'default', 'else', 'enum', 'extends', 'final', 'finally', 'for', 'if', 'implements',
+    'import', 'instanceof', 'interface', 'new', 'private', 'protected', 'public',
+    'return', 'static', 'switch', 'this', 'throw', 'throws', 'try', 'void', 'while',
+  ]),
+};
+
+const readQuotedString = (line: string, start: number): number => {
+  const quote = line[start];
+  let i = start + 1;
+  while (i < line.length) {
+    if (line[i] === '\\') {
+      i += 2;
+      continue;
+    }
+    if (line[i] === quote) return i + 1;
+    i += 1;
+  }
+  return line.length;
+};
+
+const tokenizeCodeLine = (line: string, lang: NonNullable<ReturnType<typeof normalizeCodeLang>>): CodeToken[] => {
+  const tokens: CodeToken[] = [];
+  let i = 0;
+  while (i < line.length) {
+    const rest = line.slice(i);
+    const commentStart = lang === 'bash' ? rest.startsWith('#') : rest.startsWith('//');
+    if (commentStart) {
+      tokens.push({ text: rest, kind: 'comment' });
+      break;
+    }
+    if (line[i] === '"' || line[i] === '\'' || (lang === 'js' && line[i] === '`')) {
+      const end = readQuotedString(line, i);
+      tokens.push({ text: line.slice(i, end), kind: 'string' });
+      i = end;
+      continue;
+    }
+    const number = rest.match(/^\b\d+(?:\.\d+)?\b/);
+    if (number) {
+      tokens.push({ text: number[0], kind: 'number' });
+      i += number[0].length;
+      continue;
+    }
+    const word = rest.match(/^[A-Za-z_$][\w$]*/);
+    if (word) {
+      tokens.push({
+        text: word[0],
+        kind: KEYWORDS[lang].has(word[0]) ? 'keyword' : 'plain',
+      });
+      i += word[0].length;
+      continue;
+    }
+    tokens.push({ text: line[i], kind: 'plain' });
+    i += 1;
+  }
+  return tokens;
+};
 
 const estimateWrappedLines = (lines: string[], width: number, charsPerInch = 11): number => {
   const charsPerLine = Math.max(24, Math.floor(width * charsPerInch));
@@ -232,6 +316,10 @@ export function renderBodyWithCodeBlocks(
   const bodyFontSize = options.fontSize ?? ty['body']?.size ?? 16;
   const bodyColor = options.color ?? hex(co['text-secondary'] ?? '374151');
   const codeColor = hex(co['accent-text'] ?? co['accent'] ?? '2563EB');
+  const codeKeyword = hex(co['code-keyword'] ?? co['accent-alt'] ?? co['accent'] ?? '2563EB');
+  const codeString = hex(co['code-string'] ?? co['success'] ?? codeColor);
+  const codeComment = hex(co['code-comment'] ?? co['text-muted'] ?? '6B7280');
+  const codeNumber = hex(co['code-number'] ?? co['chart-4'] ?? codeColor);
   const codeBg = hex(co['card-item-bg'] ?? '1E2124');
   const codeBorder = hex(co['border'] ?? '3A3F44');
   const maxY = bounds.y + bounds.h;
@@ -272,6 +360,7 @@ export function renderBodyWithCodeBlocks(
     if (group.length === 0 || y >= maxY) return;
     const parsed = parseCodeBlock(group);
     const lines = parsed.lines.length > 0 ? parsed.lines : [''];
+    const syntaxLang = normalizeCodeLang(parsed.lang);
     const pad = 0.14;
     const lineH = 0.20;
     const labelH = parsed.lang ? 0.22 : 0;
@@ -297,7 +386,28 @@ export function renderBodyWithCodeBlocks(
       });
     }
 
-    s.addText(lines.join('\n'), {
+    const tokenColor = (kind: CodeToken['kind']): string => {
+      if (kind === 'keyword') return codeKeyword;
+      if (kind === 'string') return codeString;
+      if (kind === 'comment') return codeComment;
+      if (kind === 'number') return codeNumber;
+      return codeColor;
+    };
+    const textRuns = syntaxLang ? lines.flatMap((line, lineIndex) => {
+      const lineTokens = tokenizeCodeLine(line, syntaxLang);
+      const sourceTokens = lineTokens.length > 0 ? lineTokens : [{ text: '', kind: 'plain' as const }];
+      return sourceTokens.map((token, tokenIndex) => ({
+        text: token.text,
+        options: {
+          fontSize: 11,
+          fontFace: 'Courier New',
+          color: tokenColor(token.kind),
+          breakLine: lineIndex < lines.length - 1 && tokenIndex === sourceTokens.length - 1,
+        },
+      }));
+    }) : undefined;
+
+    s.addText(textRuns ?? lines.join('\n'), {
       x: bounds.x + pad,
       y: y + pad + labelH,
       w: bounds.w - pad * 2,
