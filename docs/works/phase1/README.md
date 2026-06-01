@@ -6,12 +6,12 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
-| FEAT-20260601-007 | Code block polish — 타입 모호성 제거, magic number 주석, YAML 작성 예시 보강 | feature/FEAT-20260601-007-code-block-polish |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
+| FEAT-20260601-007 | Code block polish — 타입 모호성 제거, magic number 주석, YAML 작성 예시 보강 | 2026-06-01 | — |
 | FEAT-20260601-006 | Code syntax highlighting — code block token color support | 2026-06-01 | — |
 | FEAT-20260601-005 | General code block component — 본문 코드 블럭 표현 공통화 | 2026-06-01 | — |
 | FEAT-20260601-004 | Card inner horizontal padding — 카드 내부 콘텐츠 좌우 여백 통일 | 2026-06-01 | — |

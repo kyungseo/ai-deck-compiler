@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 (FEAT-20260601-007 Active) |
+| Last updated | 2026-06-01 (FEAT-20260601-007 Done) |
 
 ## Work Context Rule
 
@@ -21,7 +21,6 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
-| FEAT-20260601-007 | Code block polish — 타입 모호성 제거, magic number 주석, YAML 작성 예시 보강 | `docs/works/phase1/FEAT-20260601-007-code-block-polish.md` |
 
 ## Blockers And Open Questions
 
