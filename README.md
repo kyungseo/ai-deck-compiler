@@ -152,7 +152,7 @@ flowchart LR
 | PDF 내보내기 | `/export-pdf`로 PPTX를 PDF로 바로 변환합니다. LibreOffice 필요. |
 | 아키텍처 슬라이드 | `/generate-architecture-slide`로 자연어 설명에서 node/edge/zone을 추출해 다이어그램 슬라이드를 생성합니다. |
 | 16종 슬라이드 타입 | hero, agenda, kpi, chart, table, architecture, timeline, decision, appendix 등 발표에 필요한 타입이 미리 정의되어 있습니다. |
-| Appendix code block | 명령어·코드·재생성 절차를 appendix slide의 boxed monospace block으로 표현합니다. |
+| Code block component | 명령어·코드·재생성 절차를 content, two-column, appendix slide의 boxed monospace block으로 표현합니다. |
 | 멀티툴 지원 | Claude Code, Codex CLI/App, Cursor, Claude App에서 동일한 canonical skill 문서를 기준으로 작동합니다. |
 
 ---
@@ -171,10 +171,10 @@ AI는 자연어 요청이나 source 문서를 곧바로 bullet slide로 옮기�
 | 선택지·승인·권고안 | `decision` |
 | deck 전체 결론 | `summary.takeaways` |
 | 슬라이드 내부 핵심 문장 | `content` / `flow`의 `callout` |
-| 명령어·코드·재생성 절차 | `appendix`의 code block |
+| 명령어·코드·재생성 절차 | `content` / `two-column` / `appendix`의 code block |
 
 renderer는 여전히 deterministic합니다. AI는 `blueprint.yaml`의 의미 구조를 작성하고, 엔진은 preset과 slide type 규칙에 따라 editable PowerPoint 객체를 생성합니다.
-`appendix` code block은 현재 boxed monospace block으로 렌더링되며, 키워드·문자열 단위 syntax highlighting은 후속 backlog입니다.
+code block은 백틱 또는 fenced code body 항목을 boxed monospace block으로 렌더링합니다. 키워드·문자열 단위 syntax highlighting은 후속 backlog입니다.
 
 ---
 
@@ -222,7 +222,7 @@ slides:
 | Structure | `section-divider`, `timeline`, `flow`, `decision`, `appendix` |
 | Diagram | `architecture` |
 
-`appendix`는 일반 bullet뿐 아니라 백틱으로 감싼 명령어·코드 항목을 boxed code block으로 표현할 수 있습니다.
+`content`, `two-column`, `appendix`는 일반 bullet뿐 아니라 백틱 또는 fenced code로 감싼 명령어·코드 항목을 boxed code block으로 표현할 수 있습니다.
 
 ---
 
@@ -309,7 +309,7 @@ npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sampl
 
 - **Design preset**: `teal`(AI 기본 추천, dark), `vivid`(secondary, dark), `modern`(light/legacy) 3종 제공. `default-modern`은 legacy alias로 지원됩니다. `teal`/`vivid`는 callout bar를 지원하며, legend pill은 후속 후보입니다.
 - **Callout**: `teal`과 `vivid`는 content/flow slide의 `callout` field를 하단 강조 bar로 렌더링합니다. `modern`은 light tone에 맞는 별도 treatment 후보입니다.
-- **Code block**: `appendix`는 boxed monospace code block을 지원합니다. 언어별 syntax highlighting은 `code-syntax-highlight` backlog 후보입니다.
+- **Code block**: `content`, `two-column`, `appendix`는 boxed monospace code block을 지원합니다. 언어별 syntax highlighting은 `code-syntax-highlight` backlog 후보입니다.
 - **Preview**: LibreOffice + poppler 의존. Keynote, Google Slides 직접 지원 없음.
 - **AI 외부 검색**: AI-research-first mode의 실제 외부 검색은 도구 환경에 따라 제한됩니다.
 

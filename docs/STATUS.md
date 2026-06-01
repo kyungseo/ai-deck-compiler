@@ -9,7 +9,7 @@
 | Bootstrap checklist | `docs/BOOTSTRAP.md` |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-01 (FEAT-20260601-004 Done) |
+| Last updated | 2026-06-01 (FEAT-20260601-005 Done) |
 
 ## Work Context Rule
 
@@ -21,7 +21,6 @@
 
 | ID | Title | Work 파일 |
 | --- | --- | --- |
-| FEAT-20260601-005 | General code block component — 본문 코드 블럭 표현 공통화 | `docs/works/phase1/FEAT-20260601-005-general-code-block-component.md` |
 
 ## Blockers And Open Questions
 

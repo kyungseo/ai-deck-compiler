@@ -219,9 +219,10 @@ content card 내부의 렌더링 영역은 `src/templates/layout.ts`의 `CARD.iy
 일반 content renderer는 카드 배경의 좌우 경계에 붙지 않도록 `SL.cx + CARD.px`, `SL.cw - CARD.px * 2`를 기본 content bounds로 사용한다.
 예외 renderer를 추가할 때는 시각적 이유와 preview 검증 결과를 함께 남긴다.
 
-**appendix code block 렌더링:**
-`appendix` renderer는 `body`의 선행 항목이 백틱으로 감싸져 있으면 contiguous code block으로 인식한다.
-해당 항목은 rounded box, monospace font, accent text color로 렌더링하고, 이후 일반 body bullet은 code block 아래에 배치한다.
+**code block 렌더링:**
+`src/templates/layout.ts`의 `renderBodyWithCodeBlocks()`는 `body` 항목 중 백틱 또는 fenced code로 감싼 항목을 code block으로 인식한다.
+현재 적용 범위는 `content`, `two-column`, `appendix`이며, 일반 bullet과 code block을 같은 body 안에 혼용할 수 있다.
+해당 항목은 rounded box, monospace font, accent text color로 렌더링하고, 일반 body bullet은 앞뒤 순서에 맞춰 배치한다.
 현재는 code block grouping과 boxed rendering만 담당한다. 언어별 tokenization/syntax highlighting은 `code-syntax-highlight` backlog 범위다.
 
 새 preset을 만들 때는 `src/design/presets/{name}/tokens.json`을 작성하고 `--design {name}` CLI 옵션으로 선택합니다.
@@ -273,14 +274,14 @@ compiler/renderer layer는 이 blueprint를 deterministic하게 PPTX로 렌더�
 | 선택지·승인·권고안 | `decision` |
 | deck 전체 결론 | `summary.takeaways` |
 | 슬라이드 내부 강조 문장 | `content` / `flow`의 `callout` |
-| 명령어·코드·재생성 절차 | `appendix`의 code block |
+| 명령어·코드·재생성 절차 | `content` / `two-column` / `appendix`의 code block |
 
 책임 경계:
 
 - canonical skill(`skills/create-deck.md`, `skills/generate-blueprint.md`)은 semantic selection과 emphasis hierarchy를 정의한다.
 - wrapper(`.claude/commands/*`, `.agents/skills/*`)는 canonical skill을 thin routing으로 호출한다.
 - schema/renderer는 명시된 blueprint field만 렌더링한다. LLM 판단을 런타임 코드에 내장하지 않는다.
-- `appendix` code block은 백틱 기반 표시 규칙만 처리한다. syntax highlighting은 후속 renderer/token 작업으로 분리한다.
+- code block component는 백틱/fenced-code 기반 표시 규칙만 처리한다. syntax highlighting은 후속 renderer/token 작업으로 분리한다.
 - icon은 현재 정책만 정의한다. schema/render field는 후속 Work에서 결정한다.
 
 ---

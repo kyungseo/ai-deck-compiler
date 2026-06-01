@@ -257,6 +257,58 @@ describe('renderCalloutBar', () => {
   });
 });
 
+// ── Body code blocks ─────────────────────────────────────────────────────────
+
+describe('Body code blocks', () => {
+  it('content slide renders fenced code as boxed monospace text without fence markers', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('content');
+    template.render({
+      id: 'code',
+      type: 'content',
+      title: 'Commands',
+      body: [
+        'Run the validation command.',
+        '```bash\nnpm run validate\nnpm run deck\n```',
+        'Then review the preview.',
+      ],
+    }, tokens, slide);
+
+    const codeShape = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls.find(
+      (args: unknown[]) => typeof args[1] === 'object' && args[1] !== null && (args[1] as { rectRadius?: number }).rectRadius === 0.06,
+    );
+    const codeText = (slide.addText as ReturnType<typeof vi.fn>).mock.calls.find(
+      (args: unknown[]) => typeof args[0] === 'string' && (args[0] as string).includes('npm run validate'),
+    );
+
+    expect(codeShape).toBeTruthy();
+    expect(codeText?.[0]).not.toContain('```');
+  });
+
+  it('appendix slide keeps inline code and fenced code as separate blocks', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('appendix');
+    template.render({
+      id: 'appendix-code',
+      type: 'appendix',
+      title: 'Appendix',
+      body: [
+        'Supporting note.',
+        '`npm run typecheck`',
+        '`npm test`',
+        '```bash\nnpm run preview -- output/sample.pptx --out output/preview\n```',
+      ],
+    }, tokens, slide);
+
+    const codeTexts = (slide.addText as ReturnType<typeof vi.fn>).mock.calls.filter(
+      (args: unknown[]) => typeof args[0] === 'string',
+    ).map(args => args[0] as string);
+
+    expect(codeTexts.some(text => text.includes('npm run typecheck') && text.includes('npm test'))).toBe(true);
+    expect(codeTexts.some(text => text.includes('npm run preview') && !text.includes('```'))).toBe(true);
+  });
+});
+
 // ── All P1 types compile without error ────────────────────────────────────────
 
 describe('All P1 types compile without error', () => {
