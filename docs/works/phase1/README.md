@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
+| FEAT-20260601-007 | Code block polish — 타입 모호성 제거, magic number 주석, YAML 작성 예시 보강 | feature/FEAT-20260601-007-code-block-polish |
 
 ## Done (Archive Pending)
 

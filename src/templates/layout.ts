@@ -212,6 +212,7 @@ const parseCodeBlock = (items: string[]): CodeBlock => {
 
 const isCodeItem = (text: string): boolean => isInlineCodeItem(text) || isFencedCodeItem(text);
 
+// To add a language: extend the union, add a key in KEYWORDS, and update the comment-start check in tokenizeCodeLine.
 const normalizeCodeLang = (lang?: string): 'bash' | 'js' | 'java' | undefined => {
   const normalized = lang?.toLowerCase();
   if (!normalized) return undefined;
@@ -291,12 +292,14 @@ const tokenizeCodeLine = (line: string, lang: NonNullable<ReturnType<typeof norm
   return tokens;
 };
 
+// charsPerInch: empirical for 11pt Courier New at slide scale (~11 glyphs/inch)
 const estimateWrappedLines = (lines: string[], width: number, charsPerInch = 11): number => {
   const charsPerLine = Math.max(24, Math.floor(width * charsPerInch));
   return lines.reduce((sum, line) => sum + Math.max(1, Math.ceil(line.length / charsPerLine)), 0);
 };
 
 const estimateBulletHeight = (items: string[], width: number, fontSize: number): number => {
+  // 7.8: empirical chars-per-inch for proportional body font (~16pt Pretendard)
   const charsPerLine = Math.max(24, Math.floor(width * 7.8));
   const lineH = Math.max(0.20, fontSize / 72 * 1.28);
   return items.reduce((sum, text) => {
@@ -407,16 +410,16 @@ export function renderBodyWithCodeBlocks(
       }));
     }) : undefined;
 
-    s.addText(textRuns ?? lines.join('\n'), {
-      x: bounds.x + pad,
-      y: y + pad + labelH,
-      w: bounds.w - pad * 2,
-      h: Math.max(0.1, boxH - pad * 2 - labelH),
-      fontSize: 11,
-      fontFace: 'Courier New',
-      color: codeColor,
-      valign: 'top',
-    });
+    const textArea = {
+      x: bounds.x + pad, y: y + pad + labelH,
+      w: bounds.w - pad * 2, h: Math.max(0.1, boxH - pad * 2 - labelH),
+      fontSize: 11, fontFace: 'Courier New', color: codeColor, valign: 'top' as const,
+    };
+    if (textRuns) {
+      s.addText(textRuns, textArea);
+    } else {
+      s.addText(lines.join('\n'), textArea);
+    }
 
     y += boxH + 0.16;
   };

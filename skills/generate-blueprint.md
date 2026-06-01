@@ -143,6 +143,19 @@ body 항목 코드 표기 기준:
 - CLI 명령, 파일 경로, 코드 스니펫은 backtick(`` ` ``)으로 감싼다.
   - 예: `` `npm run deck -- --blueprint example.yaml --output out.pptx` ``
 - 여러 줄 코드는 body 항목 하나에 fenced code string으로 작성할 수 있다. 첫 줄은 세 개의 backtick과 언어명(예: bash), 마지막 줄은 세 개의 backtick만 둔다.
+  - YAML에서 multi-line string을 단일 항목으로 쓰려면 반드시 `|`(literal block scalar)를 사용한다.
+  - 예:
+    ```yaml
+    body:
+      - 실행 전 유효성 검사를 먼저 수행한다.
+      - |
+        ```bash
+        npm run validate -- --blueprint deck.yaml
+        npm run deck -- --blueprint deck.yaml --output out.pptx
+        ```
+      - 결과 파일은 output/ 디렉터리에 저장된다.
+    ```
+  - `|` 없이 배열 항목으로 분리해서 쓰면 backtick이 인식되지 않아 일반 텍스트로 렌더링된다.
 - backtick/fenced code 항목은 지원 slide에서 boxed monospace block으로 렌더링된다.
 - `bash`, `js`/`ts`, `java` fenced code는 기본 syntax color가 적용된다.
 - 일반 설명 문장과 코드 항목을 같은 body 안에 혼용할 수 있다.
