@@ -94,7 +94,31 @@ describe('Design preset alias compatibility', () => {
 
 describe('Compiler callout footer suppression', () => {
   it('callout slide omits brand footer; adjacent non-callout slide retains it', async () => {
-    // showcase-vivid-dark: slide 4 = content with callout, slide 2 = agenda (no callout)
+    const blueprint: Blueprint = {
+      deck: { title: 'Footer Suppression Fixture', design: 'vivid', theme: 'dark', version: '1.0' },
+      slides: [
+        {
+          id: 'callout',
+          type: 'content',
+          title: 'Callout slide',
+          callout: 'Callout should replace footer area',
+          body: ['Body text without brand footer marker'],
+        },
+        { id: 'agenda', type: 'agenda', title: 'Agenda', items: ['One', 'Two'] },
+      ],
+    };
+    const tokens = resolveDesignTokens('vivid', 'dark');
+    const pptx = await compile({ blueprint, tokens });
+    const buffer = await (pptx as any).write({ outputType: 'nodebuffer' }) as Buffer;
+    const zip = await JSZip.loadAsync(buffer);
+    const slide1Xml = normalizeXml(await zip.file('ppt/slides/slide1.xml')!.async('string'));
+    const slide2Xml = normalizeXml(await zip.file('ppt/slides/slide2.xml')!.async('string'));
+
+    expect(slide1Xml, 'callout slide must NOT contain brand footer').not.toContain('ai-deck-compiler');
+    expect(slide2Xml, 'non-callout slide must contain brand footer').toContain('ai-deck-compiler');
+  });
+
+  it('showcase callout slide can mention the product name without breaking footer behavior', async () => {
     const slides = await getPptxSlideXmls(
       'examples/results/showcase-vivid-dark.blueprint.yaml',
       'vivid',
@@ -103,7 +127,7 @@ describe('Compiler callout footer suppression', () => {
     const slide2Xml = slides['ppt/slides/slide2.xml']!;
     const slide4Xml = slides['ppt/slides/slide4.xml']!;
 
-    expect(slide4Xml, 'callout slide must NOT contain brand footer').not.toContain('ai-deck-compiler');
+    expect(slide4Xml, 'callout slide contains product body text').toContain('ai-deck-compiler');
     expect(slide2Xml, 'non-callout slide must contain brand footer').toContain('ai-deck-compiler');
   });
 
