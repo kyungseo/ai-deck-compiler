@@ -38,10 +38,9 @@
 | --- | --- | --- |
 | brief-first | 주제·목적만 간단히 제공 | 핵심 질문을 최대 3개씩 묻고 structure proposal로 확장 |
 | source-first | markdown, 파일 경로, 메모, 보고서 초안 제공 | source 요약 → narrative spine → slide plan → blueprint |
-| AI-research-first | "알아서 작성", "자료 찾아서 작성" 등 | research 범위와 출처 기준 확인 → content draft → blueprint |
+| AI-research-first | "알아서 작성", "자료 찾아서 작성", "초안부터 구성해줘" 등 | research 범위와 출처 기준 확인 → content draft → blueprint |
 
 `source-first`의 source 처리와 구조 결정은 이 skill의 책임이다.
-`generate-blueprint`는 구조가 정리된 뒤 Step 3~4의 blueprint 작성 단계만 위임받는다.
 
 AI-research-first mode에서 실제 외부 검색은 tool 환경에 따라 제한될 수 있다.
 검색 도구를 사용할 수 없으면 사용자 제공 source, 명시적 가정, 또는 추가 질문 기반으로 진행한다.
@@ -51,25 +50,28 @@ AI-research-first mode에서 실제 외부 검색은 tool 환경에 따라 제�
 ## Step 1 — Brief Alignment (Context 수집)
 
 다음 속성을 확인한다. 사용자가 이미 제공한 정보는 건너뛴다.
-모호한 항목이 있으면 최대 3개까지만 한 번에 질문한다.
+처음에는 최대 3문항만 묻고, 부족한 항목은 후속 질문으로 채운다.
+
+**초기 확인 (최대 3문항, 한 번에 묻는다):**
 
 ```
 발표 제작을 시작하기 전에 몇 가지 확인할게요.
 
-[목적] 이 발표의 목적은?
-  의사결정 요청 / 정보 전달 / 기술 제안 / 성과 보고 / 외부 제안
+[진행 방식] 자료를 어떻게 준비할까요?
+  간단 brief로 시작 / 정리된 파일·markdown 기반 / AI가 초안부터 구성
+  (이미 자료나 brief를 제공했으면 생략)
 
-[청중] 누가 보나요?
-  임원진 / 엔지니어링 팀 / 전사 / 고객 / 투자자
+[목적·청중] 이 발표의 목적과 주요 청중은?
+  목적: 의사결정 요청 / 정보 전달 / 기술 제안 / 성과 보고 / 외부 제안
+  청중: 임원진 / 엔지니어링 팀 / 전사 / 고객 / 투자자
 
-[분량] 발표 시간 또는 슬라이드 수?
-  (예: 10분/8장, 20분/15장)
+[분량·메시지] 발표 시간 또는 슬라이드 수? 청중이 기억해야 할 핵심은?
+  (예: 20분/15장 / 핵심 메시지: "배포 자동화로 릴리즈 주기 4배 단축")
+```
 
-[입력 방식] 지금 제공할 자료가 있나요?
-  간단 brief / markdown·파일 경로 제공 / AI가 자료 조사부터 작성
+**후속 확인 (초기 답변 후 필요 시 추가 질문):**
 
-[핵심 메시지] 청중이 발표 후 기억해야 할 것 (한 문장)
-
+```
 [데이터] 포함할 수치나 차트가 있나요?
 
 [톤] 발표 분위기는?
@@ -104,11 +106,12 @@ AI-research-first mode에서 실제 외부 검색은 tool 환경에 따라 제�
 3. 누락된 데이터·근거·청중 관점이 있으면 질문하거나 보강안을 제안한다.
 4. 구조 승인 후 blueprint 작성으로 이동한다.
 
-### AI-research-first 처리
+### AI-research-first / AI-draft-first 처리
 
-사용자가 내용 작성을 대부분 위임하면 먼저 다음을 확인한다.
+사용자가 내용 구성을 위임하면 먼저 다음을 확인한다.
+외부 검색이 불가한 경우에는 명시적 가정 기반 초안으로 진행한다.
 
-- research 범위: 지역/기간/산업/경쟁사/기술 범위
+- research 범위: 지역/기간/산업/경쟁사/기술 범위 (external search 가능한 경우)
 - 출처 기준: 공식 문서, 리포트, 뉴스, 내부 자료 등
 - 허용 수준: 출처 기반 사실과 AI 추론을 구분해서 표시
 
@@ -120,41 +123,87 @@ content가 빈약하면 바로 PPTX를 만들지 않고 추가 질문, source �
 
 수집한 정보를 바탕으로 슬라이드 구조를 제안한다.
 
+### Narrative Spine — 구조 제안 전 스토리 뼈대 작성
+
+슬라이드 목록을 나열하기 전, 발표 전체를 5~10문장으로 먼저 요약한다.
+이 단계에서 발표 흐름의 논리적 정합성을 확인하고, 누락된 논리 단계를 발견한다.
+
+**Story Arc (기승전결) 구조:**
+
+| 구간 | 핵심 질문 | 슬라이드 매핑 |
+| --- | --- | --- |
+| 기 (Context) | 배경·현황이 무엇인가? | hero, agenda, kpi(현황) |
+| 승 (Complication) | 어떤 문제·한계가 있는가? | content, chart(문제 데이터) |
+| 전 (Resolution) | 어떻게 해결하는가? | architecture, content(해결책) |
+| 결 (Impact) | 기대 효과와 다음 단계는? | chart(성과), summary |
+
+예시:
+```
+현재 플랫폼은 월 4회 배포로 시장 속도를 따라가지 못하고 있다. [기]
+배포 지연의 핵심 원인은 수동 릴리즈 프로세스와 관찰 가능성 부재다. [승]
+클라우드 네이티브 마이그레이션으로 자동화된 배포 파이프라인을 구축한다. [전]
+12개월 내 배포 빈도 4배 향상, MTTR 48h → 8h 달성이 목표다. [결]
+```
+
+source-first 모드에서는 source 요약 후 반드시 Narrative Spine을 먼저 제시하고 승인받는다.
+brief-first 모드에서는 구조 제안 직전에 한 단락으로 스토리 흐름을 서술한다.
+
 ### 슬라이드 타입 선택 가이드
 
-| 상황 | 추천 타입 |
-| --- | --- |
-| 항상 첫 슬라이드 | `hero` |
-| 4개 이상 섹션 있을 때 | `agenda` |
-| 주요 섹션 사이 구분 | `section-divider` |
-| 핵심 숫자 3~4개 강조 | `kpi` |
-| 텍스트 설명·불렛 포인트 | `content` |
-| 좌우 비교 또는 두 관점 | `two-column` |
-| 기존 vs 제안 명확한 대비 | `comparison` |
-| 시간 추세·항목 비교·구성비 데이터 | `chart` |
-| 행/열 구조의 다차원 비교 | `table` |
-| 시스템·인프라 구성요소와 관계 | `architecture` |
-| 단계별 처리·업무 흐름 | `flow` |
-| 선택지·승인 요청·권고안 | `decision` |
-| 결론·다음 단계 | `summary` |
+AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 타입으로 승격한다.
 
-### Semantic component selection
-
-AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 표현으로 승격한다.
-
-| 입력 내용 | 우선 표현 | 작성 규칙 |
+| 상황 | 추천 타입 | 작성 원칙 / 경계 |
 | --- | --- | --- |
-| 숫자 3~4개가 핵심 | `kpi` | 숫자, delta, trend 중심. 긴 설명은 줄인다. |
-| 시간에 따른 변화 | `chart` line/area | labels와 values 길이를 맞춘다. |
-| 항목 간 수치 비교 | `chart` bar/stacked-bar | 수치가 핵심이면 table보다 chart 우선. |
-| 구성비·비율 | `chart` pie/donut | 항목이 많으면 table로 전환. |
-| 여러 속성의 행/열 비교 | `table` | headers와 rows 컬럼 수 일치. |
-| 컴포넌트·시스템 관계 | `architecture` | node/edge/zone으로 구조화. |
-| 순서·단계·처리 흐름 | `flow` | A → B → C 방향성이 핵심일 때. |
-| 양자택일·승인·권고 | `decision` | `recommendation`에 선택안을 쓴다. |
-| 현재 vs 제안 비교 | `comparison` 또는 `two-column` | 대비가 핵심이면 comparison 우선. |
-| 청중이 기억할 결론 | `summary.takeaways` | deck 또는 섹션 전체 결론. |
-| 슬라이드 내부 강조 문장 1개 | `content`/`flow`의 `callout` | slide type이 아니라 optional field. 남발 금지. |
+| 항상 첫 슬라이드 | `hero` | — |
+| 4개 이상 섹션 있을 때 | `agenda` | — |
+| 주요 섹션 사이 구분 | `section-divider` | — |
+| 핵심 숫자 3~4개 강조 | `kpi` | 숫자·delta·trend 중심. 숫자가 근거 중 하나이면 `content`. |
+| 텍스트 설명·불렛 포인트 | `content` | 숫자가 슬라이드 메시지 자체이면 `kpi`. |
+| 좌우 중립 비교·두 관점 | `two-column` | 방향성 없는 병렬. 한쪽이 명확히 개선/제안이면 `comparison`. |
+| 기존 vs 개선, 명확한 방향 대비 | `comparison` | 좌측(×), 우측(✓). 방향성 없으면 `two-column`. |
+| 수치 추세·항목 비교·구성비 | `chart` | 추세·비교가 핵심. 항목이 많으면 `table`. |
+| 행/열 구조의 다차원 비교 | `table` | 수치 추세가 핵심이면 `chart`. |
+| 시스템·컴포넌트와 관계 | `architecture` | 구조·연결이 핵심. 순서가 핵심이면 `flow`. |
+| 단계별 처리·업무 흐름 | `flow` | 방향·순서가 핵심. 구조·연결이 핵심이면 `architecture`. |
+| 선택지·승인 요청·권고안 | `decision` | `recommendation`에 선택안을 쓴다. |
+| 결론·다음 단계 | `summary` | — |
+
+### 타입 선택 판단 예시 — 모호한 경계
+
+**content vs kpi:**
+- "배포 빈도 4배, MTTR 48h→8h, 변경 실패율 22%→5% — 3가지 수치가 메시지다" → `kpi`
+- "마이크로서비스 전환으로 배포 빈도가 4배 향상됐고, 팀 간 의존성도 줄었다" → `content` (숫자는 근거 중 하나)
+
+**two-column vs comparison:**
+- "클라우드 A와 클라우드 B의 비용·성능 비교" → `two-column` (중립적 병렬, 방향성 없음)
+- "수동 배포 방식과 자동화 배포의 차이" → `comparison` (기존이 문제, 제안이 해결 — 방향성 명확)
+
+**chart vs table:**
+- "분기별 배포 빈도 추이 (Q1~Q4)" → `chart line` (추세가 핵심)
+- "팀별 배포 빈도·장애 건수·MTTR 비교" → `table` (3가지 속성을 행/열로 읽어야 이해됨)
+
+**flow vs architecture:**
+- "PR 생성 → 리뷰 → CI 통과 → 병합 → 배포" → `flow` (순서가 핵심)
+- "API 서버, DB, 캐시, CDN이 어떻게 연결되는가" → `architecture` (연결 관계가 핵심)
+
+### Action Title 원칙
+
+슬라이드 `title`은 주제 라벨이 아니라 결론을 담은 선언형 문장이어야 한다.
+
+```
+✗ "Q2 성과"
+✓ "배포 빈도 4배 향상으로 Q2 목표 초과 달성"
+
+✗ "아키텍처 개요"
+✓ "마이크로서비스 전환으로 장애 격리와 독립 배포 확보"
+
+✗ "주요 지표"
+✓ "MTTR 48h → 8h, 변경 실패율 22% → 5%로 안정성 회복"
+```
+
+예외: `hero`(간결 제목 허용), `agenda`('Agenda' 고정 허용), `section-divider`(섹션명 허용), `summary`('Summary' 고정 허용 — 단, `takeaways`에 실제 결론을 담는다)
+
+구조 제안(GATE 2 이전) 단계에서 슬라이드 제목 초안을 작성할 때도 이 원칙을 적용한다.
 
 ### Emphasis hierarchy
 
@@ -183,13 +232,25 @@ body 항목 코드 표기 기준:
 - `bash`, `js`/`ts`, `java` fenced code는 기본 syntax color가 적용된다.
 - 일반 설명 문장과 코드 항목을 같은 body 안에 혼용할 수 있다.
 
-callout 사용 기준:
+component emphasis 결정 가이드:
 
-- 핵심 메시지, 결론, 주의 문장, 의사결정 포인트가 1문장으로 분명할 때만 쓴다.
-- 선택/승인/권고 문장은 먼저 `decision.recommendation` 후보로 본다.
-- deck 전체 결론은 먼저 `summary.takeaways` 후보로 본다.
+강조 표현을 선택할 때 아래 순서로 판단한다.
+
+1. **deck 전체 결론인가?** → `summary.takeaways`
+2. **선택·승인·권고 문장인가?** → `decision.recommendation`
+3. **이 슬라이드에서 가장 기억할 1문장인가?** → `callout`
+4. 위에 해당 없으면 → `body` 항목에 포함
+
+| 문장 | 판단 |
+| --- | --- |
+| "이 발표의 핵심: 파트너십으로 진입하고 2027년 내재화를 재검토한다" | deck 결론 → `summary.takeaways` |
+| "2026년 파트너십 진입, 2027년 내재화 재검토를 권고한다" | 권고 문장 → `decision.recommendation` |
+| "현 아키텍처는 일 10만 요청에서 병목이 발생한다" | 이 슬라이드 핵심 → `callout` |
+| "배포 자동화는 3단계로 진행한다" | 설명 문장 → `body` 항목 |
+
+callout 부가 기준:
 - body bullet을 그대로 복사하지 않는다.
-- 권장 밀도: 6장 deck 기준 1~2장 정도. hard rule이 아니라 산만함을 막는 품질 가이드다.
+- 권장 밀도: 6장 deck 기준 1~2장. hard rule이 아니라 산만함을 막는 품질 가이드.
 
 Icon policy:
 
@@ -215,15 +276,17 @@ hero → agenda → content × 2 → two-column → summary
 ```
 다음 구조를 제안합니다:
 
-01. [hero]        — {제목}
-02. [agenda]      — {섹션 목록}
-03. [kpi]         — {지표명}
-04. [chart]       — {차트 제목}
-05. [content]     — {슬라이드 제목}
-06. [summary]     — Key Takeaways
+01. [hero]    — {발표 제목}
+02. [agenda]  — {섹션 목록}
+03. [kpi]     — {결론형 지표 제목}
+04. [chart]   — {결론형 차트 제목}
+05. [content] — {결론형 슬라이드 제목}
+06. [summary] — Summary
 
 이 구조로 진행할까요? 슬라이드를 추가·제거하거나 순서를 바꾸고 싶으면 말씀해 주세요.
 ```
+
+hero, agenda, summary를 제외한 슬라이드 제목은 구조 제안 단계부터 Action Title 원칙을 적용한다.
 
 → **[GATE 2] 사용자 승인 후에만 blueprint 작성으로 진행한다.**
 
@@ -250,10 +313,12 @@ deck:
 **언어 규칙 (DR-014):**
 - `section_label`: 영어 UPPERCASE 고정 — `"01. PROBLEM"`, `"SOLUTION"`
 - `left.label` / `right.label` (패널 라벨): 영어 UPPERCASE 권장 — `"CURRENT REALITY"`, `"OUR APPROACH"`
-- `title`: 발표 언어 + Action Title 원칙 (결론 선언형 문장)
+- `title`: 발표 언어 + Action Title 원칙 (Step 2 참조)
 - `body` 항목: 발표 언어 + 기술 용어·지표는 영어 원문 유지
 
 **슬라이드 타입별 필수 필드:**
+
+아래 `title`과 `body` 항목은 스키마 구조 참조용 placeholder다. 실제 blueprint 작성 시 `title`은 Action Title 원칙(Step 2)을 적용한다.
 
 ```yaml
 # hero
@@ -266,7 +331,7 @@ deck:
 # kpi — kpis 배열, 최대 4개
 - id: kpi-1
   type: kpi
-  title: 핵심 지표
+  title: MTTR 48h → 8h, 변경 실패율 22% → 5%로 안정성 회복  # Action Title 예시
   kpis:
     - label: 지표명
       value: "값"      # 따옴표로 감싸기
@@ -289,7 +354,7 @@ deck:
 # content — body 3~5개 항목 권장
 - id: content-1
   type: content
-  title: 슬라이드 제목
+  title: 배포 자동화 3단계로 릴리즈 주기 단축 확보  # Action Title 예시
   body:
     - 핵심 포인트 1
     - 핵심 포인트 2
@@ -322,7 +387,47 @@ deck:
   takeaways:
     - 청중이 기억할 것 1
     - 청중이 기억할 것 2
+
+# two-column — 좌우 두 관점 또는 비교
+- id: two-col-1
+  type: two-column
+  title: 슬라이드 제목
+  left:
+    label: "CURRENT APPROACH"   # 영어 UPPERCASE 권장, 선택
+    body:
+      - 왼쪽 항목 1
+      - 왼쪽 항목 2
+  right:
+    label: "PROPOSED APPROACH"  # 영어 UPPERCASE 권장, 선택
+    body:
+      - 오른쪽 항목 1
+      - 오른쪽 항목 2
+
+# section-divider — 섹션 구분 슬라이드
+- id: section-div-1
+  type: section-divider
+  number: "01"              # 좌측 accent 컬럼 대형 숫자, 선택
+  section: "SECTION 01"    # 영어 UPPERCASE, 선택
+  title: 섹션 제목          # Action Title 예외 허용
+  subtitle: 이 섹션에서 다룰 내용  # 선택
+
+# comparison — 기존 vs 제안 명확한 대비
+- id: comparison-1
+  type: comparison
+  title: 기존 방식과 제안 방향의 핵심 차이
+  left:
+    label: "CURRENT APPROACH"   # 생략 시 "BEFORE" 기본값
+    body:
+      - "수동 배포 체크리스트"
+      - "격주 릴리즈 사이클"
+  right:
+    label: "PROPOSED APPROACH"  # 생략 시 "AFTER" 기본값
+    body:
+      - "자동화 게이트 검증"
+      - "일일 배포 가능"
 ```
+
+comparison은 좌측(×, 회색) vs 우측(✓, accent) 시각 대비. 양쪽 항목 수를 맞추는 것이 좋다.
 
 초안 작성 후:
 ```
@@ -416,10 +521,9 @@ deck 검토를 원하시면 `/review-deck` 또는 `skills/review-deck.md`를 사
 
 AI: 몇 가지 확인할게요.
 
-    발표 시간이나 슬라이드 수는 어느 정도로 생각하세요?
-    강조하고 싶은 핵심 지표가 있나요? (예: 배포 빈도, 장애 복구 시간 등)
-    포함할 차트 데이터가 있나요?
-    테마는 light / dark 중 어느 쪽이 좋으세요?
+    자료를 어떻게 준비할까요? (간단 brief 기반 / 정리된 파일 제공 / AI가 초안부터 구성)
+    발표 시간이나 슬라이드 수는요? 임원진이 꼭 기억해야 할 핵심 지표나 메시지가 있나요?
+    강조할 수치나 차트 데이터가 있나요?
 
 사용자: 20분, 배포 빈도랑 MTTR 개선 보여주고 싶어. 트렌드 차트 있어. dark.
 
@@ -427,11 +531,11 @@ AI: 알겠습니다. 다음 구조를 제안합니다:
 
     01. [hero]    — Q2 Engineering Performance Review
     02. [agenda]  — 4개 섹션 (현황 / 지표 / 성과 / 다음 분기)
-    03. [kpi]     — 핵심 지표 (배포 빈도, MTTR, 변경 실패율)
-    04. [chart]   — 배포 빈도 트렌드 (line)
-    05. [chart]   — MTTR 개선 추이 (bar)
-    06. [content] — 주요 이니셔티브
-    07. [summary] — Key Takeaways + Next Quarter
+    03. [kpi]     — 배포 빈도 4배 향상, MTTR 48h → 8h, 변경 실패율 22% → 5%로 안정성 회복
+    04. [chart]   — 주간 배포 빈도는 자동화 이후 4배 증가
+    05. [chart]   — MTTR은 48h에서 8h로 단축
+    06. [content] — 자동화 게이트와 관찰 가능성이 안정성 개선을 견인
+    07. [summary] — Summary
 
     이 구조로 진행할까요?
 
@@ -439,14 +543,57 @@ AI: 알겠습니다. 다음 구조를 제안합니다:
 
 AI: 네, blueprint 초안을 작성하겠습니다.
     차트 데이터를 준비되면 알려주세요.
-    [blueprints/q2-engineering-review.yaml 초안 작성 후 표시]
+```
+
+```yaml
+# blueprints/q2-engineering-review.yaml (초안 예시)
+deck:
+  title: Q2 Engineering Performance Review
+  design: teal
+  theme: dark
+  version: "1.0"
+  author: Engineering Team
+  audience: 임원진
+
+slides:
+  - id: hero-1
+    type: hero
+    title: Q2 Engineering Performance Review
+    subtitle: 배포 자동화와 안정성 강화 성과
+    cta: "2026 Q2 | Engineering"
+
+  - id: kpi-1
+    type: kpi
+    title: 배포 빈도 4배 향상으로 Q2 목표 초과 달성
+    kpis:
+      - label: 배포 빈도
+        value: "4x"
+        delta: "+300%"
+        trend: up
+      - label: MTTR
+        value: "8h"
+        delta: "-83%"
+        trend: down
+      - label: 변경 실패율
+        value: "5%"
+        delta: "-17pp"
+        trend: down
+
+  - id: summary-1
+    type: summary
+    title: Summary
+    body:
+      - 배포 자동화 파이프라인 구축으로 분기 목표 초과 달성
+      - MTTR 48h → 8h, 장애 격리 체계 확보
+    takeaways:
+      - 자동화 게이트 도입으로 배포 빈도 4배, 안정성 지표 전 항목 개선
+      - Q3 목표: 일일 배포 체계 완성 + 관찰 가능성 강화
 ```
 
 ---
 
 ## 관련 파일
 
-- `skills/generate-blueprint.md` — blueprint만 집중적으로 생성
 - `src/design/presets/teal/ppt-layouts.md` — 슬라이드 타입별 레이아웃 (teal 기본값)
 - `src/design/presets/teal/ppt-chart-rules.md` — 차트 데이터 형식
 - `src/design/presets/modern/ppt-layouts.md` — legacy/light 전용 레이아웃 참조

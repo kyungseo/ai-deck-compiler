@@ -6,12 +6,14 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
-| FEAT-20260601-009 | Timeline circular variant — 타원 + 곡선 화살표 타임라인 | feature/FEAT-20260601-009-timeline-circular-variant |
+| FEAT-20260601-010 | create-deck blueprint 규칙 내재화 — generate-blueprint 통합 | feature/FEAT-20260601-010-create-deck-blueprint-consolidation |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
+| FEAT-20260601-011 | create-deck skill 콘텐츠 정비 — B안 구조 개선 | 2026-06-01 | — |
+| FEAT-20260601-009 | Timeline circular variant — 타원 + 곡선 화살표 타임라인 | 2026-06-01 | — |
 | FEAT-20260601-008 | Cross-platform first-run setup — macOS + Windows 환경 설정 문서 보강 + export-pdf 확장자 검증 | 2026-06-01 | — |
 | FEAT-20260601-007 | Code block polish — 타입 모호성 제거, magic number 주석, YAML 작성 예시 보강 | 2026-06-01 | — |
 | FEAT-20260601-006 | Code syntax highlighting — code block token color support | 2026-06-01 | — |

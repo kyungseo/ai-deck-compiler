@@ -72,11 +72,10 @@ npm install
 | 환경 | 진입 방법 |
 | --- | --- |
 | Claude Code | `/create-deck` 입력 후 요청 |
-| Claude Code | `/generate-blueprint` — blueprint만 생성할 때 |
 | Claude Code | `/review-deck` — 생성된 deck 검토·개선 |
 | Claude Code | `/generate-architecture-slide` — 아키텍처 다이어그램 슬라이드만 생성할 때 |
 | Claude Code | `/export-pdf` — PPTX를 PDF로 반출할 때 |
-| Codex CLI / App | `AGENTS.md` Product Skill Routing에 따라 `create-deck`, `generate-blueprint`, `review-deck`, `export-pdf`, `generate-architecture-slide` skill 요청 |
+| Codex CLI / App | `AGENTS.md` Product Skill Routing에 따라 `create-deck`, `review-deck`, `export-pdf`, `generate-architecture-slide` skill 요청 |
 | Cursor | `.cursor/rules/product-skills.mdc`에 따라 product skill intent를 `skills/*.md` canonical 절차로 처리 |
 | Claude App | 필요한 `skills/*.md` 내용 참조 후 요청 |
 

@@ -1,8 +1,9 @@
 ---
 id: FEAT-20260601-009
 title: "Timeline circular variant — 타원 + 곡선 화살표 타임라인"
-status: Active
+status: Done
 created: 2026-06-01
+actual_end: 2026-06-01
 type: FEAT
 branch: feature/FEAT-20260601-009-timeline-circular-variant
 ---
