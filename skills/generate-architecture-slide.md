@@ -2,7 +2,7 @@
 
 자연어로 된 기술 아키텍처 설명을 받아 유효한 `architecture` slide의 `diagram` 스펙(source: inline)을 생성하는 skill.
 
-`create-deck` 또는 `generate-blueprint` 안에서 architecture slide를 작성할 때 내부적으로 이 절차를 따른다.
+`create-deck` 안에서 architecture slide를 작성할 때 내부적으로 이 절차를 따른다.
 단독으로 호출하면 architecture slide snippet만 생성하고 종료한다.
 
 **MUST:** 출력은 항상 `source: inline`이다. `source: file`은 렌더러가 실제 다이어그램으로 변환하지 않는다.
@@ -35,8 +35,7 @@
 | 컨텍스트 | 행동 |
 |---|---|
 | 단독 command | architecture slide snippet만 생성하고 종료 |
-| `create-deck` 내부 | 전체 deck의 title, section_label, notes 스타일과 일관성 유지 |
-| `generate-blueprint` 내부 | 기존 blueprint의 deck.title, deck.theme에 맞춰 생성 |
+| `create-deck` 내부 | 전체 deck의 title, section_label, notes 스타일과 일관성 유지. 기존 blueprint의 deck.title, deck.theme에 맞춰 생성 |
 
 ---
 
@@ -421,7 +420,6 @@ npm run deck -- --blueprint blueprints/{slug}.yaml --output output/{slug}.pptx
 
 ## 관련 파일
 
-- `skills/generate-blueprint.md` — 전체 blueprint 작성 절차
-- `skills/create-deck.md` — 대화식 deck 생성 end-to-end
+- `skills/create-deck.md` — 대화식 deck 생성 end-to-end (blueprint 작성 포함)
 - `src/schema/blueprint.ts` — node.kind, node.zone, edge.kind schema 정의
 - `src/templates/slides/architecture.ts` — 렌더러 구현

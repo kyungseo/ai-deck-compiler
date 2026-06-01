@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260601-010
 title: "create-deck blueprint 규칙 내재화 — generate-blueprint 통합"
-status: Active
+status: Done
 created: 2026-06-01
 type: FEAT
 branch: feature/FEAT-20260601-010-create-deck-blueprint-consolidation

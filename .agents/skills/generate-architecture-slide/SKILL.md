@@ -7,13 +7,13 @@ description: "자연어 아키텍처 설명을 받아 architecture slide diagram
 
 `skills/generate-architecture-slide.md`를 로드하여 절차를 따른다.
 
-`create-deck` / `generate-blueprint` 내부에서 architecture slide 작성 시 내부적으로 이 절차를 따른다.
+`create-deck` 내부에서 architecture slide 작성 시 내부적으로 이 절차를 따른다.
 단독 호출 시에는 architecture slide snippet만 생성하고 종료한다.
 
 ## Trigger
 
 - "아키텍처 슬라이드 만들어줘", "architecture slide 생성해줘", `/generate-architecture-slide` 의도 감지 시
-- `create-deck` / `generate-blueprint` 진행 중 architecture slide 작성이 필요할 때
+- `create-deck` 진행 중 architecture slide 작성이 필요할 때
 
 ## Procedure
 
