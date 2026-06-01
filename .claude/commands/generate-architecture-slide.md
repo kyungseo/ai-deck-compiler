@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 `skills/generate-architecture-slide.md`를 로드해서 절차를 따라줘.
 
-`create-deck` 또는 `generate-blueprint` 안에서 architecture slide를 작성할 때 이 절차를 따른다.
+`create-deck` 안에서 architecture slide를 작성할 때 이 절차를 따른다.
 단독 실행 시에는 architecture slide snippet만 생성하고 종료한다.
 
 **MUST:** 출력은 항상 `source: inline`이다.

@@ -39,3 +39,9 @@ status: Accepted
 - **장점:** create-deck이 self-contained. Step 3에서 외부 파일 없이 완전한 blueprint 작성 가능. 사용자 진입점 단순화.
 - **단점:** create-deck.md 파일 크기 증가 (+107줄, 453→560줄). skills/generate-blueprint.md는 내용이 중복되어 관리 대상으로 남음.
 - **되돌리기 비용:** Medium — git revert로 복구 가능하나 content migration 재작업 필요.
+
+## Addendum — 2026-06-01 (FEAT-20260601-012)
+
+FEAT-010 결정 당시 `skills/generate-blueprint.md`는 "내부 참조용 보존"으로 유지했다.
+FEAT-011(create-deck 콘텐츠 정비) 완료 후 재검토 결과, 보존 이점보다 drift 비용이 크다고 판단하여
+FEAT-012에서 canonical file을 폐기하고 redirect wrapper(`.claude/commands/generate-blueprint.md`, `.agents/skills/generate-blueprint/SKILL.md`)만 호환성 목적으로 유지했다.
