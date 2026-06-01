@@ -6,12 +6,12 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
-| FEAT-20260601-004 | Card inner horizontal padding — 카드 내부 콘텐츠 좌우 여백 통일 | `feature/FEAT-20260601-003-showcase-deck-results` |
 
 ## Done (Archive Pending)
 
 | ID | Title | actual_end | Hold Reason |
 | --- | --- | --- | --- |
+| FEAT-20260601-004 | Card inner horizontal padding — 카드 내부 콘텐츠 좌우 여백 통일 | 2026-06-01 | — |
 | FEAT-20260531-005 | 예제 확장 — examples/strategy + examples/data-report | 2026-05-31 | — |
 | FEAT-20260531-004 | PDF 내보내기 — export-pdf CLI + 멀티툴 AI skill | 2026-05-31 | — |
 | CHORE-20260531-004 | 문서 정보구조 정비 — README, USER-MANUAL, SYSTEM-MANUAL 재구성 | 2026-05-31 | — |

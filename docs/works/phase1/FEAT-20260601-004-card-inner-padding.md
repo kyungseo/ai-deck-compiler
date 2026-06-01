@@ -1,7 +1,8 @@
 ---
 id: FEAT-20260601-004
 title: "Card inner horizontal padding — 카드 내부 콘텐츠 좌우 여백 통일"
-status: Active
+status: Done
+actual_end: 2026-06-01
 type: FEAT
 created: 2026-06-01
 branch: feature/FEAT-20260601-003-showcase-deck-results
@@ -93,20 +94,20 @@ export const CARD = {
 
 ## Done Criteria
 
-- [ ] `layout.ts` — `CARD.px = 0.25` 추가
-- [ ] `kpi.ts` — inner padding 적용
-- [ ] `table.ts` — inner padding 적용
-- [ ] `decision.ts` — inner padding 적용
-- [ ] `comparison.ts` — inner padding 적용
-- [ ] `two-column.ts` — inner padding 적용
-- [ ] `content.ts` — inner padding 적용
-- [ ] `chart.ts` — inner padding 적용
-- [ ] `agenda.ts` — inner padding 적용
-- [ ] `summary.ts` — inner padding 적용
-- [ ] `flow.ts` / `architecture.ts` — inner zone 기준 조정
-- [ ] `npm run typecheck` 통과
-- [ ] `npm test -- -u` 통과 (snapshot diff 리뷰 포함)
-- [ ] showcase 슬라이드 7 / 13 / 15 preview 시각 확인
+- [x] `layout.ts` — `CARD.px = 0.25` 추가
+- [x] `kpi.ts` — inner padding 적용
+- [x] `table.ts` — inner padding 적용
+- [x] `decision.ts` — inner padding 적용
+- [x] `comparison.ts` — inner padding 적용
+- [x] `two-column.ts` — inner padding 적용
+- [x] `content.ts` — inner padding 적용
+- [x] `chart.ts` — inner padding 적용
+- [x] `agenda.ts` — inner padding 적용
+- [x] `summary.ts` — inner padding 적용
+- [x] `flow.ts` / `architecture.ts` — inner zone 기준 조정
+- [x] `npm run typecheck` 통과
+- [x] `npm test -- -u` 통과 (snapshot diff 리뷰 포함)
+- [x] showcase 슬라이드 7 / 13 / 15 preview 시각 확인
 
 ---
 
