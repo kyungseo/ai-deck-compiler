@@ -43,11 +43,11 @@ blueprint.yaml + design preset → Editable PPTX를 규칙 기반으로 컴파�
 | 영역 | 선택 | 결정 근거 |
 | --- | --- | --- |
 | Language | TypeScript | 타입 안전성, AI 코드 생성 친화적, discriminated union으로 16종 slide type 표현 |
-| Runtime | Node.js 18+ | pptxgenjs가 Node.js 기반. Python-pptx 대신 Node.js로 단일 스택 통합 |
+| Runtime | Node.js 20+ | pptxgenjs와 current dev tooling을 Node.js 기반 단일 스택으로 통합 |
 | PPTX 렌더링 | pptxgenjs ^3.12 | Editable output (native XML), native chart/table/shape, TypeScript-friendly API, 규칙 기반 렌더링 |
 | Schema 검증 | zod ^3.23 | TypeScript-first, discriminated union으로 slide type별 schema 분기, JSON Schema 자동 생성 가능 |
 | YAML 파싱 | yaml ^2.4 (eemeli) | YAML 1.2 지원, TypeScript-friendly, 경량 |
-| 테스트 | vitest ^1 | Vite 기반, TypeScript 직접 실행, 빠른 HMR, snapshot 테스트 내장 |
+| 테스트 | vitest ^4 | Vite 기반, TypeScript 직접 실행, snapshot 테스트 내장 |
 | CLI 실행 | tsx ^4 | TypeScript를 빌드 없이 직접 실행, 개발 속도 우선 |
 
 **채택하지 않은 선택지:**
@@ -141,7 +141,7 @@ npm run typecheck                          # tsc --noEmit
 
 | 패키지 | 버전 | 역할 |
 | --- | --- | --- |
-| vitest | ^1 | 테스트 프레임워크 |
+| vitest | ^4 | 테스트 프레임워크 |
 | tsx | ^4 | TypeScript 직접 실행 (빌드 없이 CLI 개발) |
 | typescript | ^5 | TypeScript 컴파일러 |
 | zod-to-json-schema | ^3.25 | Zod → JSON Schema 변환 |
@@ -155,8 +155,8 @@ npm run typecheck                          # tsc --noEmit
 
 ### Phase 1 Readiness Checklist
 
-- [x] Runtime / Language 확정 — Node.js 18+, TypeScript
-- [x] Framework / Library 확정 — pptxgenjs ^3.12, zod ^3.23, yaml ^2.4, vitest ^1, tsx ^4
+- [x] Runtime / Language 확정 — Node.js 20+, TypeScript
+- [x] Framework / Library 확정 — pptxgenjs ^3.12, zod ^3.23, yaml ^2.4, vitest ^4, tsx ^4
 - [x] Build tool 확정 — tsconfig.json (ES2022, strict, bundler resolution)
 - [x] Base package / Module 확정 — src/ (schema/, compiler/, templates/, design/, cli/)
 - [x] Data storage 확정 또는 Not Applicable — Not Applicable (file-based: blueprint.yaml, tokens.json)

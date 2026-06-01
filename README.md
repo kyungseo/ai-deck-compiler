@@ -98,7 +98,7 @@ AI에게 "PPT 만들어줘"라고 맡기면 보통 이런 문제가 생깁니다
 
 ### 요구사항
 
-- Node.js 18+, npm 9+
+- Node.js 20+, npm 10+
 
 **Pretendard 폰트** (권장 — 미설치 시 시스템 fallback 폰트로 렌더링)
 
