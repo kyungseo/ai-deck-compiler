@@ -6,6 +6,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | branch |
 | --- | --- | --- |
+| FEAT-20260601-008 | Cross-platform first-run setup — macOS + Windows 환경 설정 문서 보강 + export-pdf 확장자 검증 | feature/FEAT-20260601-008-cross-platform-setup |
 
 ## Done (Archive Pending)
 

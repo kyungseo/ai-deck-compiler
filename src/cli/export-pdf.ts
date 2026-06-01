@@ -74,7 +74,14 @@ function parseArgs(argv: string[]): Args {
     process.exit(1);
   }
 
-  const stem       = basename(resolved, '.pptx');
+  if (!basename(resolved).toLowerCase().endsWith('.pptx')) {
+    console.error(`[오류] .pptx 파일이 필요합니다: ${resolved}`);
+    process.exit(1);
+  }
+
+  // Strip extension case-insensitively so .PPTX also produces a clean stem.
+  const name       = basename(resolved);
+  const stem       = name.slice(0, name.length - '.pptx'.length);
   const defaultOut = join(dirname(resolved), `${stem}.pdf`);
 
   return {
@@ -99,7 +106,8 @@ function main() {
     process.exit(1);
   }
 
-  const stem = basename(pptxPath, '.pptx');
+  const pptxName = basename(pptxPath);
+  const stem = pptxName.slice(0, pptxName.length - '.pptx'.length);
   console.log(`Export PDF: ${stem}`);
   console.log(`LibreOffice: ${soffice}`);
   console.log(`출력:        ${outPath}`);
