@@ -1,9 +1,10 @@
 ---
 id: FEAT-20260601-003
 title: "Showcase deck results — ai-deck-compiler 소개 PPTX + preset gallery 교체"
-status: Done
+status: Archived
 type: FEAT
 created: 2026-06-01
+actual_end: 2026-06-01
 branch: feature/FEAT-20260601-003-showcase-deck-results
 ---
 

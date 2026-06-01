@@ -1,8 +1,9 @@
 ---
 id: FEAT-20260601-011
 title: "create-deck skill 콘텐츠 정비 — B안 구조 개선"
-status: Done
+status: Archived
 created: 2026-06-01
+actual_end: 2026-06-01
 type: FEAT
 branch: feature/FEAT-20260601-011-create-deck-skill-improvement
 ---

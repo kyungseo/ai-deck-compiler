@@ -1,7 +1,7 @@
 ---
 id: CHORE-20260531-004
 title: "문서 정보구조 정비 — README, USER-MANUAL, SYSTEM-MANUAL 재구성"
-status: Done
+status: Archived
 type: CHORE
 created: 2026-05-31
 actual_end: 2026-05-31

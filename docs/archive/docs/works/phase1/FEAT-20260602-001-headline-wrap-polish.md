@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260602-001
 title: "Headline wrap polish — action-title 가독성 보정"
-status: Done
+status: Archived
 created: 2026-06-02
 actual_end: 2026-06-02
 type: FEAT

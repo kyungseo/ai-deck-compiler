@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260531-001
 title: "P2 slide type 4종 구현 — timeline, flow, decision, appendix"
-status: Done
+status: Archived
 type: FEAT
 created: 2026-05-31
 actual_end: 2026-05-31

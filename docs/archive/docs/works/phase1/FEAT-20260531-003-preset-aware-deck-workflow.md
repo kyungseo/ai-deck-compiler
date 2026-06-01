@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260531-003
 title: "preset-aware deck creation + metadata/source input workflow"
-status: Done
+status: Archived
 type: FEAT
 created: 2026-05-31
 actual_end: 2026-05-31

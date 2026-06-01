@@ -1,9 +1,10 @@
 ---
 id: FEAT-20260531-007
 title: "Design Preset 고도화 — teal (신규 권장 default) + vivid skeleton 추가"
-status: Done
+status: Archived
 type: FEAT
 created: 2026-05-31
+actual_end: 2026-05-31
 branch: feature/FEAT-20260531-007-preset-design-overhaul
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: FEAT-20260601-007
 title: "Code block polish — 타입 모호성 제거, magic number 주석, YAML 작성 예시 보강"
-status: Done
+status: Archived
 actual_end: 2026-06-01
 type: FEAT
 created: 2026-06-01
