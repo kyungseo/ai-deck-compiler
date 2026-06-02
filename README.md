@@ -9,6 +9,10 @@ AI-Native Presentation Engineering Framework
 `ai-deck-compiler`는 Claude Code, Codex, Cursor, Claude App과 함께 쓰는 AI-first PPT 생성 도구입니다.
 AI와의 대화로 발표 내용을 빠르게 정제하고, 레이아웃과 디자인은 엔진이 일관되게 처리합니다.
 
+> [!TIP]
+> 파워포인트 Showcase:
+> [**'teal + dark' (기본)**](examples/results/showcase-teal-dark.pptx) · ['vivid + dark'](examples/results/showcase-vivid-dark.pptx) · ['modern + light'](examples/results/showcase-modern-light.pptx)
+
 ![Showcase gallery](examples/results/showcase-gallery.png)
 
 대표 showcase blueprint, PPTX, export PDF는 [examples/results](examples/results/)에서 바로 확인할 수 있습니다.
