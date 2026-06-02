@@ -92,8 +92,8 @@ describe('Design preset alias compatibility', () => {
   });
 });
 
-describe('Compiler callout footer suppression', () => {
-  it('callout slide omits brand footer; adjacent non-callout slide retains it', async () => {
+describe('Compiler callout footer behavior', () => {
+  it('callout slide retains brand footer; adjacent non-callout slide also retains it', async () => {
     const blueprint: Blueprint = {
       deck: { title: 'Footer Suppression Fixture', design: 'vivid', theme: 'dark', version: '1.0' },
       slides: [
@@ -101,7 +101,7 @@ describe('Compiler callout footer suppression', () => {
           id: 'callout',
           type: 'content',
           title: 'Callout slide',
-          callout: 'Callout should replace footer area',
+          callout: 'Callout should stay inside the card',
           body: ['Body text without brand footer marker'],
         },
         { id: 'agenda', type: 'agenda', title: 'Agenda', items: ['One', 'Two'] },
@@ -114,7 +114,7 @@ describe('Compiler callout footer suppression', () => {
     const slide1Xml = normalizeXml(await zip.file('ppt/slides/slide1.xml')!.async('string'));
     const slide2Xml = normalizeXml(await zip.file('ppt/slides/slide2.xml')!.async('string'));
 
-    expect(slide1Xml, 'callout slide must NOT contain brand footer').not.toContain('ai-deck-compiler');
+    expect(slide1Xml, 'callout slide must contain brand footer').toContain('ai-deck-compiler');
     expect(slide2Xml, 'non-callout slide must contain brand footer').toContain('ai-deck-compiler');
   });
 

@@ -6,11 +6,11 @@
 | --- | --- |
 | Phase | Phase 1 — Blueprint → Editable PPTX 일관 출력 엔진 구축 |
 | Workflow profile | Scaffold-adoption product repo; generator script not included |
-| Active plan | — |
+| Active plan | None |
 | Bootstrap checklist | Complete / inactive; local bootstrap document removed |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-02 (AI tool simulation complete) |
+| Last updated | 2026-06-02 (release finalization archived; clean idle) |
 
 ## Work Context Rule
 
@@ -20,8 +20,7 @@
 
 ## Active Work
 
-| ID | Title | Work 파일 |
-| --- | --- | --- |
+—
 
 ## Blockers And Open Questions
 

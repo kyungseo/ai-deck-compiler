@@ -52,7 +52,7 @@ teal과 동일한 Pretendard 기반 typography를 사용한다. (`ppt-design.md`
 | group-fill | `#131626` | Diagram group background |
 | group-border | `#3A3D5C` | Diagram group dashed border |
 | edge | `#5B5F78` | Diagram edge line |
-| callout-bar | `#6957E8` | Bottom callout bar background (opt-in: renders only when this token + slide.callout exist) |
+| callout-bar | `#6957E8` | Inset card callout background (opt-in: renders only when this token + slide.callout exist) |
 | callout-bar-text | `#FFFFFF` | Bottom callout bar text |
 | chart-0…5 | `#7B6CF6` `#5340CC` `#A89BF8` `#F87171` `#FBBF24` `#22D3EE` | Chart series (main→dark→light purple, then accent colors) |
 

@@ -28,6 +28,10 @@
 
 **MUST:** 각 GATE에서 반드시 멈추고 사용자 응답을 기다린다. "간단하게", "빠르게", "테스트용" 등의 말도 GATE를 건너뛰는 허가가 아니다.
 
+**Claude Code 주의:** `/create-deck`은 자체 대화형 GATE workflow다.
+Claude Code의 `/plan` 또는 "Ready to code?" plan 화면으로 전환하지 않는다.
+Step 2의 슬라이드 구조 제안이 이 workflow의 승인용 plan이며, implementation plan이나 Work plan으로 대체하지 않는다.
+
 ---
 
 ## Step 0 — Input Mode 판별
@@ -133,6 +137,9 @@ content가 빈약하면 바로 PPTX를 만들지 않고 추가 질문, source �
 ## Step 2 — 슬라이드 구조 제안
 
 수집한 정보를 바탕으로 슬라이드 구조를 제안한다.
+이 단계에서는 파일을 작성하지 않는다. 사용자에게 보여줄 발표 Narrative Spine과 slide outline만 출력한다.
+blueprint schema나 기존 `blueprints/` 파일 탐색은 구조 제안에 꼭 필요한 경우로 제한한다.
+동일한 slug의 blueprint가 이미 있으면 새 파일명을 임의로 결정하지 말고, 구조 승인 후 Step 3 시작 전에 overwrite / 새 파일명 / 기존 파일 수정 중 무엇을 원하는지 확인한다.
 
 ### Narrative Spine — 구조 제안 전 스토리 뼈대 작성
 
@@ -159,6 +166,30 @@ content가 빈약하면 바로 PPTX를 만들지 않고 추가 질문, source �
 source-first 모드에서는 source 요약 후 반드시 Narrative Spine을 먼저 제시하고 승인받는다.
 brief-first 모드에서는 구조 제안 직전에 한 단락으로 스토리 흐름을 서술한다.
 
+### Baseline Deck Grammar
+
+`/create-deck`이 작성하는 기본 deck은 showcase 수준의 구조감을 갖춰야 한다.
+사용자가 명시적으로 "목차 없이", "섹션 구분 페이지 없이", "ending 없이", "최대한 짧게"처럼 제외 의사를 밝힌 경우에만 아래 기본값을 생략한다.
+
+```text
+hero
+→ agenda
+→ section-divider + section slides
+→ section-divider + section slides
+→ optional summary
+→ closing
+```
+
+기본 규칙:
+
+- `agenda`: deck의 길이와 무관하게 기본 포함한다. 3장 이하의 초단기 deck이거나 사용자가 제외를 명시한 경우에만 생략한다.
+- `section-divider`: 주요 흐름이 바뀌는 지점마다 기본 포함한다. 적어도 본론 시작 전 첫 section-divider는 포함한다.
+- `closing`: 마지막 한 문장, Q&A, next step, contact 중 하나로 deck을 끝낸다. summary가 있어도 closing은 역할이 다르므로 기본 포함한다.
+- `summary`: deck 전체 결론과 다음 행동을 2~3개로 정리할 가치가 있을 때 포함한다. 단순 안내·짧은 예시 deck에서는 생략할 수 있다.
+- 일반 slide에는 `section_label`을 기본 작성한다. 예: `"01. PROBLEM"`, `"02. APPROACH"`, `"03. EVIDENCE"`.
+- `section_label` 번호는 section-divider의 section 번호와 일관되게 유지한다.
+- 사용자가 구조 제안에서 agenda / section-divider / closing을 제거하라고 승인하면 그 결정을 따른다.
+
 ### 슬라이드 타입 선택 가이드
 
 AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 타입으로 승격한다.
@@ -166,8 +197,8 @@ AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 
 | 상황 | 추천 타입 | 작성 원칙 / 경계 |
 | --- | --- | --- |
 | 항상 첫 슬라이드 | `hero` | — |
-| 4개 이상 섹션 있을 때 | `agenda` | — |
-| 주요 섹션 사이 구분 | `section-divider` | — |
+| 기본 목차 | `agenda` | 사용자가 제외하지 않으면 기본 포함. 3장 이하 초단기 deck만 생략 가능. |
+| 주요 섹션 사이 구분 | `section-divider` | 본론 시작 전과 큰 흐름 전환 지점에 기본 포함. |
 | 핵심 숫자 3~4개 강조 | `kpi` | 숫자·delta·trend 중심. 숫자가 근거 중 하나이면 `content`. |
 | 텍스트 설명·불렛 포인트 | `content` | 숫자가 슬라이드 메시지 자체이면 `kpi`. |
 | 좌우 중립 비교·두 관점 | `two-column` | 방향성 없는 병렬. 한쪽이 명확히 개선/제안이면 `comparison`. |
@@ -179,8 +210,8 @@ AI는 source나 brief를 bullet로 그대로 옮기지 않고, 의미에 맞는 
 | 일정·로드맵·변화 과정 | `timeline` | 시간 순서나 milestone이 핵심. 인과 설명이 핵심이면 `content`. |
 | 선택지·승인 요청·권고안 | `decision` | `recommendation`에 선택안을 쓴다. |
 | 근거·명령·참고 자료 | `appendix` | 본문 흐름을 방해하지 않는 보조 정보. 핵심 메시지는 본문 slide에 둔다. |
-| 결론·다음 단계 | `summary` | — |
-| 마지막 한 문장·Q&A | `closing` | 간결한 title/message. 새 정보 추가보다 기억할 문장에 집중. |
+| 결론·다음 단계 | `summary` | deck 결론을 정리할 가치가 있을 때 포함. closing을 대체하지 않는다. |
+| 마지막 한 문장·Q&A | `closing` | 사용자가 제외하지 않으면 기본 포함. 새 정보 추가보다 기억할 문장에 집중. |
 
 ### 타입 선택 판단 예시 — 모호한 경계
 
@@ -251,6 +282,11 @@ body 항목 코드 표기 기준:
 - backtick/fenced code 항목은 지원 slide에서 boxed monospace block으로 렌더링된다.
 - `bash`, `js`/`ts`, `java` fenced code는 기본 syntax color가 적용된다.
 - 일반 설명 문장과 코드 항목을 같은 body 안에 혼용할 수 있다.
+- 본문, 표 셀, KPI label/value에는 footnote marker나 지원하지 않는 Markdown citation을 남기지 않는다.
+  - 금지 예: `[^1]`, `[^]`, `[1]`, raw footnote definition.
+  - 출처나 보충 설명이 필요하면 `notes`의 Expected question/Talk track 또는 appendix slide로 이동한다.
+- 표 셀과 KPI에는 이모지/경고 아이콘 대신 짧은 텍스트를 쓴다.
+  - 예: `⚠️` 대신 `주의`, `확인 필요`, `베타`.
 
 component emphasis 결정 가이드:
 
@@ -307,22 +343,22 @@ Icon policy:
 ### 목적별 권장 구성
 
 **팀 성과 보고 (임원 대상, 15~20분):**
-hero → agenda → kpi → chart → content → summary
+hero → agenda → section-divider → kpi → chart → section-divider → content → summary → closing
 
 **기술 제안서 (엔지니어링 팀, 30분):**
-hero → agenda → content → architecture → two-column → chart → summary
+hero → agenda → section-divider → content → architecture → section-divider → two-column → chart → summary → closing
 
 **제품/도구 showcase (외부 공개, 10~15분):**
-hero → agenda → content → comparison → kpi → chart → architecture → flow → table → summary → appendix → closing
+hero → agenda → section-divider → content → comparison → kpi → chart → section-divider → architecture → flow → table → summary → appendix → closing
 
 **실행 계획/roadmap 공유 (팀 리드, 20분):**
-hero → content → timeline → decision → summary
+hero → agenda → section-divider → content → timeline → section-divider → decision → summary → closing
 
 **분기 리뷰 (전사, 10분):**
-hero → kpi → chart → summary
+hero → agenda → section-divider → kpi → chart → summary → closing
 
 **제안 제출 (고객, 20분):**
-hero → agenda → content × 2 → two-column → summary
+hero → agenda → section-divider → content × 2 → section-divider → two-column → summary → closing
 
 제안 형식:
 ```
@@ -330,15 +366,18 @@ hero → agenda → content × 2 → two-column → summary
 
 01. [hero]    — {발표 제목}
 02. [agenda]  — {섹션 목록}
-03. [kpi]     — {결론형 지표 제목}
-04. [chart]   — {결론형 차트 제목}
-05. [content] — {결론형 슬라이드 제목}
-06. [summary] — Summary
+03. [section-divider] — 01. {첫 섹션명}
+04. [kpi]     — {결론형 지표 제목}
+05. [chart]   — {결론형 차트 제목}
+06. [section-divider] — 02. {다음 섹션명}
+07. [content] — {결론형 슬라이드 제목}
+08. [summary] — Summary (필요 시)
+09. [closing] — {마지막 메시지 또는 Q&A}
 
 이 구조로 진행할까요? 슬라이드를 추가·제거하거나 순서를 바꾸고 싶으면 말씀해 주세요.
 ```
 
-hero, agenda, summary를 제외한 슬라이드 제목은 구조 제안 단계부터 Action Title 원칙을 적용한다.
+hero, agenda, section-divider, summary, closing을 제외한 슬라이드 제목은 구조 제안 단계부터 Action Title 원칙을 적용한다.
 
 → **[GATE 2] 사용자 승인 후에만 blueprint 작성으로 진행한다.**
 
@@ -368,6 +407,19 @@ deck:
 - `title`: 발표 언어 + Action Title 원칙 (Step 2 참조)
 - `body` 항목: 발표 언어 + 기술 용어·지표는 영어 원문 유지
 
+**section_label 작성 규칙:**
+- hero / section-divider / closing을 제외한 일반 slide에는 `section_label`을 기본 작성한다.
+- agenda에는 `"00. AGENDA"`를 권장한다.
+- section 안의 일반 slide에는 `"01. PROBLEM"`, `"02. APPROACH"`, `"03. EVIDENCE"`처럼 번호와 영문 라벨을 함께 쓴다.
+- appendix에는 `"APPENDIX"`를 쓴다.
+- 사용자가 section chip을 원하지 않거나 매우 짧은 deck이라고 승인한 경우에만 생략한다.
+
+**headline overflow 작성 규칙:**
+- 일반 slide의 긴 Action Title은 renderer가 compact header typography와 더 큰 title box로 대응한다.
+- headline이 길다는 이유만으로 메시지를 "현황", "개요", "결과" 같은 라벨형 제목으로 약화하지 않는다.
+- 제목이 2줄 이상으로 길어질 정도의 맥락은 `subtitle`, `body`, `callout`으로 분리한다.
+- hero / section-divider / closing은 큰 typography를 쓰므로 더 짧은 제목을 우선한다.
+
 **슬라이드 타입별 필수 필드:**
 
 아래 `title`과 `body` 항목은 스키마 구조 참조용 placeholder다. 실제 blueprint 작성 시 `title`은 Action Title 원칙(Step 2)을 적용한다.
@@ -388,6 +440,7 @@ deck:
 # kpi — kpis 배열, 최대 4개
 - id: kpi-1
   type: kpi
+  section_label: "01. PERFORMANCE"
   title: MTTR 48h → 8h, 변경 실패율 22% → 5%로 안정성 회복  # Action Title 예시
   kpis:
     - label: 지표명
@@ -398,6 +451,7 @@ deck:
 # chart — inline 데이터 사용
 - id: chart-1
   type: chart
+  section_label: "01. PERFORMANCE"
   title: 차트 제목
   chart:
     type: bar          # bar|stacked-bar|line|area|pie|donut
@@ -411,6 +465,7 @@ deck:
 # content — body 3~5개 항목 권장
 - id: content-1
   type: content
+  section_label: "02. APPROACH"
   title: 배포 자동화 3단계로 릴리즈 주기 단축 확보  # Action Title 예시
   body:
     - 핵심 포인트 1
@@ -425,6 +480,7 @@ deck:
 # architecture — zone 기반 배치
 - id: arch-1
   type: architecture
+  section_label: "02. ARCHITECTURE"
   title: 아키텍처 제목
   diagram:
     source: inline
@@ -443,6 +499,7 @@ deck:
 # summary
 - id: summary-1
   type: summary
+  section_label: "03. TAKEAWAYS"
   title: Summary
   body:
     - 핵심 내용 요약
@@ -453,6 +510,7 @@ deck:
 # two-column — 좌우 두 관점 또는 비교
 - id: two-col-1
   type: two-column
+  section_label: "02. COMPARISON"
   title: 슬라이드 제목
   left:
     label: "CURRENT APPROACH"   # 영어 UPPERCASE 권장, 선택
@@ -476,6 +534,7 @@ deck:
 # comparison — 기존 vs 제안 명확한 대비
 - id: comparison-1
   type: comparison
+  section_label: "02. COMPARISON"
   title: 기존 방식과 제안 방향의 핵심 차이
   left:
     label: "CURRENT APPROACH"   # 생략 시 "BEFORE" 기본값
@@ -491,6 +550,7 @@ deck:
 # table — 행/열 비교
 - id: table-1
   type: table
+  section_label: "03. EVIDENCE"
   title: 세 가지 preset은 같은 content를 다른 발표 톤으로 전환한다
   headers: [Preset, Theme, Best for]
   rows:
@@ -501,6 +561,7 @@ deck:
 # timeline — 일정·milestone
 - id: timeline-1
   type: timeline
+  section_label: "03. ROADMAP"
   title: 3단계 전환으로 rollout risk를 낮춘다
   items:
     - date: Week 1
@@ -516,6 +577,7 @@ deck:
 # flow — 단계별 처리 흐름
 - id: flow-1
   type: flow
+  section_label: "02. WORKFLOW"
   title: Review gate를 통과하며 초안이 산출물로 바뀐다
   diagram:
     source: inline
@@ -545,6 +607,7 @@ deck:
 # decision — 선택지와 권고
 - id: decision-1
   type: decision
+  section_label: "04. DECISION"
   title: Public showcase는 제품 자체를 설명하는 deck으로 둔다
   options:
     - label: Generic sample
@@ -562,6 +625,7 @@ deck:
 # appendix — 보조 정보와 code block
 - id: appendix-1
   type: appendix
+  section_label: "APPENDIX"
   title: Appendix
   body:
     - "```bash\nnpm run validate -- --blueprint blueprints/example.yaml\nnpm run deck -- --blueprint blueprints/example.yaml --output output/example-v1.0.pptx\n```"
@@ -584,6 +648,7 @@ blueprints/{slug}.yaml을 작성했습니다.
 [blueprint.yaml 내용 전체 표시]
 
 각 슬라이드를 검토해 주세요. 수정할 내용이 있으면 말씀해 주세요.
+수정할 내용이 없으면 "진행해" 또는 "PPTX 생성해줘"라고 답해 주세요. 그러면 validation 후 PPTX를 생성하겠습니다.
 ```
 
 → **[GATE 3] 사용자가 검토 완료를 확인한 뒤에만 Step 4 검토·보완 반복으로 진행한다.**
@@ -710,8 +775,25 @@ slides:
     subtitle: 배포 자동화와 안정성 강화 성과
     cta: "2026 Q2 | Engineering"
 
+  - id: agenda-1
+    type: agenda
+    title: 오늘 볼 것
+    section_label: "00. AGENDA"
+    items:
+      - 성과 지표
+      - 안정성 개선
+      - Q3 실행 계획
+
+  - id: section-performance
+    type: section-divider
+    number: "01"
+    section: "PERFORMANCE"
+    title: Q2 성과는 배포 속도와 안정성을 함께 개선했다
+    subtitle: 핵심 지표를 먼저 확인한다
+
   - id: kpi-1
     type: kpi
+    section_label: "01. PERFORMANCE"
     title: 배포 빈도 4배 향상으로 Q2 목표 초과 달성
     kpis:
       - label: 배포 빈도
@@ -729,6 +811,7 @@ slides:
 
   - id: summary-1
     type: summary
+    section_label: "02. TAKEAWAYS"
     title: Summary
     body:
       - 배포 자동화 파이프라인 구축으로 분기 목표 초과 달성
@@ -736,6 +819,12 @@ slides:
     takeaways:
       - 자동화 게이트 도입으로 배포 빈도 4배, 안정성 지표 전 항목 개선
       - Q3 목표: 일일 배포 체계 완성 + 관찰 가능성 강화
+
+  - id: closing-1
+    type: closing
+    message: Next step
+    title: Q3는 일일 배포 체계 완성에 집중한다
+    subtitle: Discussion and decision
 ```
 
 ---

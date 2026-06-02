@@ -30,15 +30,15 @@ section_label 없는 슬라이드: chip 미렌더링, title Y = 0.35" (SL.ty 기
 
 ## Callout Bar
 
-`content` / `flow` 슬라이드에서 `callout` 필드가 있을 때 렌더링되는 하단 full-width 강조 바.
+`content` / `flow` 슬라이드에서 `callout` 필드가 있을 때 카드 내부 하단에 렌더링되는 inset 강조 패널.
 
 | 속성 | 값 |
 | --- | --- |
-| 위치 | x=0, y=6.85", w=13.33", h=0.34" |
+| 위치 | x=1.12", y=6.13", w=11.10", h=0.48" |
 | Fill | `callout-bar` (`#2D6B5E`) |
 | Text color | `callout-bar-text` (`#FFFFFF`) |
 | Font | caption 14pt, Bold, center align, valign middle |
-| Footer 억제 | callout bar 렌더 시 brand footer 미표시 |
+| Footer | brand footer 유지 |
 | 적용 조건 | `callout-bar` 토큰 존재 + `content`/`flow` slide의 `callout` field 존재 |
 
 blueprint 예시:

@@ -50,6 +50,8 @@ blueprint 파일 경로가 제공되지 않으면 묻는다.
 
 파일을 읽어 `deck` 메타데이터(제목, 청중, 테마)와 슬라이드 목록을 파악한다.
 PPTX 또는 preview PNG 경로가 제공되면 함께 확인한다.
+preview PNG 경로가 있어도 실제로 열어보거나 검사한 slide만 "확인 완료"라고 말한다.
+전체 slide를 보지 않았으면 확인한 slide 번호와 미확인 범위를 명시한다.
 
 → **[GATE 1] 파일 확인 및 검토 범위 합의 후에만 분석을 시작한다.**
 
@@ -66,6 +68,12 @@ PPTX 또는 preview PNG 경로가 제공되면 함께 확인한다.
 - 섹션 전환이 자연스러운가 (`section-divider` 배치 적절성)
 - 슬라이드 수가 발표 시간에 적합한가 (참고: 1장 = 약 1.5~2분)
 - 흐름상 빠진 슬라이드나 불필요하게 중복된 슬라이드가 있는가
+
+slide type count 기준:
+- `section-divider`는 실제 `type: section-divider` slide만 센다.
+- `structural slide`는 hero, agenda, section-divider, summary, appendix, closing처럼 흐름을 보조하는 slide를 뜻한다.
+- `content slide`는 kpi, chart, table, architecture, timeline, flow, comparison, decision, content, two-column처럼 본문 메시지를 전달하는 slide를 뜻한다.
+- 보고서에서 위 용어를 섞지 않는다. 예: "section-divider 6장"이라고 쓰려면 실제 section-divider가 6장이어야 한다.
 
 출력 형식:
 ```
@@ -146,6 +154,7 @@ PPTX 또는 preview PNG 경로가 제공되면 함께 확인한다.
 ### 6. Preview Visual Review
 
 preview PNG가 있으면 blueprint 구조 검토와 함께 실제 화면 기준으로 평가한다.
+단, preview 폴더가 존재한다는 이유만으로 전체 visual review 완료로 간주하지 않는다.
 
 확인 기준:
 - 제목/본문 overflow가 없는가
@@ -153,6 +162,19 @@ preview PNG가 있으면 blueprint 구조 검토와 함께 실제 화면 기준�
 - chart/table 텍스트가 읽히는가
 - preset/theme/brand footer가 일관되게 보이는가
 - 강조 요소가 메시지 우선순위를 방해하지 않는가
+
+확인 범위 기록:
+- 직접 열어본 slide 번호 또는 자동 검사한 파일 범위를 명시한다.
+- 일부만 확인했다면 `Preview` 상태를 ✅로 두지 않는다. `⚠️ 일부 확인` 또는 `⏭️ 미확인`으로 표시한다.
+- "12장 확인 완료" 같은 표현은 실제로 12장 모두를 열어보거나 자동 검사했을 때만 사용한다.
+
+issue 분류:
+- blueprint 수정으로 해결 가능: title/body 축약, slide type 변경, section_label 수정, kpi/table 데이터 정리
+- renderer follow-up: layout collision, component spacing, excessive fixed whitespace, closing/hero line placement
+- content density issue: source가 빈약하거나 plain bullet이 많아 visual richness가 낮은 경우
+
+renderer follow-up을 발견하면 blueprint 수정 제안과 분리해서 보고한다.
+renderer 한계라고 단정하기 전에 위 세 범주 중 어느 쪽인지 먼저 판단한다.
 
 preview가 없으면 다음 명령으로 생성을 제안한다.
 
@@ -197,9 +219,14 @@ unzip -p output/{slug}.pptx docProps/core.xml | rg "dc:title|dc:creator|dc:subje
 ## Step 3 — 검토 보고서 출력
 
 7종 항목 결과를 하나의 보고서로 정리해 출력한다.
+보고서에는 slide count와 preview 확인 범위를 짧게 포함한다.
 
 ```
 ## Deck Review — {deck.title}
+
+검토 범위:
+- Slides: 총 {n}장 ({content_n} content / {structural_n} structural, section-divider {section_divider_n}장)
+- Preview: {확인한 slide 번호 또는 미확인 사유}
 
 | 항목 | 상태 | 핵심 발견 |
 |------|------|----------|
@@ -224,6 +251,7 @@ unzip -p output/{slug}.pptx docProps/core.xml | rg "dc:title|dc:creator|dc:subje
 
 ⚠️ 또는 ❌ 항목에 대해 blueprint 수정 제안을 생성한다.
 각 제안은 slide id, 필드, 변경 전/후를 명시한다.
+blueprint 수정으로 해결할 수 없는 preview/layout 문제는 이 목록에 섞지 않고 `Renderer Follow-up` 또는 `Visual Follow-up`으로 별도 출력한다.
 
 출력 형식:
 
@@ -249,6 +277,10 @@ unzip -p output/{slug}.pptx docProps/core.xml | rg "dc:title|dc:creator|dc:subje
 
 변경 후:
   {field}: {제안 값}
+
+### Renderer Follow-up
+
+- {slide 번호 또는 slide id}: {renderer/layout 이슈와 별도 Work 후보 여부}
 ```
 
 제안 우선순위 기준: ❌ → ⚠️, 흐름·메시지 문제 → 데이터·텍스트 문제

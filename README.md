@@ -38,7 +38,7 @@ Q2 엔지니어링 성과 리뷰 deck 만들어줘.
 dark theme으로 해줘.
 ```
 
-AI가 발표 구조를 제안하고 확인을 받습니다. 승인하면 blueprint를 작성하고 PPTX를 바로 생성합니다. 생성된 파일은 PowerPoint에서 바로 편집할 수 있습니다.
+AI가 발표 구조를 제안하고 확인을 받습니다. 승인하면 blueprint를 작성하고 다시 검토를 요청합니다. 수정할 내용이 없다고 확인하면 PPTX를 생성합니다. 생성된 파일은 PowerPoint에서 바로 편집할 수 있습니다.
 
 ### 사용 환경
 
@@ -142,11 +142,12 @@ flowchart LR
   A["요청\n'Q2 리뷰 deck 만들어줘'"] --> B["AI: 목적·청중·구성 협의"]
   B --> C["슬라이드 구조 제안 + 확인"]
   C --> D["blueprint.yaml 작성"]
-  D --> E["PPTX 생성"]
-  E --> F["사용자 승인 시 preview 검토"]
-  F --> G{"수정 필요?"}
-  G -->|Yes| C
-  G -->|No| H["최종 PPTX"]
+  D --> E["blueprint 검토 + 생성 승인"]
+  E --> F["PPTX 생성"]
+  F --> G["사용자 승인 시 preview 검토"]
+  G --> H{"수정 필요?"}
+  H -->|Yes| C
+  H -->|No| I["최종 PPTX"]
 ```
 
 중간에 사용자가 "3번 슬라이드 내용 바꿔줘", "KPI 항목 추가해줘"라고 말하면 AI가 blueprint를 수정하고 다시 컴파일합니다. 반복이 빠르기 때문에 초안에서 완성까지 한 세션 안에 끝낼 수 있습니다.
@@ -302,7 +303,7 @@ npm run validate -- --blueprint examples/sample/blueprint.yaml
 npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sample-v1.0.pptx
 ```
 
-현재 기준: 59개 테스트.
+현재 기준: 61개 테스트.
 
 ---
 
