@@ -16,6 +16,7 @@ Product track Phase 1 작업 인덱스다.
 
 | ID | Title | actual_end | Archive |
 | --- | --- | --- | --- |
+| CHORE-20260602-002 | Public transition — visibility 전환 및 post-public settings 검증 | 2026-06-02 | `docs/archive/docs/works/phase1/CHORE-20260602-002-public-transition.md` |
 | PATCH-20260602-001 | Security alert triage — public 전 critical vulnerability 확인 | 2026-06-02 | `docs/archive/docs/works/phase1/PATCH-20260602-001-security-alert-triage.md` |
 | FEAT-20260602-001 | Headline wrap polish — action-title 가독성 보정 | 2026-06-02 | `docs/archive/docs/works/phase1/FEAT-20260602-001-headline-wrap-polish.md` |
 | FEAT-20260601-013 | Showcase final polish — ai-deck-compiler 실전형 대표 deck | 2026-06-02 | `docs/archive/docs/works/phase1/FEAT-20260601-013-showcase-final-polish.md` |

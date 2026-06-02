@@ -102,7 +102,7 @@ AI-research-first mode에서 실제 외부 검색은 tool 환경에 따라 제�
 [테마] dark (AI-native·기술·엔지니어링, teal/vivid 기본값) / light (비즈니스·보고서 — modern 사용 시 권장)
 
 [작성자/브랜드] 표지와 PPTX metadata에 표시할 이름 또는 팀명?
-  (기본값: ai-deck-compiler (Kyungseo.Park@gmail.com) / 생략 시 기본값 사용)
+  (기본값: AI Deck Compiler / 생략 시 기본값 사용)
 
 [버전] 문서 버전?
   (기본값: 1.0 / blueprint와 PPTX metadata 추적에 사용)
@@ -356,7 +356,7 @@ deck:
   design: teal          # 기본 추천 (dark-first). light 필요 시 modern 사용
   theme: dark           # teal/vivid는 dark 우선. light 원하면 design: modern
   version: "1.0"       # 문서 버전 — 표지 우측 상단에 자동 표시
-  author: # 작성자 — 생략 시 기본값(ai-deck-compiler) 사용, 표지와 PPTX metadata에 표시
+  author: # 작성자 — 생략 시 기본값(AI Deck Compiler) 사용, 표지와 PPTX metadata에 표시
   audience: # 청중 (선택)
 ```
 

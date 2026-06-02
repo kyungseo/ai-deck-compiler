@@ -110,7 +110,7 @@ public 전환 전에는 새 기능 추가보다 release gate 정리와 검증을
 
 **[public-repo-settings]** | Priority: P0 | Scope: GitHub public 전환 전 repo settings 확인
 
-- Reference: `/Users/kyungseo/dev-home/vibe/ai-workflow-harness/docs/decisions/DR-020-github-repo-settings.md`
+- Reference: source workflow repo `docs/decisions/DR-020-github-repo-settings.md`
 - Done Criteria:
   - protect-main / protect-develop ruleset 확인
   - secret scanning + push protection 확인

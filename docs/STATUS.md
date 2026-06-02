@@ -10,7 +10,7 @@
 | Bootstrap checklist | Complete / inactive; local bootstrap document removed |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-02 (public clean baseline ready) |
+| Last updated | 2026-06-02 (public transition complete) |
 
 ## Work Context Rule
 

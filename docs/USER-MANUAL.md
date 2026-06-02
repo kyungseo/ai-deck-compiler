@@ -388,7 +388,7 @@ AI workflow 기본 추천은 `teal + dark`입니다.
 | `vivid` | deep-navy + vivid purple, bold contrast. secondary/experimental | `dark` |
 | `modern` | modern, minimal, technical. light/dark 모두 지원 | `light` 또는 `dark` |
 
-**주의:** `teal`과 `vivid`는 dark-first preset입니다. `theme: light`를 사용하면 dark와 동일하게 렌더링됩니다. light 테마가 필요하면 `design: modern, theme: light`를 사용하세요. 기존 `default-modern` 이름도 alias로 동작합니다.
+**주의:** `teal`과 `vivid`는 dark-first preset입니다. `theme: light`를 사용하면 dark와 동일하게 렌더링됩니다. light 테마가 필요하면 `design: modern, theme: light`를 사용하세요.
 
 | 항목 | 설명 |
 | --- | --- |
@@ -398,7 +398,7 @@ AI workflow 기본 추천은 `teal + dark`입니다.
 기본 author는 다음 값입니다.
 
 ```text
-ai-deck-compiler (Kyungseo.Park@gmail.com)
+AI Deck Compiler
 ```
 
 deck마다 다른 작성자를 쓰려면 blueprint에 `deck.author`를 넣거나 `/create-deck` 초기 질문에서 작성자/팀명을 알려주세요.

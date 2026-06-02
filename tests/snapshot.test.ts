@@ -161,7 +161,7 @@ describe('PPTX document metadata', () => {
     );
 
     expect(coreXml).toContain('<dc:title>Product Overview</dc:title>');
-    expect(coreXml).toContain('<dc:creator>ai-deck-compiler (Kyungseo.Park@gmail.com)</dc:creator>');
+    expect(coreXml).toContain('<dc:creator>AI Deck Compiler</dc:creator>');
     expect(coreXml).toContain('<dc:subject>Product Overview — Internal team</dc:subject>');
     expect(coreXml).toContain('<cp:revision>1</cp:revision>');
   });

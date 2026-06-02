@@ -79,7 +79,7 @@
 ## Color — Light Theme (dark fallback)
 
 `teal` / `vivid`는 dark-first preset입니다. `theme: light`를 사용하면 dark 값과 동일하게 렌더링됩니다.
-light 테마가 필요하면 `modern light`를 사용하세요. 기존 `default-modern` 이름도 alias로 동작합니다.
+light 테마가 필요하면 `modern light`를 사용하세요.
 
 ---
 
