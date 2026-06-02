@@ -60,12 +60,7 @@ export async function compile(opts: CompilerOptions): Promise<pptxgen> {
 
     template.render(slideToRender, tokens, s);
 
-    const CALLOUT_TYPES = new Set(['content', 'flow']);
-    type SlideWithCallout = { callout?: string };
-    const hasCallout = CALLOUT_TYPES.has(slide.type) &&
-      !!(slide as SlideWithCallout).callout &&
-      !!tokens.colors['callout-bar'];
-    const skipFooter = slide.type === 'closing' || slide.type === 'section-divider' || hasCallout;
+    const skipFooter = slide.type === 'closing' || slide.type === 'section-divider';
     if (!skipFooter) {
       renderFooter(s, tokens, blueprint.slides.indexOf(slide), blueprint.slides.length);
     }

@@ -19,15 +19,15 @@ teal과 동일한 chip 렌더링. 색상만 다르다.
 
 ## Callout Bar
 
-슬라이드 하단 전체 너비 accent 패널. content / flow 슬라이드에서 `callout` 필드가 있을 때 opt-in 렌더링.
+카드 내부 하단 inset accent 패널. content / flow 슬라이드에서 `callout` 필드가 있을 때 opt-in 렌더링.
 
 | 속성 | 값 |
 | --- | --- |
-| 위치 | x=0, y=6.85, w=13.33" (full-width), h=0.34" |
+| 위치 | x=1.12", y=6.13", w=11.10", h=0.48" |
 | Fill | `callout-bar` (`#6957E8`) |
 | Text color | `callout-bar-text` (`#FFFFFF`) |
 | Font | 14pt bold Pretendard, center align, valign middle |
-| Footer 억제 | callout bar 렌더 시 brand footer 미표시 |
+| Footer | brand footer 유지 |
 | 적용 조건 | `callout-bar` 토큰 존재 + blueprint `callout` 필드 존재 |
 
 blueprint 예시:

@@ -24,6 +24,8 @@ disable-model-invocation: true
 
 파일을 읽어 `deck` 메타데이터(제목, 청중, 테마)와 슬라이드 목록을 파악한다.
 PPTX 또는 preview PNG 경로가 제공되면 함께 확인한다.
+preview PNG 경로가 있어도 실제로 열어보거나 검사한 slide만 "확인 완료"라고 말한다.
+전체 slide를 보지 않았다면 확인한 slide 번호와 미확인 범위를 명시한다.
 
 → **[GATE 1] 파일 확인 및 검토 범위 합의 후에만 분석을 시작한다.**
 
@@ -33,10 +35,17 @@ PPTX 또는 preview PNG 경로가 제공되면 함께 확인한다.
 
 검토 항목: 슬라이드 흐름 / 메시지 일관성 / 텍스트 분량 / 차트·표 데이터 명확성 / 청중 적합성 / preview visual / PPTX metadata
 
+**MUST:** slide type count는 정확히 분리한다. `section-divider`는 실제 `type: section-divider`만 세고, hero/agenda/summary/closing까지 포함한 경우는 `structural slide`라고 부른다.
+**MUST:** preview visual issue는 blueprint 수정 가능 / renderer follow-up / content density issue로 분류한다. renderer/layout 문제를 blueprint 수정 제안에 섞지 않는다.
+
 ## Step 3 — 검토 보고서 출력
 
 ```
 ## Deck Review — {deck.title}
+
+검토 범위:
+- Slides: 총 {n}장 ({content_n} content / {structural_n} structural, section-divider {section_divider_n}장)
+- Preview: {확인한 slide 번호 또는 미확인 사유}
 
 | 항목 | 상태 | 핵심 발견 |
 |------|------|----------|
@@ -59,6 +68,7 @@ PPTX 또는 preview PNG 경로가 제공되면 함께 확인한다.
 
 `skills/review-deck.md` §Step 4의 출력 형식을 따른다.
 각 제안: slide id + field + 변경 전/후. 우선순위: ❌ → ⚠️, 흐름·메시지 → 데이터·텍스트.
+blueprint 수정으로 해결할 수 없는 renderer/layout 문제는 `Renderer Follow-up`으로 분리한다.
 
 → **[GATE 3] 적용할 제안 번호를 확인한다. "전체 적용" / "번호 지정" / "직접 수정" 중 선택.**
 

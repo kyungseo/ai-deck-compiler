@@ -80,47 +80,6 @@ public 전환 전에는 새 기능 추가보다 release gate 정리와 검증을
 
 ---
 
-**[ai-tool-simulation]** | Priority: P0 | Scope: Claude Code, Codex, Cursor, Claude App 작업 케이스별 routing 검증
-
-- Cases:
-  - brief-first deck 생성
-  - source-first markdown 기반 deck 생성
-  - blueprint-only 요청이 create-deck으로 연결되는지
-  - review-deck
-  - generate-architecture-slide
-  - export-pdf
-  - preview는 사용자 승인 후 진행되는지
-- Done Criteria:
-  - 도구별 진입점과 prompt 예시가 문서와 일치
-  - 실패/애매한 케이스는 public 전 수정 또는 maintenance backlog로 분류
-- Verification: simulation log 또는 Work Discovery 기록
-
----
-
-**[docs-final-review]** | Priority: P0 | Scope: README, USER-MANUAL, SYSTEM-MANUAL, examples 문서 최종 현행화
-
-- Done Criteria:
-  - public 사용자가 README만 보고 설치/예제 확인/create-deck 시작 가능
-  - USER-MANUAL은 사용자 흐름 중심, SYSTEM-MANUAL은 유지보수자 구조 중심으로 역할 분리
-  - examples/results의 `blueprint.yaml`, `.pptx`, `.pdf`, gallery 구조 설명 명확
-  - 오래된 `generate-blueprint` 독립 진입점, `default-modern` 기본값, stale command 설명 제거
-- Verification: 문서 리뷰 + stale phrase search
-
----
-
-**[public-repo-settings]** | Priority: P0 | Scope: GitHub public 전환 전 repo settings 확인
-
-- Reference: `/Users/kyungseo/dev-home/vibe/ai-workflow-harness/docs/decisions/DR-020-github-repo-settings.md`
-- Done Criteria:
-  - protect-main / protect-develop ruleset 확인
-  - secret scanning + push protection 확인
-  - vulnerability alerts 확인
-  - delete_branch_on_merge, allow_update_branch, discussions 확인
-  - About, topics, description 확인
-- Verification: `gh repo view`, `gh api repos/{owner}/{repo}`, `gh api repos/{owner}/{repo}/rulesets`
-
----
-
 **[social-post-prep]** | Priority: P1 | Scope: public 전환용 소셜 포스팅 초안 준비
 
 - Done Criteria:
@@ -202,3 +161,8 @@ public 전환 전에는 새 기능 추가보다 release gate 정리와 검증을
 | FEAT-20260601-010 | create-deck blueprint 규칙 내재화 | 2026-06-01 |
 | FEAT-20260601-011 | create-deck skill 콘텐츠 정비 | 2026-06-01 |
 | FEAT-20260601-012 | generate-blueprint canonical 파일 폐기 | 2026-06-01 |
+| CHORE-20260602-003 | AI tool simulation — create-deck routing and blueprint draft dry-run | 2026-06-02 |
+| PATCH-20260602-002 | create-deck structure defaults — agenda/section/closing/section_label 기본화 | 2026-06-02 |
+| CHORE-20260602-004 | docs final review — README/USER/SYSTEM public 정합성 점검 | 2026-06-02 |
+| CHORE-20260602-005 | public repo settings — GitHub 공개 저장소 설정 확인 | 2026-06-02 |
+| CHORE-20260602-006 | release finalization — v1.0.0 tag/release 준비 | 2026-06-02 |
