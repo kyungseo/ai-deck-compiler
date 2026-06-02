@@ -6,16 +6,16 @@ A 시리즈 고유 요소 중 callout bar는 구현 완료. chart legend pill은
 
 ## Callout Bar 레이아웃
 
-content / flow 슬라이드에서 `callout` 필드가 있을 때 카드 하단에 full-width bar 렌더링.
+content / flow 슬라이드에서 `callout` 필드가 있을 때 카드 내부 하단에 inset panel 렌더링.
 
 | 항목 | 값 |
 | --- | --- |
-| x | 0 |
-| y | 6.85" |
-| w | 13.33" (full-width) |
-| h | 0.34" |
+| x | 1.12" |
+| y | 6.13" |
+| w | 11.10" |
+| h | 0.48" |
 | Fill | `callout-bar` token (`#6957E8`) |
-| Footer | callout bar 렌더 시 brand footer 억제
+| Footer | brand footer 유지 |
 
 ---
 

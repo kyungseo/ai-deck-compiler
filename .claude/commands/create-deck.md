@@ -7,6 +7,8 @@ disable-model-invocation: true
 `skills/create-deck.md`를 로드해서 아래 절차를 따라줘.
 
 **MUST:** 각 Step 사이에 반드시 사용자 응답을 기다린다. 사용자가 "간단하게", "빠르게", "테스트용" 등을 말해도 GATE를 건너뛰지 않는다. 승인 없이 다음 Step으로 진행하지 않는다.
+**MUST:** Claude Code의 `/plan` 또는 "Ready to code?" plan 화면으로 전환하지 않는다. `/create-deck`의 Step 2 구조 제안이 이 workflow의 승인용 plan이다.
+**MUST:** Step 2에서는 implementation plan, file edit plan, Work plan이 아니라 사용자에게 보여줄 발표 Narrative Spine과 slide outline만 출력한다.
 
 ## Step 0 — Input mode 판별
 
@@ -36,6 +38,9 @@ PPT 제작을 도와드리겠습니다. 몇 가지 확인할게요.
 ## Step 2 — 슬라이드 구조 제안
 
 `skills/create-deck.md` §Step 2의 슬라이드 타입 선택 가이드, semantic component selection, 목적별 권장 구성을 참고해서 구조를 번호 목록으로 제안한다.
+이 단계에서는 파일을 쓰지 않는다. schema/existing blueprint 탐색은 구조 제안에 꼭 필요한 경우로 제한하고, 기존 동일 slug 파일이 있으면 새 파일명을 임의로 정하지 말고 Step 2 제안 또는 Step 3 시작 전에 사용자에게 확인한다.
+
+**Claude Code MUST:** 사용자가 명시적으로 제외하지 않는 한 기본 구조에 `agenda`, 주요 섹션 사이 `section-divider`, 마지막 `closing`을 포함한다. `summary`는 deck의 결론·다음 행동을 2~3개로 정리할 가치가 있을 때만 포함한다.
 
 제안 후 반드시 아래 문장으로 끝낸다:
 ```
@@ -49,6 +54,8 @@ PPT 제작을 도와드리겠습니다. 몇 가지 확인할게요.
 승인된 구조를 기반으로 `blueprints/{제목-slug}.yaml`을 작성한다.
 `skills/create-deck.md`의 Step 3 blueprint 작성 규칙(Action Title 원칙, 언어 규칙, 슬라이드 타입별 YAML)을 따른다.
 각 slide에는 `skills/create-deck.md`의 Speaker Notes 기준에 따라 `notes`를 작성한다.
+일반 slide에는 showcase처럼 `section_label`을 기본 작성한다. 긴 Action Title은 renderer의 compact header가 처리할 수 있으므로 제목 의미를 약화하지 말고, 필요한 맥락은 `subtitle`, `body`, `callout`으로 분리한다.
+본문, 표 셀, KPI label/value에는 `[^1]`, `[^]`, `[1]` 같은 footnote marker나 지원하지 않는 Markdown citation을 남기지 않는다. 표 셀과 KPI에는 이모지/경고 아이콘 대신 `주의`, `확인 필요`, `베타` 같은 짧은 텍스트를 쓴다. 출처나 보충 설명은 `notes` 또는 appendix slide로 이동한다.
 
 - blueprints/ 디렉토리가 없으면 생성한다
 - 파일명: 발표 제목을 소문자 하이픈으로 변환 (예: `q2-engineering-review.yaml`)
@@ -57,6 +64,7 @@ PPT 제작을 도와드리겠습니다. 몇 가지 확인할게요.
 작성 후 반드시 아래 문장으로 끝낸다:
 ```
 각 슬라이드를 검토해 주세요. 수정할 내용이 있으면 말씀해 주시면 반영하겠습니다.
+수정할 내용이 없으면 "진행해" 또는 "PPTX 생성해줘"라고 답해 주세요. 그러면 validation 후 PPTX를 생성하겠습니다.
 ```
 
 → **[GATE 3] 사용자가 검토 완료를 확인한 뒤에만 Step 4로 진행한다. 확인 없이 PPTX를 생성하지 않는다.**

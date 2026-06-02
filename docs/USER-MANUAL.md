@@ -16,7 +16,7 @@ Command:
 ```
 
 그러면 AI가 질문합니다. "어떤 발표인가요? 청중은 누구인가요? 핵심 메시지가 있으신가요?"
-답변을 주면 AI가 슬라이드 구성을 제안하고, 확인을 받은 뒤 `blueprint.yaml`을 작성하고, PPTX를 생성합니다.
+답변을 주면 AI가 슬라이드 구성을 제안하고, 확인을 받은 뒤 `blueprint.yaml`을 작성합니다. 사용자가 blueprint를 검토하고 생성 진행을 승인하면 PPTX를 생성합니다.
 
 생성된 파일은 PowerPoint에서 바로 편집할 수 있습니다. chart, table, 도형이 이미지가 아닌 PowerPoint 객체로 만들어집니다.
 
@@ -36,11 +36,12 @@ flowchart LR
   A["'Q2 리뷰 deck 만들어줘'"] --> B["AI: 목적·청중·구성 협의"]
   B --> C["슬라이드 구조 제안 + 확인"]
   C --> D["blueprint.yaml 자동 작성"]
-  D --> E["editable PPTX 생성"]
-  E --> F["AI: 시각 검토 + 개선 제안"]
-  F --> G{"수정 필요?"}
-  G -->|Yes| B
-  G -->|No| H["최종 PPTX"]
+  D --> E["blueprint 검토 + 생성 승인"]
+  E --> F["editable PPTX 생성"]
+  F --> G["사용자 승인 시 preview 검토"]
+  G --> H{"수정 필요?"}
+  H -->|Yes| B
+  H -->|No| I["최종 PPTX"]
 ```
 
 ---
@@ -357,7 +358,7 @@ AI는 source 내용을 그대로 bullet로 옮기기보다, 의미에 맞는 표
 | 배경 설명 중 강조할 한 문장 | `content.callout` |
 | 발표 전체의 결론 | `summary.takeaways` |
 
-callout은 slide type이 아니라 선택 필드입니다. `teal`과 `vivid`에서는 `content` / `flow` 슬라이드 하단 강조 bar로 렌더링됩니다. 모든 슬라이드에 넣으면 산만해지므로 6장 deck 기준 1~2장 정도를 권장합니다.
+callout은 slide type이 아니라 선택 필드입니다. `teal`과 `vivid`에서는 `content` / `flow` 슬라이드 카드 하단의 inset 강조 패널로 렌더링됩니다. 모든 슬라이드에 넣으면 산만해지므로 6장 deck 기준 1~2장 정도를 권장합니다.
 
 code block은 `content`, `two-column`, `appendix` slide에서 백틱 또는 fenced code로 감싼 body 항목을 boxed monospace block으로 표현하는 기능입니다. `bash`, `js`/`ts`, `java` fenced code는 keyword, string, comment, number에 기본 syntax color를 적용합니다. 지원하지 않는 언어와 inline code는 단색 monospace block으로 표시됩니다.
 
@@ -388,7 +389,7 @@ AI workflow 기본 추천은 `teal + dark`입니다.
 | `vivid` | deep-navy + vivid purple, bold contrast. secondary/experimental | `dark` |
 | `modern` | modern, minimal, technical. light/dark 모두 지원 | `light` 또는 `dark` |
 
-**주의:** `teal`과 `vivid`는 dark-first preset입니다. `theme: light`를 사용하면 dark와 동일하게 렌더링됩니다. light 테마가 필요하면 `design: modern, theme: light`를 사용하세요. 기존 `default-modern` 이름도 alias로 동작합니다.
+**주의:** `teal`과 `vivid`는 dark-first preset입니다. `theme: light`를 사용하면 dark와 동일하게 렌더링됩니다. light 테마가 필요하면 `design: modern, theme: light`를 사용하세요.
 
 | 항목 | 설명 |
 | --- | --- |
@@ -398,7 +399,7 @@ AI workflow 기본 추천은 `teal + dark`입니다.
 기본 author는 다음 값입니다.
 
 ```text
-ai-deck-compiler (Kyungseo.Park@gmail.com)
+AI Deck Compiler
 ```
 
 deck마다 다른 작성자를 쓰려면 blueprint에 `deck.author`를 넣거나 `/create-deck` 초기 질문에서 작성자/팀명을 알려주세요.

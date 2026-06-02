@@ -55,12 +55,12 @@ function resolveHeaderTitleMetrics(
   const pressure = hasSectionLabel ? units : units - 4;
   let fontSize = baseFontSize;
 
-  if (pressure > 34) fontSize = Math.min(baseFontSize, 32);
-  else if (pressure > 24) fontSize = Math.min(baseFontSize, 34);
+  if (pressure > 30) fontSize = Math.min(baseFontSize, 28);
+  else if (pressure > 24) fontSize = Math.min(baseFontSize, 32);
 
   const baseHeight = hasSubtitle ? 0.60 : SL.th;
   const height = fontSize < baseFontSize
-    ? (hasSubtitle ? 0.72 : 1.03)
+    ? (hasSubtitle ? 0.72 : 1.12)
     : baseHeight;
 
   return { fontSize, height };
@@ -180,7 +180,7 @@ const ZONE_GRID: Record<Zone, [number, number]> = {
   'left':          [0, 1], 'right':         [2, 1],
 };
 
-/** Renders a full-width callout bar at slide bottom. No-op if callout-bar token absent. */
+/** Renders an inset callout inside the content card. No-op if callout-bar token absent. */
 export function renderCalloutBar(
   s: PptxSlide,
   callout: string,
@@ -190,12 +190,17 @@ export function renderCalloutBar(
   if (!co['callout-bar']) return;
   const bg = hex(co['callout-bar']);
   const fg = hex(co['callout-bar-text'] ?? 'FFFFFF');
-  s.addShape('rect', {
-    x: 0, y: 6.85, w: SL.w, h: 0.34,
+  const x = SL.mx + 0.45;
+  const y = CARD.y + CARD.h - 0.72;
+  const w = SL.cw - 0.90;
+  const h = 0.48;
+  s.addShape('roundRect', {
+    x, y, w, h,
     fill: { color: bg }, line: { color: bg, width: 0 },
+    rectRadius: 0.07,
   });
   s.addText(callout, {
-    x: SL.mx, y: 6.85, w: SL.cw, h: 0.34,
+    x: x + 0.28, y, w: w - 0.56, h,
     fontSize: ty['caption']?.size ?? 14,
     bold: true,
     fontFace: ty['caption']?.font ?? 'Pretendard',

@@ -139,7 +139,7 @@ body:
 ## Consequences
 
 - blueprint.yaml 작성 시 위 규칙을 기본값으로 적용한다.
-- `skills/generate-blueprint.md`와 `skills/create-deck.md`에 이 DR을 참조한다.
+- `skills/create-deck.md`에 이 DR을 참조한다. deprecated `generate-blueprint` wrapper는 `create-deck` 절차로 라우팅한다.
 - AI가 blueprint를 생성할 때 `section_label`은 자동으로 영어 UPPERCASE로 작성한다.
 - 기존 examples/의 blueprint는 이 DR 기준으로 별도 수정하지 않는다 (예제 목적 유지).
 

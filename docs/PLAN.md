@@ -63,7 +63,7 @@ blueprint.yaml + design preset → Editable PPTX를 규칙 기반으로 컴파�
 ### Initial Structure
 
 ```
-presentation-compiler/
+ai-deck-compiler/
 ├── src/
 │   ├── schema/
 │   │   ├── blueprint.ts          # Zod schema (16 slide types, discriminated union)
@@ -501,7 +501,7 @@ src/design/presets/{preset-name}/
 ```bash
 # 검증 시나리오 (macOS / Windows 공통)
 git clone <repo-url>
-cd presentation-compiler
+cd ai-deck-compiler
 npm install
 npm run typecheck                                    # 타입 오류 없음
 npm test                                             # 전체 테스트 통과

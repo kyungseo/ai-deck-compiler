@@ -38,7 +38,7 @@ Q2 엔지니어링 성과 리뷰 deck 만들어줘.
 dark theme으로 해줘.
 ```
 
-AI가 발표 구조를 제안하고 확인을 받습니다. 승인하면 blueprint를 작성하고 PPTX를 바로 생성합니다. 생성된 파일은 PowerPoint에서 바로 편집할 수 있습니다.
+AI가 발표 구조를 제안하고 확인을 받습니다. 승인하면 blueprint를 작성하고 다시 검토를 요청합니다. 수정할 내용이 없다고 확인하면 PPTX를 생성합니다. 생성된 파일은 PowerPoint에서 바로 편집할 수 있습니다.
 
 ### 사용 환경
 
@@ -142,11 +142,12 @@ flowchart LR
   A["요청\n'Q2 리뷰 deck 만들어줘'"] --> B["AI: 목적·청중·구성 협의"]
   B --> C["슬라이드 구조 제안 + 확인"]
   C --> D["blueprint.yaml 작성"]
-  D --> E["PPTX 생성"]
-  E --> F["사용자 승인 시 preview 검토"]
-  F --> G{"수정 필요?"}
-  G -->|Yes| C
-  G -->|No| H["최종 PPTX"]
+  D --> E["blueprint 검토 + 생성 승인"]
+  E --> F["PPTX 생성"]
+  F --> G["사용자 승인 시 preview 검토"]
+  G --> H{"수정 필요?"}
+  H -->|Yes| C
+  H -->|No| I["최종 PPTX"]
 ```
 
 중간에 사용자가 "3번 슬라이드 내용 바꿔줘", "KPI 항목 추가해줘"라고 말하면 AI가 blueprint를 수정하고 다시 컴파일합니다. 반복이 빠르기 때문에 초안에서 완성까지 한 세션 안에 끝낼 수 있습니다.
@@ -166,6 +167,7 @@ flowchart LR
 | 아키텍처 슬라이드 | `/generate-architecture-slide`로 자연어 설명에서 node/edge/zone을 추출해 다이어그램 슬라이드를 생성합니다. |
 | 16종 슬라이드 타입 | hero, agenda, kpi, chart, table, architecture, timeline, decision, appendix 등 발표에 필요한 타입이 미리 정의되어 있습니다. |
 | Code block component | 명령어·코드·재생성 절차를 content, two-column, appendix slide의 boxed monospace block으로 표현합니다. |
+| Brand customization | `deck.author`와 preset token으로 footer, metadata, color, font를 조정하고 필요하면 custom preset을 만들 수 있습니다. |
 | 멀티툴 지원 | Claude Code, Codex CLI/App, Cursor, Claude App에서 동일한 canonical skill 문서를 기준으로 작동합니다. |
 
 ---
@@ -252,10 +254,10 @@ AI workflow 기본 추천은 `teal + dark`입니다.
 | --- | --- |
 | Canvas | 13.33" × 7.5" (`LAYOUT_WIDE`) |
 | Theme | `dark` (teal/vivid 권장), `light` (modern 권장) |
-| Default author | `ai-deck-compiler (Kyungseo.Park@gmail.com)` |
+| Default author | `AI Deck Compiler` |
 | Brand footer | `ai-deck-compiler` |
 
-`design: modern`이 light/business tone의 canonical preset입니다. 기존 `design: default-modern` blueprint도 alias로 계속 동작합니다. 회사 브랜드에 맞춘 custom preset은 [USER-MANUAL](docs/USER-MANUAL.md)의 customization 절차와 `skills/customize-preset.md`를 참고하세요.
+`design: modern`이 light/business tone의 canonical preset입니다. 회사 브랜드에 맞춘 custom preset은 [USER-MANUAL](docs/USER-MANUAL.md)의 customization 절차와 `skills/customize-preset.md`를 참고하세요.
 
 ---
 
@@ -301,7 +303,7 @@ npm run validate -- --blueprint examples/sample/blueprint.yaml
 npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sample-v1.0.pptx
 ```
 
-현재 기준: 59개 테스트.
+현재 기준: 61개 테스트.
 
 ---
 
@@ -316,13 +318,13 @@ npm run deck -- --blueprint examples/sample/blueprint.yaml --output output/sampl
 
 ---
 
-## 한계와 제약
+## 현재 범위
 
-- **Design preset**: `teal`(AI 기본 추천, dark), `vivid`(secondary, dark), `modern`(light/legacy) 3종 제공. `default-modern`은 legacy alias로 지원됩니다. `teal`/`vivid`는 callout bar를 지원하며, legend pill은 후속 후보입니다.
-- **Callout**: `teal`과 `vivid`는 content/flow slide의 `callout` field를 하단 강조 bar로 렌더링합니다. `modern`은 light tone에 맞는 별도 treatment 후보입니다.
-- **Code block**: `content`, `two-column`, `appendix`는 boxed monospace code block을 지원합니다. `bash`, `js`/`ts`, `java` fenced code는 lightweight syntax highlighting을 적용합니다.
-- **Preview**: LibreOffice + poppler 의존. Keynote, Google Slides 직접 지원 없음.
-- **AI 외부 검색**: AI-research-first mode의 실제 외부 검색은 도구 환경에 따라 제한됩니다.
+- **Design preset**: 현재 `teal`, `vivid`, `modern` 3종을 제공합니다. 신규 deck은 `teal + dark`를 기본 추천으로 둡니다.
+- **Branding**: `deck.author`와 preset token으로 작성자, footer, metadata를 조정할 수 있습니다. 회사 브랜드를 계속 쓰려면 custom preset을 만드는 방식을 권장합니다.
+- **Code block**: `content`, `two-column`, `appendix`에서 boxed monospace code block을 지원합니다. `bash`, `js`/`ts`, `java` fenced code는 lightweight syntax highlighting을 적용합니다.
+- **Preview / PDF**: Preview와 PDF export는 LibreOffice에 의존합니다. Preview PNG 생성에는 poppler도 필요합니다.
+- **AI 외부 검색**: AI-research-first mode의 실제 외부 검색은 사용하는 AI 도구 환경에 따라 달라집니다.
 
 ---
 

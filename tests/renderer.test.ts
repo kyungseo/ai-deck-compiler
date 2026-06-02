@@ -125,6 +125,28 @@ describe('Editable object invariant', () => {
     expect((titleCall?.[1] as { h?: number }).h).toBeGreaterThan(0.82);
   });
 
+  it('content: very long action title uses extra compact typography', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('content');
+    const title = 'AI 코딩 도구 채택은 개발자 생산성 지표를 실질적으로 바꾸고 있다';
+
+    template.render({
+      id: 'c-very-long-title',
+      type: 'content',
+      section_label: '01. LANDSCAPE',
+      title,
+      body: ['Item A'],
+    }, tokens, slide);
+
+    const titleCall = (slide.addText as ReturnType<typeof vi.fn>).mock.calls.find(
+      (args: unknown[]) => args[0] === title,
+    );
+
+    expect(titleCall).toBeDefined();
+    expect((titleCall?.[1] as { fontSize?: number }).fontSize).toBeLessThanOrEqual(28);
+    expect((titleCall?.[1] as { h?: number }).h).toBeGreaterThanOrEqual(1.12);
+  });
+
   it('chart: renders native chart without addImage (inline data)', () => {
     const slide = makeMockSlide();
     const template = defaultRegistry.resolve('chart');
@@ -226,7 +248,7 @@ describe('renderCalloutBar', () => {
     expect(slide.calls['addText']).toBe(1);
   });
 
-  it('content slide: callout field renders callout bar at y=6.85 (even with empty body)', () => {
+  it('content slide: callout field renders an inset card callout above the footer area', () => {
     const slide = makeMockSlide();
     const tokensWithCallout: ResolvedDesignTokens = {
       ...tokens,
@@ -238,12 +260,16 @@ describe('renderCalloutBar', () => {
       tokensWithCallout, slide,
     );
     const calloutShapes = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls.filter(
-      (args: unknown[]) => typeof args[1] === 'object' && args[1] !== null && (args[1] as { y?: number }).y === 6.85,
+      (args: unknown[]) => typeof args[1] === 'object' &&
+        args[1] !== null &&
+        (args[0] as string) === 'roundRect' &&
+        (args[1] as { y?: number }).y === 6.13,
     );
     expect(calloutShapes).toHaveLength(1);
+    expect(calloutShapes[0]?.[1]).toMatchObject({ x: 1.12, w: 11.1, h: 0.48 });
   });
 
-  it('flow slide: callout renders at y=6.85 even when diagram is absent (early return path)', () => {
+  it('flow slide: callout renders an inset card callout even when diagram is absent (early return path)', () => {
     const slide = makeMockSlide();
     const tokensWithCallout: ResolvedDesignTokens = {
       ...tokens,
@@ -255,7 +281,10 @@ describe('renderCalloutBar', () => {
       tokensWithCallout, slide,
     );
     const calloutShapes = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls.filter(
-      (args: unknown[]) => typeof args[1] === 'object' && args[1] !== null && (args[1] as { y?: number }).y === 6.85,
+      (args: unknown[]) => typeof args[1] === 'object' &&
+        args[1] !== null &&
+        (args[0] as string) === 'roundRect' &&
+        (args[1] as { y?: number }).y === 6.13,
     );
     expect(calloutShapes).toHaveLength(1);
   });
@@ -273,7 +302,10 @@ describe('renderCalloutBar', () => {
     );
     const addShapeArgs = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls;
     const calloutBarCalls = addShapeArgs.filter(
-      (args: unknown[]) => typeof args[1] === 'object' && args[1] !== null && (args[1] as { y?: number }).y === 6.85,
+      (args: unknown[]) => typeof args[1] === 'object' &&
+        args[1] !== null &&
+        (args[0] as string) === 'roundRect' &&
+        (args[1] as { y?: number }).y === 6.13,
     );
     expect(calloutBarCalls).toHaveLength(0);
   });
@@ -493,5 +525,33 @@ describe('All P2 types compile without error', () => {
       subtitle: 'kyungseo.park@gmail.com',
       message: '발표를 들어주셔서 감사합니다',
     }, tokens, slide)).not.toThrow();
+  });
+
+  it('closing: long title moves divider below the compact title box', () => {
+    const slide = makeMockSlide();
+    const template = defaultRegistry.resolve('closing');
+    const title = '파일럿 팀 구성과 평가 기준을 오늘 확정한다';
+
+    template.render({
+      id: 'cl-long',
+      type: 'closing',
+      title,
+      subtitle: '파일럿 참여자 모집 → Week 1 도구 셋업 → 6주 후 전체 도입 결정',
+      message: 'Next Steps',
+    }, tokens, slide);
+
+    const titleCall = (slide.addText as ReturnType<typeof vi.fn>).mock.calls.find(
+      (args: unknown[]) => args[0] === title,
+    );
+    const dividerCall = (slide.addShape as ReturnType<typeof vi.fn>).mock.calls.find(
+      (args: unknown[]) => args[0] === 'rect' && (args[1] as { h?: number }).h === 0.05,
+    );
+
+    expect(titleCall).toBeDefined();
+    expect(dividerCall).toBeDefined();
+    expect((titleCall?.[1] as { fontSize?: number }).fontSize).toBeLessThan(56);
+    expect((dividerCall?.[1] as { y?: number }).y).toBeGreaterThan(
+      ((titleCall?.[1] as { y?: number }).y ?? 0) + ((titleCall?.[1] as { h?: number }).h ?? 0),
+    );
   });
 });

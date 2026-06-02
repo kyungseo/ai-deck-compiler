@@ -13,7 +13,7 @@ const DEFAULT_BRAND: BrandToken = {
   show: true,
   showPageNumbers: true,
   fontSize: 10,
-  author: 'ai-deck-compiler (Kyungseo.Park@gmail.com)',
+  author: 'AI Deck Compiler',
 };
 
 interface RawTokens {

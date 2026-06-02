@@ -79,7 +79,7 @@
 ## Color — Light Theme (dark fallback)
 
 `teal` / `vivid`는 dark-first preset입니다. `theme: light`를 사용하면 dark 값과 동일하게 렌더링됩니다.
-light 테마가 필요하면 `modern light`를 사용하세요. 기존 `default-modern` 이름도 alias로 동작합니다.
+light 테마가 필요하면 `modern light`를 사용하세요.
 
 ---
 
@@ -106,15 +106,15 @@ light 테마가 필요하면 `modern light`를 사용하세요. 기존 `default-
 
 ## Callout Bar
 
-`content` / `flow` 슬라이드에서 `callout` 필드가 있을 때 하단 full-width bar를 렌더링한다.
+`content` / `flow` 슬라이드에서 `callout` 필드가 있을 때 카드 내부 하단에 inset panel을 렌더링한다.
 callout은 slide type이 아니라 optional emphasis field이며, 핵심 메시지·결론·주의 문장 1개만 강조할 때 사용한다.
 
 | 속성 | 값 |
 | --- | --- |
 | Fill | `callout-bar` (`#2D6B5E`) |
 | Text color | `callout-bar-text` (`#FFFFFF`) |
-| 위치 | x=0, y=6.85", w=13.33", h=0.34" |
-| Footer | callout bar 렌더 시 brand footer 미표시 |
+| 위치 | x=1.12", y=6.13", w=11.10", h=0.48" |
+| Footer | brand footer 유지 |
 
 ---
 

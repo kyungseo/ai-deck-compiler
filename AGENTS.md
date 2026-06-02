@@ -65,7 +65,7 @@ Each product skill file loads the canonical procedure from `skills/{name}.md`.
 When creating or editing any document, prompt, command, rule, or hook message — confirm DR-007 applies.
 
 - **English Only:** `AGENTS.md`, `CLAUDE.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
-- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`
+- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`
 
 Full policy: `docs/decisions/DR-007-language-policy.md`
 

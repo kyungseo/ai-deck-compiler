@@ -252,7 +252,7 @@ Product skills:
 
 | Skill | Role |
 | --- | --- |
-| `create-deck` | input mode 판별, blueprint 작성, PPTX 생성, preview review loop |
+| `create-deck` | input mode 판별, blueprint 작성, PPTX 생성, preview 승인/review loop |
 | `review-deck` | 구조/메시지/텍스트/데이터/청중/preview/metadata 검토 |
 | `export-pdf` | PPTX → PDF 변환. LibreOffice 환경 체크 + 설치 안내 |
 | `generate-architecture-slide` | 자연어 설명 → architecture slide diagram spec 생성. node/zone/edge 유효성 보장 |
@@ -468,7 +468,7 @@ npm run preview -- output/sample-v1.0.pptx --out output/sample-preview
 현재 기준:
 
 - 16 slide types
-- 59 tests
+- 61 tests
 - AI 추천 preset: `teal + dark` / legacy/light: `modern`
 - supported themes: `light`, `dark`
 
