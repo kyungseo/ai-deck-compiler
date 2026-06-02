@@ -80,23 +80,6 @@ public 전환 전에는 새 기능 추가보다 release gate 정리와 검증을
 
 ---
 
-**[ai-tool-simulation]** | Priority: P0 | Scope: Claude Code, Codex, Cursor, Claude App 작업 케이스별 routing 검증
-
-- Cases:
-  - brief-first deck 생성
-  - source-first markdown 기반 deck 생성
-  - blueprint-only 요청이 create-deck으로 연결되는지
-  - review-deck
-  - generate-architecture-slide
-  - export-pdf
-  - preview는 사용자 승인 후 진행되는지
-- Done Criteria:
-  - 도구별 진입점과 prompt 예시가 문서와 일치
-  - 실패/애매한 케이스는 public 전 수정 또는 maintenance backlog로 분류
-- Verification: simulation log 또는 Work Discovery 기록
-
----
-
 **[docs-final-review]** | Priority: P0 | Scope: README, USER-MANUAL, SYSTEM-MANUAL, examples 문서 최종 현행화
 
 - Done Criteria:
@@ -202,3 +185,4 @@ public 전환 전에는 새 기능 추가보다 release gate 정리와 검증을
 | FEAT-20260601-010 | create-deck blueprint 규칙 내재화 | 2026-06-01 |
 | FEAT-20260601-011 | create-deck skill 콘텐츠 정비 | 2026-06-01 |
 | FEAT-20260601-012 | generate-blueprint canonical 파일 폐기 | 2026-06-01 |
+| CHORE-20260602-003 | AI tool simulation — create-deck routing and blueprint draft dry-run | 2026-06-02 |
