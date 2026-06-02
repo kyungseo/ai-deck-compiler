@@ -11,7 +11,7 @@ AI와의 대화로 발표 내용을 빠르게 정제하고, 레이아웃과 디�
 
 > [!TIP]
 > 파워포인트 Showcase:
-> [**'teal + dark' (기본)**](examples/results/showcase-teal-dark.pptx) · ['vivid + dark'](examples/results/showcase-vivid-dark.pptx) · ['modern + light'](examples/results/showcase-modern-light.pptx)
+> [**'teal + dark' (기본)**](examples/results/showcase-teal-dark.pdf) · ['vivid + dark'](examples/results/showcase-vivid-dark.pdf) · ['modern + light'](examples/results/showcase-modern-light.pdf)
 
 ![Showcase gallery](examples/results/showcase-gallery.png)
 
