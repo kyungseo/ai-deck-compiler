@@ -1,0 +1,54 @@
+# session-start
+
+Canonical workflow procedure for `/session-start`.
+
+이 파일은 workflow 상세 절차의 SSoT다. Tool-specific surface는 아래 adapter만 가진다.
+
+| Tool | Adapter |
+| --- | --- |
+| Claude Code | `.claude/commands/session-start.md` |
+| Codex | `.agents/skills/workflow-session-start/SKILL.md` |
+| Antigravity | Codex adapter 재사용: `.agents/skills/workflow-session-start/SKILL.md` |
+| Cursor | `.cursor/rules/workflow.mdc` |
+
+Adapter는 Step 0, hard-stop 요약, entry mechanism, fallback만 보유한다. 상세 절차, checklist, cascade 판단은 이 canonical 파일을 따른다.
+
+## Procedure
+
+docs/STATUS.md의 Current State, Active Work, Blockers And Open Questions, Next Actions만 확인해줘.
+`docs/BOOTSTRAP.md` 존재 여부는 확인하지 마. 다만 Next Actions가 scaffold bootstrap/onboarding을 명시하면 후속 작업에서 `docs/BOOTSTRAP.md`를 로드해야 한다고 알려줘.
+그다음 `docs/works/*/*.md` 중 `status: Done`이지만 archive되지 않은 Work 파일이 있는지 파일명과 frontmatter 수준으로만 확인해줘.
+archive 대기 Work 파일이 있으면, 각 파일에서 `Needs-Triage:` 줄이 있는지 **그 줄만 가볍게** 확인해줘. full Discovery를 읽거나 해석하지 말고, `Needs-Triage:` 메모가 있으면 그 메모만 표시해줘. 이 메모는 정식 backlog candidate가 아니라 triage-only reminder다.
+Done이지만 archive되지 않은 Work 파일이 5개 이상이면, 섹션 6(리스크와 확인 질문)에 PLAN 누적 드리프트 가능성을 soft warning으로 포함한다. 개별 Work마다 T5 판정이 "영향 없음"이었더라도 여러 Work가 완료되면서 `docs/PLAN.md`와 실제 진행 방향 간 괴리가 생길 수 있다. 주기적 PLAN 현행화 검토(`/work-select` 또는 별도 세션)를 권장한다.
+Phase 1 또는 refactor 이전 상세가 필요하고 해당 경로가 실제 존재하는 경우에만 docs/archive/ 또는 docs/archive/snapshots/harness-refactor-20260514/를 추가로 참고해줘.
+
+**Bootstrap-State Rule:** Active Work 없음 + Next Actions가 scaffold bootstrap/onboarding을 가리키는 경우(보통 Current phase가 placeholder),
+- section 1(결론) 첫 줄에 단일 권고를 못박는다: "scaffold 직후 bootstrap onboarding 상태입니다. 다음 단계는 `docs/BOOTSTRAP.md` §0부터 onboarding 시작입니다."
+- section 4는 STATUS Next Actions 항목을 병렬 후보로 나열하지 않는다. onboarding은 §0부터 순서대로 진행하는 단일 경로이므로, 단일 권고("`docs/BOOTSTRAP.md` §0부터 시작")로 출력하고 §1 이후 단계는 그 경로 안의 순서로만 종속 표기한다.
+- section 6 마지막 확인 질문은 1개로 좁힌다: "지금 bootstrap onboarding(§0~)을 시작할까요?"
+- bootstrap 시작 시 "준비된 brief"(프로젝트 정체성·목표·주요 사용자·성공 기준 요약, 형식 자유)가 있는지 먼저 묻고 그 의미를 한 줄로 설명한다. 있으면 경로/텍스트를 받아 `docs/BOOTSTRAP.md` §1·§2 반영에 쓰고, 없으면 §1·§2 항목 일괄 제출 또는 대화형 중 선택하게 한다. 온보딩 종료 후에도 언제든 보강 가능함을 함께 안내한다(상세 옵션은 BOOTSTRAP intro "온보딩 입력 방식").
+- 이 경우 Idle-State Rule 출력은 내지 않는다(상호배타: Next Actions가 비면 Idle, bootstrap을 가리키면 Bootstrap).
+
+**Idle-State Rule:** Active Work 없음 + Next Actions 없음 + archive 대기 Work 없음인 경우,
+- Blockers And Open Questions에 Open 항목이 있으면 section 4에서 idle-state 안내보다 먼저 노출한다.
+- Open Blocker도 없으면 section 4를 아래 형식으로 출력한다. 닫힌 milestone을 next candidate로 자동 확장하지 않는다.
+  ```
+  현재 repository는 Active Work와 Next Actions가 없는 clean idle 상태입니다.
+  다음 작업을 고르려면: /work-select
+  새 작업을 등록하려면: /work-register
+  다른 프로젝트에 harness를 적용하려는 source repo 작업이라면 README Section 10 New Project Adoption을 참고하세요.
+  ```
+
+아래 형식으로 현재 상태를 요약해줘.
+
+1. 결론
+2. 현재 Active Work
+3. Archive 대기 Work 파일
+4. 다음으로 진행할 후보 작업
+5. 필요한 추가 문서
+6. 리스크와 확인 질문
+
+아직 구현은 시작하지 말고, 진행할 작업을 먼저 제안해줘.
+Archive 대기 Work가 있으면 사용자 승인 전에는 `git mv`를 실행하지 말고 archive 여부만 제안해줘.
+`Needs-Triage:` 메모가 있으면 section 3에 Work 파일명과 함께 보여주고, section 4에서는 "archive 전에 triage할지 / archive 후 별도 `/work-plan`으로 열지" 정도만 제안해줘. backlog 후보로 자동 승격하지 마.
+(Done 상태 Work는 이전 세션에서 `/work-close`로 완료 처리된 것이다. 재개가 필요하면 `/work-resume`을 쓰되, Done Work는 재개하지 않고 후속 작업을 신규 Work로 분리한다.)
