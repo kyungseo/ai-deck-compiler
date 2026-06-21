@@ -2,7 +2,7 @@
 
 `docs/HARNESS-PROTOCOL.md` §9에서 추출한 Naming Rules policy slice다.
 Work ID 부여·검증, OQ/DR ID, 파일명 규칙 확인이 필요할 때만 로드한다.
-`/start`, `/pick`, 일반 status 확인, cascade 검증에서는 로드하지 않는다.
+`/session-start`, `/work-select`, 일반 status 확인, cascade 검증에서는 로드하지 않는다.
 
 ---
 
@@ -66,7 +66,18 @@ backlog 후보는 제목/slug만 유지한다. Work 파일 생성(착수 승인)
 
 `DR-NNN` 체계를 유지한다. DR은 repository-wide decision record로 Work ID와 다른 lifecycle을 가진다. Work frontmatter `related_dr` 또는 본문 링크로 연결한다.
 
-병렬 branch merge 시 DR 번호가 충돌하면 먼저 merge된 DR이 해당 번호를 유지한다. 나중에 merge되는 DR은 번호를 재배정한다. 외부 참조(PR description, commit body)가 있으면 변경 비용을 보고하고 사용자 승인 후 조정한다.
+**Number allocation (band):** DR ID는 **정확히 `DR-` + 3자리 숫자**만 쓴다(예: `DR-0xx` 형태, 여기서 x는 숫자).
+
+| 대역(숫자) | 표기 | 용도 |
+| --- | --- | --- |
+| 001–799번 | `DR-0xx` ~ `DR-7xx` | framework/source DR (harness 자체 결정) |
+| 800–999번 | `DR-8xx` ~ `DR-9xx` | product/adopter-local DR (적용 대상 repository의 제품 결정) |
+
+이 대역 분리는 adopter product DR이 framework DR과 번호가 겹쳐 충돌하는 것을 막는다. adopter/product repository는 자기 product 결정 DR을 **800–999번(`DR-8xx`~`DR-9xx`)**에서 발급한다. framework/source DR은 799번 이하만 쓴다.
+
+`PDR-` 같은 prefix namespace와 4자리 이상 ID는 **쓰지 않는다.** 현행 검사 regex가 `DR-` 뒤 3자리 숫자만 인식하므로, prefix를 붙이거나 자릿수를 늘리면 검사가 내부의 3자리만 잘라 오인식한다(예: `PDR-`는 내부 3자리로, 4자리는 앞 3자리로 잡힘). prefix namespace나 4자리 확장은 관련 검사 도구·template·index 규칙을 함께 갱신하는 별도 작업이 선행돼야 한다. product-local DR이 950번에 도달하거나 200개를 넘겨 800번대가 부족해지면 그 namespace expansion 작업을 연다.
+
+병렬 branch merge 시 DR 번호가 충돌하면 먼저 merge된 DR이 해당 번호를 유지한다. 나중에 merge되는 DR은 같은 대역 안에서 번호를 재배정한다. 외부 참조(PR description, commit body)가 있으면 변경 비용을 보고하고 사용자 승인 후 조정한다.
 
 ## Historical ID Prefixes
 
@@ -87,12 +98,13 @@ backlog 후보는 제목/slug만 유지한다. Work 파일 생성(착수 승인)
 | Location | Rule | Example |
 | --- | --- | --- |
 | `docs/` root | UPPERCASE-HYPHENATED | `HARNESS-PROTOCOL.md` |
-| `docs/backlog/` | UPPERCASE-HYPHENATED | `PHASE2.md` |
-| `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-011-status-recent-decisions-policy.md` |
+| `docs/backlog/` | UPPERCASE-HYPHENATED | `PRODUCT.md` (단계 운영 시 `PRODUCT-P{n}.md`) |
+| `docs/decisions/` | `DR-{NNN}-{topic}.md` | `DR-013-work-file-spec.md` |
 | `docs/works/{category}/` | `{ID}-{lowercase-topic}.md` | `CHORE-20260527-001-id-tracker-rule.md` |
 | `docs/archive/docs/` | 원본 상대 경로와 파일명 mirror | `docs/archive/docs/WORKFLOW-MANUAL-ai-workflow-v1.0.0.md` |
 | `docs/archive/snapshots/` | `{topic}-{YYYYMMDD}` | `harness-refactor-20260514/` |
 | `docs/retrospectives/` | `{topic}-{YYYYMMDD}.md` | `ai-workflow-complexity-review-20260518.md` |
+| `docs/briefs/` | `{topic}-{YYYYMMDD}.md` | `harness-policy-boundary-20260615.md` |
 | `docs/presentations/` | artifact/deck version naming | `harness-v1-team-intro-v1.1.pptx` |
 
 기존 media asset은 의미 보존을 우선한다. 신규 media 파일은 가능하면 lowercase-hyphenated를 사용하되, 사용자 표시명이나 외부 산출물 이름을 보존해야 하면 예외로 둔다.

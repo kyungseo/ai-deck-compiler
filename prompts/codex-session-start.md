@@ -2,6 +2,7 @@
 
 이 문서는 Codex에서 새 세션을 시작할 때 복사해서 쓰는 bootstrap prompt다.
 repo root의 `AGENTS.md`가 Codex 기본 진입점이다.
+Antigravity(Gemini 기반)도 root `AGENTS.md`를 자동 로드하고 `.agents/skills/`를 그대로 소비하므로, 자동 인식이 안 되는 환경에서는 이 fallback prompt를 동일하게 사용한다.
 
 각 섹션은 두 케이스로 제공된다.
 
@@ -20,13 +21,13 @@ repo root의 `AGENTS.md`가 Codex 기본 진입점이다.
 
 작업 선택 기준:
 
-- Product track 또는 Phase 준비 작업: `docs/backlog/PHASE{n}.md`
+- Product track 작업: `docs/backlog/PRODUCT.md`
 - Harness, command/rule, workflow hardening: `docs/backlog/HARNESS.md`
 - 큰 작업 Work 파일: `docs/works/{category}/{ID}-{topic}.md` (spec: DR-013)
 
 이 repo의 bootstrap/onboarding은 완료 상태다. scaffold adoption 지침이 필요하면 source workflow repo를 참조한다.
 `docs/PLAN-SUMMARY.md` Implementation Baseline이 비어 있으면 feature 후보 대신 Project Initialization을 첫 후보로 제안하고,
-baseline이 완료된 뒤에 그 결과를 `docs/backlog/PHASE1.md`의 Product track 후보로 등록한다.
+baseline이 완료된 뒤에 그 결과를 `docs/backlog/PRODUCT.md`의 Product track 후보로 등록한다.
 AI workflow 자체의 개선 항목과 example pack 정비 항목은 `docs/backlog/HARNESS.md`로 분리한다.
 
 ---
@@ -77,7 +78,7 @@ MUST: 출력은 source: inline만 사용한다. node.id/node.zone 중복 없음,
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Codex Skill Routing에 따라 /start에 대응하는 workflow skill을 로드하고 절차를 수행해줘.
+AGENTS.md Codex Skill Routing에 따라 /session-start에 대응하는 workflow skill을 로드하고 절차를 수행해줘.
 ```
 
 **AGENTS.md 없음:**
@@ -106,7 +107,7 @@ Codex에서는 .claude/commands를 직접 실행하지 말고, 동일한 절차�
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Codex Skill Routing에 따라 /pick에 대응하는 workflow skill을 로드하고 절차를 수행해줘.
+AGENTS.md Codex Skill Routing에 따라 /work-select에 대응하는 workflow skill을 로드하고 절차를 수행해줘.
 ```
 
 **AGENTS.md 없음:**
@@ -115,10 +116,10 @@ AGENTS.md Codex Skill Routing에 따라 /pick에 대응하는 workflow skill을 
 AGENTS.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 확인해줘.
 작업 성격에 따라 product backlog 또는 harness backlog를 선택해 다음 후보를 검토해줘.
 
-- Product track 또는 Phase 준비 작업: docs/backlog/PHASE{n}.md
+- Product track 작업: docs/backlog/PRODUCT.md
 - harness, command/rule, workflow hardening: docs/backlog/HARNESS.md
 
-만약 product backlog가 아직 비어 있으면 먼저 제품 목표, 사용자, Phase 1 범위를 기준으로 초기 작업 후보를 만들 수 있는지 검토해줘 (backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work 착수 승인 시 확정됨).
+만약 product backlog가 아직 비어 있으면 먼저 제품 목표, 사용자, 초기 product 범위를 기준으로 초기 작업 후보를 만들 수 있는지 검토해줘 (backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work-plan 착수 승인 시 확정됨).
 단, `docs/PLAN-SUMMARY.md` Implementation Baseline이 비어 있으면 feature 후보 대신 Project Initialization을 첫 후보로 제안해줘.
 example pack이나 role/rule/prompt 정비가 필요하면 Harness 후보로 분리해줘.
 
@@ -144,7 +145,7 @@ STATUS.md는 바로 수정하지 말고, 변경이 필요하면 Approval Matrix 
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Codex Skill Routing에 따라 /register에 대응하는 workflow skill을 로드하고 절차를 수행해줘.
+AGENTS.md Codex Skill Routing에 따라 /work-register에 대응하는 workflow skill을 로드하고 절차를 수행해줘.
 ```
 
 **AGENTS.md 없음:**
@@ -161,13 +162,13 @@ AGENTS.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md�
 
 - 지금 바로 착수: docs/STATUS.md Active Work
 - 곧 할 것: docs/STATUS.md Next Actions
-- Product track 작업: docs/backlog/PHASE{n}.md
+- Product track 작업: docs/backlog/PRODUCT.md
 - Harness 작업: docs/backlog/HARNESS.md
 
 backlog 후보는 Work ID를 선점하지 말고 제목/slug, Priority, Scope, Done Criteria, Verification을 포함해줘.
-Work ID는 /work 착수 승인 후 Work 파일 생성 시 확정해줘.
+Work ID는 /work-plan 착수 승인 후 Work 파일 생성 시 확정해줘.
 STATUS.md 변경이 필요하면 Approval Matrix state rules에 맞게 먼저 보고하고 승인 대기해줘.
-긴급 항목이면 등록 후 /work로 이어갈지 물어봐.
+긴급 항목이면 등록 후 /work-plan으로 이어갈지 물어봐.
 ```
 
 ---
@@ -177,7 +178,7 @@ STATUS.md 변경이 필요하면 Approval Matrix state rules에 맞게 먼저 �
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Codex Skill Routing에 따라 /work에 대응하는 workflow skill을 로드하고 계획을 세워줘.
+AGENTS.md Codex Skill Routing에 따라 /work-plan에 대응하는 workflow skill을 로드하고 계획을 세워줘.
 ```
 
 **AGENTS.md 없음:**
@@ -213,7 +214,7 @@ STATUS.md 변경은 사용자가 명시적으로 승인한 뒤에만 수행해�
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Codex Skill Routing에 따라 /resume에 대응하는 workflow skill을 로드하고 작업을 재개해줘.
+AGENTS.md Codex Skill Routing에 따라 /work-resume에 대응하는 workflow skill을 로드하고 작업을 재개해줘.
 ```
 
 **AGENTS.md 없음:**
@@ -302,7 +303,7 @@ AGENTS.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md�
 **AGENTS.md 있음:**
 
 ```text
-AGENTS.md Codex Skill Routing에 따라 /doc에 대응하는 workflow skill을 로드하고 발표/보고 자료를 준비해줘.
+AGENTS.md Codex Skill Routing에 따라 /work-doc에 대응하는 workflow skill을 로드하고 발표/보고 자료를 준비해줘.
 
 요청:
 - 목적: [발표/보고/의사결정/리뷰/교육]
@@ -345,7 +346,7 @@ STATUS.md 변경이 필요하면 Approval Matrix state rules에 맞게 먼저 �
 
 ## 9. Documentation Only Work
 
-발표자료, 보고서, review package, decision brief, 외부 공유용 문서 산출물처럼 품질 높은 문서 생성 문맥이면 이 섹션 대신 `/doc` 절차를 사용한다.
+발표자료, 보고서, review package, decision brief, 외부 공유용 문서 산출물처럼 품질 높은 문서 생성 문맥이면 이 섹션 대신 `/work-doc` 절차를 사용한다.
 기존 문서 일부 편집, 오탈자 수정, README 갱신처럼 source 문서 자체를 고치는 작업이면 아래 절차를 사용한다.
 
 **AGENTS.md 있음:**
@@ -379,7 +380,7 @@ STATUS.md 변경이 필요하면 변경 섹션, 변경 이유, 변경 후 상태
 **AGENTS.md 있음:**
 
 ```text
-Work가 완료됐다면 AGENTS.md Codex Skill Routing에 따라 /close에 대응하는 workflow skill을 로드하고 Work Done 처리를 먼저 수행해줘. 그다음 /done에 대응하는 workflow skill을 로드하고 세션을 마무리해줘.
+Work가 완료됐다면 AGENTS.md Codex Skill Routing에 따라 /work-close에 대응하는 workflow skill을 로드하고 Work Done 처리를 먼저 수행해줘. 그다음 /session-summary에 대응하는 workflow skill을 로드하고 세션을 마무리해줘.
 ```
 
 **AGENTS.md 없음:**
@@ -406,18 +407,21 @@ Work가 완료됐다면 AGENTS.md Codex Skill Routing에 따라 /close에 대응
    - 이번 작업에서 DR-worthy 결정이 확정되었으면 목록화하고 기록 여부를 물어봐.
    - 계획·검토 중 발견된 미결 의사결정이 있으면 STATUS.md OQ 추가 및 DR Draft 생성을 제안해.
 7. troubleshooting 기록 필요 여부
-   - 이번 작업에서 비자명 이슈(환경 설정 문제, 재현 어려운 오류, 비직관적 원인)를 해결했으면 `docs/troubleshooting/`에 기록 여부를 물어봐.
+   - 이번 작업에서 원인 불명의 이슈(환경 설정 문제, 재현 어려운 오류, 불명확한 원인)를 해결했으면 `docs/troubleshooting/`에 기록 여부를 물어봐.
    - 이미 관련 파일이 있으면 업데이트 필요 여부를 확인해.
-8. 상태 머신 종료 상태
+   - 파일 작성 시 DR-027 frontmatter 스펙 적용.
+8. 회고 기록 필요 여부
+   - 세션·Phase·이슈 회고가 필요하면 `docs/retrospectives/`에 기록 여부를 물어봐. DR-027 frontmatter 스펙 적용.
+9. 상태 머신 종료 상태
    - VALIDATE 결과
    - CHECKPOINT, END, 또는 FAIL/RECOVER 필요 여부
-9. Commit 상태
+10. Commit 상태
    - commit 수행 여부
    - commit하지 않았다면 이유와 남은 risk
-10. Active Work Discovery 확인 (Work가 미완료인 경우)
+11. Active Work Discovery 확인 (Work가 미완료인 경우)
    - Active Work가 있으면 Discovery에 현재 진행 상황이 기록되어 있는지 확인해.
    - 미기록이면 기록할 내용을 제안하고 기록 여부를 물어봐.
-11. 다음 세션에서 이어갈 프롬프트
+12. 다음 세션에서 이어갈 프롬프트
 ```
 
 ---

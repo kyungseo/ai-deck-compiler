@@ -401,7 +401,7 @@ deck:
 
 **id 규칙:** 소문자, 하이픈, 고유값. 예: `hero-1`, `kpi-q2`, `arch-overview`
 
-**언어 규칙 (DR-014):**
+**언어 규칙 (DR-801):**
 - `section_label`: 영어 UPPERCASE 고정 — `"01. PROBLEM"`, `"SOLUTION"`
 - `left.label` / `right.label` (패널 라벨): 영어 UPPERCASE 권장 — `"CURRENT REALITY"`, `"OUR APPROACH"`
 - `title`: 발표 언어 + Action Title 원칙 (Step 2 참조)

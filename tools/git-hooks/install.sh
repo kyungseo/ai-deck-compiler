@@ -1,27 +1,15 @@
 #!/usr/bin/env sh
-# Installs git hooks from tools/git-hooks/ into .git/hooks/
+# Installs git hooks for ai-deck-compiler.
+# Run once after cloning: sh tools/git-hooks/install.sh
 
-set -eu
-
-HOOKS_DIR="$(git rev-parse --git-dir)/hooks"
+ROOT=$(git rev-parse --show-toplevel)
+HOOKS_DIR="$ROOT/.git/hooks"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-install_hook() {
-    HOOK_NAME=$1
-    SRC="$SCRIPT_DIR/$HOOK_NAME"
-    DEST="$HOOKS_DIR/$HOOK_NAME"
+ln -sf "$SCRIPT_DIR/pre-commit" "$HOOKS_DIR/pre-commit"
+ln -sf "$SCRIPT_DIR/commit-msg" "$HOOKS_DIR/commit-msg"
+chmod +x "$HOOKS_DIR/pre-commit" "$HOOKS_DIR/commit-msg"
 
-    if [ ! -f "$SRC" ]; then
-        echo "  Skipping $HOOK_NAME (not found)"
-        return
-    fi
-
-    cp "$SRC" "$DEST"
-    chmod +x "$DEST"
-    echo "  Installed $HOOK_NAME"
-}
-
-echo "Installing git hooks..."
-install_hook pre-commit
-install_hook commit-msg
-echo "Done."
+echo "Git hooks installed:"
+echo "  pre-commit : diff, branch isolation, shell syntax, and finalization advisory checks"
+echo "  commit-msg : Conventional Commits format and DR-025 finalization gate"

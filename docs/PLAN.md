@@ -428,7 +428,7 @@ src/design/presets/{preset-name}/
 | DR-007 | 언어 정책 | 문서·prompt·rule은 한국어 primary, 기술 용어는 영어 혼용 |
 | DR-008 | 문서 파일명 규칙 | `docs/decisions/DR-NNN-kebab-case.md` |
 | DR-013 | Work 파일 spec | `docs/works/{category}/{ID}-{topic}.md` |
-| DR-014 | PPT 언어 정책 | section_label 영문 UPPERCASE, title Action Title, body 발표 언어 |
+| DR-801 | PPT 언어 정책 | section_label 영문 UPPERCASE, title Action Title, body 발표 언어 |
 
 ---
 

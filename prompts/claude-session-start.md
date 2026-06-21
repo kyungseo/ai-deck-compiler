@@ -1,14 +1,14 @@
 # Claude Code Session Start Prompt
 
 이 문서는 Claude Code slash command를 사용할 수 없는 환경에서 복사해 쓰는 fallback prompt 모음이다.
-Claude Code 안에서는 `.claude/commands/`의 `/start`, `/pick`, `/work`, `/close`, `/done`을 우선 사용한다.
+Claude Code 안에서는 `.claude/commands/`의 `/session-start`, `/work-select`, `/work-plan`, `/work-close`, `/session-summary`을 우선 사용한다.
 
 핵심 기준:
 
 - `CLAUDE.md`, `docs/BEHAVIOR-PRINCIPLES.md`, `docs/AGENT-WORKFLOW.md`를 먼저 따른다.
 - 현재 상태는 `docs/STATUS.md`를 기준으로 해석한다.
 - 상세 하네스 규칙은 필요한 경우 `docs/HARNESS-PROTOCOL.md`만 읽는다.
-- Product track 또는 project 작업은 `docs/backlog/PHASE{n}.md`, harness 작업은 `docs/backlog/HARNESS.md`로 분기한다.
+- Product track 또는 project 작업은 `docs/backlog/PRODUCT.md`, harness 작업은 `docs/backlog/HARNESS.md`로 분기한다.
 - Bootstrap/onboarding은 `docs/STATUS.md` Next Actions가 명시할 때만 후속으로 다룬다.
 - AI workflow 자체의 개선 항목과 example pack 정비 항목은 Harness track backlog로 분리한다.
 - 구현 전에는 plan, verification, risk, reversal cost를 보고하고 승인 대기한다.
@@ -40,10 +40,10 @@ CLAUDE.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md를 읽어줘.
 CLAUDE.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 확인해줘.
 작업 성격에 따라 다음 backlog 중 하나를 선택해 검토해줘.
 
-- Product track 또는 Phase 준비 작업: docs/backlog/PHASE{n}.md
+- Product track 작업: docs/backlog/PRODUCT.md
 - harness, command/rule, workflow hardening: docs/backlog/HARNESS.md
 
-Product backlog가 아직 비어 있으면 제품 목표, 사용자, Phase 1 범위를 기준으로 초기 작업 후보를 먼저 제안해줘 (backlog 후보에는 Work ID를 선점하지 않고, Work ID는 /work 착수 승인 시 확정됨).
+Product backlog가 아직 비어 있으면 제품 목표, 사용자, 초기 product 범위를 기준으로 초기 작업 후보를 먼저 제안해줘 (backlog 후보에는 Work ID를 선점하지 않고, Work ID는 /work-plan 착수 승인 시 확정됨).
 단, `docs/PLAN-SUMMARY.md` Implementation Baseline이 비어 있으면 feature 후보 대신 Project Initialization을 첫 후보로 제안해줘.
 example pack이나 role/rule/prompt 정비가 필요하면 Harness 후보로 분리해줘.
 
@@ -118,36 +118,21 @@ STATUS.md 변경이 필요하면 Approval Matrix state rules에 맞게 먼저 �
 
 ---
 
-## 5. New Project Initialization
+## 5. New Project Initialization (Manual Fallback)
 
 ```text
-이 저장소의 Claude 운영 구조를 참고해서 새 프로젝트용 AI 작업 문서 구조를 설계해줘.
+새 프로젝트나 기존 프로젝트에 AI Workflow Harness를 적용하려고 해.
 
-새 프로젝트 정보:
+먼저 `scripts/create-harness.sh`를 사용할 수 있는 source repository 환경인지 확인해줘.
+사용 가능하면 README의 "Apply The Harness To Your Project" 섹션을 기준으로
+`scripts/create-harness.sh` 실행 명령을 제안하고, 실행 전 승인 대기해줘.
 
-- 목표: [한 문장]
-- 기술 스택: [언어, 프레임워크, DB, 배포 환경]
-- 제약 조건: [성능, 보안, 호환성, 일정 등]
-- 우선순위: [가장 중요한 것]
-- 초기 범위: [Phase 1에서 만들 것]
+수동 초기화가 필요한 환경이면 파일을 바로 만들지 말고 아래만 제안해줘.
 
-다음 파일 구조를 기준으로 초안을 제안해줘.
-
-- CLAUDE.md (루트, 영어)
-- docs/AGENT-WORKFLOW.md (한국어, 공통 운영 규칙)
-- docs/STATUS.md (Current State, Active Work, OQ, Next Actions)
-- docs/HARNESS-PROTOCOL.md (상태 머신, 문서 지도, trigger/cascade 상세 protocol)
-- docs/HARNESS-QUICK-REFERENCE.md (세션 실행 규칙 요약)
-- docs/PLAN-SUMMARY.md (프로젝트 요약, 핵심 구조, 검증 기본값)
-- docs/PLAN.md (전체 기술 근거, 필요 시만 로드)
-- docs/backlog/PHASE1.md (제품 목표에서 도출한 Product track 후보 작업)
-- docs/backlog/HARNESS.md (harness, command/rule, automation 후보 작업)
-- docs/decisions/ (DECISION-TEMPLATE.md 포함)
-- docs/archive/ (빈 폴더)
-- .claude/settings.json (defaultMode=plan, 금지 명령 목록, 필요 시 hook)
-- .claude/rules/ (docs-workflow, git-workflow, infra, [언어]-[프레임워크], testing)
-- .claude/commands/ (start, pick, work, resume, debug, close, done, record-decision, health)
-- prompts/ (세션 시작 fallback만 유지)
+1. 필요한 입력값: project name, target directory, profile, workflow mode
+2. 생성 또는 복사할 최소 문서 범위
+3. scaffold 후 첫 `/session-start`와 `docs/BOOTSTRAP.md` onboarding 순서
+4. 파일 생성 전 검증/되돌리기 방법
 
 구현이나 파일 생성은 내가 승인한 뒤 진행해줘.
 ```
@@ -192,16 +177,22 @@ CLAUDE.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md�
 7. 의사결정 기록 필요 여부
    - 이번 작업에서 DR-worthy 결정이 확정되었으면 목록화하고 기록 여부를 물어봐.
    - 계획·검토 중 발견된 미결 의사결정이 있으면 STATUS.md OQ 추가 및 DR Draft 생성을 제안해.
-8. Commit 상태
+8. troubleshooting 기록 필요 여부
+   - 이번 작업에서 원인 불명의 이슈(환경 설정 문제, 재현 어려운 오류, 불명확한 원인)를 해결했으면 `docs/troubleshooting/`에 기록 여부를 물어봐.
+   - 이미 관련 파일이 있으면 업데이트 필요 여부를 확인해.
+   - 파일 작성 시 DR-027 frontmatter 스펙 적용.
+9. 회고 기록 필요 여부
+   - 세션·Phase·이슈 회고가 필요하면 `docs/retrospectives/`에 기록 여부를 물어봐. DR-027 frontmatter 스펙 적용.
+10. Commit 상태
    - commit 수행 여부
    - commit하지 않았다면 이유와 남은 risk
-9. 상태 머신 종료 상태
+11. 상태 머신 종료 상태
    - VALIDATE 결과
    - CHECKPOINT, END, 또는 FAIL/RECOVER 필요 여부
-10. Active Work Discovery 확인 (Work가 미완료인 경우)
+12. Active Work Discovery 확인 (Work가 미완료인 경우)
    - Active Work가 있으면 Discovery에 현재 진행 상황이 기록되어 있는지 확인해.
    - 미기록이면 기록할 내용을 제안하고 기록 여부를 물어봐.
-   - Work를 완료하고 싶다면 이 fallback prompt를 닫고 `/close`를 먼저 실행한 뒤 다시 이 프롬프트를 실행해.
+   - Work를 완료하고 싶다면 이 fallback prompt를 닫고 `/work-close`를 먼저 실행한 뒤 다시 이 프롬프트를 실행해.
 
 다음 세션의 시작 프롬프트로 바로 사용할 수 있는 짧은 문장도 마지막에 작성해줘.
 ```
