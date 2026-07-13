@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "harness_version": "1.3.0",
+  "harness_version": "1.4.0",
   "source_identity": "ai-workflow-harness",
   "generated_at": "2026-06-21",
   "profile": "generic",
@@ -40,7 +40,7 @@
     {"path": "skills/workflow/session-start.md", "src": "skills/workflow/session-start.md", "sha256": "7f2277e4ca75966392db7c0070ef0ef5220493f7cce4901f490e7f55d56b9c01"},
     {"path": "skills/workflow/session-summary.md", "src": "skills/workflow/session-summary.md", "sha256": "fa7d04ea98b8645d129a1038a09229d42fbbaa0b5baa3954b5ce777a340df7ab"},
     {"path": "skills/workflow/work-brief.md", "src": "skills/workflow/work-brief.md", "sha256": "ae0cc5aee2ec90b0de85992e0ea4bac5e89b05fb23ddbf5f3b184421c0bb479b"},
-    {"path": "skills/workflow/work-close.md", "src": "skills/workflow/work-close.md", "sha256": "6d5efd2f05caf59a2cde6820d9db14163654071ac6d9780d0f02803ba380fa0b"},
+    {"path": "skills/workflow/work-close.md", "src": "skills/workflow/work-close.md", "sha256": "97f66c130783acd6d22787dd6d982ec84a89eacd3ebce670e586f0b8a9d8cb4c"},
     {"path": "skills/workflow/work-debug.md", "src": "skills/workflow/work-debug.md", "sha256": "243c1881f3e3effde47d5ad5601f7718f63f21b1fbfb3ef28e6ce21befaa69ac"},
     {"path": "skills/workflow/work-plan.md", "src": "skills/workflow/work-plan.md", "sha256": "23a8e51c9bb26b9faef15f189c65e47ad1aa7bbcebe89c039c30f1aebc557953"},
     {"path": "skills/workflow/work-register.md", "src": "skills/workflow/work-register.md", "sha256": "bc09434439a604e8ca40fcb867083fd0e0512ab98dfc9b3af9bfb271cfdae401"},
