@@ -10,7 +10,8 @@
 | Bootstrap checklist | Complete / inactive; local bootstrap document removed |
 | Project backlog | `docs/backlog/PHASE1.md` |
 | Harness backlog | `docs/backlog/HARNESS.md` |
-| Last updated | 2026-06-02 (release finalization archived; clean idle) |
+| Local repo map | `~/dev-home/vibe/ai-workflow-harness/docs/maintainer/REPO-MAP.md` (machine-local — cross-repo 작업 시 로드) |
+| Last updated | 2026-07-14 (Local repo map row 추가; clean idle 유지) |
 
 ## Work Context Rule
 
