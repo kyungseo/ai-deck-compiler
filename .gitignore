@@ -7,7 +7,7 @@ dist/
 # Node.js
 node_modules/
 
-# Generated / ephemeral working files
+# Generated / ephemeral working files (렌더링·검증용 작업 파일)
 outputs/
 output/
 *.pptx

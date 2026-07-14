@@ -1,6 +1,6 @@
 # Behavior Principles
 
-모든 AI 도구(Claude Code, Codex, Cursor)에 적용되는 **전역 행동 지침**이다.
+모든 AI 도구(Claude Code, Codex, Antigravity, Cursor)에 적용되는 **전역 행동 지침**이다.
 
 충돌 시 우선순위: **1) 이 문서(전역 행동 원칙) → 2) `docs/AGENT-WORKFLOW.md`(프로젝트 운영 규칙) → 3) 도구별 설정(`.claude/*`, `.cursor/rules/*`)**
 
@@ -15,6 +15,7 @@
 - 구현 전 가정을 명시적으로 기술하라. 결과·범위·위험에 영향을 주는 불확실성이 있으면 반드시 질문하라.
 - 해석이 갈릴 경우 독단적으로 선택하지 말고 선택지를 제시하라.
 - 더 간단한 접근 방식이 있다면 제안하고, 필요하다면 과잉 설계에 반대(push back)하라.
+- 사용자의 선택이나 제안이 관례에 어긋나거나 비효율적이거나 논리적으로 맞지 않으면, 따르기 전에 객관적 근거와 비판적 관점에서 맹점을 먼저 짚고 대안을 제시한다. 사용자가 인지 후 원래 방향을 고수하면 그 때 따른다.
 - 모호한 점이 있다면 즉시 중단하고 혼란스러운 부분을 명명하여 질문하라.
 
 ---
@@ -64,7 +65,20 @@
 - **리스크 명시:** 기술적 의사결정 시 반드시 되돌리기 비용(Reversal Cost), 가정, 리스크를 명시한다.
 - **비판적 시각:** 감정적 공감보다 객관적 데이터를 제공하고, 설계의 맹점을 비판적으로 지적한다.
 - **시각화:** 복잡한 구조는 표, 불렛포인트, ASCII 텍스트 기반 구성도를 사용하여 구조화한다.
+- **다음 액션 제안:** 작업이 명확한 handoff 지점에 도달했고 남은 lifecycle action이 분명하면, 조용히 끝내지 말고 다음 액션을 짧게 제안한다. 예: commit, PR, merge, archive, 배포, 다음 review round 등 작업 유형에 맞는 lifecycle action. 다음 단계가 모호하거나 불필요하거나 사용자를 압박할 수 있으면 관성적으로 붙이지 않는다.
+- **출력 언어:** agent의 사용자 노출 출력(응답뿐 아니라 진행 narration, tool 설명, echo 라벨 포함)은 대화 언어를 따른다(기본 한국어). 이는 default conversational convention이며 강제(hard-gate) 대상은 아니다. 언어 정책 SSoT는 `docs/decisions/DR-007-language-policy.md`.
 - 단, command·prompt·artifact workflow가 더 구체적인 output contract를 정의한 경우에는 그 형식을 우선하되, 가능한 범위에서 결론·검증·리스크가 드러나게 한다.
+
+---
+
+## 6. Harness Context Discipline
+
+**이 repo의 harness 운영 행동을 유도하는 내용을 agent-side 지속 컨텍스트에 저장하지 않는다. harness 문서가 단일 SSoT다.**
+
+- **적용 대상:** repo 밖 agent-side 지속 컨텍스트 — Claude memory(`~/.claude/<proj>/memory/`), Codex 전역 profile/config, Antigravity global customizations·app data(`~/.gemini/config`, `~/.gemini/antigravity`), Cursor user-level(global) rules. in-repo harness-owned 표면(`.claude/`, `.cursor/rules/`, `.agents/skills/`, `docs/`, `skills/`)은 harness 자체이므로 이 제약의 대상이 아니다.
+- **판정 룰:** 저장 내용이 이 harness의 repo-specific operational instruction(repo명·경로, Work·STATUS lifecycle, gate·trigger·cascade, DR closure, branch-flow, commit bundling, approval 절차 등)을 유도하면 **금지**. repo와 무관한 일반 커뮤니케이션 스타일·안전 선호·사용자 프로필·외부 시스템 포인터는 **허용**.
+- **이유:** agent-side 컨텍스트가 행동을 보정하면 harness 동작이 "harness 문서만으로" 유도되는지 검증할 수 없고(문서 결함이 가려짐), 도구마다 보정 여부가 달라 검증 조건이 불균등해진다.
+- **Self-audit:** 각 도구 사용자는 자신의 agent-side 지속 컨텍스트에 위 금지 항목이 있는지 점검하고 제거한다. Claude memory는 알려진 경로에서 직접 점검 가능하나, Codex/Antigravity/Cursor의 repo 밖 컨텍스트는 owner attestation 또는 reviewer self-audit로만 확인한다(자동 검증·hard-gate 대상 아님).
 
 ---
 

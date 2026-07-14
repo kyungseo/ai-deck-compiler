@@ -18,14 +18,12 @@ Before planning, editing, committing, opening a PR, or merging:
 
 MUST:
 
-- Treat this file and `CLAUDE.md` as equal tool-specific entry points.
+- Treat this file and `CLAUDE.md` as equal tool-specific entry points. Supported tools are Claude Code / Codex / Antigravity (Gemini-based) / Cursor.
 - Read and follow `docs/BEHAVIOR-PRINCIPLES.md` at session start for global behavioral principles that apply to all tasks.
 - Read and follow `docs/AGENT-WORKFLOW.md` at session start for common workflow, context routing, status rules, and validation defaults.
 - Read `docs/STATUS.md` current sections before choosing or continuing work.
 - Bootstrap/onboarding is complete for this repo; if scaffold adoption guidance is needed, refer to the source workflow repo instead of local bootstrap files.
-- Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands.
-- Do not read `.claude/commands/*.md` at session start; load a command file only when that workflow is explicitly invoked or clearly relevant.
-- When a Claude command is relevant, follow the same procedure manually.
+- Treat `.claude/commands/*.md` as Claude Code command definitions, not as executable Codex commands. Do not read them at session start or follow them directly; run workflows through the Codex skill adapters per Codex Skill Routing below.
 - Treat `.claude/rules/*.md` as project-local rule references. Do not load them at session start; when editing files whose paths match a rule's `paths` frontmatter, read only the matching rule files and apply their guidance manually.
 - Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, and every commit.
 - On failure: follow `docs/HARNESS-PROTOCOL.md` Failure And Recovery.
@@ -39,7 +37,8 @@ NEVER:
 
 When a workflow command is invoked or its intent is matched,
 load `.agents/skills/workflow-{name}/SKILL.md` and follow the procedure.
-Skill name maps directly to command name (e.g., `/start` → `workflow-start`).
+Skill name maps directly to command name (e.g., `/session-start` → `workflow-session-start`).
+Each skill adapter must load the matching canonical procedure in `skills/workflow/{name}.md` as Step 0.
 
 Available workflow skills: directories named `workflow-*` under `.agents/skills/`.
 
@@ -60,12 +59,19 @@ App-level automatic skill discovery is outside the scope of this routing.
 
 Each product skill file loads the canonical procedure from `skills/{name}.md`.
 
-## Document Language Policy
+Antigravity (Gemini-based) consumes this same `.agents/` surface: it auto-loads root `AGENTS.md` and discovers `.agents/skills/workflow-{name}/SKILL.md`, following the identical Step 0 → canonical procedure. No Antigravity-specific adapter exists; the `Antigravity` row in each canonical adapter table reuses the Codex adapter.
 
-When creating or editing any document, prompt, command, rule, or hook message — confirm DR-007 applies.
+If the matched skill intent is uncertain or multiple skills are equally plausible, confirm the interpreted intent in one line before loading a skill. Do not silently pick one and execute.
+
+## Language Policy
+
+`docs/decisions/DR-007-language-policy.md` is the single SSoT for language. When creating or editing any document, prompt, command, rule, hook message, **commit message, or PR body** — confirm DR-007 applies.
 
 - **English Only:** `AGENTS.md`, `CLAUDE.md`, `.claude/rules/*.md`, `.cursor/rules/*.mdc`
-- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`
+- **Korean primary + Bilingual Rules:** `docs/*.md`, `prompts/*.md`, `skills/workflow/*.md`, `.claude/commands/*.md`, `.agents/skills/*/SKILL.md`
+- **Commit message:** English type prefix; Korean-primary subject/body (Bilingual Rules); English co-author trailer.
+- **PR body:** Korean-primary + Bilingual Rules.
+- **Agent user-facing output** (progress narration, tool descriptions, echo labels): follow the conversation language (default Korean). Default conversational convention, not a hard gate.
 
 Full policy: `docs/decisions/DR-007-language-policy.md`
 
@@ -77,6 +83,8 @@ If this repository has `docs/GIT-WORKFLOW.md`, follow §5 for commit format.
 
 NEVER open a PR from a feature branch without `--base develop`. Default GitHub base (main) is wrong for this repo.
 
+Before opening a feature PR, sync the latest `develop` into the feature branch (`git fetch origin && git merge origin/develop`) per `docs/GIT-WORKFLOW.md` §2-3, resolving conflicts locally. Default to `merge` (squash policy makes rebase's linear history moot); `--force-with-lease` only on your own feature branch, never on `develop`/`main`.
+
 After `gh pr merge` completes, follow the merge type:
-- feature→develop: execute §2-4 (sync develop, delete local feature branch, suggest next feature branch).
-- develop→main: execute §3-4 (Post-Merge Develop Sync: sync main, merge origin/main into develop, push develop).
+- feature→develop: use `--squash` (default per harness merge policy); use `--merge` only when commit-level history must be preserved. Then execute §2-5 (sync develop, delete local feature branch, suggest next feature branch).
+- develop→main: use `--merge` (regular merge is the default per harness merge policy). Then execute §3-4 (Post-Merge Develop Sync: sync main, merge origin/main into develop, push develop).

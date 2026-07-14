@@ -4,7 +4,7 @@
 세션 시작 fallback prompt만 보관한다.
 
 Generic task prompt library는 이 repo의 public surface에서 제거했다.
-반복 task prompt가 필요하면 source workflow repo인 `ai-workflow-harness`의 prompt library를 참조한다.
+반복 task prompt가 필요하면 source workflow repo의 prompt library를 참조한다.
 
 ## Files
 

@@ -13,13 +13,17 @@ MUST:
 
 - Keep active context files short and current.
 - Use `docs/STATUS.md` for live work state.
-- Use `docs/backlog/PHASE{n}.md` for product and Phase{n} preparation candidate work.
+- Use `docs/backlog/PRODUCT.md` for Product track candidate work (optional phasing: `PRODUCT-P{n}.md`).
 - Use `docs/backlog/HARNESS.md` for harness, command/rule, and workflow hardening candidate work.
 - Use path-mirrored locations under `docs/archive/` for completed historical detail.
 - Use `docs/HARNESS-QUICK-REFERENCE.md` for daily workflow execution rules.
 - Include done criteria and verification for actionable work items.
+- When adding or moving a file in a directory that has a `README.md` index, update that index in the same change. Applies to `docs/decisions/`, `docs/retrospectives/`, `docs/briefs/`, `docs/troubleshooting/`, `docs/works/{category}/`, and any other directory with a `README.md`. On archive moves, remove the row from the live source index and add it to the **archive-side index** at `docs/archive/<mirrored-path>/README.md`. Live category README는 Active/현행 인덱스만 유지하고, Archived 인덱스는 archive-side mirrored README가 보유한다.
 - Use Work files for large tasks: `docs/works/{category}/{ID}-{lowercase-topic}.md` (spec: DR-013).
+- When creating a new `docs/troubleshooting/` or `docs/retrospectives/` file, apply the DR-027 frontmatter spec defined in each directory's `README.md`.
+- When creating a new `docs/briefs/` file, apply the frontmatter spec defined in `docs/briefs/README.md`.
 - Do not reuse task IDs for different meanings.
+- Shipped DR reference closure (source repo only — N/A for adopter repos): when citing a `DR-NNN` in a **shipped surface** (core canonical docs, shipped DR seed files, adapters/rules/prompts), confirm the DR is in the scaffold seed (`scripts/create-harness.sh` default `adapt` block). If not in seed — canonical doc: self-describe the concept without the `DR-NNN` token; DR-file lineage: keep the cross-reference in the `Linked DRs:` frontmatter line only (body self-describes). Run `bash scripts/tests/check-shipped-dr-closure.sh` to verify before commit — and the source-repo `pre-commit` hook runs it automatically (hard gate; no-op where the check script is absent). Non-shipped surfaces (Work files, source-only docs, backlog) are exempt.
 - Follow `docs/decisions/DR-007-language-policy.md` when editing docs, prompts, commands, rules, Cursor rules, or hook messages.
 - Follow `docs/AGENT-WORKFLOW.md` Approval Matrix before execution, scope expansion, state changes, or committing.
 - Request explicit user approval before editing `docs/STATUS.md`; report the Approval Matrix state-change proposal first.
@@ -33,10 +37,14 @@ When the user's intent matches a workflow command without an explicit `/command`
 
 | Intent | Command file to follow |
 | --- | --- |
-| Register or add a work item | `.claude/commands/register.md` |
-| Record a DR or decision | `.claude/commands/record-decision.md` |
-| Start or plan a specific task | `.claude/commands/work.md` (includes the three pre-checks) |
-| Resume interrupted work | `.claude/commands/resume.md` (includes drift checks) |
+| Register or add a work item — "작업 등록하자", "백로그에 추가해줘", "이 아이디어 등록해줘" | `.claude/commands/work-register.md` |
+| Record a DR or decision — "결정 기록하자", "DR 남기자", "의사결정 기록해줘" | `.claude/commands/record-decision.md` |
+| Start or plan a specific task — "작업 계획을 세우자", "work 파일 작성하자", "작업을 시작하자", "플랜 짜줘". Identify the target task from conversation context (recent Work ID, backlog item, or topic under discussion); if no specific task is identifiable from context, surface `/work-select` first. | `.claude/commands/work-plan.md` (includes the three pre-checks) |
+| Resume interrupted work — "이어서 하자", "작업 재개하자", "중단된 작업 계속하자" | `.claude/commands/work-resume.md` (includes drift checks) |
+| Complete / close / wrap up current work, or request commit·PR·merge after task — "작업 마무리하자", "close 처리해줘", "완료하고 PR 올리자", "커밋하자" | `.claude/commands/work-close.md` (load skill; multi-step procedure runs from canonical) |
+| End the session, summarize today's work, or wrap up without closing a Work item — "세션 마무리하자", "오늘 정리해줘", "요약해줘" | `.claude/commands/session-summary.md` |
+
+**Ambiguity rule:** If the recognized intent is uncertain or multiple interpretations are equally plausible, confirm the interpreted intent in one line before loading a procedure. Do not silently pick one and execute. Example: user says "진행해" after a descriptive (non-proposal) AI statement — confirm "work-close를 실행하는 것으로 이해하겠습니다, 맞나요?" before proceeding.
 
 **Criteria for adding intent recognition here:**
 
@@ -47,7 +55,11 @@ When the user's intent matches a workflow command without an explicit `/command`
 | False-positive risk | Intent is clear and low-risk to detect | Context is broad and may trigger incorrectly |
 | Invocation style | Automatic recognition is more natural | Explicit `/command` invocation is more predictable |
 
-Example: do not add `/doc` here because it is occasional and heavy. Load `doc.md` only for an explicit `/doc` invocation or a clear user request.
+Example: do not add `/work-doc` here because it is occasional and heavy. Load `work-doc.md` only for an explicit `/work-doc` invocation or a clear user request.
+
+Excluded with justification:
+- `/work-select` — intent is context-dependent ("what should I work on next?" means different things when Active Work exists vs. when idle; false-positive risk is high). Use explicit `/work-select` or follow session-start idle-state guidance.
+- `/work-close` multi-step flag — added above with a trigger-load pattern rather than full inline procedure, to satisfy the "multi-step" exclusion criterion while still ensuring the skill is loaded on natural-language close intent.
 
 NEVER:
 

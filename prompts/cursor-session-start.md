@@ -15,13 +15,13 @@ Cursor는 `.cursor/rules/*.mdc`를 함께 적용하되, 전역 행동 원칙은 
 
 작업 선택 기준:
 
-- Product track 또는 Phase 준비 작업: `docs/backlog/PHASE{n}.md`
+- Product track 작업: `docs/backlog/PRODUCT.md`
 - Harness, command/rule, workflow hardening: `docs/backlog/HARNESS.md`
 - 큰 작업 Work 파일: `docs/works/{category}/{ID}-{topic}.md` (spec: DR-013)
 
 이 repo의 bootstrap/onboarding은 완료 상태다. scaffold adoption 지침이 필요하면 source workflow repo를 참조한다.
 `docs/PLAN-SUMMARY.md` Implementation Baseline이 비어 있으면 feature 후보 대신 Project Initialization을 첫 후보로 제안하고,
-baseline이 완료된 뒤에 그 결과를 `docs/backlog/PHASE1.md`의 Product track 후보로 등록한다.
+baseline이 완료된 뒤에 그 결과를 `docs/backlog/PRODUCT.md`의 Product track 후보로 등록한다.
 AI workflow 자체의 개선 항목과 example pack 정비 항목은 `docs/backlog/HARNESS.md`로 분리한다.
 
 ---
@@ -74,10 +74,10 @@ Active Work의 [Work ID 또는 작업명]을 진행하려고 해.
 CLAUDE.md, docs/BEHAVIOR-PRINCIPLES.md, docs/AGENT-WORKFLOW.md, docs/STATUS.md를 읽어줘.
 작업 성격에 따라 product backlog 또는 harness backlog를 선택해 다음 후보를 검토해줘.
 
-- Product track 또는 Phase 준비 작업: docs/backlog/PHASE{n}.md
+- Product track 작업: docs/backlog/PRODUCT.md
 - harness, command/rule, workflow hardening: docs/backlog/HARNESS.md
 
-Product backlog가 아직 비어 있으면 제품 목표, 사용자, Phase 1 범위를 기준으로 초기 작업 후보를 먼저 제안해줘 (backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work 착수 승인 시 확정됨).
+Product backlog가 아직 비어 있으면 제품 목표, 사용자, 초기 product 범위를 기준으로 초기 작업 후보를 먼저 제안해줘 (backlog 후보는 Work ID 없이 제목/slug로 관리하고, Work ID는 /work-plan 착수 승인 시 확정됨).
 단, `docs/PLAN-SUMMARY.md` Implementation Baseline이 비어 있으면 feature 후보 대신 Project Initialization을 첫 후보로 제안해줘.
 example pack이나 role/rule/prompt 정비가 필요하면 Harness 후보로 분리해줘.
 
@@ -162,7 +162,7 @@ STATUS.md 변경이 필요하면 변경 섹션, 변경 이유, 변경 후 상태
 
 ## 7. 문서 전용 작업
 
-발표자료, 보고서, review package, decision brief, 외부 공유용 문서 산출물처럼 품질 높은 문서 생성 문맥이면 이 섹션 대신 `/doc` 절차를 사용한다.
+발표자료, 보고서, review package, decision brief, 외부 공유용 문서 산출물처럼 품질 높은 문서 생성 문맥이면 이 섹션 대신 `/work-doc` 절차를 사용한다.
 기존 문서 일부 편집, 오탈자 수정, README 갱신처럼 source 문서 자체를 고치는 작업이면 아래 절차를 사용한다.
 
 ```text
@@ -199,11 +199,17 @@ STATUS.md 변경이 필요하면 변경 섹션, 변경 이유, 변경 후 상태
 6. 의사결정 기록 필요 여부
    - 이번 작업에서 DR-worthy 결정이 확정되었으면 목록화하고 기록 여부를 물어봐.
    - 계획·검토 중 발견된 미결 의사결정이 있으면 STATUS.md OQ 추가 및 DR Draft 생성을 제안해.
-7. 상태 머신 종료 상태
+7. troubleshooting 기록 필요 여부
+   - 이번 작업에서 원인 불명의 이슈(환경 설정 문제, 재현 어려운 오류, 불명확한 원인)를 해결했으면 `docs/troubleshooting/`에 기록 여부를 물어봐.
+   - 이미 관련 파일이 있으면 업데이트 필요 여부를 확인해.
+   - 파일 작성 시 DR-027 frontmatter 스펙 적용.
+8. 회고 기록 필요 여부
+   - 세션·Phase·이슈 회고가 필요하면 `docs/retrospectives/`에 기록 여부를 물어봐. DR-027 frontmatter 스펙 적용.
+9. 상태 머신 종료 상태
    - VALIDATE 결과
    - CHECKPOINT, END, 또는 FAIL/RECOVER 필요 여부
-8. Commit 상태
+10. Commit 상태
    - commit 수행 여부
    - commit하지 않았다면 이유와 남은 risk
-9. 다음 세션에서 이어갈 프롬프트
+11. 다음 세션에서 이어갈 프롬프트
 ```
