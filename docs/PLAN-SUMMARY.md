@@ -65,4 +65,3 @@ Public 이후 plan은 기능 구축 목록보다 유지보수와 품질 개선 �
 - Backlog: `docs/backlog/PHASE1.md`
 - User guide: `docs/USER-MANUAL.md`
 - Maintainer guide: `docs/SYSTEM-MANUAL.md`
-- Local repo map (cross-repo 작업 시에만 로드): `~/dev-home/vibe/ai-workflow-harness/docs/maintainer/REPO-MAP.md` (machine-local — 이 운영 환경 밖에서는 N/A)
